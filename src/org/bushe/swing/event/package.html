@@ -1,0 +1,156 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<head>
+
+</head>
+
+<body bgcolor="white">
+<p>The EventBus provides publish/subscribe event services for single-JVM. It is 
+  especially suitable for Swing Application, though it is usable in any application, 
+  even server-side.</p>
+<p>The EventBus allows two components to communicate with each other without either 
+  of them knowing, or having a reference to, the other. It is an alternative to 
+  the tight coupling introduced by the typical Swing addXXXListener event mechanism. 
+  Instead of adding a listeners to a component the listener is subscribed to the 
+  EventBus and the listened-to component publishes events to the EventBus. The 
+  EventBus takes care of routing events from publishers to subscribers.</p>
+<p>This simple example prints &quot;Hello World&quot;</p>
+<pre><br>class MySubscriber implements EventTopicHandler {
+	MySubscriber() { 
+		EventBus.subscribe(&quot;Hello&quot;, this);
+	}
+   //EventTopicHandler implementation
+   public void handleEvent(String topic, Object evt) {
+   	System.out.println(topic+&quot; &quot;+evt);
+   }
+}
+
+class MyPublisher{
+...
+	EventBus.publish(&quot;Hello&quot;, &quot;World&quot;);
+...</pre>
+<p>Though the term &quot;Event Bus&quot; refers to the entire package, the {@link 
+  EventBus} class used above is a static wrapper around an {@link EventService}, 
+  specifically the {@link SwingEventService} implementation. MySubscriber subscribes 
+  itself to the topic named &quot;Hello&quot; . When MyPublisher publishes the 
+  String &quot;World&quot; (the data object of the event) on the event topic &quot;Hello&quot;, 
+  the Event Bus calls MySubscriber and &quot;Hello World&quot; is printed.</p>
+<h2>Two Analogies</h2>
+<p>The EventBus is a different motif for Swing that some Swing developers find 
+  difficult to understand at first. There are two analogies to the EventBus that 
+  may aid in understanding. The first is messaging systems like JMS where one 
+  process publishes messages on a topic name to other processes. For example, 
+  a stock quote server may publish $300 on a topic named &quot;GOOG&quot;. Client 
+  applications may subscribe to the &quot;GOOG&quot; topic and update their ticker 
+  when they recieve messages for &quot;GOOG&quot;. The JMS system decouples the 
+  clients from the server. The server does not need to keep track of how many 
+  clients are active, where they are located, if the clients are still up and 
+  running, if they are interested in &quot;GOOG&quot;, etc. The JMS system takes 
+  care of the details. Similarly, the clients don't have to know whether the server 
+  is still up and running, where it located, etc. All you need are publish() and 
+  subscribe().</p>
+<p> Another analogy is a computer motherboard system bus. Different components 
+  plug into the bus and receive and send messages to other componets on the bus. 
+  You don't need to hook your CPU directly into each component in your computer, 
+  nor does your video card hook up directly to your monitor. This layer of decoupling 
+  makes things a lot easier on device manufacturers, chip designers, computer 
+  manufacturers and computer owners. </p>
+<p>The EventBus similarly solves many problems in Swing by introducing this decoupling 
+  layer. </p>
+<h2> Advantages </h2>
+<ul>
+  <li>Using the EventService avoids code bloat for handling events. There is no 
+    need for: 
+    <ul>
+      <li>XXXEventListener interfaces 
+      <li>addXXXListener methods 
+      <li>removeXXXListener methods 
+      <li>addXXXListener methods 
+      <li>fireEventListener methods, which tend to be very buggy (they don't handle 
+        exceptions well, don't fire in expected order EventListenerList) 
+      <li>(if desired) XXXEvent class are not necessary, but can be used for type 
+        safety. 
+    </ul>
+  <li> The Event Bus promotes loose coupling of components. Components can communicate 
+    with each other without having to find each other and add and remove listeners 
+    from each other at appropriate times. 
+    <ul>
+      <li> Poor listener management is the primary cause of client &quot;loitering 
+        objects&quot; a.k.a. &quot;memory leaks.&quot; When listeners are not 
+        removed, the objects they refer to stay in memory, perhaps forever. 
+      <li>Listener management in very dynamic GUIs, such as those that use docking 
+        frameworks, is very difficult and sometimes nearly impossible
+      <li>Loose coupling promotes unit testing. When components are not tied to 
+        each other they are easier to test independently.
+      <li>Loose couple promotes parallel development. Developers can describe 
+        the contracts between components through the EventServiceEvents. One can 
+        imagine building higher layers of abstraction - such as binding and validation 
+        through Event Bus events.
+    </ul>
+	</ul>
+    <h2>Features</h2>
+	
+<ul>
+  <li>Event Service implementations are <strong>threadsafe</strong> - multiple 
+    threads can be publishing and subscribing at the same time.
+  <li>Event Services can be used in a <strong>typesafe</strong> manner by publishing 
+    typed {@link EventServiceEvent}s and having listeners subscribe to EventServiceEvents 
+    by class. It can also be used in a type unsafe manner by publishing Objects 
+    on topic names (Strings) and having listeners subscribe to those names. 
+  <li>Multiple named EventService can be used simulanteously to properly route 
+    event traffic.
+  <li>Using the SwingEventService ensures Swing events are <strong>safely published 
+    on the Swing EDT</strong>, either directly, or when necessary, through a SwingUtilities.invokeLater() 
+    call. 
+  <li>Event Services allows <strong>vetos</strong> event publication in a manner 
+    more safe than the JavaBeans VetoableEventListener. In JavaBeans, VetoableChangeSupport.fireVetoChange() 
+    &quot;if anyone vetos the change, then a new event [is fired] reverting everyone 
+    to the old value.&quot; The EventService tests all VetoableListeners <strong>first</strong>, 
+    and does not publish the event if any vetoable listener vetos it. This avoids 
+    having to write &quot;undo&quot; code or transactional code needed in JavaBean' 
+    vetoable properties. 
+  <li>Event Services allows ultimate easy listener management by supporting <strong>WeakReferences</strong>. 
+    All EventService subscribe methods have a subscribeWeakly siblng. The subscribeWeakly 
+    methods create a WeakReference of the subscriber and subscribe the weak reference. 
+    The subscriber can then get garbage collection normally, even if subscribed. 
+    Thus subscribers can subscribe weakly and not have to worry about unsubscribing, 
+    thus avoiding memory leaks. Using the non-weak methods, the subscribers must 
+    be unsubscribed, otherwise memory leaks may occur. 
+  <li>Swing Container EventService support allows Swing components to limit event 
+    publication to a component and its children. Children can automatically subscribe 
+    to the Container EventService of their nearest parent through the {@link ContainerEventServiceRegistrar}, 
+    even if they don't yet have a parent (or if they move). A parent can define 
+    itself the as a {@link ContainerEventServiceSupplier}, if none are defined 
+    one is created on the RootPaneContainer automagically. 
+</ul>
+The Event Service is a centralized processor of application events local to the 
+process (client). It does not provide any processing of events outside of the 
+process, in other words it doesn't talk to the server and the server cannot talk 
+to it directly. However, the EventService is very useful as a mediator between 
+server communication and the client code that needs it. Each call from the server 
+can be published on an EventService. Any client-side component (Swing or non-Swing) 
+can then subscribe to the client-side event and receive the updates. This structure 
+allows throttling, coalescing many events into one, and for Swing apps, automatically 
+making your Swing app thread-safe.<br>
+</ul>
+</li> </ul> 
+<h2>Usage</h2>
+<p>An example of topic publishing is shown above, below is an example of topic 
+  publication. One nice usage of EventBus events is closing an application. Typically 
+  there is at least two places where an application is closed - the File-&gt;Exit 
+  menu and the dialog's &quot;X&quot; button. You can directly hook up the action 
+  menu to the dialog by passing a reference to the dialog to the menu item and 
+  having the menu item call a method on the dialog. This is less than ideal OO 
+  design, but is what Swing developers are often stuck with. A main application 
+  controller can be hooked up to each as well, still, as you'll see, using the 
+  Event Bus promotes true component development.</p>
+<pre>public class MyDialog {
+
+
+	public void shutdown() {
+   }</pre>
+<pre>}</pre>
+<pre></pre>
+todo!!! 
+</body>
+</html>
