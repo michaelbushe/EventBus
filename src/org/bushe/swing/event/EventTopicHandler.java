@@ -28,7 +28,7 @@ public interface EventTopicHandler {
     * The EventService calls this method on each publication on a subscribed topic name.
     * <p>Prequisite: EventTopicHandler has subscribed for a topic name with the EventService.</p>
     * @param topic the name of the topic published on
-    * @param evt a data object associated with the event publication, anything you want
+    * @param data a data object associated with the event publication, anything you want
     */
-   public void handleEvent(String topic, Object evt);
+   public void handleEvent(String topic, Object data);
 }

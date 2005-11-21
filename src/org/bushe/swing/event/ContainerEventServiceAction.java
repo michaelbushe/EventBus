@@ -49,15 +49,22 @@ public class ContainerEventServiceAction extends EventServiceAction {
    protected EventService getEventService(ActionEvent evt) {
       Component comp = null;
       try {
-         comp = (Component) evt.getSource();
+         if (evt.getSource() instanceof Component) {
+            comp = (Component) evt.getSource();
+         }
          if (comp == null) {
-            throw new RuntimeException("ActionEvent source was null, could not find event bus, must override getContainerEventService in action with id:" + getName());
+            if (getThrowsExceptionOnNullEventService()) {
+               throw new RuntimeException("ActionEvent source was null, could not find event bus, must override getContainerEventService in action with id:" + getName());
+            }
          } else {
             return ContainerEventServiceFinder.getEventService(comp);
          }
       } catch (ClassCastException ex) {
-         throw new RuntimeException("ActionEvent source was not a component (" + comp.getClass() + "), must override getContainerEventService in action with id:" + getName(), ex);
+         if (getThrowsExceptionOnNullEventService()) {
+            throw new RuntimeException("ActionEvent source was not a component (" + (comp == null?"null":comp.getClass()+"") + "), must override getContainerEventService in action with id:" + getName(), ex);
+         }
       }
+      return null;
    }
 }
 

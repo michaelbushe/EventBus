@@ -36,8 +36,9 @@ import javax.swing.ImageIcon;
  * @author Michael Bushe michael@bushe.com
  */
 public abstract class EventServiceAction extends AbstractAction {
+   public static final String EVENT_SERVICE_TOPIC_NAME = "event-service-topic";
+
    private boolean throwsExceptionOnNullEventService = true;
-   private static final String EVENT_SERVICE_TOPIC_NAME = "event-service-topic";
 
    public EventServiceAction() {
    }
@@ -102,7 +103,13 @@ public abstract class EventServiceAction extends AbstractAction {
    }
 
    /**
-    * The topic name is the action's id, unless the action's getValue("event-service-topic") is non-null, in which case
+    * The topic name is the first non-null value out of:
+    * <ol>
+    * <li>the action's getValue("event-service-topic")  {@link EVENT_SERVICE_TOPIC_NAME}
+    * <li>the action's getValue("ID") (for compatibility with the SAM ActionManager's ID)
+    * <li>the action's {@link Action.ACTION_COMMAND_KEY}
+    * <li>the action event's {@link Action.ACTION_COMMAND_KEY}
+    * <li>the aciton's {@link Action.NAME}
     * the value is used (if the value is not a String, the value's toString() is used). This can be configured via XML
     * by like so: <code> <name-value-pair name="event-service-topic" value="com.wellmanage.trading.nts.client.fx.MyTopicName"/>
     * </code>
@@ -114,11 +121,26 @@ public abstract class EventServiceAction extends AbstractAction {
     * @return the topic name to publish on, getId() by default
     */
    protected String getTopicName(ActionEvent evt) {
-      String xmlValue = getValue(EVENT_SERVICE_TOPIC_NAME) + "";
-      if (xmlValue != null) {
-         return xmlValue;
+      Object topicName = getValue(EVENT_SERVICE_TOPIC_NAME);
+      if (topicName != null) {
+         return topicName+"";
       } else {
-         return (String) getName();
+         topicName = getValue("ID");
+         if (topicName != null) {
+            return topicName+"";
+         } else {
+            topicName = getValue(Action.ACTION_COMMAND_KEY);
+            if (topicName != null) {
+               return topicName+"";
+            } else {
+               topicName = evt.getActionCommand();
+               if (topicName != null) {
+                  return topicName+"";
+               } else {
+                  return (String) getName();
+               }
+            }
+         }
       }
    }
 
@@ -141,5 +163,14 @@ public abstract class EventServiceAction extends AbstractAction {
     */
    public boolean getThrowsExceptionOnNullEventService() {
       return throwsExceptionOnNullEventService;
+   }
+
+   /**
+    * By default, exceptions are throw if getSwingEventService(0 returns null.
+    *
+    * @param throwsExceptionOnNullEventService true to suppress the exception when there is no event service
+    */
+   public void setThrowsExceptionOnNullEventService(boolean throwsExceptionOnNullEventService) {
+      this.throwsExceptionOnNullEventService = throwsExceptionOnNullEventService;
    }
 }

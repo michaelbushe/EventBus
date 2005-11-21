@@ -78,6 +78,7 @@ BE Swing Event Bus Build
          </classpath>
          <jvmarg value="-Demma.coverage.out.file=${coverage}/coverage.emma" />
          <jvmarg value="-Demma.coverage.out.merge=true"/>
+         <jvmarg value="-Djava.util.logging.config.file=${test}/testlogging.properties" />
          <formatter type="xml" />
          <batchtest fork="yes" todir="${junitXml}">
             <fileset dir="${testClasses}">
@@ -103,8 +104,10 @@ BE Swing Event Bus Build
     <target name="instrumentEmma" depends="compileTest" description="Instrument classes with EMMA" >
         <emma>
            <instr instrpath="${classes}" destdir="${coverageClasses}"
-            metadatafile="${coverage}/metadata.emma"
-            merge="true"/>
+               metadatafile="${coverage}/metadata.emma"
+               merge="true">
+              <filter includes="org.bushe.swing.event.*" />              
+           </instr>
         </emma>
     </target>
 

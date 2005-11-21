@@ -223,4 +223,9 @@ public interface EventService {
     * @see #subscribeVetoListenerWeakly(Class, VetoEventListener)
     */
    public boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener);
+
+   /**
+    * Clears all current subscribers and veto subscribers
+    */
+   public void clearAllSubscribers();
 }

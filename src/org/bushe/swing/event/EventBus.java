@@ -48,6 +48,9 @@ public class EventBus {
     * @see {@link EventService#publish(EventServiceEvent)}
     */
    public static void publish(EventServiceEvent evt) {
+      if (evt == null) {
+         throw new IllegalArgumentException("Can't publish null.");
+      }
       globalEventService.publish(evt);
    }
 
@@ -55,6 +58,9 @@ public class EventBus {
     * @see {@link EventService#publish(String, Object)}
     */
    public static void publish(String topic, Object o) {
+      if (topic == null) {
+         throw new IllegalArgumentException("Can't publish to null topic.");
+      }
       globalEventService.publish(topic, o);
    }
 
@@ -139,7 +145,7 @@ public class EventBus {
     * @see {@link EventService#subscribeVetoListenerWeakly(String, VetoEventListener)}
     */
    public static boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListener(topic, vetoListener);
+      return globalEventService.subscribeVetoListenerWeakly(topic, vetoListener);
    }
 
 }

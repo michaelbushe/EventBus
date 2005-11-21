@@ -51,6 +51,7 @@ public class SwingEventService extends ThreadSafeEventService {
          super.publish(event, topic, evtObj, handlerMap, vetoableListenerMap, callingStack);
       } else {
          //Make call to this method - stick on the EDT if not on the EDT
+         //Check the params first so that this thread can get the exception thrown
          SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                if (LOG.isLoggable(Level.FINE)) {

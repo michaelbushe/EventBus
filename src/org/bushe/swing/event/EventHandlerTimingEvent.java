@@ -110,7 +110,7 @@ public class EventHandlerTimingEvent extends AbstractEventServiceEvent {
     * @return true if a veto listener took too long, false if an EventHandler took took long
     */
    public boolean isVetoExceeded() {
-      return vetoEventListener == null;
+      return vetoEventListener != null;
    }
 
    /**

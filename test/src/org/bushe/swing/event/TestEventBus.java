@@ -18,24 +18,22 @@ package org.bushe.swing.event;
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
-public class TestDefaultEventService extends TestCase {
+public class TestEventBus extends TestCase {
 
-   private ThreadSafeEventService eventService = null;
    private EventHandler eventHandler = null;
    private EventTopicHandler eventTopicHandler;
    private EventHandlerTimingEvent timing;
    private EBTestCounter testCounter = new EBTestCounter();
 
-   public TestDefaultEventService(String name) {
+   public TestEventBus(String name) {
       super(name);
    }
 
    protected void setUp() throws Exception {
-      eventService = new ThreadSafeEventService(null, true);
+      EventBus.getGlobalEventService().clearAllSubscribers();
    }
 
    protected void tearDown() throws Exception {
-      eventService = null;
    }
 
    private EventServiceEvent createEvent() {
@@ -84,47 +82,56 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = eventService.subscribe(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
       assertTrue("testSubscribe(new handler)", actualReturn);
 
-      actualReturn = eventService.subscribe(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
       assertFalse("testSubscribe(duplicate handler)", actualReturn);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
       try {
-         actualReturn = eventService.subscribe((Class) null, getEventHandler());
+         actualReturn = EventBus.subscribe((Class) null, getEventHandler());
          fail("subscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
-         actualReturn = eventService.subscribe(getEventClass(), null);
+         actualReturn = EventBus.subscribe(getEventClass(), null);
          fail("subscribe(x, null) should have thrown exception");
       } catch (Exception e) {
       }
 
    }
 
+   private void waitForEDT() {
+      try {
+         Thread.sleep(500);
+      } catch (Throwable e){
+      }
+   }
+
    public void testSubscribeWeakly() {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = eventService.subscribeWeakly(getEventClass(), handler);
+      actualReturn = EventBus.subscribeWeakly(getEventClass(), handler);
       assertTrue("testSubscribeWeakly(new handler)", actualReturn);
 
-      actualReturn = eventService.subscribeWeakly(getEventClass(), handler);
+      actualReturn = EventBus.subscribeWeakly(getEventClass(), handler);
       assertFalse("testSubscribe(duplicate handler)", actualReturn);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
@@ -133,20 +140,21 @@ public class TestDefaultEventService extends TestCase {
       System.gc();
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
       try {
-         actualReturn = eventService.subscribeWeakly((Class) null, getEventHandler());
+         actualReturn = EventBus.subscribeWeakly((Class) null, getEventHandler());
          fail("subscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
-         actualReturn = eventService.subscribeWeakly(getEventClass(), null);
+         actualReturn = EventBus.subscribeWeakly(getEventClass(), null);
          fail("subscribe(x, null) should have thrown exception");
       } catch (Exception e) {
       }
@@ -202,20 +210,22 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = eventService.subscribe(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
 
       VetoEventListener vetoListener = new VetoEventListenerForTest();
-      actualReturn = eventService.subscribeVetoListener(getEventClass(), vetoListener);
+      actualReturn = EventBus.subscribeVetoListener(getEventClass(), vetoListener);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.handleExceptionCount);
-      eventService.unsubscribeVetoListener(getEventClass(), vetoListener);
-      eventService.publish(createEvent());
+      EventBus.unsubscribeVetoListener(getEventClass(), vetoListener);
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -227,20 +237,22 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = eventService.subscribe(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
 
       VetoEventListener vetoListener = new VetoEventListenerForTest(true);
-      actualReturn = eventService.subscribeVetoListener(getEventClass(), vetoListener);
+      actualReturn = EventBus.subscribeVetoListener(getEventClass(), vetoListener);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.handleExceptionCount);
-      eventService.unsubscribeVetoListener(getEventClass(), vetoListener);
-      eventService.publish(createEvent());
+      EventBus.unsubscribeVetoListener(getEventClass(), vetoListener);
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 2, testCounter.eventsHandledCount);
@@ -252,24 +264,26 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventTopicHandler handler = createEventTopicHandler(false);
 
-      actualReturn = eventService.subscribe("FooTopic", handler);
+      actualReturn = EventBus.subscribe("FooTopic", handler);
 
       VetoEventListener vetoListener = new VetoEventListener() {
          public boolean shouldVeto(EventServiceEvent evt) {
             return true;
          }
       };
-      actualReturn = eventService.subscribeVetoListener("FooTopic", vetoListener);
+      actualReturn = EventBus.subscribeVetoListener("FooTopic", vetoListener);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.handleExceptionCount);
-      eventService.unsubscribeVetoListener("FooTopic", vetoListener);
-      eventService.publish("FooTopic", createEvent());
+      EventBus.unsubscribeVetoListener("FooTopic", vetoListener);
+      EventBus.publish("FooTopic", createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -281,18 +295,19 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = eventService.subscribe(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
 
       VetoEventListener vetoListener = new VetoEventListener() {
          public boolean shouldVeto(EventServiceEvent evt) {
             return true;
          }
       };
-      actualReturn = eventService.subscribeVetoListenerWeakly(getEventClass(), vetoListener);
+      actualReturn = EventBus.subscribeVetoListenerWeakly(getEventClass(), vetoListener);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
@@ -303,7 +318,8 @@ public class TestDefaultEventService extends TestCase {
          Thread.sleep(1000);
       } catch (InterruptedException e) {
       }
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -314,26 +330,27 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
       EventTopicHandler handler = createEventTopicHandler(false);
 
-      actualReturn = eventService.subscribe("FooTopic", handler);
+      actualReturn = EventBus.subscribe("FooTopic", handler);
 
       VetoEventListener vetoListener = new VetoEventListener() {
          public boolean shouldVeto(EventServiceEvent evt) {
             return true;
          }
       };
-      actualReturn = eventService.subscribeVetoListenerWeakly("FooTopic", vetoListener);
+      actualReturn = EventBus.subscribeVetoListenerWeakly("FooTopic", vetoListener);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.handleExceptionCount);
       vetoListener = null;
       System.gc();
-      eventService.publish("FooTopic", createEvent());
-
+      EventBus.publish("FooTopic", createEvent());
+      waitForEDT();
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.handleExceptionCount);
@@ -341,36 +358,38 @@ public class TestDefaultEventService extends TestCase {
 
 
    public void testUnsubscribe() {
-      eventService.subscribe(getEventClass(), getEventHandler(false));
+      EventBus.subscribe(getEventClass(), getEventHandler(false));
 
       boolean actualReturn;
 
       try {
-         actualReturn = eventService.unsubscribe((Class) null, getEventHandler());
+         actualReturn = EventBus.unsubscribe((Class) null, getEventHandler());
          fail("unsubscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
-         actualReturn = eventService.unsubscribe(getEventClass(), null);
+         actualReturn = EventBus.unsubscribe(getEventClass(), null);
          fail("unsubscribe(x, null) should have thrown exception");
       } catch (Exception e) {
       }
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
-      actualReturn = eventService.unsubscribe(getEventClass(), getEventHandler());
+      actualReturn = EventBus.unsubscribe(getEventClass(), getEventHandler());
       assertTrue("return value", actualReturn);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
@@ -379,36 +398,38 @@ public class TestDefaultEventService extends TestCase {
 
    public void testUnsubscribeTopic() {
       EventTopicHandler eventTopicHandler = createEventTopicHandler(false);
-      eventService.subscribe("FooTopic", eventTopicHandler);
+      EventBus.subscribe("FooTopic", eventTopicHandler);
 
       boolean actualReturn;
 
       try {
-         actualReturn = eventService.unsubscribe(null, eventTopicHandler);
+         actualReturn = EventBus.unsubscribe(null, eventTopicHandler);
          fail("unsubscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
-         actualReturn = eventService.unsubscribe("FooTopic", null);
+         actualReturn = EventBus.unsubscribe("FooTopic", null);
          fail("unsubscribe(x, null) should have thrown exception");
       } catch (Exception e) {
       }
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish("FooTopic", "Foo");
+      EventBus.publish("FooTopic", "Foo");
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
-      actualReturn = eventService.unsubscribe("FooTopic", eventTopicHandler);
+      actualReturn = EventBus.unsubscribe("FooTopic", eventTopicHandler);
       assertTrue("return value", actualReturn);
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish("FooTopic", "Foo");
+      EventBus.publish("FooTopic", "Foo");
+      waitForEDT();
 
       //The test passes if 1 handlers completed and 0 handlers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
@@ -421,33 +442,38 @@ public class TestDefaultEventService extends TestCase {
     */
    public void testPublish() {
       try {
-         eventService.publish(null);
+         EventBus.publish(null);
+         waitForEDT();
          fail("publish(null) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
-         eventService.publish((String) null, createEvent());
+         EventBus.publish((String) null, createEvent());
+         waitForEDT();
          fail("publish(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
       assertEquals("testPublish(completed)", 0, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
-      eventService.publish("Foo", "Bar");
+      EventBus.publish("Foo", "Bar");
+      waitForEDT();
       assertEquals("testPublish(completed)", 0, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
 
-      eventService.subscribe(getEventClass(), createEventHandler(true));
-      eventService.subscribe(getEventClass(), createEventHandler(false));
-      eventService.subscribe(getEventClass(), createEventHandler(true));
-      eventService.subscribe(getEventClass(), createEventHandler(false));
+      EventBus.subscribe(getEventClass(), createEventHandler(true));
+      EventBus.subscribe(getEventClass(), createEventHandler(false));
+      EventBus.subscribe(getEventClass(), createEventHandler(true));
+      EventBus.subscribe(getEventClass(), createEventHandler(false));
 
       testCounter.eventsHandledCount = 0;
       testCounter.handleExceptionCount = 0;
-      eventService.publish(createEvent());
+      EventBus.publish(createEvent());
+      waitForEDT();
 
       //The test passes if 2 handlers completed and 2 handlers threw exception.
       assertEquals("testPublish(completed)", 4, testCounter.eventsHandledCount);
@@ -459,6 +485,7 @@ public class TestDefaultEventService extends TestCase {
       ObjectEvent evt = new ObjectEvent("Foo", "Bar");
       assertEquals(evt.getEventObject(), "Bar");
       EventBus.publish(evt);
+      waitForEDT();
       //Since we are using hte event bus from a non-awt thread, stay alive for a sec
       //to give time for the EDT to start and post the message
       try {
@@ -469,48 +496,4 @@ public class TestDefaultEventService extends TestCase {
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
    }
 
-   public void testTimeHandling() {
-      eventService.subscribe(getEventClass(), createEventHandler(new Long(200L)));
-      final Boolean[] wasCalled = new Boolean[1];
-      eventService.subscribe(EventHandlerTimingEvent.class, new EventHandler() {
-         public void handleEvent(EventServiceEvent evt) {
-            wasCalled[0] = Boolean.TRUE;
-         }
-      });
-      eventService.publish(createEvent());
-      assertTrue(wasCalled[0] == null);
-      eventService = new ThreadSafeEventService(new Long(100), true);
-      eventService.subscribe(getEventClass(), createEventHandler(new Long(200L)));
-      final Boolean[] wasCalled2 = new Boolean[1];
-      eventService.subscribe(EventHandlerTimingEvent.class, new EventHandler() {
-         public void handleEvent(EventServiceEvent evt) {
-            wasCalled2[0] = Boolean.TRUE;
-            timing = (EventHandlerTimingEvent) evt;
-         }
-      });
-      eventService.publish(createEvent());
-      assertTrue(wasCalled2[0] == Boolean.TRUE);
-      assertNotNull(timing.getSource());
-      assertNotNull(timing.getEnd());
-      assertNotNull(timing.getEvent());
-      assertNotNull(timing.getHandler());
-      assertNotNull(timing.getStart());
-      assertNotNull(timing.getTimeLimitMilliseconds());
-      assertFalse(timing.isEventHandlingExceeded());
-      assertFalse(timing.isVetoExceeded());
-      assertNull(timing.getVetoEventListener());
-   }
-
-   public void testEventLocator() {
-      EventService es = EventServiceLocator.getSwingEventService();
-      assertTrue(es instanceof SwingEventService);
-      es = new ThreadSafeEventService(null, false);
-      EventServiceLocator.setEventService("foo", es);
-      EventService es2 = EventServiceLocator.getEventService("foo");
-      assertTrue(es2 == es);
-      EventServiceLocator.setEventService("foo", null);
-      es2 = EventServiceLocator.getEventService("foo");
-      assertNull(es2);
-      assertEquals(EventServiceLocator.getSwingEventService(), EventBus.getGlobalEventService());
-   }
 }

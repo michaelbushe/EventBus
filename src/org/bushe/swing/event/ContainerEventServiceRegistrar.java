@@ -17,6 +17,8 @@ package org.bushe.swing.event;
 
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.awt.event.HierarchyListener;
+import java.awt.event.HierarchyEvent;
 import javax.swing.JComponent;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
@@ -117,6 +119,11 @@ public class ContainerEventServiceRegistrar {
          throw new NullPointerException("JComponent is null");
       }
       updateContainerEventService();
+      jComp.addHierarchyListener(new HierarchyListener() {
+         public void hierarchyChanged(HierarchyEvent e) {
+            updateContainerEventService();
+         }
+      });
       jComp.addContainerListener(new ContainerListener() {
          public void componentAdded(ContainerEvent e) {
             updateContainerEventService();

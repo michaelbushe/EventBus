@@ -113,6 +113,9 @@ public class ThreadSafeEventService implements EventService {
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Subscribing weakly by class, class:" + cl + ", handler:" + eh);
       }
+      if (eh == null) {
+         throw new IllegalArgumentException("Handler cannot be null.");
+      }
       return subscribe(cl, handlersByEventClass, new WeakReference(eh));
    }
 
@@ -120,6 +123,9 @@ public class ThreadSafeEventService implements EventService {
    public boolean subscribeWeakly(String name, EventTopicHandler eh) {
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Subscribing weakly by topic name, name:" + name + ", handler:" + eh);
+      }
+      if (eh == null) {
+         throw new IllegalArgumentException("Handler cannot be null.");
       }
       return subscribe(name, handlersByTopic, new WeakReference(eh));
    }
@@ -154,6 +160,28 @@ public class ThreadSafeEventService implements EventService {
             }
             handlers = new HashSet();
             handlerMap.put(o, handlers);
+         } else {
+            //Two weak references to the same object don't compare equal, also need to make sure a weak ref and a hard
+            //ref aren't both subscribed
+            Object compareEH = eh;
+            if (eh instanceof WeakReference) {
+               compareEH = ((WeakReference)eh).get();
+               if (compareEH == null) {
+                  return false;//already garbage collected?  Weird.
+               }
+            }
+            for (Iterator iterator = handlers.iterator(); iterator.hasNext();) {
+               Object existingHandler = iterator.next();
+               if (existingHandler instanceof WeakReference) {
+                  existingHandler = ((WeakReference)existingHandler).get();
+                  if (existingHandler == null) {
+                     iterator.remove();//was garbage collected
+                  }
+               }
+               if (compareEH.equals(existingHandler)) {
+                  return false;
+               }
+            }
          }
          return handlers.add(eh);
       }
@@ -171,12 +199,28 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#subscribeVetoListenerWeakly(Class, VetoEventListener) */
    public boolean subscribeVetoListenerWeakly(Class eventClass, VetoEventListener vetoListener) {
+      if (vetoListener == null) {
+         throw new IllegalArgumentException("VetoListener cannot be null.");
+      }
       return subscribeVetoListener(eventClass, vetoListenersByClass, new WeakReference(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListenerWeakly(String, VetoEventListener) */
    public boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener) {
+      if (vetoListener == null) {
+         throw new IllegalArgumentException("VetoListener cannot be null.");
+      }
       return subscribeVetoListener(topic, vetoListenersByTopic, new WeakReference(vetoListener));
+   }
+
+   /** @see org.bushe.swing.event.EventService#clearAllSubscribers()  */
+   public void clearAllSubscribers() {
+      synchronized(listenerLock) {
+         this.handlersByEventClass.clear();
+         this.handlersByTopic.clear();
+         this.vetoListenersByClass.clear();
+         this.vetoListenersByTopic.clear();
+      }
    }
 
    /**
@@ -523,9 +567,5 @@ public class ThreadSafeEventService implements EventService {
       SwingException clientEx = new SwingException(contextMsg, e, callingStack);
       String msg = "Exception thrown by;" + sourceString;
       LOG.log(Level.WARNING, msg, clientEx);
-      Component comp = null;
-      if (event != null && event.getSource() instanceof Component) {
-         comp = (Component) event.getSource();
-      }
    }
 }
