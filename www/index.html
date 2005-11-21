@@ -223,28 +223,13 @@ title="Note: link may open in new window" class="helplink">Get help?</a></div>
  
 <div class="strut">&nbsp;</div>
 </td>
-<td>
- 
-<div id="bodycol">
- 
- 
- 
-
-        
-                 
-          
-  
-
- 
- 
-
-
-
-
-<div id="projecthome" class="app"> 
-          <h1>EventBus</h1>
+    <td> <div id="bodycol"> 
+        <div id="projecthome" class="app"> 
+          <h1>Event Bus</h1>
           <p> The Event Bus is a Swing-oriented single-process publish/subscribe 
-            event routing library. 
+            event routing library. The EventBus is fully-functional, with very 
+            good API documentation and test coverage (80+%). It has been deployed 
+            in production. 
           <p>The Event Bus is easy to use and yet very powerful. It requires no 
             setup and the API is small and clear. The EventBus solves many problems, 
             particularly with Swing applications.
@@ -252,97 +237,95 @@ title="Note: link may open in new window" class="helplink">Get help?</a></div>
             Event Bus hopes to make Swing applications more componentized, modular 
             and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
             Info Bus from JDK 1.1 days</a>, but it is much simpler and smaller. 
-            The idea is similar to a computer-system bus - components plug into 
+            The idea is similar to a computer system bus - components plug into 
             it and listen for information passed on it. This is different from 
             the Swing listener paradigm where listeners attach to and listen on 
             specific components. The Event Bus is related to messaging systems 
-            like JMS where by processes publish messages on a topic and other 
-            systems can listen on the topic. The JMS implementation takes care 
-            of efficiently routing the messages. The major advantage to JMS and 
-            the EventBus is that it introduces a decoupling layer. Components 
-            only have to know about the bus, not each subscriber and publisher 
-            that they may be interested in.
+            like JMS whereby processes publish messages on a topic and other systems 
+            can listen on the topic. The JMS implementation takes care of efficiently 
+            routing the messages. The major advantage to JMS and the EventBus 
+            is that it introduces a decoupling layer. Components only have to 
+            know about the bus, not each subscriber and publisher that they may 
+            be interested in.
           <p>Components can subscribe to events passed on the Event Bus by Event 
             Class or by a topic name (String). Subscriptions can be done weakly, 
             avoiding memory leaks. 
-          <p>The EventBus is fully-functional from the get go, with very good 
-            API documentation and fiar test coverage. It has been used in production 
-            projects. The goals after the initial release are: - Create tutorials 
-            for simple usage, Swing component usages such as a progress bar, and 
-            solving other Swing problems such as moving information from non-Swing 
-            threads to Swing components via events, model and validation solutions 
-            through events, and integrating services-oriented Swing with events. 
-            - Get eyes on it and feedback - Finalize the API (it should be pretty 
-            close)
-<p>&nbsp;
-  <table border="0" cellpadding="0" cellspacing="0">
-    <tr> 
-      <td width="16"><img src="buttonbar_left.gif" alt="" width="16" height="26" /></td>
-      <td background="buttonbar_bg.gif"> 
-        <table border="0" cellpadding="0" cellspacing="0"  style="margin-top: 6px">
-          <tr> 
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="http://www.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">java.net</a></td>
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="http://java-net.dev.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">project 
-              home</a></td>
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="https://java-net.dev.java.net/servlets/ProjectForumView;jsessionid=8C48D5421D8F0AA721533B152039C509" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">forum</a></td>
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="http://weblogs.java.net/" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">blog</a></td>
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="http://wiki.java.net/bin/view/Main/WebHome" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">wiki</a></td>
-            <!-- link -->
-            <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-            <td><a href="#faq" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">faq</a></td>
-          </tr>
-        </table>
-      </td>
-      <td width="22"><img src="buttonbar_right.gif" alt="" width="22" height="26" /></td>
-    </tr>
-    <tr> 
-      <td valign="top"><img src="buttonsh_left.gif" alt="" width="16" height="8" /></td>
-      <td background="buttonsh_bg.gif"><img src="buttonsh_bg.gif" alt="" width="16" height="8" /></td>
-      <td valign="top"><img src="buttonsh_right.gif" alt="" width="22" height="8" /></td>
-    </tr>
-  </table>
-  <p>&nbsp;
-  <h3>Project highlights</h3>
-
-  <b>Milestone or objective 1</b> 
-  <p> 
-<p>description</p>
-  <b>Milestone or objective 2</b> 
-  <p> 
-<p>description</p>
-  <b>Milestone or objective 3</b> 
-  <p>
-
+          <p>Though code complete, this project is new, so the project website 
+            is not yet complete.
+          <h2>Download Release Snapshot</h2>
+          <p>The current release is 0.8.1. 
+          <p><a href="EventBus.jar">EventBus.jar</a>
+          <p><a href="EventBus-src.jar">EventBus-src.jar</a>
+          <p><a href="EventBus-doc.jar">EventBus-doc.jar</a>
+          <p><a href="EventBus-all.jar">EventBus-all.jar</a>
+          <h2>Future</h2>
+          <p>The goals after the initial release are: </div>
+      </div>
+      <ul>
+        <li> 
+          <div> 
+            <div class="app"> Create tutorials </div>
+            <ul>
+              <li>Simple usage Swing component usages for such components as a 
+                progress bar.
+              <li>moving information from non-Swing threads to Swing components 
+                via events.
+              <li>mvc models through events.
+              <li>form validation solutions through events.
+              <li>integrating services-oriented Swing with events.
+            </ul>
+          </div>
+        </li>
+        <li>Get eyes on it and feedback</li>
+        <li>Finalize the API (it should be pretty close)</li>
+      </ul>
+      <div>
+        <div class="app">
+          <p>&nbsp; 
+          <table border="0" cellpadding="0" cellspacing="0">
+            <tr> 
+              <td width="16"><img src="buttonbar_left.gif" alt="" width="16" height="26" /></td>
+              <td background="buttonbar_bg.gif"> <table border="0" cellpadding="0" cellspacing="0"  style="margin-top: 6px">
+                  <tr> 
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="http://www.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">java.net</a></td>
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="http://java-net.dev.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">project 
+                      home</a></td>
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="https://java-net.dev.java.net/servlets/ProjectForumView;jsessionid=8C48D5421D8F0AA721533B152039C509" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">forum</a></td>
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="http://weblogs.java.net/" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">blog</a></td>
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="http://wiki.java.net/bin/view/Main/WebHome" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">wiki</a></td>
+                    <!-- link -->
+                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
+                    <td><a href="#faq" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">faq</a></td>
+                  </tr>
+                </table></td>
+              <td width="22"><img src="buttonbar_right.gif" alt="" width="22" height="26" /></td>
+            </tr>
+            <tr> 
+              <td valign="top"><img src="buttonsh_left.gif" alt="" width="16" height="8" /></td>
+              <td background="buttonsh_bg.gif"><img src="buttonsh_bg.gif" alt="" width="16" height="8" /></td>
+              <td valign="top"><img src="buttonsh_right.gif" alt="" width="22" height="8" /></td>
+            </tr>
+          </table>
+          <p>&nbsp; 
+          <h3>&nbsp; </h3>
+          <h3>Examples</h3>
+          <p> todo
 <p> 
-<p>description</p>
-
-<h3>Releases</h3>
-
-<p>links to code
-<p>
-
-<h3>Examples</h3>
-<p> links to examples
-<p>
-
-<h3>Feedback</h3>
-  <p> list of feedback and participation options including mailing lists, project 
-    owners/contacts, discussion forum, wikis etc 
-</div>
-
-
-</div>
-</td>
+          <h3>Feedback</h3>
+          <p> While the mailing lists are being set up, you can email me at michael 
+            at bushedotcom
+        </div>
+      </div></td>
 
 </tr>
 </table>
