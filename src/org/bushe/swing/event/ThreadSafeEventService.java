@@ -418,7 +418,7 @@ public class ThreadSafeEventService implements EventService {
       }
       for (int i = copyOfHandlers.size() - 1; i >= 0; i--) {
          Object eh = copyOfHandlers.get(i);
-         if (eh instanceof EventHandler) {
+         if (event != null) {
             EventHandler eventHandler = (EventHandler) eh;
             long start = System.currentTimeMillis();
             try {

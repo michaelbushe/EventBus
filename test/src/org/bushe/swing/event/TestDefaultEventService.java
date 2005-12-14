@@ -513,4 +513,47 @@ public class TestDefaultEventService extends TestCase {
       assertNull(es2);
       assertEquals(EventServiceLocator.getSwingEventService(), EventBus.getGlobalEventService());
    }
+
+   /**
+    * Test for ISSUE #1:
+    * If a class implements both handler interfaces I've seen a topci 'event' be
+    * published from a publish methog with the correct (topic) signature, yet be
+    * handled at the wrong handler method (the one with the signature for real event
+    * classes, not topics
+    */
+   public void testSimultaneousTopicAndClass() {
+      DoubleHandler doubleHandler = new DoubleHandler();
+      eventService.subscribe(org.bushe.swing.event.ObjectEvent.class, doubleHandler);
+      eventService.subscribe("org.bushe.swing.event.ObjectEvent.class", doubleHandler);
+      ObjectEvent evt = new ObjectEvent("Foo", "Bar");
+      assertEquals(evt.getEventObject(), "Bar");
+      eventService.publish(evt);
+      assertEquals(1, doubleHandler.timesEventCalled);
+      assertEquals(0, doubleHandler.timesTopicCalled);
+      assertEquals(evt, doubleHandler.lastEvent);
+      assertEquals(null, doubleHandler.lastEventString);
+      eventService.publish("org.bushe.swing.event.ObjectEvent.class", "Bar");
+      assertEquals(1, doubleHandler.timesEventCalled);
+      assertEquals(1, doubleHandler.timesTopicCalled);
+      assertEquals(evt, doubleHandler.lastEvent);
+      assertEquals("org.bushe.swing.event.ObjectEvent.class", doubleHandler.lastEventString);
+   }
+
+   class DoubleHandler implements EventTopicHandler, EventHandler {
+      public int timesTopicCalled = 0;
+      public int timesEventCalled = 0;
+      public String lastEventString;
+      public EventServiceEvent lastEvent;
+
+      public void handleEvent(String topic, Object data) {
+         timesTopicCalled++;
+         lastEventString = topic;
+      }
+
+      public void handleEvent(EventServiceEvent evt) {
+         timesEventCalled++;
+         lastEvent = evt;
+      }
+   }
+
 }

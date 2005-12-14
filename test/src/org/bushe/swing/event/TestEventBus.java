@@ -22,7 +22,6 @@ public class TestEventBus extends TestCase {
 
    private EventHandler eventHandler = null;
    private EventTopicHandler eventTopicHandler;
-   private EventHandlerTimingEvent timing;
    private EBTestCounter testCounter = new EBTestCounter();
 
    public TestEventBus(String name) {
@@ -56,10 +55,6 @@ public class TestEventBus extends TestCase {
       return new TopicHandlerForTest(testCounter, throwException);
    }
 
-   private EventHandler createEventHandler(Long waitTime) {
-      return new HandlerForTest(testCounter, waitTime);
-   }
-
    private EventHandler getEventHandler() {
       return getEventHandler(true);
    }
@@ -69,13 +64,6 @@ public class TestEventBus extends TestCase {
          eventHandler = createEventHandler(throwException);
       }
       return eventHandler;
-   }
-
-   private EventTopicHandler getEventTopicHandler() {
-      if (eventTopicHandler == null) {
-         eventTopicHandler = createEventTopicHandler(false);
-      }
-      return eventTopicHandler;
    }
 
    public void testSubscribe() {
@@ -111,9 +99,13 @@ public class TestEventBus extends TestCase {
 
    }
 
+   /**
+    * Since we are using the event bus from a non-awt thread, stay alive for a sec
+    * to give time for the EDT to start and post the message
+    */
    private void waitForEDT() {
       try {
-         Thread.sleep(500);
+         Thread.sleep(1000);
       } catch (Throwable e){
       }
    }
@@ -486,14 +478,9 @@ public class TestEventBus extends TestCase {
       assertEquals(evt.getEventObject(), "Bar");
       EventBus.publish(evt);
       waitForEDT();
-      //Since we are using hte event bus from a non-awt thread, stay alive for a sec
-      //to give time for the EDT to start and post the message
-      try {
-         Thread.sleep(500);
-      } catch (InterruptedException e) {
-      }
       assertEquals("testPublish(completed)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.handleExceptionCount);
    }
+
 
 }

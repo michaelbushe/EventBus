@@ -47,13 +47,18 @@ BE Swing Event Bus Build
 
     <target name="compileSource" depends="-init" description="Compiles the source.">
        <echo message="classes = ${classes}"/>
-       <javac srcdir="${src}" destdir="${classes}" debug="true">
+       <javac srcdir="${src}" destdir="${classes}" debug="true" source="1.4">
          <classpath path="./lib/jdic.jar"/>
        </javac>
     </target>
 
     <target name="compileTest" depends="compileSource" description="Compiles the test source.">
-      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" classpath="${classes}"/>
+      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" source="1.4">
+         <classpath>
+            <pathelement path="${classes}"/>
+            <fileset dir="${testLib}" includes="*.jar"/>
+         </classpath>
+      </javac>
     </target>
 
     <target name="test" description="Runs all tests." depends="compileTest">
@@ -74,7 +79,7 @@ BE Swing Event Bus Build
            <pathelement path="${testClasses}"/>
            <pathelement path="."/>
            <pathelement path="${emma}/emma.jar" />
-           <fileset dir="test/lib" includes="*.jar"/>
+           <fileset dir="${testLib}" includes="*.jar"/>
          </classpath>
          <jvmarg value="-Demma.coverage.out.file=${coverage}/coverage.emma" />
          <jvmarg value="-Demma.coverage.out.merge=true"/>
