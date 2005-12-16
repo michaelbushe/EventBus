@@ -25,7 +25,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.awt.Component;
 
 import org.bushe.swing.exception.SwingException;
 
@@ -52,7 +51,7 @@ import org.bushe.swing.exception.SwingException;
  * lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting in an
  * unsubscribed object receiving notifiction of the event.
  * <p>
- * Exceptions are logged by default, override {@link #handleException(String, EventServiceEvent, String, Object, Exception, StackTraceElement[], String)}
+ * Exceptions are logged by default, override {@link #handleException(String, EventServiceEvent, String, Object, Throwable, StackTraceElement[], String)}
  * to handle exceptions in another way.  Each call to a subscriber is wrapped in a try block to ensure one listener
  * does not interfere with another.
  * @author Michael Bushe michael@bushe.com
@@ -67,26 +66,41 @@ public class ThreadSafeEventService implements EventService {
    private Map vetoListenersByClass = new HashMap();
    private Map vetoListenersByTopic = new HashMap();
    private Object listenerLock = new Object();
-   private Long timeLimitMilliseconds;
+   private Long timeThresholdForEventTimingEventPublication;
 
    /**
     * Creates a ThreadSafeEventService while providing time monitoring options.
     *
-    * @param timeLimitMilliseconds the longest time a handler should spend handling an event, The service will pulish
-    * an EventHandlerTimingEvent after listener processing if the time was exceeded.  If null, no
-    * EventHandlerTimingEvent will be issued.
-    * @param handleTimingEvents listen for the EventHandlerTimingEvent and call the protected handleTiming when they
-    * occur.  This logs a warning to a java.util.logging logger by default.
+    * @param timeThresholdForEventTimingEventPublication the longest time a handler should spend handling an event,
+    * The service will pulish an EventHandlerTimingEvent after listener processing if the time was exceeded.  If null,
+    * no EventHandlerTimingEvent will be issued.
+    */
+   public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication) {
+      this(timeThresholdForEventTimingEventPublication, false);
+   }
+
+   /**
+    * Creates a ThreadSafeEventService while providing time monitoring options.
     *
+    * @param timeThresholdForEventTimingEventPublication the longest time a handler should spend handling an event.
+    * The service will pulish an EventHandlerTimingEvent after listener processing if the time was exceeded.  If null,
+    * no EventHandlerTimingEvent will be issued.
+    * @param handleTimingEventsInternally add a subscriber to the EventHandlerTimingEvent internally and call the
+    * protected handleTiming() method when they occur.  This logs a warning to a java.util.logging logger by default.
+    * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and handleTimingEventsInternally
+    * is true.
     * @todo (non Swing-only?) start a timer call and when it calls back, report the time if exceeded.
     */
-   public ThreadSafeEventService(Long timeLimitMilliseconds, boolean handleTimingEvents) {
-      this.timeLimitMilliseconds = timeLimitMilliseconds;
-      if (handleTimingEvents) {
+   public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication, boolean handleTimingEventsInternally) {
+      if (timeThresholdForEventTimingEventPublication == null && handleTimingEventsInternally) {
+         throw new IllegalArgumentException("null, true in constructor is not valid.  If you want to send timing messages for all events and handle them internally, pass 0, true");
+      }
+      this.timeThresholdForEventTimingEventPublication = timeThresholdForEventTimingEventPublication;
+      if (handleTimingEventsInternally) {
          //Listen to timing events and log them
-         subscribe(EventHandlerTimingEvent.class, new EventHandler() {
+         subscribeWeakly(EventHandlerTimingEvent.class, new EventHandler() {
             public void handleEvent(EventServiceEvent evt) {
-               handleTiming(evt);
+               handleTiming((EventHandlerTimingEvent) evt);
             }
          });
       }
@@ -440,16 +454,16 @@ public class ThreadSafeEventService implements EventService {
    }
 
    private void checkTimeLimit(long start, EventServiceEvent event, EventHandler handler, VetoEventListener l) {
-      if (timeLimitMilliseconds == null) {
+      if (timeThresholdForEventTimingEventPublication == null) {
          return;
       }
       long end = System.currentTimeMillis();
-      if (end - start > timeLimitMilliseconds.longValue()) {
-         publish(new EventHandlerTimingEvent(this, new Long(start), new Long(end), timeLimitMilliseconds, event, handler, l));
+      if (end - start > timeThresholdForEventTimingEventPublication.longValue()) {
+         publish(new EventHandlerTimingEvent(this, new Long(start), new Long(end), timeThresholdForEventTimingEventPublication, event, handler, l));
       }
    }
 
-   protected void handleTiming(EventServiceEvent evt) {
+   protected void handleTiming(EventHandlerTimingEvent evt) {
       LOG.log(Level.WARNING, evt + "");
    }
 

@@ -31,7 +31,7 @@ public class TestDefaultEventService extends TestCase {
    }
 
    protected void setUp() throws Exception {
-      eventService = new ThreadSafeEventService(null, true);
+      eventService = new ThreadSafeEventService(null, false);
    }
 
    protected void tearDown() throws Exception {

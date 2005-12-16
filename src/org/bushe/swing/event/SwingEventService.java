@@ -32,10 +32,40 @@ import javax.swing.SwingUtilities;
  */
 public class SwingEventService extends ThreadSafeEventService {
 
+   /**
+    * By default, the SwingEventService is contructed such that any listener that
+    * takes over 200 ms causes an EventHandlerTimingEvent to be published.  You will
+    * need to add a subscriber to this event.  Note that if you use event to launch
+    * a modal dialog, the timings will be as long as the dialog is up - this is the way
+    * Swing works.
+    */
    public SwingEventService() {
-      super(new Long(200), true);
+      super(new Long(200), false);
    }
 
+   public SwingEventService(Long timeThresholdForEventTimingEventPublication) {
+      super(timeThresholdForEventTimingEventPublication, false);
+   }
+
+   /**
+    * Create a SwingEventService is such that any listener that takes over timeThresholdForEventTimingEventPublication
+    * milliseconds causes an EventHandlerTimingEvent to be published.  You can add a subscriber to this event or set
+    * handleTimingEventsInternally to true to cause the default logging to occur through the protected
+    * {@link #handleTiming(EventHandlerTimingEvent)} call.
+    * <p>
+    * Note that if you use event to launch a modal dialog, the timings will be as long as the dialog is up - this is the way
+    * Swing works.
+    * @param timeThresholdForEventTimingEventPublication the longest time a handler should spend handling an event,
+    * The service will pulish an EventHandlerTimingEvent after listener processing if the time was exceeded.  If null,
+    * no EventHandlerTimingEvent will be issued.
+    * @param handleTimingEventsInternally add a subscriber to the EventHandlerTimingEvent internally and call the
+    * protected {@link #handleTiming(EventHandlerTimingEvent)} method when they occur.  This logs a warning to a java.util.logging logger by default.
+    * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and handleTimingEventsInternally
+    * is true.
+    */
+   public SwingEventService(Long timeThresholdForEventTimingEventPublication, boolean handleTimingEventsInternally) {
+      super(timeThresholdForEventTimingEventPublication, handleTimingEventsInternally);
+   }
 
    /**
     * Same as ThreadSafeEventService.publish(), except if the call is coming from a thread that is not the

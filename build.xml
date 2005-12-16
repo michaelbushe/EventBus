@@ -156,6 +156,13 @@ BE Swing Event Bus Build
         </jar>
     </target>
 
-    <target name="dist" depends="clean, testWithEmma, testReport, doc, alljars"
+   <target name="copyToWeb">
+      <copy file="${dist}/EventBus.jar" todir="./www" overwrite="yes"/>
+      <copy file="${dist}/EventBus-src.jar" todir="./www" overwrite="yes"/>
+      <copy file="${dist}/EventBus-doc.jar" todir="./www" overwrite="yes"/>
+      <copy file="${dist}/EventBus-all.jar" todir="./www" overwrite="yes"/>
+   </target>
+
+    <target name="dist" depends="clean, testWithEmma, testReport, doc, alljars, copyToWeb"
             description="Creates the binary, source, doc and all-in-one jar distibutions."/>
 </project>
