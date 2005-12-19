@@ -79,10 +79,10 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#subscribeWeakly(Class, EventHandler)}
+    * @see {@link EventService#subscribeStrongly(Class, EventHandler)}
     */
    public static boolean subscribeWeakly(Class eventClass, EventHandler handler) {
-      return globalEventService.subscribeWeakly(eventClass, handler);
+      return globalEventService.subscribeStrongly(eventClass, handler);
    }
 
    /**
@@ -100,10 +100,10 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#subscribeWeakly(String, EventTopicHandler)}
+    * @see {@link EventService#subscribeStrongly(String, EventTopicHandler)}
     */
    public static boolean subscribeWeakly(String topic, EventTopicHandler handler) {
-      return globalEventService.subscribeWeakly(topic, handler);
+      return globalEventService.subscribeStrongly(topic, handler);
    }
 
    /**
@@ -121,10 +121,10 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#subscribeVetoListenerWeakly(Class, VetoEventListener)}
+    * @see {@link EventService#subscribeVetoListenerStrongly(Class, VetoEventListener)}
     */
    public static boolean subscribeVetoListenerWeakly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerWeakly(eventClass, vetoListener);
+      return globalEventService.subscribeVetoListenerStrongly(eventClass, vetoListener);
    }
 
    /**
@@ -142,10 +142,10 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#subscribeVetoListenerWeakly(String, VetoEventListener)}
+    * @see {@link EventService#subscribeVetoListenerStrongly(String, VetoEventListener)}
     */
    public static boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerWeakly(topic, vetoListener);
+      return globalEventService.subscribeVetoListenerStrongly(topic, vetoListener);
    }
 
 }

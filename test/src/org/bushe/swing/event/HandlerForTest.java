@@ -1,5 +1,7 @@
 package org.bushe.swing.event;
 
+import java.util.Date;
+
 /**
  * @author Michael Bushe
  * @since Nov 19, 2005 11:01:06 PM
@@ -8,6 +10,7 @@ class HandlerForTest implements EventHandler {
    private boolean throwException;
    private Long waitTime;
    private EBTestCounter testDefaultEventService;
+   Date callTime = null;
 
    public HandlerForTest(EBTestCounter testDefaultEventService, Long waitTime) {
       this.testDefaultEventService = testDefaultEventService;
@@ -20,6 +23,7 @@ class HandlerForTest implements EventHandler {
    }
 
    public void handleEvent(EventServiceEvent evt) {
+      callTime = new Date();
       if (waitTime != null) {
          try {
             Thread.sleep(waitTime.longValue());
@@ -31,5 +35,9 @@ class HandlerForTest implements EventHandler {
          testDefaultEventService.handleExceptionCount++;
          throw new IllegalArgumentException();
       }
+   }
+
+   public boolean equals(Object obj) {
+      return (this == obj);
    }
 }

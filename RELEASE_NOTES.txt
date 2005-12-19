@@ -1,0 +1,11 @@
+Release Notes for the Event Bus
+0.8.3
+ISSUE 3: Guarenteed Ordering, and exposure of handlers
+ISSUE 4: Weak by default
+
+0.8.2
+ISSUE 1: Problem with one object implementing both handler interfaces
+ISSUE 8: SwingEventService logs on dialogs
+
+0.8.1
+Initial release

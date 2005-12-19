@@ -17,12 +17,11 @@ package org.bushe.swing.event;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,6 +34,9 @@ import org.bushe.swing.exception.SwingException;
  * one could imagine a multi-thread safe TableModel that ensured TableChangeEvents are on the EDT. Swing components
  * should use the SwingEventService instead, which is the default implementation returned from the EventBus.
  * <p/>
+ * On event publication, handlers are called in the order in which they subscribed by default.  To force the
+ * order of publication for a handler, you can subscribe with a weighting Number.
+ * <p>
  * To debug problems with your usage of the event service you may find it helpful to turn on fine logging for the logger
  * named "org.bushe.swing.event.ThreadSafeEventService" (java.util.logging).
  * <p/>
@@ -98,7 +100,7 @@ public class ThreadSafeEventService implements EventService {
       this.timeThresholdForEventTimingEventPublication = timeThresholdForEventTimingEventPublication;
       if (handleTimingEventsInternally) {
          //Listen to timing events and log them
-         subscribeWeakly(EventHandlerTimingEvent.class, new EventHandler() {
+         subscribeStrongly(EventHandlerTimingEvent.class, new EventHandler() {
             public void handleEvent(EventServiceEvent evt) {
                handleTiming((EventHandlerTimingEvent) evt);
             }
@@ -108,40 +110,52 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#subscribe(Class, EventHandler) */
    public boolean subscribe(Class cl, EventHandler eh) {
+      if (cl == null) {
+         throw new IllegalArgumentException("Event class must not be null");
+      }
+      if (eh == null) {
+         throw new IllegalArgumentException("Event handler must not be null");
+      }
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Subscribing by class, class:" + cl + ", handler:" + eh);
       }
-      return subscribe(cl, handlersByEventClass, eh);
+      return subscribe(cl, handlersByEventClass, new WeakReference(eh));
    }
 
    /** @see EventService#subscribe(String, EventTopicHandler) */
-   public boolean subscribe(String name, EventTopicHandler eh) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by topic name, name:" + name + ", handler:" + eh);
+   public boolean subscribe(String topic, EventTopicHandler eh) {
+      if (topic == null) {
+         throw new IllegalArgumentException("Topic must not be null");
       }
-      return subscribe(name, handlersByTopic, eh);
+      if (eh == null) {
+         throw new IllegalArgumentException("Event topic handler must not be null");
+      }
+      if (LOG.isLoggable(Level.FINE)) {
+         LOG.fine("Subscribing by topic name, name:" + topic + ", handler:" + eh);
+      }
+      return subscribe(topic, handlersByTopic, new WeakReference(eh));
    }
 
-   /** @see EventService#subscribeWeakly(Class, EventHandler) */
-   public boolean subscribeWeakly(Class cl, EventHandler eh) {
+   /** @see EventService#subscribeStrongly(Class, EventHandler) */
+   public boolean subscribeStrongly(Class cl, EventHandler eh) {
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Subscribing weakly by class, class:" + cl + ", handler:" + eh);
       }
       if (eh == null) {
          throw new IllegalArgumentException("Handler cannot be null.");
       }
-      return subscribe(cl, handlersByEventClass, new WeakReference(eh));
+      return subscribe(cl, handlersByEventClass, eh);
    }
 
-   /** @see EventService#subscribe(String, EventTopicHandler) */
-   public boolean subscribeWeakly(String name, EventTopicHandler eh) {
+   /** @see EventService#subscribeStrongly(String, EventTopicHandler) */
+   public boolean subscribeStrongly(String name, EventTopicHandler eh) {
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Subscribing weakly by topic name, name:" + name + ", handler:" + eh);
       }
       if (eh == null) {
          throw new IllegalArgumentException("Handler cannot be null.");
       }
-      return subscribe(name, handlersByTopic, new WeakReference(eh));
+      return subscribe(name, handlersByTopic, eh);
    }
 
    /**
@@ -166,13 +180,14 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Can't subscribe null handler to " + o);
       }
+      boolean alreadyExists = false;
       synchronized (listenerLock) {
-         Set handlers = (Set) handlerMap.get(o);
+         List handlers = (List) handlerMap.get(o);
          if (handlers == null) {
             if (LOG.isLoggable(Level.FINE)) {
                LOG.fine("Creating new handler map for :" + o);
             }
-            handlers = new HashSet();
+            handlers = new ArrayList();
             handlerMap.put(o, handlers);
          } else {
             //Two weak references to the same object don't compare equal, also need to make sure a weak ref and a hard
@@ -193,11 +208,13 @@ public class ThreadSafeEventService implements EventService {
                   }
                }
                if (compareEH.equals(existingHandler)) {
-                  return false;
+                  iterator.remove();//will add to the end of the calling list
+                  alreadyExists = true;
                }
             }
          }
-         return handlers.add(eh);
+         handlers.add(eh);
+         return !alreadyExists;
       }
    }
 
@@ -211,16 +228,16 @@ public class ThreadSafeEventService implements EventService {
       return subscribeVetoListener(topic, vetoListenersByTopic, vetoListener);
    }
 
-   /** @see EventService#subscribeVetoListenerWeakly(Class, VetoEventListener) */
-   public boolean subscribeVetoListenerWeakly(Class eventClass, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListenerStrongly(Class, VetoEventListener) */
+   public boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
       return subscribeVetoListener(eventClass, vetoListenersByClass, new WeakReference(vetoListener));
    }
 
-   /** @see EventService#subscribeVetoListenerWeakly(String, VetoEventListener) */
-   public boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListenerStrongly(String, VetoEventListener) */
+   public boolean subscribeVetoListenerStrongly(String topic, VetoEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
@@ -260,9 +277,9 @@ public class ThreadSafeEventService implements EventService {
          throw new IllegalArgumentException("Can't subscribe veto listener to null.");
       }
       synchronized (listenerLock) {
-         Set vetoListeners = (Set) vetoListenerMap.get(o);
+         List vetoListeners = (List) vetoListenerMap.get(o);
          if (vetoListeners == null) {
-            vetoListeners = new HashSet();
+            vetoListeners = new ArrayList();
             vetoListenerMap.put(o, vetoListeners);
          }
          return vetoListeners.add(vl);
@@ -343,12 +360,15 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#publish(EventServiceEvent) */
    public void publish(EventServiceEvent evt) {
-      publish(evt, null, null, handlersByEventClass, vetoListenersByClass, null);
+      if (evt == null) {
+         throw new IllegalArgumentException("Cannot publish null event.");
+      }
+      publish(evt, null, null, getSubscribers(evt.getClass()), getVetoSubscribers(evt.getClass()), null);
    }
 
    /** @see EventService#publish(String, Object) */
    public void publish(String topicName, Object evtObj) {
-      publish(null, topicName, evtObj, handlersByTopic, vetoListenersByTopic, null);
+      publish(null, topicName, evtObj, getSubscribers(topicName), getVetoSubscribers(topicName), null);
    }
 
    /**
@@ -358,66 +378,46 @@ public class ThreadSafeEventService implements EventService {
     * @param event the event to publish, null if publishing on a topic
     * @param topic if publishing on a topic, the topic to publish on, else null
     * @param evtObj if publishing on a topic, the evtObj to publish, else null
-    * @param handlerMap the internal map of handlers to use, keyed either by topic or by event class, values are the
-    * EventHandler to call.
-    * @param vetoableListenerMap the internal map of vetoableListenerMap to use, keyed either by topic or by event
-    * class, values are VetoEventListener's that may veto the publication of the event.
+    * @param subscribers the subscribers to publish to - must be a snapshot copy
+    * @param vetoSubscribers the veto subscribers to publish to - must be a snapshot copy.
     *
     * @throws IllegalArgumentException if eh or o is null
     */
    protected void publish(final EventServiceEvent event, final String topic, final Object evtObj,
-           final Map handlerMap, final Map vetoableListenerMap, StackTraceElement[] callingStack) {
-      List copyOfHandlers = null;
-      List copyOfVetoListeners = null;
+           final List subscribers, final List vetoSubscribers, StackTraceElement[] callingStack) {
 
       if (event == null && topic == null) {
-         throw new IllegalArgumentException("Can't publish to null topic or event.");
+         throw new IllegalArgumentException("Can't publish to null topic/event.");
       }
 
-      synchronized (listenerLock) {
-         Set handlers = null;
-         Set vetoableListeners = null;
-         //topic or event
+      //topic or event
+      if (LOG.isLoggable(Level.FINE)) {
          if (event != null) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Publishing event: class=" + event.getClass() + ", event=" + event);
-            }
-            handlers = (Set) handlerMap.get(event.getClass());
-            vetoableListeners = (Set) vetoableListenerMap.get(event.getClass());
+            LOG.fine("Publishing event: class=" + event.getClass() + ", event=" + event);
          } else if (topic != null) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Publishing event: topic=" + topic + ", evtObj=" + evtObj);
-            }
-            handlers = (Set) handlerMap.get(topic);
-            vetoableListeners = (Set) vetoableListenerMap.get(topic);
-         }
-
-         if (handlers == null) {
-            return;
-         }
-         //Make a defensive copy of handlers and veto listeners so listeners
-         //can change the listener list while the listeners are being called
-         //Resolve WeakReferences and unsubscribe if necessary.
-         copyOfHandlers = createCopyOfContentsRemoveWeakRefs(handlers);
-
-         //Make a defensive copy of handlers and veto listeners so listeners
-         //can change the listener list while the listeners are being called
-         //Resolve WeakReferences and unsubscribe if necessary.
-         if (vetoableListeners != null) {
-            copyOfVetoListeners = createCopyOfContentsRemoveWeakRefs(vetoableListeners);
+            LOG.fine("Publishing event: topic=" + topic + ", evtObj=" + evtObj);
          }
       }
-      //Lock is released
 
-      //Check all veto listeners, if any veto, then don't publish
-      if (copyOfVetoListeners != null && !copyOfVetoListeners.isEmpty()) {
-         for (Iterator vlIter = copyOfVetoListeners.iterator(); vlIter.hasNext();) {
+      if (subscribers == null || subscribers.isEmpty()) {
+         if (LOG.isLoggable(Level.FINE)) {
+            LOG.fine("No subscribers for event or topic. Event:"+event+ ", Topic:"+topic);
+         }
+         return;
+      }
+
+      //Check all veto subscribers, if any veto, then don't publish
+      if (vetoSubscribers != null && !vetoSubscribers.isEmpty()) {
+         for (Iterator vlIter = vetoSubscribers.iterator(); vlIter.hasNext();) {
             VetoEventListener vl = (VetoEventListener) vlIter.next();
             long start = System.currentTimeMillis();
             try {
                if (vl.shouldVeto(event)) {
                   handleVeto(event, vl, topic, evtObj);
                   checkTimeLimit(start, event, null, vl);
+                  if (LOG.isLoggable(Level.FINE)) {
+                     LOG.fine("Publication vetoed. Event:"+event+ ", Topic:"+topic+", veto subscriber:"+vl);
+                  }
                   return;
                }
             } catch (Throwable ex) {
@@ -428,10 +428,11 @@ public class ThreadSafeEventService implements EventService {
       }
 
       if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Publishing event to handlers.  Event:" + event + ", handlers:" + copyOfHandlers);
+         LOG.fine("Publishing to subscribers :"+subscribers);
       }
-      for (int i = copyOfHandlers.size() - 1; i >= 0; i--) {
-         Object eh = copyOfHandlers.get(i);
+
+      for (int i = 0; i < subscribers.size(); i++) {
+         Object eh = subscribers.get(i);
          if (event != null) {
             EventHandler eventHandler = (EventHandler) eh;
             long start = System.currentTimeMillis();
@@ -450,6 +451,40 @@ public class ThreadSafeEventService implements EventService {
                handleEventHandlingException(topic, evtObj, e, callingStack, eventTopicHandler);
             }
          }
+      }
+   }
+
+   public List getSubscribers(Class eventClass) {
+      synchronized (listenerLock) {
+         return getSubscribers(eventClass, handlersByEventClass);
+      }
+   }
+
+   public List getSubscribers(String topic) {
+      synchronized (listenerLock) {
+         return getSubscribers(topic, handlersByTopic);
+      }
+   }
+
+   public List getVetoSubscribers(Class eventClass) {
+      synchronized (listenerLock) {
+         return getSubscribers(eventClass, vetoListenersByClass);
+      }
+   }
+
+   public List getVetoSubscribers(String topic) {
+      synchronized (listenerLock) {
+         return getSubscribers(topic, vetoListenersByTopic);
+      }
+   }
+
+   private List getSubscribers(Object classOrTopic, Map subscriberMap) {
+      synchronized (listenerLock) {
+         List subscribers = (List) subscriberMap.get(classOrTopic);
+         //Make a defensive copy of handlers and veto listeners so listeners
+         //can change the listener list while the listeners are being called
+         //Resolve WeakReferences and unsubscribe if necessary.
+         return createCopyOfContentsRemoveWeakRefs(subscribers);
       }
    }
 
@@ -490,7 +525,7 @@ public class ThreadSafeEventService implements EventService {
     * @return a copy of the set
     */
    private boolean removeFromSetResolveWeakReferences(Map map, Object key, Object toRemove) {
-      Set handlers = (Set) map.get(key);
+      List handlers = (List) map.get(key);
       if (handlers == null) {
          return false;
       }
@@ -506,7 +541,6 @@ public class ThreadSafeEventService implements EventService {
             if (wr.get() == null) {
                //clean up a garbage collected reference
                iter.remove();
-               continue;
             } else if (wr.get() == toRemove) {
                iter.remove();
                return true;
@@ -524,7 +558,10 @@ public class ThreadSafeEventService implements EventService {
     *
     * @return a copy of the set
     */
-   private List createCopyOfContentsRemoveWeakRefs(Set handlersOrVetoListeners) {
+   private List createCopyOfContentsRemoveWeakRefs(Collection handlersOrVetoListeners) {
+      if (handlersOrVetoListeners == null) {
+         return null;
+      }
       List copyOfHandlersOrVetolisteners = new ArrayList(handlersOrVetoListeners.size());
       for (Iterator iter = handlersOrVetoListeners.iterator(); iter.hasNext();) {
          Object elem = iter.next();

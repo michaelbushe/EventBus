@@ -114,10 +114,10 @@ public class TestEventBus extends TestCase {
       boolean actualReturn;
       EventHandler handler = createEventHandler(false);
 
-      actualReturn = EventBus.subscribeWeakly(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
       assertTrue("testSubscribeWeakly(new handler)", actualReturn);
 
-      actualReturn = EventBus.subscribeWeakly(getEventClass(), handler);
+      actualReturn = EventBus.subscribe(getEventClass(), handler);
       assertFalse("testSubscribe(duplicate handler)", actualReturn);
 
       testCounter.eventsHandledCount = 0;

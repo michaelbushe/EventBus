@@ -15,6 +15,8 @@
  */
 package org.bushe.swing.event;
 
+import java.util.List;
+
 
 /**
  * An EventService provides publish/subscribe event services to a single JVM.
@@ -28,19 +30,26 @@ package org.bushe.swing.event;
  * <p>
  * A single subscriber cannot subscribe more than once to an event or topic name, however implementations
  * should ignore double-subscription requests silently.  A single EventHandler can subscribe to more than one
- * event class, and a single EventTopicHandler can subscribe to more than one topic name.  Subscribers are
- * guaranteed to only be called for the class or topic name they subscribe to.
+ * event class, and a single EventTopicHandler can subscribe to more than one topic name.  A single object cna implement
+ * both interfaces.  Subscribers are guaranteed to only be called for the classes and/or topic names they subscribe to.
  * <p>
- * EventHandlers will remain subscribed until they are passed to {@link #unsubscribe(Class, EventHandler)} with the
- * event class to which there are subscribed, or until they are garbage collected if they are subscribed via
- * {@link #subscribeWeakly(Class, EventHandler)}.  EventTopicHandlers will remain subscribed until they are passed to
- * {@link #unsubscribe(String, EventTopicHandler)} with the topic name to which there are subscribed,
- * or until they are garbage collected if they are subscribed via {@link #subscribeWeakly(String, EventTopicHandler)}.
+ * By default the EventService only holds WeakReferences to handlers.  If a handler has no references to it, then
+ * it can be garbage collected .  This avoids memory leaks in exchange for the risk of accidently adding a listener and
+ * have it disappear unexpectedly.  If a handler is a non-static inner class, then it will stay subscribed at least
+ * until the instance of its parent class is garbage collected since all inner classes maintain an implicit reference
+ * to their parent instance.  If you want to subscribe a handler that will have no other reference to it, then
+ * use one of the subscribeStrongly() methods, which will prevent garbage collection.
  * <p>
- * Publication of an EventServiceEvent or an object on a topic name can be vetoed by a {@link VetoEventListener}.
+ * Unless garbage collected, EventHandlers will remain subscribed until they are passed to one of the
+ * unsubscribe() methods with the event class or topic name to which there are subscribed.
+ * <p>
+ * Publication of an EventServiceEvent or an object on class or topic name can be vetoed by a {@link VetoEventListener}.
  * All VetoEventListeners are checked before any EventHandlers or EventTopicHandlers are called.
- * (This is unlike the JavaBean's VetoPropertyEventListener which can leave side effects of half-propogated events.)
+ * This is unlike the JavaBean's VetoPropertyEventListener which can leave side effects of half-propogated events.
  * VetoEventListeners are subscribed in the same manner as EventHandlers and EventTopicHandlers.
+ * <p>
+ * Handlers are called in the order in which they are subscribed by default (FIFO).  This is also unlike Swing, where
+ * event listeners are called in the reverse order of when they were subscribed (FILO).
  * <p>
  * This simple example prints "Hello World"
  * <pre>
@@ -75,8 +84,21 @@ public interface EventService {
    public void publish(String topic, Object o);
 
    /**
-    * Subscribes a handler to an event class.
-    *
+    * Subscribes a <b>WeakReference</b> to an EventHandler to the publication of events of an event class.
+    * <p>
+    * Note that Java inner classes have an implicit reference to their parent class.  So an inner class
+    * that is subscribed to an EventService will remian subscribed at least until their parent class instance is
+    * garbage collected (or unsubscribe is called).
+    * <p>
+    * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
+    * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
+    * the handler has not been garbage collected, then the handleEvent will be called normally.  If the hard reference
+    * has been garbage collected, the service will unsubscribe it's WeakReference.
+    * <p>
+    * It's allowable to call unsubscribe() with the same EventHandler hard reference to stop a subscription
+    * immediately.
+    * <p>
+    * The service will create the WeakReference
     * @param eventClass the class of EventServiceEvent listened to
     * @param handler The handler that will accept the events when published.
     *
@@ -85,14 +107,48 @@ public interface EventService {
    public boolean subscribe(Class eventClass, EventHandler handler);
 
    /**
-    * Subscribes a handler to a topic name
-    *
+    * Subscribes a <b>WeakReference</b> to an EventHandler to the publication of a topic name.
+    * <p>
+    * Note that Java inner classes have an implicit reference to their parent class.  So an inner class
+    * that is subscribed to an EventService will remian subscribed at least until their parent class instance is
+    * garbage collected (or unsubscribe is called).
+    * <p>
+    * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
+    * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
+    * the handler has not been garbage collected, then the handleEvent will be called normally.  If the hard reference
+    * has been garbage collected, the service will unsubscribe it's WeakReference.
+    * <p>
+    * It's allowable to call unsubscribe() with the same EventHandler hard reference to stop a subscription
+    * immediately.
+    * <p>
     * @param topic the name of the topic listened to
     * @param handler The topic handler that will accept the events when published.
     *
     * @return true if the handler was subscribed sucessfully, false otherwise
     */
    public boolean subscribe(String topic, EventTopicHandler handler);
+
+   /**
+    * Subscribes a handler to an event class.
+    * <p>
+    * The handler will remain subscribed until {@link #unsubscribe(Class, EventHandler)}  is called.
+    * @param eventClass the class of EventServiceEvent listened to
+    * @param handler The handler that will accept the events when published.
+    *
+    * @return true if the handler was subscribed sucessfully, false otherwise
+    */
+   public boolean subscribeStrongly(Class eventClass, EventHandler handler);
+
+   /**
+    * Subscribes a handler to an event topic name.
+    * <p>
+    * The handler will remain subscribed until {@link #unsubscribe(String, EventTopicHandler)}  is called.
+    * @param topic the name of the topic listened to
+    * @param handler The topic handler that will accept the events when published.
+    *
+    * @return true if the handler was subscribed sucessfully, false otherwise
+    */
+   public boolean subscribeStrongly(String topic, EventTopicHandler handler);
 
    /**
     * Stop the subscription for a handler to an event class
@@ -115,43 +171,17 @@ public interface EventService {
    public boolean unsubscribe(String topic, EventTopicHandler handler);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventHandler to a event class.
+    * Subscribes a <b>WeakReference</b> to an VetoListener to a event class.
     * <p/>
     * Use this method to avoid having to call unsubscribe(), though with care since garbage collection semantics is
-    * indeterminate.  The service will respect the WeakReference semantics.  In other words, if the handler has not
-    * been garbage collected, then the handleEvent will be called normally.  If the hard reference has been garbage
+    * indeterminate.  The service will respect the WeakReference semantics.  In other words, if the vetoListener has
+    * not been garbage collected, then the handleEvent will be called normally.  If the hard reference has been garbage
     * collected, the service will unsubscribe it's WeakReference.
     * <p/>
-    * It's allowable to call unsubscribe() with the same EventHandler hard reference to stop a subscription
+    * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
     * immediately.
     * <p/>
     * The service will create the WeakReference
-    *
-    * @param eventClass the class of EventServiceEvent listened to
-    * @param handler The handler that will accept the events when published.
-    *
-    * @return true if the handler was subscribed sucessfully, false otherwise
-    */
-   public boolean subscribeWeakly(Class eventClass, EventHandler handler);
-
-   /**
-    * Subscribes a <b>WeakReference</b> to an EventTopicHandler to a topic name.
-    * <p/>
-    * For WeakReference semantics, see {@link #subscribeWeakly(Class, EventHandler)}
-    * <p/>
-    *
-    * @param topic the name of the topic listened to
-    * @param handler The topic handler that will accept the events when published.
-    *
-    * @return true if the handler was subscribed sucessfully, false otherwise
-    *
-    * @see #subscribeWeakly(Class, EventHandler)
-    */
-   public boolean subscribeWeakly(String topic, EventTopicHandler handler);
-
-   /**
-    * Subscribes a VetoListener for an event class.
-    *
     * @param eventClass the class of EventServiceEvent that can be vetoed
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
@@ -160,7 +190,10 @@ public interface EventService {
    public boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a VetoListener to a topic name.
+    * Subscribes a <b>WeakReference</b> to an EventTopicHandler to a topic name.
+    * <p/>
+    * For WeakReference semantics, see {@link #subscribeVetoListener(Class, VetoEventListener)}
+    * <p/>
     *
     * @param topic the name of the topic listened to
     * @param vetoListener The vetoListener that can determine whether an event is published.
@@ -168,6 +201,33 @@ public interface EventService {
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
     */
    public boolean subscribeVetoListener(String topic, VetoEventListener vetoListener);
+
+
+   /**
+    * Subscribes a VetoListener for an event class.
+    * <p>
+    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Class, VetoEventListener)}
+    * is called.
+    * @param eventClass the class of EventServiceEvent listened to
+    * @param vetoListener The vetoListener that will accept the events when published.
+    *
+    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    */
+   public boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener);
+
+   /**
+    * Subscribes a VetoListener to a topic name.
+    * <p>
+    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(String, VetoEventListener)}
+    * is called.
+    * @param topic the name of the topic listened to
+    * @param vetoListener The topic vetoListener that will accept the events when published.
+    *
+    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    *
+    * @see #subscribeVetoListenerStrongly(Class, VetoEventListener)
+    */
+   public boolean subscribeVetoListenerStrongly(String topic, VetoEventListener vetoListener);
 
    /**
     * Stop the subscription for a vetoListener to an event class.
@@ -189,40 +249,30 @@ public interface EventService {
     */
    public boolean unsubscribeVetoListener(String topic, VetoEventListener vetoListener);
 
-   /**
-    * Subscribes a <b>WeakReference</b> to an VetoListener to a event class.
-    * <p/>
-    * Use this method to avoid having to call unsubscribe(), though with care since garbage collection semantics is
-    * indeterminate.  The service will respect the WeakReference semantics.  In other words, if the vetoListener has
-    * not been garbage collected, then the handleEvent will be called normally.  If the hard reference has been garbage
-    * collected, the service will unsubscribe it's WeakReference.
-    * <p/>
-    * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
-    * immediately.
-    * <p/>
-    * The service will create the WeakReference
-    *
-    * @param eventClass the class of EventServiceEvent listened to
-    * @param vetoListener The vetoListener that will accept the events when published.
-    *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
-    */
-   public boolean subscribeVetoListenerWeakly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventTopicHandler to a topic name.
-    * <p/>
-    * For WeakReference semantics, see {@link #subscribeVetoListenerWeakly(Class, VetoEventListener)}
-    * <p/>
-    *
-    * @param topic the name of the topic listened to
-    * @param vetoListener The topic vetoListener that will accept the events when published.
-    *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
-    *
-    * @see #subscribeVetoListenerWeakly(Class, VetoEventListener)
+    * @param eventClass the eventClass of interest
+    * @return the subscribers that will be called when an event of eventClass is published.
     */
-   public boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener);
+   public List getSubscribers(Class eventClass);
+
+   /**
+    * @param topic the topic of interest
+    * @return the subscribers that will be called when an event is published on the topic.
+    */
+   public List getSubscribers(String topic);
+
+   /**
+    * @param eventClass the eventClass of interest
+    * @return the veto subscribers that will be called when an event of eventClass is published.
+    */
+   public List getVetoSubscribers(Class eventClass);
+
+   /**
+    * @param topic the topic of interest
+    * @return the veto subscribers that will be called when an event is published on the topic.
+    */
+   public List getVetoSubscribers(String topic);
 
    /**
     * Clears all current subscribers and veto subscribers

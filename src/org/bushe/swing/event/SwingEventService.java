@@ -15,7 +15,7 @@
  */
 package org.bushe.swing.event;
 
-import java.util.Map;
+import java.util.List;
 import java.util.logging.Level;
 import javax.swing.SwingUtilities;
 
@@ -73,12 +73,10 @@ public class SwingEventService extends ThreadSafeEventService {
     * Otherwise this DOES NOT post a new event on the EDT.  The subscribers are called on the same EDT event,
     * just like addXXXListeners would be.
     */
-   protected final void publish(final EventServiceEvent event, final String topic,
-           final Object evtObj, final Map handlerMap,
-           final Map vetoableListenerMap,
-           final StackTraceElement[] callingStack) {
+   protected void publish(final EventServiceEvent event, final String topic, final Object evtObj,
+           final List subscribers, final List vetoSubscribers, final StackTraceElement[] callingStack) {
       if (SwingUtilities.isEventDispatchThread()) {
-         super.publish(event, topic, evtObj, handlerMap, vetoableListenerMap, callingStack);
+         super.publish(event, topic, evtObj, subscribers, vetoSubscribers, callingStack);
       } else {
          //Make call to this method - stick on the EDT if not on the EDT
          //Check the params first so that this thread can get the exception thrown
@@ -88,8 +86,7 @@ public class SwingEventService extends ThreadSafeEventService {
                   LOG.fine("publish(" + event + "," + topic + "," + evtObj
                           + "), called from non-EDT Thread:" + callingStack);
                }
-               SwingEventService.super.publish(event, topic, evtObj, handlerMap,
-                       vetoableListenerMap, callingStack);
+               SwingEventService.super.publish(event, topic, evtObj, subscribers, vetoSubscribers, callingStack);
             }
          });
       }
