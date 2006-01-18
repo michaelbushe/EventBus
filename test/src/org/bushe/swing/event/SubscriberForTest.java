@@ -6,23 +6,23 @@ import java.util.Date;
  * @author Michael Bushe
  * @since Nov 19, 2005 11:01:06 PM
  */
-class HandlerForTest implements EventHandler {
+class SubscriberForTest implements EventSubscriber {
    private boolean throwException;
    private Long waitTime;
    private EBTestCounter testDefaultEventService;
    Date callTime = null;
 
-   public HandlerForTest(EBTestCounter testDefaultEventService, Long waitTime) {
+   public SubscriberForTest(EBTestCounter testDefaultEventService, Long waitTime) {
       this.testDefaultEventService = testDefaultEventService;
       this.waitTime = waitTime;
    }
 
-   public HandlerForTest(EBTestCounter testDefaultEventService, boolean throwException) {
+   public SubscriberForTest(EBTestCounter testDefaultEventService, boolean throwException) {
       this.testDefaultEventService = testDefaultEventService;
       this.throwException = throwException;
    }
 
-   public void handleEvent(EventServiceEvent evt) {
+   public void onEvent(EventServiceEvent evt) {
       callTime = new Date();
       if (waitTime != null) {
          try {
@@ -32,7 +32,7 @@ class HandlerForTest implements EventHandler {
       }
       testDefaultEventService.eventsHandledCount++;
       if (throwException) {
-         testDefaultEventService.handleExceptionCount++;
+         testDefaultEventService.subscribeExceptionCount++;
          throw new IllegalArgumentException();
       }
    }

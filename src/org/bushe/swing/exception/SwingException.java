@@ -38,9 +38,9 @@ import java.io.PrintStream;
  * The swing calling stack is different from the cause of the exception since
  * it is gathered before the exception occurs in a different stack from the cause
  * and used after the exception in a new thread occurs.
- * @todo in SwingUtils, make an invokeLater method that saves the calling stack
- * catches all exceptions from a subsequent call to SwingUtilities. invokeLater()
- * and throws a Swing Exception so the calling stack is saves.
+ * @todo in SwingUtils, make an invokeLater() method that saves the calling stack
+ * and catches all exceptions from a subsequent call to SwingUtilities.invokeLater(),
+ * then throws a Swing Exception so the calling stack is saved.
  * @author Michael Bushe michael@bushe.com
  */
 public class SwingException extends Exception {

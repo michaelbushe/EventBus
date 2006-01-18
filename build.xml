@@ -134,7 +134,7 @@ BE Swing Event Bus Build
            <fileset dir="${src}" defaultexcludes="yes">
               <include name="org/**/*.java" />
            </fileset>
-           <docTitle><![CDATA[<h1>{$}</h1>]]></docTitle>
+           <docTitle><![CDATA[<h1>${ant.project.name}</h1>]]></docTitle>
            <tag name="todo" scope="all" description="To do:" />
         </javadoc>
     </target>
@@ -161,6 +161,9 @@ BE Swing Event Bus Build
       <copy file="${dist}/EventBus-src.jar" todir="./www" overwrite="yes"/>
       <copy file="${dist}/EventBus-doc.jar" todir="./www" overwrite="yes"/>
       <copy file="${dist}/EventBus-all.jar" todir="./www" overwrite="yes"/>
+      <copy todir="./www/doc">
+            <fileset dir="${build}/doc"/>
+      </copy>
    </target>
 
     <target name="dist" depends="clean, testWithEmma, testReport, doc, alljars, copyToWeb"

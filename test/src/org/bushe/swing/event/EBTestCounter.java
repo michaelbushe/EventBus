@@ -6,5 +6,5 @@ package org.bushe.swing.event;
  */
 public class EBTestCounter {
    int eventsHandledCount;
-   int handleExceptionCount;
+   int subscribeExceptionCount;
 }

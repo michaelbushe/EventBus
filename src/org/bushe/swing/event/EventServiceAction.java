@@ -21,6 +21,8 @@ import javax.swing.Action;
 import javax.swing.ImageIcon;
 
 /**
+ * Abstract class that translates a Swing ActionEvent to an EventServiceEvent published on an {@link EventService}.
+ * <p>
  * This abstract class ties the Swing Actions with the Event Bus.  When fired, this action publishes an event on an
  * EventService - either the global EventBus or a Container EventService.
  * <p/>
@@ -85,7 +87,7 @@ public abstract class EventServiceAction extends AbstractAction {
       }
    }
 
-   /**@return the name of the action (Action.NAME)
+   /**@return the name of the action (javax.swing.Action#NAME)
     */
    public Object getName() {
       return getValue(Action.NAME);
@@ -105,11 +107,11 @@ public abstract class EventServiceAction extends AbstractAction {
    /**
     * The topic name is the first non-null value out of:
     * <ol>
-    * <li>the action's getValue("event-service-topic")  {@link EVENT_SERVICE_TOPIC_NAME}
+    * <li>the action's getValue("event-service-topic")  {@link #EVENT_SERVICE_TOPIC_NAME}
     * <li>the action's getValue("ID") (for compatibility with the SAM ActionManager's ID)
-    * <li>the action's {@link Action.ACTION_COMMAND_KEY}
-    * <li>the action event's {@link Action.ACTION_COMMAND_KEY}
-    * <li>the aciton's {@link Action.NAME}
+    * <li>the action's {@link javax.swing.Action#ACTION_COMMAND_KEY}
+    * <li>the action event's {@link javax.swing.Action#ACTION_COMMAND_KEY}
+    * <li>the aciton's {@link javax.swing.Action#NAME}
     * the value is used (if the value is not a String, the value's toString() is used). This can be configured via XML
     * by like so: <code> <name-value-pair name="event-service-topic" value="com.wellmanage.trading.nts.client.fx.MyTopicName"/>
     * </code>

@@ -33,7 +33,7 @@
           <p>Though not Swing-specific, the EventBus has Swing support and the 
             Event Bus hopes to make Swing applications more componentized, modular 
             and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
-            Info Bus from JDK 1.1 days</a>, but it is much simpler and smaller. 
+            Info Bus from JDK 1.1 days</a>, but it is much simpler and smaller.
             The idea is similar to a computer system bus - components plug into 
             it and listen for information passed on it. This is different from 
             the Swing listener paradigm where listeners attach to and listen on 
@@ -50,11 +50,13 @@
           <p>Though code complete, this project is new, so the project website 
             is not yet complete. 
           <h2>Download Release Snapshot</h2>
-          <p>The current release is 0.8.3. 
+          <p>The current release is 0.9.1. 
           <p><a href="EventBus.jar">EventBus.jar</a> 
           <p><a href="EventBus-src.jar">EventBus-src.jar</a> 
           <p><a href="EventBus-doc.jar">EventBus-doc.jar</a> 
           <p><a href="EventBus-all.jar">EventBus-all.jar</a> 
+          <h2>JavaDoc</h2>
+          <p>Take a look at the online <a href="docs/api/index.html">JavaDocs</a></p>
           <h2>Future</h2>
           <p>The goals after the initial release are: </div>
       </div>
@@ -98,11 +100,11 @@
    }
 }</pre>
           <p>StatusBar.java
-          <pre>public StatusBar extends JLabel implements EventHandler {
+          <pre>public StatusBar extends JLabel implements EventSubscriber {
    public StatusBar() {
       EventBus.subscribe(StatusEvent.class, this);
    }
-   public void handleEvent(EventServiceEvent evt) {
+   public void onEvent(EventServiceEvent evt) {
       StatusEvent statusEvent = (StatusEvent)evt;
 	  this.setText(statusEvent.getStatusText();
    }

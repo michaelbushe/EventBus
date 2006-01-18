@@ -24,7 +24,7 @@ import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestContainerEventService extends TestCase {
-   private ArrayList handledEvents;
+   private ArrayList subscribedEvents;
    private Object aSource = new Object();
    private JFrame frame;
    private JPanel panel;
@@ -34,7 +34,7 @@ public class TestContainerEventService extends TestCase {
    }
 
    protected void setUp() throws Exception {
-      handledEvents = new ArrayList();
+      subscribedEvents = new ArrayList();
       frame = new JFrame();
       panel = new JPanel();
       frame.setContentPane(panel);
@@ -49,10 +49,10 @@ public class TestContainerEventService extends TestCase {
       assertTrue(EventBus.getGlobalEventService() != es);
       EventService esBar = ContainerEventServiceFinder.getEventService(barButton);
       assertEquals(esBar, es);
-      assertEquals(0, handledEvents.size());
-      es.subscribe("FooTopic", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      assertEquals(0, subscribedEvents.size());
+      es.subscribe("FooTopic", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       esBar.publish("FooTopic", "Foo");
@@ -60,7 +60,7 @@ public class TestContainerEventService extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
    public void testContainerEventServiceSupplier() {
@@ -76,10 +76,10 @@ public class TestContainerEventService extends TestCase {
       assertTrue(EventBus.getGlobalEventService() != es);
       EventService esBar = ContainerEventServiceFinder.getEventService(barButton);
       assertTrue(esBar != es);
-      assertEquals(0, handledEvents.size());
-      es.subscribe("FooTopic", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      assertEquals(0, subscribedEvents.size());
+      es.subscribe("FooTopic", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       esBar.publish("FooTopic", "Foo");
@@ -87,18 +87,18 @@ public class TestContainerEventService extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(0, handledEvents.size());
+      assertEquals(0, subscribedEvents.size());
    }
 
    public void testContainerEventServiceRegistrar() {
       final Object[] lastEventObject = new Object[1];
       JButton button = new JButton("Foo");
-      EventTopicHandler buttonContainerTopicHandler = new EventTopicHandler() {
-         public void handleEvent(String topic, Object data) {
+      EventTopicSubscriber buttonContainerTopicSubscriber = new EventTopicSubscriber() {
+         public void onEvent(String topic, Object data) {
              lastEventObject[0] = data;
          }
       };
-      ContainerEventServiceRegistrar reg = new ContainerEventServiceRegistrar(button, buttonContainerTopicHandler, "RegEvent");
+      ContainerEventServiceRegistrar reg = new ContainerEventServiceRegistrar(button, buttonContainerTopicSubscriber, "RegEvent");
       EventService es = reg.getContainerEventService();
       assertTrue(es != null);
       EventBus.publish("RegEvent", "WrongBus");

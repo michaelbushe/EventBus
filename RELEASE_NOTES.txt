@@ -1,10 +1,14 @@
 Release Notes for the Event Bus
+0.9.1
+ISSUE 4: Made WeakReferences the default.  Changed subscriber to subscribeStrongly and subscribeWeakly to subscribe
+Changed API by renaming all *Handlers to *Subscriber, changed handleEvent to onEvent
+Cleaned Javadoc so that there are practically no errors.
+
 0.8.3
-ISSUE 3: Guarenteed Ordering, and exposure of handlers
-ISSUE 4: Weak by default
+ISSUE 3: Guarenteed Ordering in order of subscribers, and exposure of subscribers
 
 0.8.2
-ISSUE 1: Problem with one object implementing both handler interfaces
+ISSUE 1: Problem with one object implementing both subscriber interfaces
 ISSUE 8: SwingEventService logs on dialogs
 
 0.8.1

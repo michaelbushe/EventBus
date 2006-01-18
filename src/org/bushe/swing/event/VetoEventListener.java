@@ -26,7 +26,7 @@ public interface VetoEventListener {
     * Determine whether an event should be vetoed or published.
     * <p/>
     * The EventService calls this method <b>before</b> publication of EventServiceEvents.  If any of the
-    * VetoEventListeners return true, then none of the handlers for that event are called. <p>Prequisite:
+    * VetoEventListeners return true, then none of the subscribers for that event are called. <p>Prequisite:
     * VetoEventListener has to be subscribed with the EventService for the EventServiceEvent or topic.</p>
     * <p>Guaranteed to be called in the SwingEventThread when using the SwingEventService (EventBus). See {@link
     * EventService}</p>

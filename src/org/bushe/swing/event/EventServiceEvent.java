@@ -16,8 +16,8 @@
 package org.bushe.swing.event;
 
 /**
- * Marker interface for events that get processed by the EventService
- * @see {@link AbstractEventServiceEvent} for a simple base class
+ * Interface for events that get processed by the EventService
+ * @see AbstractEventServiceEvent for a simple base class
  * @author Michael Bushe michael@bushe.com
  */
 public interface EventServiceEvent {

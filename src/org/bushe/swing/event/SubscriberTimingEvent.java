@@ -16,17 +16,17 @@
 package org.bushe.swing.event;
 
 /**
- * This event is used internally to handle timing reports on an EventService, though applications
- * may subscribe to this event to do additional handling.
- * @see {@link ThreadSafeEventService(Long, boolean)}
+ * This event is published internally to report timing for subscribeStrongly on an EventService.  Applications
+ * may subscribeStrongly to this event to do handle subscribers that take too long.
+ * @see ThreadSafeEventService
  * @author Michael Bushe michael@bushe.com
  */
-public class EventHandlerTimingEvent extends AbstractEventServiceEvent {
+public class SubscriberTimingEvent extends AbstractEventServiceEvent {
    private Long start;
    private Long end;
    private Long timeLimitMilliseconds;
    private EventServiceEvent event;
-   private EventHandler handler;
+   private EventSubscriber subscriber;
    private VetoEventListener vetoEventListener;
    private String stringified;
 
@@ -37,20 +37,20 @@ public class EventHandlerTimingEvent extends AbstractEventServiceEvent {
     * @param end system time at end of the notification of listener
     * @param timeLimitMilliseconds expected maximum time
     * @param event the published event
-    * @param handler the event handler that went over the time limit, can be null if vetoEventListener is not null
+    * @param subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not null
     * @param vetoEventListener the vetoEventListener that took too long, can be null if the eventListener is not null
     */
-   public EventHandlerTimingEvent(Object source, Long start, Long end, Long timeLimitMilliseconds,
-           EventServiceEvent event, EventHandler handler, VetoEventListener vetoEventListener) {
+   public SubscriberTimingEvent(Object source, Long start, Long end, Long timeLimitMilliseconds,
+           EventServiceEvent event, EventSubscriber subscriber, VetoEventListener vetoEventListener) {
       super(source);
       this.start = start;
       this.end = end;
       this.timeLimitMilliseconds = timeLimitMilliseconds;
       this.event = event;
-      this.handler = handler;
+      this.subscriber = subscriber;
       this.vetoEventListener = vetoEventListener;
-      String type = "EventServiceHandler";
-      String thing = ", EventServiceHandler" + handler;
+      String type = "EventServiceSubscriber";
+      String thing = ", EventServiceSubscriber" + subscriber;
       if (vetoEventListener != null) {
          type = "VetoEventListener";
          thing = ", VetoEventListener" + vetoEventListener;
@@ -93,10 +93,10 @@ public class EventHandlerTimingEvent extends AbstractEventServiceEvent {
    }
 
    /**
-    * @return handler the event handler that went over the time limit, can be null if vetoEventListener is not null
+    * @return subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not null
     */
-   public EventHandler getHandler() {
-      return handler;
+   public EventSubscriber getSubscriber() {
+      return subscriber;
    }
 
    /**
@@ -107,17 +107,17 @@ public class EventHandlerTimingEvent extends AbstractEventServiceEvent {
    }
 
    /**
-    * @return true if a veto listener took too long, false if an EventHandler took took long
+    * @return true if a veto listener took too long, false if an EventSubscriber took took long
     */
    public boolean isVetoExceeded() {
       return vetoEventListener != null;
    }
 
    /**
-    * @return true if an EventHandler took too long, false if a veto listener took took long
+    * @return true if an EventSubscriber took too long, false if a veto listener took took long
     */
    public boolean isEventHandlingExceeded() {
-      return handler == null;
+      return subscriber == null;
    }
 
    public String toString() {

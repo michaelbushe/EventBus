@@ -20,14 +20,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 /**
- * When fired, this action publishes an EventServiceEvent on a ContainerEventService of the source of the ActionEvent.
+ * When fired, this action translates an ActionEvent to an EvetnServiceEvent published on a ContainerEventService.  
+ * <p/>
+ * The source of the EventServiceEvent is the ActionEvent
  * <p/>
  * By default, the EventService is found by asking the ContainerEventServiceFinder to find the EventService for the
  * source of the fired ActionEvent, which must be a java.awt.Component and contained in a hierarchy (the source must
  * have been added to another Swing container).  If the action was on a button, this means the container hierarchy of
  * the button is walked (up) until a ContainerEventServiceSupplier is found or until the top of the hierarchy is
  * reached, at which a ContainerEventService is created automatically on the fly via the top container's
- * putClientProperty() method using the key {@link ContainerEventServiceFinder.CLIENT_PROPERTY_KEY_TOP_LEVEL_EVENT_SERVICE}.
+ * putClientProperty() method using the key {@link ContainerEventServiceFinder#CLIENT_PROPERTY_KEY_TOP_LEVEL_EVENT_SERVICE}.
  * If the event is on JPopupMenu then the popup menu's invoker's hierarchy is walked.
  * <p/>
  * To exhibit other behavior, override the getSwingEventService() to return another EventService. For example, the creator of

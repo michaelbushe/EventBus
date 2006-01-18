@@ -16,18 +16,20 @@
 package org.bushe.swing.event;
 
 /**
- * The EventBus provides Swing event publication and subscription services.
+ * The EventBus provides Swing event publication and subscription services.  It is a simple static wrapper around
+ * a global instance of an {@link EventService}, specifically a {@link SwingEventService}.
  * <p>
  * For Swing Applications the EventBus is nearly all you need, besides some of your own Event classes (if so desired).
  * <p>
  * The EventBus is really just a convenience class that provides a static wrapper around a global instance of the
- * {@link SwingEventService}.  For details on the API and implementation, see {@link EventService}, SwingEventService,
- * and its parent {@link ThreadSafeEventService}.  Calling EventBus subscribe/publish is equivalent to
+ * {@link SwingEventService}.  For details on the API and implementation, see {@link EventService},
+ * {@link SwingEventService}, and its parent {@link ThreadSafeEventService}.
+ * This class exists solely for simplicity.  Calling <code>EventBus.subscribeXXX/publishXXX</code> is equivalent to
  * <code>EventServiceLocator.getSwingEventService().subscribeXXX/publishXXX</code>, it is just shorter to type.
- * @see <b>package JavaDoc<b> for more information
  * @see EventService
  * @see SwingEventService
  * @see ThreadSafeEventService
+ * See package JavaDoc for more information
  * @author Michael Bushe michael@bushe.com
  */
 public class EventBus {
@@ -45,7 +47,7 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#publish(EventServiceEvent)}
+    * @see EventService#publish(EventServiceEvent)
     */
    public static void publish(EventServiceEvent evt) {
       if (evt == null) {
@@ -55,7 +57,7 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#publish(String, Object)}
+    * @see EventService#publish(String, Object)
     */
    public static void publish(String topic, Object o) {
       if (topic == null) {
@@ -65,87 +67,87 @@ public class EventBus {
    }
 
    /**
-    * @see {@link EventService#subscribe(Class, EventHandler)}
+    * @see EventService#subscribe(Class, EventSubscriber)
     */
-   public static boolean subscribe(Class eventClass, EventHandler handler) {
-      return globalEventService.subscribe(eventClass, handler);
+   public static boolean subscribe(Class eventClass, EventSubscriber subscriber) {
+      return globalEventService.subscribe(eventClass, subscriber);
    }
 
    /**
-    * @see {@link EventService#unsubscribe(Class, EventHandler)}
+    * @see EventService#subscribeStrongly(Class, EventSubscriber)
     */
-   public static boolean unsubscribe(Class eventClass, EventHandler handler) {
-      return globalEventService.unsubscribe(eventClass, handler);
+   public static boolean subscribeStrongly(Class eventClass, EventSubscriber subscriber) {
+      return globalEventService.subscribeStrongly(eventClass, subscriber);
    }
 
    /**
-    * @see {@link EventService#subscribeStrongly(Class, EventHandler)}
+    * @see EventService#unsubscribe(Class, EventSubscriber)
     */
-   public static boolean subscribeWeakly(Class eventClass, EventHandler handler) {
-      return globalEventService.subscribeStrongly(eventClass, handler);
+   public static boolean unsubscribe(Class eventClass, EventSubscriber subscriber) {
+      return globalEventService.unsubscribe(eventClass, subscriber);
    }
 
    /**
-    * @see {@link EventService#subscribe(String, EventTopicHandler)}
-    */
-   public static boolean subscribe(String topic, EventTopicHandler handler) {
-      return globalEventService.subscribe(topic, handler);
-   }
-
-   /**
-    * @see {@link EventService#unsubscribe(String, EventTopicHandler)}
-    */
-   public static boolean unsubscribe(String topic, EventTopicHandler handler) {
-      return globalEventService.unsubscribe(topic, handler);
-   }
-
-   /**
-    * @see {@link EventService#subscribeStrongly(String, EventTopicHandler)}
-    */
-   public static boolean subscribeWeakly(String topic, EventTopicHandler handler) {
-      return globalEventService.subscribeStrongly(topic, handler);
-   }
-
-   /**
-    * @see {@link EventService#subscribeVetoListener(Class, VetoEventListener)}
+    * @see EventService#subscribeVetoListener(Class, VetoEventListener)
     */
    public static boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       return globalEventService.subscribeVetoListener(eventClass, vetoListener);
    }
 
    /**
-    * @see {@link EventService#unsubscribeVetoListener(Class, VetoEventListener)}
+    * @see EventService#subscribeVetoListenerStrongly(Class, VetoEventListener)
+    */
+   public static boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener) {
+      return globalEventService.subscribeVetoListenerStrongly(eventClass, vetoListener);
+   }
+
+   /**
+    * @see EventService#unsubscribeVetoListener(Class, VetoEventListener)
     */
    public static boolean unsubscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       return globalEventService.unsubscribeVetoListener(eventClass, vetoListener);
    }
 
    /**
-    * @see {@link EventService#subscribeVetoListenerStrongly(Class, VetoEventListener)}
+    * @see EventService#subscribe(String, EventTopicSubscriber)
     */
-   public static boolean subscribeVetoListenerWeakly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerStrongly(eventClass, vetoListener);
+   public static boolean subscribe(String topic, EventTopicSubscriber subscriber) {
+      return globalEventService.subscribe(topic, subscriber);
    }
 
    /**
-    * @see {@link EventService#subscribeVetoListener(String, VetoEventListener)}
+    * @see EventService#subscribeStrongly(String, EventTopicSubscriber)
+    */
+   public static boolean subscribeStrongly(String topic, EventTopicSubscriber subscriber) {
+      return globalEventService.subscribeStrongly(topic, subscriber);
+   }
+
+   /**
+    * @see EventService#unsubscribe(String, EventTopicSubscriber)
+    */
+   public static boolean unsubscribe(String topic, EventTopicSubscriber subscriber) {
+      return globalEventService.unsubscribe(topic, subscriber);
+   }
+
+   /**
+    * @see EventService#subscribeVetoListenerStrongly(String, VetoEventListener)
     */
    public static boolean subscribeVetoListener(String topic, VetoEventListener vetoListener) {
       return globalEventService.subscribeVetoListener(topic, vetoListener);
    }
 
    /**
-    * @see {@link EventService#unsubscribeVetoListener(String, VetoEventListener)}
+    * @see EventService#subscribeVetoListener(String, VetoEventListener)
     */
-   public static boolean unsubscribeVetoListener(String topic, VetoEventListener vetoListener) {
-      return globalEventService.unsubscribeVetoListener(topic, vetoListener);
+   public static boolean subscribeVetoListenerStrongly(String topic, VetoEventListener vetoListener) {
+      return globalEventService.subscribeVetoListenerStrongly(topic, vetoListener);
    }
 
    /**
-    * @see {@link EventService#subscribeVetoListenerStrongly(String, VetoEventListener)}
+    * @see EventService#unsubscribeVetoListener(String, VetoEventListener)
     */
-   public static boolean subscribeVetoListenerWeakly(String topic, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerStrongly(topic, vetoListener);
+   public static boolean unsubscribeVetoListener(String topic, VetoEventListener vetoListener) {
+      return globalEventService.unsubscribeVetoListener(topic, vetoListener);
    }
 
 }

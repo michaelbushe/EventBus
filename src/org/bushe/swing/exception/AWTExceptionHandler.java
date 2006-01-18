@@ -21,18 +21,14 @@ import java.awt.Frame;
 import javax.swing.JDialog;
 
 /**
- * Plug this class into the AWT Thread to handle Exceptions.
- * In order to be used call either:
- * <pre>
- * java -Dsun.awt.exception.handler=org.bushe.swing.exception.AWTExceptionHandler
- * </pre>
- * or
+ * Plug this class into the AWT Thread to handle Swing Exceptions.
+ * To plug in the exception handler, add it as a JVM property like so:
  * <pre>
  * java -Dsun.awt.exception.handler=org.bushe.swing.exception.AWTExceptionHandler
  * </pre>
  * <p>
- * When this property is set, this class called by the EDT to handle
- * Exceptions encountered in the AWT Thread
+ * When this property is set, this class is instantiated and called by the EDT to when exceptions
+ * occur in the AWT Thread
  * <p>
  * This class is hopefully customizable enough for most any application.
  * <p>
@@ -44,6 +40,10 @@ public class AWTExceptionHandler {
    private static String emailAddress;
    private static AWTErrorLogger logger;
 
+   /**
+    * An implementation of this interface can be passed to the AWTExcpetionHandler to handle
+    * logging on behalf of the AWTExceptionHandler.
+    */
    public static interface AWTErrorLogger {
       public void log(Throwable t);
    }
@@ -52,7 +52,7 @@ public class AWTExceptionHandler {
    }
 
    /**
-    * This returns null by default and if it returns null, no Email button is shown.
+    * This returns null by default and if it returns null, no Email button is shown in the error dialog.
     * @return the current email address that the Email button on the error dialog will send to.
     */
    public static String getErrorEmailAddress() {
@@ -60,8 +60,8 @@ public class AWTExceptionHandler {
    }
 
    /**
-    * If set to a non-null value, the Email button will be shown and will trigger the user's email
-    * client to send an error email to the error email address.
+    * If set to a non-null value, the Email button will be shown in the error dialog that will
+    * trigger the user's email client to send an error email to the error email address.
     * @param emailAddy current email address that the Email button on the error dialog will send to.
     */
    public static void setErrorEmailAddress(String emailAddy) {
@@ -77,7 +77,7 @@ public class AWTExceptionHandler {
    }
 
    /**
-    * Called by the AWT EventQueue to handle the exception.
+    * Called by the AWT EventQueue to handle the exception
     * @param t the throwable to handle
     */
     public void handle(Throwable t) {
@@ -91,7 +91,7 @@ public class AWTExceptionHandler {
 
    /**
     * This method is called when there is no frame.  Typically you will
-    * log, but just prints to system.out.
+    * log, but just prints to system.err, or the supplied AWTErrorLogger.
     * @param t
     */
    protected void handleThrowableWithoutFrame(Throwable t) {

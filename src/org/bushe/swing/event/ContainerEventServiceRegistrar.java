@@ -24,10 +24,10 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
- * Registers a component with it's Container's EventService.
+ * Registers a component with it's Container's EventService while keeping track of the components container.
  * <p>
  * Registering with a component's ContainerEventService is tricky since components may not be in their hierarchy when
- * they want to register with it, or components may move (though rarely).  This class handles the of registering a
+ * they want to register with it, or components may move (though rarely).  This class subscribes the of registering a
  * component with it's container event service.  It automatically registers when the Container becomes available to a
  * component, and unregisters and re-registers when the component is moved.
  *
@@ -35,9 +35,9 @@ import javax.swing.event.AncestorListener;
  */
 public class ContainerEventServiceRegistrar {
    private JComponent jComp;
-   private EventHandler eventHandler;
+   private EventSubscriber eventSubscriber;
    private Class[] eventClasses;
-   private EventTopicHandler eventTopicHandler;
+   private EventTopicSubscriber eventTopicSubscriber;
    private String[] topics;
    private EventService containerEventService;
 
@@ -52,68 +52,68 @@ public class ContainerEventServiceRegistrar {
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribe the handler
+    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
     * to the eventClass when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
-    * @param eventHandler the handler to register to the Container EventServer
+    * @param eventSubscriber the subscriber to register to the Container EventServer
     * @param eventClass the class of event to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventHandler eventHandler, Class eventClass) {
-      this(jComp, eventHandler, new Class[]{eventClass}, null, null);
+   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class eventClass) {
+      this(jComp, eventSubscriber, new Class[]{eventClass}, null, null);
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribe the handler
+    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
     * to the topic when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
-    * @param eventTopicHandler the topic handler to register to the Container EventServer
+    * @param eventTopicSubscriber the topic subscriber to register to the Container EventServer
     * @param topic the event topic name to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicHandler eventTopicHandler, String topic) {
-      this(jComp, null, null, eventTopicHandler, new String[]{topic});
+   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicSubscriber eventTopicSubscriber, String topic) {
+      this(jComp, null, null, eventTopicSubscriber, new String[]{topic});
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribe the handler
+    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
     * to the event classes when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
-    * @param eventHandler the handler to register to the Container EventServer
+    * @param eventSubscriber the subscriber to register to the Container EventServer
     * @param eventClasses the classes of event to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventHandler eventHandler, Class[] eventClasses) {
-      this(jComp, eventHandler, eventClasses, null, null);
+   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses) {
+      this(jComp, eventSubscriber, eventClasses, null, null);
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribe the handler
+    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
     * to the topics when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
-    * @param eventTopicHandler the topic handler to register to the Container EventServer
+    * @param eventTopicSubscriber the topic subscriber to register to the Container EventServer
     * @param topics the event topic names to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicHandler eventTopicHandler, String[] topics) {
-      this(jComp, null, null, eventTopicHandler, topics);
+   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicSubscriber eventTopicSubscriber, String[] topics) {
+      this(jComp, null, null, eventTopicSubscriber, topics);
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribe the handler to the topics
+    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber to the topics
     * and the event classes when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
-    * @param eventHandler the handler to register to the Container EventServer
+    * @param eventSubscriber the subscriber to register to the Container EventServer
     * @param eventClasses the classes of event to register for
     * @param topics the event topic names to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventHandler eventHandler, Class[] eventClasses,
-           EventTopicHandler eventTopicHandler, String[] topics) {
+   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses,
+           EventTopicSubscriber eventTopicSubscriber, String[] topics) {
       this.jComp = jComp;
-      this.eventHandler = eventHandler;
+      this.eventSubscriber = eventSubscriber;
       this.eventClasses = eventClasses;
-      this.eventTopicHandler = eventTopicHandler;
+      this.eventTopicSubscriber = eventTopicSubscriber;
       this.topics = topics;
       if (jComp == null) {
          throw new NullPointerException("JComponent is null");
@@ -159,13 +159,13 @@ public class ContainerEventServiceRegistrar {
          if (eventClasses != null) {
             for (int i = 0; i < eventClasses.length; i++) {
                Class eventClass = eventClasses[i];
-               containerEventService.unsubscribe(eventClass, eventHandler);
+               containerEventService.unsubscribe(eventClass, eventSubscriber);
             }
          }
          if (topics != null) {
             for (int i = 0; i < topics.length; i++) {
                String topic = topics[i];
-               containerEventService.unsubscribe(topic, eventTopicHandler);
+               containerEventService.unsubscribe(topic, eventTopicSubscriber);
             }
          }
       }
@@ -175,13 +175,13 @@ public class ContainerEventServiceRegistrar {
          if (eventClasses != null) {
             for (int i = 0; i < eventClasses.length; i++) {
                Class eventClass = eventClasses[i];
-               containerEventService.subscribe(eventClass, eventHandler);
+               containerEventService.subscribe(eventClass, eventSubscriber);
             }
          }
          if (topics != null) {
             for (int i = 0; i < topics.length; i++) {
                String topic = topics[i];
-               containerEventService.subscribe(topic, eventTopicHandler);
+               containerEventService.subscribe(topic, eventTopicSubscriber);
             }
          }
       }

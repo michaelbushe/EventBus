@@ -16,19 +16,19 @@
 package org.bushe.swing.event;
 
 /**
- * Interface for classes that handle {@link EventServiceEvent}s from the {@link EventService}.
+ * Interface for classes that listen to topics on the {@link EventService}.
  *
  * @author Michael Bushe michael@bushe.com
  */
-public interface EventHandler {
+public interface EventTopicSubscriber {
 
    /**
-    * Handles an event.
-    * <p>The EventService calls this method on each publication of subscribed EventServiceEvents.
-    * <p>Prequisite: EventHandler has subscribed for the EventServiceEvent type with the EventService.</p>
-    * See {@link EventService}</p>
-    *
-    * @param evt The EventServiceEvent to handle.
+    * Handle an event published on a topic.
+    * <p>
+    * The EventService calls this method on each publication on a subscribed topic name.
+    * <p>Prequisite: EventTopicSubscriber has subscribed for a topic name with the EventService.</p>
+    * @param topic the name of the topic published on
+    * @param data a data object associated with the event publication, anything you want
     */
-   public void handleEvent(EventServiceEvent evt);
+   public void onEvent(String topic, Object data);
 }

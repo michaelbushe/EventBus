@@ -20,9 +20,9 @@ import junit.framework.TestCase;
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestEventBusTiming extends TestCase {
 
-   private EventHandler eventHandler = null;
-   private EventTopicHandler eventTopicHandler;
-   private EventHandlerTimingEvent timing;
+   private EventSubscriber eventSubscriber = null;
+   private EventTopicSubscriber eventTopicSubscriber;
+   private SubscriberTimingEvent timing;
    private EBTestCounter testCounter = new EBTestCounter();
 
    public TestEventBusTiming(String name) {
@@ -48,34 +48,34 @@ public class TestEventBusTiming extends TestCase {
       return createEvent().getClass();
    }
 
-   private EventHandler createEventHandler(boolean throwException) {
-      return new HandlerForTest(testCounter, throwException);
+   private EventSubscriber createEventSubscriber(boolean throwException) {
+      return new SubscriberForTest(testCounter, throwException);
    }
 
-   private EventTopicHandler createEventTopicHandler(boolean throwException) {
-      return new TopicHandlerForTest(testCounter, throwException);
+   private EventTopicSubscriber createEventTopicSubscriber(boolean throwException) {
+      return new TopicSubscriberForTest(testCounter, throwException);
    }
 
-   private EventHandler createEventHandler(Long waitTime) {
-      return new HandlerForTest(testCounter, waitTime);
+   private EventSubscriber createEventSubscriber(Long waitTime) {
+      return new SubscriberForTest(testCounter, waitTime);
    }
 
-   private EventHandler getEventHandler() {
-      return getEventHandler(true);
+   private EventSubscriber getEventSubscriber() {
+      return getEventSubscriber(true);
    }
 
-   private EventHandler getEventHandler(boolean throwException) {
-      if (eventHandler == null) {
-         eventHandler = createEventHandler(throwException);
+   private EventSubscriber getEventSubscriber(boolean throwException) {
+      if (eventSubscriber == null) {
+         eventSubscriber = createEventSubscriber(throwException);
       }
-      return eventHandler;
+      return eventSubscriber;
    }
 
-   private EventTopicHandler getEventTopicHandler() {
-      if (eventTopicHandler == null) {
-         eventTopicHandler = createEventTopicHandler(false);
+   private EventTopicSubscriber getEventTopicSubscriber() {
+      if (eventTopicSubscriber == null) {
+         eventTopicSubscriber = createEventTopicSubscriber(false);
       }
-      return eventTopicHandler;
+      return eventTopicSubscriber;
    }
 
    public void testNothing() {
@@ -83,10 +83,10 @@ public class TestEventBusTiming extends TestCase {
    }
 
    public void broker_timeHandling() {
-      EventBus.subscribe(getEventClass(), createEventHandler(new Long(200L)));
+      EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled = new Boolean[1];
-      EventBus.subscribe(EventHandlerTimingEvent.class, new EventHandler() {
-         public void handleEvent(EventServiceEvent evt) {
+      EventBus.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
+         public void onEvent(EventServiceEvent evt) {
             wasCalled[0] = Boolean.TRUE;
          }
       });
@@ -96,12 +96,12 @@ public class TestEventBusTiming extends TestCase {
       } catch (Throwable e){
       }
       assertTrue(wasCalled[0] == null);
-      EventBus.subscribe(getEventClass(), createEventHandler(new Long(200L)));
+      EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled2 = new Boolean[1];
-      EventBus.subscribe(EventHandlerTimingEvent.class, new EventHandler() {
-         public void handleEvent(EventServiceEvent evt) {
+      EventBus.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
+         public void onEvent(EventServiceEvent evt) {
             wasCalled2[0] = Boolean.TRUE;
-            timing = (EventHandlerTimingEvent) evt;
+            timing = (SubscriberTimingEvent) evt;
          }
       });
       EventBus.publish(createEvent());
@@ -113,7 +113,7 @@ public class TestEventBusTiming extends TestCase {
       assertNotNull(timing.getSource());
       assertNotNull(timing.getEnd());
       assertNotNull(timing.getEvent());
-      assertNotNull(timing.getHandler());
+      assertNotNull(timing.getSubscriber());
       assertNotNull(timing.getStart());
       assertNotNull(timing.getTimeLimitMilliseconds());
       assertFalse(timing.isEventHandlingExceeded());

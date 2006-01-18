@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestEventAction extends TestCase {
-   private ArrayList handledEvents;
+   private ArrayList subscribedEvents;
    private Object aSource = new Object();
 
    private class MyEventServiceEvent extends AbstractEventServiceEvent {
@@ -42,32 +42,34 @@ public class TestEventAction extends TestCase {
    }
 
    protected void setUp() throws Exception {
-      handledEvents = new ArrayList();
+      subscribedEvents = new ArrayList();
    }
 
    public void testEventBusTopicAction() {
       EventBusAction action = new EventBusAction();
       action.putValue(Action.ACTION_COMMAND_KEY, "FooAction");
-      EventBus.subscribe("FooAction", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      EventTopicSubscriber subscriber = new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
-      });
+      };
+      EventBus.subscribeStrongly("FooAction", subscriber);
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
       try {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
+      assertNotNull(action);//keeps it from being garbage collected
    }
 
    public void testEventBusTopicActionEventServiceValueFirst() {
       EventBusAction action = new EventBusAction();
       action.putValue(EventBusAction.EVENT_SERVICE_TOPIC_NAME, "FooAction");
       action.putValue(Action.ACTION_COMMAND_KEY, "BarAction");
-      EventBus.subscribe("FooAction", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      EventBus.subscribeStrongly("FooAction", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
@@ -75,16 +77,16 @@ public class TestEventAction extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
    public void testEventBusTopicActionIDValueFirst() {
       EventBusAction action = new EventBusAction();
       action.putValue("ID", "FooAction");
       action.putValue(Action.ACTION_COMMAND_KEY, "BarAction");
-      EventBus.subscribe("FooAction", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      EventBus.subscribeStrongly("FooAction", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
@@ -92,15 +94,15 @@ public class TestEventAction extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
    public void testEventBusTopicActionNameWorks() {
       EventBusAction action = new EventBusAction();
       action.putValue(Action.NAME, "FooAction");
-      EventBus.subscribe("FooAction", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      EventBus.subscribeStrongly("FooAction", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
@@ -108,7 +110,7 @@ public class TestEventAction extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
    public void testEventBusEventAction() {
@@ -117,10 +119,10 @@ public class TestEventAction extends TestCase {
             return new MyEventServiceEvent(aSource, evt);
          }
       };
-      EventBus.subscribe(MyEventServiceEvent.class, new EventHandler() {
-         public void handleEvent(EventServiceEvent evt) {
+      EventBus.subscribe(MyEventServiceEvent.class, new EventSubscriber() {
+         public void onEvent(EventServiceEvent evt) {
             assertEquals(evt.getSource(), aSource);
-            handledEvents.add(evt);
+            subscribedEvents.add(evt);
          }
       });
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
@@ -128,7 +130,7 @@ public class TestEventAction extends TestCase {
          Thread.sleep(500);//Calling the EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
 
@@ -141,10 +143,10 @@ public class TestEventAction extends TestCase {
       panel.add(button);
       EventService es = ContainerEventServiceFinder.getEventService(button);
       assertTrue(EventBus.getGlobalEventService() != es);
-      assertEquals(0, handledEvents.size());
-      es.subscribe("FooAction", new EventTopicHandler() {
-         public void handleEvent(String topic, Object evt) {
-            handledEvents.add(evt);
+      assertEquals(0, subscribedEvents.size());
+      es.subscribe("FooAction", new EventTopicSubscriber() {
+         public void onEvent(String topic, Object evt) {
+            subscribedEvents.add(evt);
          }
       });
       button.doClick();
@@ -152,7 +154,7 @@ public class TestEventAction extends TestCase {
          Thread.sleep(500);//Calling hte EDT, need to slow this thread
       } catch (InterruptedException e) {
       }
-      assertEquals(1, handledEvents.size());
+      assertEquals(1, subscribedEvents.size());
    }
 
    public void testContainerEventActionException() {
