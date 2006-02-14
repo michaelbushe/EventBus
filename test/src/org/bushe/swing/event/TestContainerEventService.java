@@ -28,6 +28,7 @@ public class TestContainerEventService extends TestCase {
    private Object aSource = new Object();
    private JFrame frame;
    private JPanel panel;
+   private Object lastEventObject;
 
    public TestContainerEventService(String name) {
       super(name);
@@ -56,10 +57,7 @@ public class TestContainerEventService extends TestCase {
          }
       });
       esBar.publish("FooTopic", "Foo");
-      try {
-         Thread.sleep(500);//Calling hte EDT, need to slow this thread
-      } catch (InterruptedException e) {
-      }
+      waitForEDT();
       assertEquals(1, subscribedEvents.size());
    }
 
@@ -83,49 +81,72 @@ public class TestContainerEventService extends TestCase {
          }
       });
       esBar.publish("FooTopic", "Foo");
-      try {
-         Thread.sleep(500);//Calling hte EDT, need to slow this thread
-      } catch (InterruptedException e) {
-      }
+      waitForEDT();
       assertEquals(0, subscribedEvents.size());
    }
 
+   private void waitForEDT() {
+      try {
+         Thread.sleep(1000);//Calling hte EDT, need to slow this thread
+      } catch (InterruptedException e) {
+      }
+   }
+
    public void testContainerEventServiceRegistrar() {
-      final Object[] lastEventObject = new Object[1];
-      JButton button = new JButton("Foo");
+      //Set the lastEventObject whenever the event fires on the right Container Event Service
       EventTopicSubscriber buttonContainerTopicSubscriber = new EventTopicSubscriber() {
          public void onEvent(String topic, Object data) {
-             lastEventObject[0] = data;
+            System.out.println("topic="+topic+", data="+data);
+            setLastEventObject(data);
          }
       };
+      JButton button = new JButton("Foo");
       ContainerEventServiceRegistrar reg = new ContainerEventServiceRegistrar(button, buttonContainerTopicSubscriber, "RegEvent");
       EventService es = reg.getContainerEventService();
       assertTrue(es != null);
+
+      //Publishing onthe global event bus should not have an effect
       EventBus.publish("RegEvent", "WrongBus");
-      assertEquals(lastEventObject[0], null);
+      assertEquals(getLastEventObject(), null);
+
+      //Make a container that has another container inside it that supplies a container event service
       JPanel subPanel = new JPanel();
       subPanel.add(button);
       ContainerEventServiceSupplierPanel subPanel2 = new ContainerEventServiceSupplierPanel();
       panel.add(subPanel);
       panel.add(subPanel2);
       EventService es2 = reg.getContainerEventService();
+      //teh registrar kept up with the move
       assertTrue(es2 != es);
       EventBus.publish("RegEvent", "WrongBus");
-      assertEquals(lastEventObject[0], null);
+      assertEquals(getLastEventObject(), null);
       EventService topPanelES = ContainerEventServiceFinder.getEventService(panel);
       topPanelES.publish("RegEvent", "TopLevelBus");
-      assertEquals("TopLevelBus", lastEventObject[0]);
+      waitForEDT();
+      assertEquals("TopLevelBus", getLastEventObject());
       EventService subPanel2ES = subPanel2.getContainerEventService();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      assertEquals( "TopLevelBus", lastEventObject[0]);//still
+      waitForEDT();
+      assertEquals( "TopLevelBus", getLastEventObject());//still
       subPanel2.add(button);
+      waitForEDT();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      assertEquals("SuppliedBus", lastEventObject[0]);//detected move
+      assertEquals("SuppliedBus", getLastEventObject());//detected move
       subPanel.add(button);
       topPanelES.publish("RegEvent", "TopLevelBus");
-      assertEquals("TopLevelBus", lastEventObject[0]);
+      waitForEDT();
+      assertEquals("TopLevelBus", getLastEventObject());
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      assertEquals("TopLevelBus", lastEventObject[0]);
+      waitForEDT();
+      assertEquals("TopLevelBus", getLastEventObject());
+   }
+
+   private synchronized void setLastEventObject(Object data) {
+      lastEventObject = data;
+   }
+
+   public synchronized Object getLastEventObject() {
+      return lastEventObject;
    }
 
    class ContainerEventServiceSupplierPanel extends JPanel implements ContainerEventServiceSupplier {

@@ -24,8 +24,8 @@ import javax.swing.RootPaneContainer;
  * This class finds a component's container event service, and creates one if necessary and possible.
  * <p/>
  * A Container EventService is, unlike the EventBus, an EventService that is container specific, in other words, it is
- * shared only amongst components within a container.  For example, a Form component can supply an EventService local
- * only to components in the form.  The Form's components can publish value change events on their Container's Event
+ * shared only amongst components within a container.  For example, a Form component can supply an EventService used
+ * only by components in the form.  The Form's components can publish value change events on their Container's Event
  * Service.  The Form's Model and Validator may listen to these events to collect data and show errors, respectively.
  * <p/>
  * Most importantly, Container EventService's cuts down event traffic, avoid naming and listener clashes, promotes

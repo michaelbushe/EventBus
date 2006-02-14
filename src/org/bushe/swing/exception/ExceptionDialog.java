@@ -291,8 +291,7 @@ public class ExceptionDialog extends JDialog {
     * @return a JLabel with "The following error occurred:"
     */
    protected JLabel createTitleComponent() {
-      JLabel label = new JLabel("The following error occurred:");
-      return label;
+      return new JLabel("The following error occurred:");
    }
 
    /**

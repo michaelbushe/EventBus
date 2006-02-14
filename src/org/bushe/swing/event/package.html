@@ -48,8 +48,8 @@ class HelloEventBus {
          EventBus.subscribeStrongly(&quot;Hello&quot;, new MySubscriber());
          //subscriber will not get garbage collected
          EventBus.publish(&quot;Hello&quot;, &quot;World&quot;);
-         //In real apps - make sure you don't create a memory leak (a.k.a. - loitering object)
-         //EventBus.unsubscribe(subscriber);
+         //In real apps use unsubscribe to make sure you don't create a memory leak (a.k.a. - loitering object)
+         EventBus.unsubscribe(subscriber);
       }
    </pre>
 </p>
@@ -66,20 +66,20 @@ class HelloEventBus {
    around a SwingEventService).  The other is its parent, the {@link org.bushe.swing.event.ThreadSafeEventService}.
    As the name implies the ThreadSafeEventService can be used in multithreaded environments.  The
    ThreadSafeEventService is the parent of the SwingEventService, so all provided
-   EventService implementations can be used from multiple threads concurrently.  The SwingEventServices
+   EventService implementations can be used from multiple threads concurrently.  The SwingEventService
    differs from the ThreadSafeEventService by ensuring that publications are posted on the
    Swing/AWT {@link java.awt.EventDispatchThread}.
 </p>
 <p>
  The EventBus is intented to be very simple to use.  There is no setup required and the API is
-   quite small.  You do, however, need to be careful with memory management for subscribers.  A couple of tips:
+   fairly small.  You do, however, need to be careful with memory management for subscribers.  A couple of tips:
    <ul>
       <li>When calling subscribe(), keep a reference to the subscriber for as long as you want the
          subscription to last.  For example, a JPanel that adds a subscriber to the EventBus will
          usually want to keep a reference to the subscriber as an instance variable, otherwise it
          will be garbage collected right away:</li>
-      <li>Never call subscribeStrongly() with an anonymous inner class - unless you want to .  The garbage collector will likely
-          collect your subscriber immediately.</li>
+      <li>Never call subscribeStrongly() with an anonymous inner class - unless you want to keep the subscription active
+         until the VM exits.</li>
    </ul>
 </p>
 <h2>Two Analogies</h2>
@@ -102,17 +102,17 @@ class HelloEventBus {
   nor does your video card hook up directly to your monitor.&nbsp; This layer of decoupling
   makes things a lot easier on device manufacturers, chip designers, computer 
   manufacturers and computer owners.</p>
-<p>The EventBus similarly solves many problems in Swing by introducing this decoupling 
+<p>The EventBus similarly solves many problems in Swing (or any appplication) by introducing this decoupling
   layer. </p>
 <h2> Advantages </h2>
 <ul>
   <li>Using the EventService avoids code bloat for handling events.&nbsp; There is no
     need for: 
     <ul>
-      <li>XXXEventListener interfaces 
-      <li>addXXXListener methods 
+      <li>XXXEventListener interfaces
+      <li>XXXEventListener implementation
+      <li>addXXXListener methods
       <li>removeXXXListener methods 
-      <li>addXXXListener methods 
       <li>fireEventListener methods, which tend to be very buggy (they don't handle
         exceptions well, and don't fire in the expected backwards order of EventListenerList)
       <li>(if desired) XXXEvent class are not necessary, but can be used for type 
@@ -160,12 +160,11 @@ class HelloEventBus {
     typed {@link org.bushe.swing.event.EventServiceEvent}s and having listeners subscribe to EventServiceEvents
     by class.&nbsp; It can also be used in a type unsafe manner by publishing Objects
     on topic names (Strings) and having listeners subscribe to those names by name or <strong>regular expression</strong>.
-  <li>Multiple named EventServices can be used simulanteously to properly route
-    event traffic.
+  <li>Multiple EventServices can be used simulanteously to properly route event traffic.
   <li>Using the SwingEventService ensures Swing events are <strong>safely published 
     on the Swing EDT</strong>, either directly, or when necessary, through a SwingUtilities.invokeLater() 
     call. 
-  <li>Event Services allows <strong>vetos</strong> event publication in a manner 
+  <li>Event Services allows <strong>veto</strong> event publication in a manner
     more safe than the JavaBeans VetoableEventListener.&nbsp; In JavaBeans, VetoableChangeSupport.fireVetoChange()
     &quot;if anyone vetos the change, then a new event [is fired] reverting everyone 
     to the old value.&quot; The EventService tests all VetoableListeners <strong>first</strong>, 
@@ -175,10 +174,10 @@ class HelloEventBus {
   <li>Event Services allows easy listener management by using <strong>WeakReferences</strong> by default.
     All EventService subscribe(...) methods have a subscribeStrongly(...) siblng.&nbsp; The subscribe(...)
     methods create a WeakReference of the subscriber and subscribe the weak reference.&nbsp;
-    The subscriber can then get garbage collection normally, even when subscribed.&nbsp;
+    The subscriber can then get garbage collected normally, even while subscribed.&nbsp;
     When Subscribers subscribe weakly, they do not have to worry about unsubscribing, thus avoiding memory leaks.&nbsp;
     Using the subscribeStrongly(...) methods, the subscribers must be unsubscribed, otherwise memory leaks may occur.
-  <li>Swing Container EventService support allows Swing components to limit event 
+  <li>EventService support for Swing Containers allows Swing components to limit event
     publication to a component and its children.&nbsp; Children can automatically subscribe
     to the Container EventService of their nearest parent through the {@link org.bushe.swing.event.ContainerEventServiceRegistrar},
     even if they don't yet have a parent (or if they move).&nbsp; A parent can define
@@ -188,13 +187,14 @@ class HelloEventBus {
 <p>
 The Event Service is a centralized processor of application events local to the 
 process (client).&nbsp; It does not provide any processing of events outside of the
-process.&nbsp;  In other words it does not move events from a server to a client, it
-only .&nbsp; However, the EventService is very useful as a mediator between
-server communication code and the client code that needs it.&nbsp; Each call from the server
+process.&nbsp;  In other words it does not move events from a server to a client - it
+is not a solution for Event Driven Architecture in an SOA, or any other multi-tier problem.&nbsp;
+However, the EventService is very useful as a mediator between server communications
+and the client code that needs it.&nbsp; Each call from the server
 can be published on an EventService.&nbsp; Any client-side component (Swing or non-Swing)
 can then subscribe to the client-side event and receive the updates.&nbsp; This structure
 automatically  makes your Swing app thread-safe in the incoming direction.  In environments where
-the server gives frequent updates (say, every 2 seconds, depending on the speed of your client-side
+the server provides frequent updates (say, every 2 seconds, depending on the speed of your client-side
 processing code), you should take care to throttle updates to the Swing EDT, perhaps coalescing
 many events into one.  This can be done from the server side, of course, but the multithreaded
 EventService allows this to occur client-side as well assuming sufficient processing power on the
@@ -210,8 +210,8 @@ client for the non-EDT threads (which is typically the case).<br>
   menu and the JFrame's &quot;X&quot; button.&nbsp; (or alt-F4 keystrok on Windows). The menu is an ActionListener and
   JFrame uses a Window listener.  You could have the window listener call doClick() on the menu or call the menu's
   action and have the menu's action perform the work. This is less than ideal OO design, but is what Swing developers are
-   often stuck with.&nbsp; This gets even less elegant when another place in the application that closes the application -
-   say an error catching routine (an AWTExceptionHandler or similar).
+  often stuck with.&nbsp; This gets even less elegant when another place in the application that closes the application -
+  say an error catching routine (an AWTExceptionHandler or similar).
    <p>
    Instead, let's make thing more elegant and easy by using the EventBus</p>
    <pre>public class JFrame {
@@ -253,17 +253,19 @@ client for the non-EDT threads (which is typically the case).<br>
    Perhaps that doesn't look much better than calling <code>shutdown()</code> three times, but if this code is distributed
    three different files, it gets a little nasty.  You can expose shutdown(), but then you are on your way to the
    Swing spaghetti dinner table.
+
 <h2>Miscellany</h2>
+
 <p>The EventBus uses Apache Commons Logging so it will integrate with your logging framework - log4j, java.util.logging, etc.
 The hope was to have the EventBus not dependent on any other jar, but we felt this tradeoff was worth it.
 <p>A few of exception handling classes are included in the EventBus distributions. They don't have anything
 to do with the EventBus per se, but I simply didn't want to create another project for them.  :-)  SwingExcpetion
-   is a handy exception when invokeLater() is called since the call stack that calls the
-   invokeLater() can be captured (and is captured by the SwingEventService).
-   The AWTExceptionHandler can plug into Swing to provide centralized handling of exceptions.
-   Also included is a a dialog that handles excpetions, including emailing exceptions and copying
-   them to the clipboard.  It is a particularly handy when using the EventBus from multiple threads.
-   When using the email feature of the dialog jdic.jar is required on the classpath and the
-   associated binary (such as jdic.dll) are required in the java.library.path.
+is a handy exception when invokeLater() is called since the call stack that calls the invokeLater() can be captured
+(and is captured by the SwingEventService).
+
+The AWTExceptionHandler can plug into Swing to provide centralized handling of exceptions.  Also included is a a dialog
+that handles excpetions, including emailing exceptions and copying them to the clipboard.  It is a particularly handy
+when using the EventBus from multiple threads.  When using the email feature of the dialog jdic.jar is required on the
+classpath and the associated binary (such as jdic.dll) are required in the java.library.path.
 </body>
 </html>

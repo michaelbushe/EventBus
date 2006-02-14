@@ -16,7 +16,7 @@
 package org.bushe.swing.event;
 
 /**
- * Interface for classes that subscribeStrongly to {@link EventServiceEvent}s from an {@link EventService}.
+ * Interface for classes that subscribe to {@link EventServiceEvent}s from an {@link EventService}.
  *
  * @author Michael Bushe michael@bushe.com
  */
@@ -28,7 +28,7 @@ public interface EventSubscriber {
     * <p>Prequisite: EventSubscriber has subscribed for the EventServiceEvent type with the EventService.</p>
     * See {@link EventService}</p>
     *
-    * @param evt The EventServiceEvent to subscribeStrongly.
+    * @param evt The EventServiceEvent that is being published.
     */
    public void onEvent(EventServiceEvent evt);
 }

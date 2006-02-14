@@ -471,7 +471,8 @@ public class TestEventBus extends TestCase {
       assertEquals("testPublish(completed)", 4, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 2, testCounter.subscribeExceptionCount);
 
-      EventBus.subscribe(ObjectEvent.class, createEventSubscriber(false));
+      EventSubscriber eventSubscriber = createEventSubscriber(false);
+      EventBus.subscribe(ObjectEvent.class, eventSubscriber);
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       ObjectEvent evt = new ObjectEvent("Foo", "Bar");

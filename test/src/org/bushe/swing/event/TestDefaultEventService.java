@@ -16,6 +16,7 @@
 package org.bushe.swing.event;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -462,7 +463,7 @@ public class TestDefaultEventService extends TestCase {
       boolean actualReturn;
 
       try {
-         actualReturn = eventService.unsubscribe(null, eventTopicSubscriber);
+         actualReturn = eventService.unsubscribe((String) null, eventTopicSubscriber);
          fail("unsubscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }
@@ -617,6 +618,63 @@ public class TestDefaultEventService extends TestCase {
       assertEquals("org.bushe.swing.event.ObjectEvent.class", doubleSubscriber.lastEventString);
    }
 
+   public void testRegex() {
+      DoubleSubscriber doubleSubscriber = new DoubleSubscriber();
+      Pattern pat = Pattern.compile("Foo[1-5]");
+      eventService.subscribe(pat, doubleSubscriber);
+      List subscribers = eventService.getSubscribersToPattern(pat);
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+      subscribers = eventService.getSubscribersByPattern("Foo1");
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+      subscribers = eventService.getSubscribers("Foo1");
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+
+      eventService.publish("Foo1", "Bar");
+      assertEquals(0, doubleSubscriber.timesEventCalled);
+      assertEquals(1, doubleSubscriber.timesTopicCalled);
+      assertEquals(null, doubleSubscriber.lastEvent);
+      assertEquals("Foo1", doubleSubscriber.lastEventString);
+      eventService.publish("Foo2", "Bar");
+      assertEquals(0, doubleSubscriber.timesEventCalled);
+      assertEquals(2, doubleSubscriber.timesTopicCalled);
+      assertEquals(null, doubleSubscriber.lastEvent);
+      assertEquals("Foo2", doubleSubscriber.lastEventString);
+   }
+
+   public void testTypeSubscription() {
+      DoubleSubscriber subscriber = new DoubleSubscriber();
+
+      eventService.subscribe(TopLevelEvent.class, subscriber);
+      List subscribers = eventService.getSubscribersToType(TopLevelEvent.class);
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+      subscribers = eventService.getSubscribersToType(DerivedEvent.class);
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+      subscribers = eventService.getSubscribers(DerivedEvent.class);
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+      subscribers = eventService.getSubscribers(TopLevelEvent.class);
+      assertNotNull(subscribers);
+      assertEquals(1, subscribers.size());
+
+      DerivedEvent derivedEvent = new DerivedEvent(this);
+      eventService.publish(derivedEvent);
+      assertEquals(1, subscriber.timesEventCalled);
+      assertEquals(0, subscriber.timesTopicCalled);
+      assertEquals(derivedEvent, subscriber.lastEvent);
+      assertEquals(null, subscriber.lastEventString);
+      TopLevelEvent topLevelEvent = new TopLevelEvent(this);
+      eventService.publish(topLevelEvent);
+      assertEquals(2, subscriber.timesEventCalled);
+      assertEquals(0, subscriber.timesTopicCalled);
+      assertEquals(topLevelEvent, subscriber.lastEvent);
+      assertEquals(null, subscriber.lastEventString);
+   }
+
    class DoubleSubscriber implements EventTopicSubscriber, EventSubscriber {
       public int timesTopicCalled = 0;
       public int timesEventCalled = 0;
@@ -634,4 +692,14 @@ public class TestDefaultEventService extends TestCase {
       }
    }
 
+   class TopLevelEvent extends AbstractEventServiceEvent {
+      public TopLevelEvent(Object source) {
+         super(source);
+      }
+   }
+   class DerivedEvent extends TopLevelEvent {
+      public DerivedEvent(Object source) {
+         super(source);
+      }
+   }
 }

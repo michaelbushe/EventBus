@@ -16,8 +16,8 @@
 package org.bushe.swing.event;
 
 /**
- * This event is published internally to report timing for subscribeStrongly on an EventService.  Applications
- * may subscribeStrongly to this event to do handle subscribers that take too long.
+ * This event is published internally to report timing for subscribe on an EventService.  Applications
+ * may subscribe to this event to do handle subscribers that take too long.
  * @see ThreadSafeEventService
  * @author Michael Bushe michael@bushe.com
  */

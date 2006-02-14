@@ -52,7 +52,7 @@ public class ContainerEventServiceRegistrar {
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
+    * Create a registrar that will keep track of the container event service, and subscribe the subscriber
     * to the eventClass when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
@@ -64,7 +64,7 @@ public class ContainerEventServiceRegistrar {
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
+    * Create a registrar that will keep track of the container event service, and subscribe the subscriber
     * to the topic when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
@@ -76,7 +76,7 @@ public class ContainerEventServiceRegistrar {
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber
+    * Create a registrar that will keep track of the container event service, and subscribe the subscriber
     * to the event classes when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
@@ -100,7 +100,7 @@ public class ContainerEventServiceRegistrar {
    }
 
    /**
-    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber to the topics
+    * Create a registrar that will keep track of the container event service, and subscribe the subscriber to the topics
     * and the event classes when the ContainerEventService is available and when it changes.
     *
     * @param jComp the component whose container to monitor
