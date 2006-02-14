@@ -2,7 +2,6 @@ Release Notes for the Event Bus
 0.9.5
 ISSUE 5: RegEx subscriptions
 ISSUE 6: Subscribe class subscribes to subclass events too, can now subscribeExactly as well.
-Changed API by renaming all *Handlers to *Subscriber, changed handleEvent to onEvent
 Cleaned Javadoc more, especially fixing hte overly aggressive replacement of "handle" with "subscribe".
 
 0.9.1
