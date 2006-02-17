@@ -131,6 +131,7 @@ public class TestContainerEventService extends TestCase {
       subPanel2.add(button);
       waitForEDT();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
+      waitForEDT();
       assertEquals("SuppliedBus", getLastEventObject());//detected move
       subPanel.add(button);
       topPanelES.publish("RegEvent", "TopLevelBus");

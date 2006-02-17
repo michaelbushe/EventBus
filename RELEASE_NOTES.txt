@@ -1,4 +1,7 @@
 Release Notes for the Event Bus
+0.9.6
+ISSUE 9: VetoTopicEventListener added
+
 0.9.5
 ISSUE 5: RegEx subscriptions
 ISSUE 6: Subscribe class subscribes to subclass events too, can now subscribeExactly as well.

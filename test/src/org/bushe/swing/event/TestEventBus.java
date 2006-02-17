@@ -159,7 +159,7 @@ public class TestEventBus extends TestCase {
       } catch (Throwable t) {
       }
       try {
-         EventBus.subscribeVetoListenerStrongly((String) null, new VetoEventListenerForTest());
+         EventBus.subscribeVetoListenerStrongly((String) null, new VetoTopicEventListenerForTest());
          fail();
       } catch (Throwable t) {
       }
@@ -181,7 +181,7 @@ public class TestEventBus extends TestCase {
       } catch (Throwable t) {
       }
       try {
-         EventBus.unsubscribeVetoListener((String) null, new VetoEventListenerForTest());
+         EventBus.unsubscribeVetoListener((String) null, new VetoTopicEventListenerForTest());
          fail();
       } catch (Throwable t) {
       }
@@ -258,8 +258,8 @@ public class TestEventBus extends TestCase {
 
       actualReturn = EventBus.subscribeStrongly("FooTopic", subscriber);
 
-      VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+      VetoTopicEventListener vetoListener = new VetoTopicEventListener() {
+         public boolean shouldVeto(String topic, Object data) {
             return true;
          }
       };
@@ -267,14 +267,14 @@ public class TestEventBus extends TestCase {
 
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
-      EventBus.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", "Bar");
       waitForEDT();
 
-      //The test passes if 1 subscribers completed and 0 subscribers threw exception.
+      //The test passes if 0 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       EventBus.unsubscribeVetoListener("FooTopic", vetoListener);
-      EventBus.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", "Bar");
       waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
@@ -324,8 +324,8 @@ public class TestEventBus extends TestCase {
 
       actualReturn = EventBus.subscribeStrongly("FooTopic", subscriber);
 
-      VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+      VetoTopicEventListener vetoListener = new VetoTopicEventListener() {
+         public boolean shouldVeto(String topic, Object data) {
             return true;
          }
       };
@@ -333,7 +333,7 @@ public class TestEventBus extends TestCase {
 
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
-      EventBus.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", "Bar");
       waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
@@ -341,7 +341,7 @@ public class TestEventBus extends TestCase {
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       vetoListener = null;
       System.gc();
-      EventBus.publish("FooTopic", createEvent());
+      EventBus.publish("FooTopic", "Bar");
       waitForEDT();
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -395,7 +395,7 @@ public class TestEventBus extends TestCase {
       boolean actualReturn;
 
       try {
-         actualReturn = EventBus.unsubscribe(null, eventTopicSubscriber);
+         actualReturn = EventBus.unsubscribe((String) null, eventTopicSubscriber);
          fail("unsubscribe(null, x) should have thrown exception");
       } catch (Exception e) {
       }

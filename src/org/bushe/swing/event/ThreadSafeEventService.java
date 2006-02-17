@@ -317,8 +317,8 @@ public class ThreadSafeEventService implements EventService {
       return subscribeVetoListener(eventClass, vetoListenersByExactClass, new WeakReference(vetoListener));
    }
 
-   /** @see EventService#subscribeVetoListener(String, VetoEventListener) */
-   public boolean subscribeVetoListener(String topic, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListener(String, VetoTopicEventListener) */
+   public boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
@@ -328,8 +328,8 @@ public class ThreadSafeEventService implements EventService {
       return subscribeVetoListener(topic, vetoListenersByTopic, new WeakReference(vetoListener));
    }
 
-   /** @see EventService#subscribeVetoListener(Pattern, VetoEventListener) */
-   public boolean subscribeVetoListener(Pattern topicPattern, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListener(Pattern, VetoTopicEventListener) */
+   public boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
@@ -361,8 +361,8 @@ public class ThreadSafeEventService implements EventService {
       return subscribeVetoListener(eventClass, vetoListenersByExactClass, vetoListener);
    }
 
-   /** @see EventService#subscribeVetoListenerStrongly(String, VetoEventListener) */
-   public boolean subscribeVetoListenerStrongly(String topic, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListenerStrongly(String, VetoTopicEventListener) */
+   public boolean subscribeVetoListenerStrongly(String topic, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
@@ -372,8 +372,8 @@ public class ThreadSafeEventService implements EventService {
       return subscribeVetoListener(topic, vetoListenersByTopic, vetoListener);
    }
 
-   /** @see EventService#subscribeVetoListenerStrongly(Pattern, VetoEventListener) */
-   public boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoEventListener vetoListener) {
+   /** @see EventService#subscribeVetoListenerStrongly(Pattern, VetoTopicEventListener) */
+   public boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
          throw new IllegalArgumentException("VetoListener cannot be null.");
       }
@@ -462,7 +462,7 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   /** @see EventService#unsubscribeVetoListener(String, VetoEventListener) */
+   /** @see EventService#unsubscribeVetoListener(Class, VetoEventListener) */
    public boolean unsubscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       return unsubscribeVetoListener(eventClass, vetoListenersByClass, vetoListener);
    }
@@ -472,13 +472,13 @@ public class ThreadSafeEventService implements EventService {
       return unsubscribeVetoListener(eventClass, vetoListenersByExactClass, vetoListener);
    }
 
-   /** @see EventService#unsubscribeVetoListener(String, VetoEventListener) */
-   public boolean unsubscribeVetoListener(String topic, VetoEventListener vetoListener) {
+   /** @see EventService#unsubscribeVetoListener(String, VetoTopicEventListener) */
+   public boolean unsubscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
       return unsubscribeVetoListener(topic, vetoListenersByTopic, vetoListener);
    }
 
-   /** @see EventService#unsubscribeVetoListener(Pattern, VetoEventListener) */
-   public boolean unsubscribeVetoListener(Pattern topicPattern, VetoEventListener vetoListener) {
+   /** @see EventService#unsubscribeVetoListener(Pattern, VetoTopicEventListener) */
+   public boolean unsubscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
       return unsubscribeVetoListener(topicPattern, vetoListenersByTopicPattern, vetoListener);
    }
 
@@ -558,11 +558,24 @@ public class ThreadSafeEventService implements EventService {
       //Check all veto subscribers, if any veto, then don't publish
       if (vetoSubscribers != null && !vetoSubscribers.isEmpty()) {
          for (Iterator vlIter = vetoSubscribers.iterator(); vlIter.hasNext();) {
-            VetoEventListener vl = (VetoEventListener) vlIter.next();
+            Object vetoer = vlIter.next();
+            VetoEventListener vl = null;
+            VetoTopicEventListener vtl = null;
+            if (event == null) {
+               vtl = (VetoTopicEventListener) vetoer;
+            } else {
+               vl = (VetoEventListener) vetoer;
+            }
             long start = System.currentTimeMillis();
             try {
-               if (vl.shouldVeto(event)) {
-                  subscribeVeto(event, vl, topic, evtObj);
+               boolean shouldVeto = false;
+               if (event == null) {
+                  shouldVeto = vtl.shouldVeto(topic, evtObj);
+               } else {
+                  shouldVeto = vl.shouldVeto(event);
+               }
+               if (shouldVeto) {
+                  handleVeto(vl, event, vtl, topic, evtObj);
                   checkTimeLimit(start, event, null, vl);
                   if (LOG.isLoggable(Level.FINE)) {
                      LOG.fine("Publication vetoed. Event:"+event+ ", Topic:"+topic+", veto subscriber:"+vl);
@@ -622,19 +635,8 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#getSubscribersToType(Class)   */
    public List getSubscribersToType(Class eventClass) {
       synchronized (listenerLock) {
-         List result = new ArrayList();
-         Set keys = subscribersByEventClass.keySet();
-         for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-            Class type = (Class) iterator.next();
-            if (type.isAssignableFrom(eventClass)) {
-               if (LOG.isLoggable(Level.FINE)) {
-                  LOG.fine("Hierachical match "+type+" matched event of class " + eventClass);
-               }
-               Collection subscribers = (Collection) subscribersByEventClass.get(type);
-               result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
-            }
-         }
-         return result;
+         Map classMap = subscribersByEventClass;
+         return getEventOrVetoSubscribersToType(classMap, eventClass);
       }
    }
 
@@ -691,13 +693,31 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
+   /** @see EventService#getVetoSubscribers(Class)  */
    public List getVetoSubscribers(Class eventClass) {
       synchronized (listenerLock) {
-         return getSubscribers(eventClass, vetoListenersByClass);
+         List exactMatches = getVetoSubscribersToType(eventClass);
+         List hierarchyMatches = getVetoSubscribersToExactClass(eventClass);
+         List result = new ArrayList();
+         if (exactMatches != null) {
+            result.addAll(exactMatches);
+         }
+         if (hierarchyMatches != null) {
+            result.addAll(hierarchyMatches);
+         }
+         return result;
       }
    }
 
-   public List getExactVetoSubscribers(Class eventClass) {
+   /** @see EventService#getVetoSubscribersToType(Class)   */
+   public List getVetoSubscribersToType(Class eventClass) {
+      synchronized (listenerLock) {
+         Map classMap = vetoListenersByClass;
+         return getEventOrVetoSubscribersToType(classMap, eventClass);
+      }
+   }
+
+   public List getVetoSubscribersToExactClass(Class eventClass) {
       synchronized (listenerLock) {
          return getSubscribers(eventClass, vetoListenersByExactClass);
       }
@@ -725,6 +745,22 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
+   private List getEventOrVetoSubscribersToType(Map classMap, Class eventClass) {
+      List result = new ArrayList();
+      Set keys = classMap.keySet();
+      for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+         Class type = (Class) iterator.next();
+         if (type.isAssignableFrom(eventClass)) {
+            if (LOG.isLoggable(Level.FINE)) {
+               LOG.fine("Hierachical match "+type+" matched event of class " + eventClass);
+            }
+            Collection subscribers = (Collection) classMap.get(type);
+            result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
+         }
+      }
+      return result;
+   }
+
    private void checkTimeLimit(long start, EventServiceEvent event, EventSubscriber subscriber, VetoEventListener l) {
       if (timeThresholdForEventTimingEventPublication == null) {
          return;
@@ -739,14 +775,22 @@ public class ThreadSafeEventService implements EventService {
       LOG.log(Level.WARNING, evt + "");
    }
 
-   private void subscribeVeto(final EventServiceEvent event, VetoEventListener vl, final String topic,
-           final Object evtObj) {
+   /**
+    * Handle vetos of an event or topic, by default logs finely.
+    * @param vl the veto listener for an event
+    * @param event the event, can be null if topic is not
+    * @param vtl the veto listener for a topic
+    * @param topic can be null if event is not
+    * @param evtObj the object published with the topic
+    */
+   protected void handleVeto(VetoEventListener vl, EventServiceEvent event,
+           VetoTopicEventListener vtl, String topic, Object evtObj) {
       //@todo register object that want to know about the veto and notify them of the veto
       if (LOG.isLoggable(Level.FINE)) {
          if (event != null) {
             LOG.fine("Vetoing event: class=" + event.getClass() + ", event=" + event + ", vetoer:" + vl);
          } else {
-            LOG.fine("Vetoing event: topic=" + topic + ", evtObj=" + evtObj + ", vetoer:" + vl);
+            LOG.fine("Vetoing event: topic=" + topic + ", evtObj=" + evtObj + ", vetoer:" + vtl);
          }
       }
    }

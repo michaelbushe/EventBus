@@ -238,7 +238,7 @@ public class TestDefaultEventService extends TestCase {
       } catch (Throwable t) {
       }
       try {
-         EventBus.subscribeVetoListenerStrongly((String) null, new VetoEventListenerForTest());
+         EventBus.subscribeVetoListenerStrongly((String) null, new VetoTopicEventListenerForTest());
          fail();
       } catch (Throwable t) {
       }
@@ -260,7 +260,7 @@ public class TestDefaultEventService extends TestCase {
       } catch (Throwable t) {
       }
       try {
-         EventBus.unsubscribeVetoListener((String) null, new VetoEventListenerForTest());
+         EventBus.unsubscribeVetoListener((String) null, new VetoTopicEventListenerForTest());
          fail();
       } catch (Throwable t) {
       }
@@ -333,8 +333,8 @@ public class TestDefaultEventService extends TestCase {
 
       actualReturn = eventService.subscribe("FooTopic", subscriber);
 
-      VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+      VetoTopicEventListener vetoListener = new VetoTopicEventListener() {
+         public boolean shouldVeto(String topic, Object data) {
             return true;
          }
       };
@@ -342,13 +342,13 @@ public class TestDefaultEventService extends TestCase {
 
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
-      eventService.publish("FooTopic", createEvent());
+      eventService.publish("FooTopic", "Bar");
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       eventService.unsubscribeVetoListener("FooTopic", vetoListener);
-      eventService.publish("FooTopic", createEvent());
+      eventService.publish("FooTopic", "Bar");
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -395,8 +395,8 @@ public class TestDefaultEventService extends TestCase {
 
       actualReturn = eventService.subscribe("FooTopic", subscriber);
 
-      VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+      VetoTopicEventListener vetoListener = new VetoTopicEventListener() {
+         public boolean shouldVeto(String topic, Object data) {
             return true;
          }
       };

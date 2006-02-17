@@ -295,31 +295,25 @@ public interface EventService {
    public boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventTopicSubscriber to a topic name.
-    * <p/>
-    * For WeakReference semantics, see {@link #subscribeVetoListener(Class, VetoEventListener)}
-    * <p/>
+    * Subscribes a <b>WeakReference</b> to a VetoTopicEventListener to a topic name.
     *
     * @param topic the name of the topic listened to
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
     */
-   public boolean subscribeVetoListener(String topic, VetoEventListener vetoListener);
+   public boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventTopicSubscriber to all the topic names that
+    * Subscribes a <b>WeakReference</b> to an VetoTopicEventListener to all the topic names that
     * match the RegEx Pattern.
-    * <p/>
-    * For WeakReference semantics, see {@link #subscribeVetoListener(Class, VetoEventListener)}
-    * <p/>
     *
     * @param topicPattern the RegEx pattern to match topics with
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
     */
-   public boolean subscribeVetoListener(Pattern topicPattern, VetoEventListener vetoListener);
+   public boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
    /**
     * Subscribes a VetoListener for an event class and its subclasses.
@@ -348,36 +342,36 @@ public interface EventService {
    /**
     * Subscribes a VetoListener to a topic name.
     * <p>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(String, VetoEventListener)}
+    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(String, VetoTopicEventListener)}
     * is called.
     * @param topic the name of the topic listened to
-    * @param vetoListener The topic vetoListener that will accept the events when published.
+    * @param vetoListener The topic vetoListener that will accept or reject publication.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
     *
     * @see #subscribeVetoListenerStrongly(Class, VetoEventListener)
     */
-   public boolean subscribeVetoListenerStrongly(String topic, VetoEventListener vetoListener);
+   public boolean subscribeVetoListenerStrongly(String topic, VetoTopicEventListener vetoListener);
 
    /**
-    * Subscribes a VetoListener to a set of topics that match a RegEx expression.
+    * Subscribes a VetoTopicEventListener to a set of topics that match a RegEx expression.
     * <p>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(String, VetoEventListener)}
+    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Pattern, VetoTopicEventListener)}
     * is called.
     * @param topicPattern the RegEx pattern that matches the name of the topics listened to
-    * @param vetoListener The topic vetoListener that will accept the events when published.
+    * @param vetoListener The topic vetoListener that will accept or reject publication.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
     *
-    * @see #subscribeVetoListenerStrongly(Class, VetoEventListener)
+    * @see #subscribeVetoListenerStrongly(Pattern, VetoTopicEventListener)
     */
-   public boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoEventListener vetoListener);
+   public boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
    /**
     * Stop the subscription for a vetoListener that is subscribed to an event class and its subclasses.
     *
     * @param eventClass the class of EventServiceEvent that can be vetoed
-    * @param vetoListener The vetoListener that can determine whether an event is published.
+    * @param vetoListener The vetoListener that will accept or reject publication of an event.
     *
     * @return true if the vetoListener was subscribed to the event, false if it wasn't
     */
@@ -387,31 +381,31 @@ public interface EventService {
     * Stop the subscription for a vetoListener that is subscribed to an event class (but not its subclasses).
     *
     * @param eventClass the class of EventServiceEvent that can be vetoed
-    * @param vetoListener The vetoListener that can determine whether an event is published.
+    * @param vetoListener The vetoListener that will accept or reject publication of an event.
     *
     * @return true if the vetoListener was subscribed to the event, false if it wasn't
     */
    public boolean unsubscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Stop the subscription for a vetoListener that is subscribed to an event topic name.
+    * Stop the subscription for a VetoTopicEventListener that is subscribed to an event topic name.
     *
     * @param topic the name of the topic that is listened to
     * @param vetoListener The vetoListener that can determine whether an event is published on that topic
     *
-    * @return true if the vetoListener was subscribed to the event, false if it wasn't
+    * @return true if the vetoListener was subscribed to the topic, false if it wasn't
     */
-   public boolean unsubscribeVetoListener(String topic, VetoEventListener vetoListener);
+   public boolean unsubscribeVetoListener(String topic, VetoTopicEventListener vetoListener);
 
    /**
-    * Stop the subscription for a vetoListener that is subscribed to an event topic RegEx pattern.
+    * Stop the subscription for a VetoTopicEventListener that is subscribed to an event topic RegEx pattern.
     *
     * @param topicPattern the RegEx pattern matching the name of the topics listened to
     * @param vetoListener The vetoListener that can determine whether an event is published on that topic
     *
-    * @return true if the vetoListener was subscribed to the event, false if it wasn't
+    * @return true if the vetoListener was subscribed to the topicPattern, false if it wasn't
     */
-   public boolean unsubscribeVetoListener(Pattern topicPattern, VetoEventListener vetoListener);
+   public boolean unsubscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
    /**
     * Union of getSubscribersToType(Class) and getSubscribersToExactClass(Class)
@@ -465,7 +459,13 @@ public interface EventService {
     * @param eventClass the eventClass of interest
     * @return the veto subscribers that will be called when an event of eventClass (but not its subclasses) is published.
     */
-   public List getExactVetoSubscribers(Class eventClass);
+   public List getVetoSubscribersToExactClass(Class eventClass);
+
+   /**
+    * @param eventClass the eventClass of interest
+    * @return the veto subscribers that are subscribed to the eventClass and its subclasses
+    */
+   public List getVetoSubscribersToType(Class eventClass);
 
    /**
     * @param topic the topic of interest
