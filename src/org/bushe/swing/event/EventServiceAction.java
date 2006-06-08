@@ -15,10 +15,8 @@
  */
 package org.bushe.swing.event;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.Action;
-import javax.swing.ImageIcon;
 
 /**
  * Abstract class that translates a Swing ActionEvent to an EventServiceEvent published on an {@link EventService}.
@@ -41,9 +39,10 @@ public abstract class EventServiceAction extends AbstractAction {
    public static final String EVENT_SERVICE_TOPIC_NAME = "event-service-topic";
 
    private boolean throwsExceptionOnNullEventService = true;
+    public static final String EVENT_BUS_EVENT_CLASS_NAME = "eventBus.eventClassName";
 
-   public EventServiceAction() {
-   }
+    public EventServiceAction() {
+    }
 
    public EventServiceAction(String actionName, ImageIcon icon) {
       super(actionName, icon);
@@ -95,13 +94,40 @@ public abstract class EventServiceAction extends AbstractAction {
 
    /**
     * Override to publish and event service event instead of publishing on a topic.
+    * <p>
+    * Checks if the {@link EVENT_BUS_EVENT_CLASS_NAME} is defined for this action,
+    * attempts a no-arg constuction of the event and fires it.
+    * <p>
+    * Using SAM, this might looke like:
+    * <code>
+    * <action id="exit-action"
+    *     mnemonic="x"
+    *     name="Exit"
+    *     actionClass="org.bushe.swing.event.eventbus.demo.ShowViewAction">
+    *    <name-value-pair name="eventBus.eventClassName" value="org.bushe.swing.event.eventbus.app.SystemShutdownEvent"/>
+    * </action>
+    * <code>
     *
     * @param evt the event passed to #execute(ActionEvent)
     *
     * @return an EventServiceEvent to publish, if null, a topic name and value is used.
     */
    protected EventServiceEvent getEventServiceEvent(ActionEvent evt) {
-      return null;
+        String eventClassName = (String) getValue(EVENT_BUS_EVENT_CLASS_NAME);
+        if (eventClassName != null) {
+            try {
+                Class cl = Class.forName(eventClassName);
+                EventServiceEvent actionEvent = (EventServiceEvent) cl.newInstance();
+                return actionEvent;
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException("Could not load class "+eventClassName, e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException("Could not load class "+eventClassName, e);
+            } catch (InstantiationException e) {
+                throw new RuntimeException("Could not load class "+eventClassName, e);
+            }
+        }
+        return null;
    }
 
    /**
