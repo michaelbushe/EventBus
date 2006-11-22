@@ -314,4 +314,109 @@ public class EventBus {
       globalEventService.clearAllSubscribers();
    }
 
+
+   /**
+    * @see EventService#setDefaultCacheSizePerClassOrTopic(int)
+    */
+   public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic) {
+      globalEventService.setDefaultCacheSizePerClassOrTopic(defaultCacheSizePerClassOrTopic);
+   }
+
+   /**
+    * @see org.bushe.swing.event.EventService#getDefaultCacheSizePerClassOrTopic()
+    */
+   public int getDefaultCacheSizePerClassOrTopic() {
+      return globalEventService.getDefaultCacheSizePerClassOrTopic();
+   }
+
+   /**
+    * @see EventService#setCacheSizeForEventClass(Class, int)
+    */
+   public void setCacheSizeForEventClass(Class eventClass, int cacheSize) {
+      globalEventService.setCacheSizeForEventClass(eventClass, cacheSize);
+   }
+
+   /**
+    * @see EventService#getCacheSizeForEventClass(Class)
+    */
+   public int getCacheSizeForEventClass(Class eventClass)  {
+      return globalEventService.getCacheSizeForEventClass(eventClass);
+   }
+
+   /**
+    * @see EventService#setCacheSizeForTopic(String, int)
+    */
+   public void setCacheSizeForTopic(String topicName, int cacheSize)  {
+      globalEventService.setCacheSizeForTopic(topicName, cacheSize);
+   }
+
+   /**
+    * @see EventService#setCacheSizeForTopic(java.util.regex.Pattern, int)
+    */
+   public void setCacheSizeForTopic(Pattern pattern, int cacheSize)  {
+      globalEventService.setCacheSizeForTopic(pattern, cacheSize);
+   }
+
+   /**
+    * @see EventService#getCacheSizeForTopic(String)
+    */
+   public int getCacheSizeForTopic(String topic)  {
+      return globalEventService.getCacheSizeForTopic(topic);
+   }
+
+   /**
+    * @see EventService#getLastEvent(Class)
+    */
+   public EventServiceEvent getLastEvent(Class eventClass)  {
+      return globalEventService.getLastEvent(eventClass);
+   }
+
+   /**
+    * @see EventService#getCachedEvents(Class)
+    */
+   public List getCachedEvents(Class eventClass)  {
+      return globalEventService.getCachedEvents(eventClass);
+   }
+
+   /**
+    * @see EventService#getLastTopicData(String)
+    */
+   public Object getLastTopicData(String topic)  {
+      return globalEventService.getLastTopicData(topic);
+   }
+
+   /**
+    * @see EventService#getCachedTopicData(String)
+    */
+   public List getCachedTopicData(String topic) {
+      return globalEventService.getCachedTopicData(topic);
+   }
+
+   /**
+    * @see EventService#clearCache(Class)
+    */
+   public void clearCache(Class eventClass)  {
+      globalEventService.clearCache(eventClass);
+   }
+
+   /**
+    * @see EventService#clearCache(String)
+    */
+   public void clearCache(String topic) {
+      globalEventService.clearCache(topic);
+   }
+
+   /**
+    * @see EventService#clearCache(java.util.regex.Pattern)
+    */
+   public void clearCache(Pattern pattern) {
+      globalEventService.clearCache(pattern);
+   }
+
+   /**
+    * @see org.bushe.swing.event.EventService#clearCache()
+    */
+   public void clearCache() {
+      globalEventService.clearCache();
+   }
 }

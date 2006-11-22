@@ -15,6 +15,10 @@
  */
 package org.bushe.swing.event;
 
+import java.util.List;
+import java.util.regex.Pattern;
+import java.io.Serializable;
+
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
@@ -482,6 +486,4 @@ public class TestEventBus extends TestCase {
       assertEquals("testPublish(completed)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
    }
-
-
 }

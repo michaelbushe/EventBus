@@ -16,6 +16,7 @@
 package org.bushe.swing.event;
 
 import java.util.List;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 
@@ -73,6 +74,17 @@ import java.util.regex.Pattern;
  * EventBus.publish("Hello", "World");
  * System.out.println(subscriber + " This is just to make sure the subscriber didn't get garbage collected, not necessary if you use subscribeStrongly()");
  * </pre>
+ * <p>
+ * Events and/or topic data can be cached, but are not by default.  To cache events or topic data, call
+ * #setDefaultCacheSizePerClassOrTopic(int), #setCacheSizeForEventClass(Class, int), or
+ * #setCacheSizeForTopic(String, int), #setCacheSizeForTopic(Pattern, int).  Retrieve cached values with
+ * #getLastEvent(Class), #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String).  Using
+ * caching while subscribing is most likely to make sense only if you subscribe and publish on the same thread
+ * (so caching is very useful for Swing applications since both happen on the EDT in a single-threaded manner).
+ * In multithreaded applications, you never know if your subscriber has handled an event while it was being subscribed
+ * (before the subscribe() method returned) that is newer or older than the retrieved cached value (taked before or
+ * after subscribe() respectively).
+ *
  * @author Michael Bushe michael@bushe.com
  * @see ThreadSafeEventService for the default implementation
  * @see SwingEventService for the Swing-safe implementation
@@ -483,4 +495,137 @@ public interface EventService {
     * Clears all current subscribers and veto subscribers
     */
    public void clearAllSubscribers();
+
+   /**
+    * Sets the default cache size for each kind of event, default is 0 (no caching).
+    * <p>
+    * If this value is set to a positive number, then when an event is published, the EventService
+    * caches the event or topic payload data for later retrieval.  This allows subscribers to find out what has most
+    * recently happened before they subscribed.  The cached event(s) are returned from #getLastEvent(Class),
+    * #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String)
+    * <p>
+    * The default can be overridden on a by-event-class or by-topic basis.
+    * @param defaultCacheSizePerClassOrTopic
+    */
+   public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic);
+
+   /**
+    * @return the default number of event payloads kept per event class or topic
+    */
+   public int getDefaultCacheSizePerClassOrTopic();
+
+   /**
+    * Set the number of events cached for a particular class of event.  By default, no events are cached.
+    * <p>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p>
+    * Class hierarchy semantics are respected.  That is, if there are three events, A, X and Y, and X and Y are
+    * both derived from A, then setting the cache size for A applies the cache size for all three.  Setting the
+    * cache size for X applies to X and leaves the settings for A and Y in tact.  Intefaces can be passed
+    * to this method, but they only take effect if the cache size of a class or it's superclasses has been set.
+    * Just like Class.getInterfaces(), if multiple cache sizes are set, the interface names
+    * declared earliest in the implements clause of the eventClass takes effect.
+    * <p>
+    * The cache for an event is not adjusted until the next event of that class is published.
+    * @param eventClass the class of event
+    * @param cacheSize the number of published events to cache for this event
+    */
+   public void setCacheSizeForEventClass(Class eventClass, int cacheSize);
+
+   /**
+    * Returns the number of events cached for a particular class of event.  By default, no events are cached.
+    * <p>
+    * This result is computed for a particular class from the values passed to
+    * #setCacheSizeForEventClass(Class, int), and respects the class hierarchy.
+    * @param eventClass the class of event
+    * @return the maximum size of the event cache for the given event class
+    * @see #setCacheSizeForEventClass(Class, int)
+    */
+   public int getCacheSizeForEventClass(Class eventClass);
+
+   /**
+    * Set the number of published data objects cached for a particular event topic.  By default, no data are cached.
+    * <p>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p>
+    * Exact topic names take precedence over pattern matching.
+    * <p>
+    * The cache for a topic is not adjusted until the next publication on that topic.
+    * @param topicName the topic name
+    * @param cacheSize the number of published data Objects to cache for this topci
+    */
+   public void setCacheSizeForTopic(String topicName, int cacheSize);
+
+   /**
+    * Set the number of published data objects cached for a topics matching a pattern.  By default, no data are cached.
+    * <p>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p>
+    * Exact topic names take precedence over pattern matching.
+    * <p>
+    * The cache for a topic is not adjusted until the next publication on that topic.
+    * @param pattern the pattern matching topic names
+    * @param cacheSize the number of data Objects to cache for this topci
+    */
+   public void setCacheSizeForTopic(Pattern pattern, int cacheSize);
+
+   /**
+    * Returns the number of cached data objects published on a particular topic.  
+    * <p>
+    * This result is computed for a particular class from the values passed to
+    * #setCacheSizeForEventClass(Class, int), and respects the class hierarchy.
+    * @param topic the topic name
+    * @return the maximum size of the data Object cache for the given topic
+    * @see #setCacheSizeForTopic(String, int)
+    * @see #setCacheSizeForTopic(java.util.regex.Pattern, int)
+    */
+   public int getCacheSizeForTopic(String topic);
+
+   /**
+    * @param eventClass an index into the cache
+    * @return the last event published for this event class, or null if caching is turned off (the default)
+    */
+   public EventServiceEvent getLastEvent(Class eventClass);
+
+   /**
+    * @param eventClass an index into the cache
+    * @return the last events published for this event class, or null if caching is turned off (the default)
+    */
+   public List getCachedEvents(Class eventClass);
+
+   /**
+    * @param topic an index into the cache
+    * @return the last data Object published on this topic, or null if caching is turned off (the default)
+    */
+   public Object getLastTopicData(String topic);
+
+   /**
+    * @param topic an index into the cache
+    * @return the last data Objects published on this topic, or null if caching is turned off (the default)
+    */
+   public List getCachedTopicData(String topic);
+
+   /**
+    * Clears the event cache for a specific event class or interface and it's any of it's subclasses or implementing
+    * classes.
+    * @param eventClass the event class to clear the cache for
+    */
+   public void clearCache(Class eventClass);
+
+   /**
+    * Clears the topic data cache for a specific topic name.
+    * @param topic the topic name to clear the cache for
+    */
+   public void clearCache(String topic);
+
+   /**
+    * Clears the topic data cache for all topics that match a particular pattern.
+    * @param pattern the pattern to match topic caches to
+    */
+   public void clearCache(Pattern pattern);
+
+   /**
+    * Clear all event caches for all topics and event.
+    */
+   public void clearCache();
 }

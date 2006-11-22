@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.LinkedList;
 import java.util.regex.Pattern;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,6 +59,17 @@ import org.bushe.swing.exception.SwingException;
  * Exceptions are logged by default, override {@link #handleException(String, EventServiceEvent, String, Object, Throwable, StackTraceElement[], String)}
  * to handleException exceptions in another way.  Each call to a subscriber is wrapped in a try block to ensure one listener
  * does not interfere with another.
+ * <p>
+ * Events and/or topic data can be cached, but are not by default.  To cache events or topic data, call
+ * #setDefaultCacheSizePerClassOrTopic(int), #setCacheSizeForEventClass(Class, int), or
+ * #setCacheSizeForTopic(String, int), #setCacheSizeForTopic(Pattern, int).  Retrieve cached values with
+ * #getLastEvent(Class), #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String).  Using
+ * caching while subscribing is most likely to make sense only if you subscribe and publish on the same thread
+ * (so caching is very useful for Swing applications since both happen on the EDT in a single-threaded manner).
+ * In multithreaded applications, you never know if your subscriber has handled an event while it was being subscribed
+ * (before the subscribe() method returned) that is newer or older than the retrieved cached value (taked before or
+ * after subscribe() respectively).
+ *
  * @author Michael Bushe michael@bushe.com
  * @todo perhaps publication should double-check to see if a subscriber is still subscribed
  * @see EventService for a complete description of the API
@@ -74,7 +86,20 @@ public class ThreadSafeEventService implements EventService {
    private Map vetoListenersByTopic = new HashMap();
    private Map vetoListenersByTopicPattern = new HashMap();
    private Object listenerLock = new Object();
+   private Object cacheLock = new Object();
    private Long timeThresholdForEventTimingEventPublication;
+   private Map cacheByEvent = new HashMap/*<Class, LinkedList>*/();
+   private int defaultCacheSizePerClassOrTopic = 0;
+   private Map cacheSizesForEventClass;
+   private Map rawCacheSizesForEventClass;
+   private boolean rawCacheSizesForEventClassChanged;
+   private Map cacheByTopic = new HashMap/*<Class, LinkedList>*/();
+   private Map cacheSizesForTopic;
+   private Map rawCacheSizesForTopic;
+   private boolean rawCacheSizesForTopicChanged;
+   private Map rawCacheSizesForPattern;
+   private boolean rawCacheSizesForPatternChanged;
+
 
    /**
     * Creates a ThreadSafeEventService while providing time monitoring options.
@@ -95,8 +120,8 @@ public class ThreadSafeEventService implements EventService {
     * no SubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the SubscriberTimingEvent internally and call the
     * protected subscribeTiming() method when they occur.  This logs a warning to a java.util.logging logger by default.
-    * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and subscribeTimingEventsInternally
-    * is true.
+    * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and
+    * subscribeTimingEventsInternally is true.
     * @todo (non Swing-only?) start a timer call and when it calls back, report the time if exceeded.
     */
    public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication, boolean subscribeTimingEventsInternally) {
@@ -548,14 +573,7 @@ public class ThreadSafeEventService implements EventService {
          }
       }
 
-      if (subscribers == null || subscribers.isEmpty()) {
-         if (LOG.isLoggable(Level.FINE)) {
-            LOG.fine("No subscribers for event or topic. Event:"+event+ ", Topic:"+topic);
-         }
-         return;
-      }
-
-      //Check all veto subscribers, if any veto, then don't publish
+      //Check all veto subscribers, if any veto, then don't publish or cache
       if (vetoSubscribers != null && !vetoSubscribers.isEmpty()) {
          for (Iterator vlIter = vetoSubscribers.iterator(); vlIter.hasNext();) {
             Object vetoer = vlIter.next();
@@ -589,6 +607,15 @@ public class ThreadSafeEventService implements EventService {
          }
       }
 
+      addEventToCache(event, topic, evtObj);
+
+      if (subscribers == null || subscribers.isEmpty()) {
+         if (LOG.isLoggable(Level.FINE)) {
+            LOG.fine("No subscribers for event or topic. Event:"+event+ ", Topic:"+topic);
+         }
+         return;
+      }
+
       if (LOG.isLoggable(Level.FINE)) {
          LOG.fine("Publishing to subscribers :"+subscribers);
       }
@@ -611,6 +638,60 @@ public class ThreadSafeEventService implements EventService {
                eventTopicSubscriber.onEvent(topic, evtObj);
             } catch (Throwable e) {
                onEventException(topic, evtObj, e, callingStack, eventTopicSubscriber);
+            }
+         }
+      }
+   }
+
+   /**
+    * Adds an event to the event cache, if appropriate.  This method is called just before publication to listeners,
+    * after the event passes any veto listeners.
+    * <p>
+    * Using protected visibility to open the caching to other implementations.
+    * @param event the event about to be published, null if topic is non-null
+    * @param topic the topic about to be published to, null if the event is non-null
+    * @param evtObj the evtObj about to be published on a topic, null if the event is non-null
+    */
+   protected void addEventToCache(EventServiceEvent event, String topic, Object evtObj) {
+      //Taking the listener lock here, since a listener that is now subscribing will want
+      //this event since they are not in this subscriber list.
+      synchronized(listenerLock) {
+         if (event != null){
+            int cacheSizeForEventClass = getCacheSizeForEventClass(event.getClass());
+            List eventClassCache = (List) cacheByEvent.get(event.getClass());
+            if (cacheSizeForEventClass <= 0) {
+               if (eventClassCache != null) {
+                  //the cache threshold was lowered to 0
+                  cacheByEvent.remove(event.getClass());
+               }
+            } else {
+               if (eventClassCache == null) {
+                  eventClassCache = new LinkedList();
+                  cacheByEvent.put(event.getClass(), eventClassCache);
+               }
+               eventClassCache.add(0, event);
+               while (eventClassCache.size() > cacheSizeForEventClass) {
+                  eventClassCache.remove(eventClassCache.size()-1);
+               }
+            }
+         } else {
+            //topic
+            int cacheSizeForTopic = getCacheSizeForTopic(topic);
+            List topicCache = (List) cacheByTopic.get(topic);
+            if (cacheSizeForTopic <= 0) {
+               if (topicCache != null) {
+                  //the cache threshold was lowered to 0
+                  topicCache.remove(topic);
+               }
+            } else {
+               if (topicCache == null) {
+                  topicCache = new LinkedList();
+                  cacheByTopic.put(topic, topicCache);
+               }
+               topicCache.add(0, evtObj);
+               while (topicCache.size() > cacheSizeForTopic) {
+                  topicCache.remove(topicCache.size()-1);
+               }
             }
          }
       }
@@ -859,6 +940,333 @@ public class ThreadSafeEventService implements EventService {
          }
       }
       return copyOfSubscribersOrVetolisteners;
+   }
+
+   /**
+    * Sets the default cache size for each kind of event, default is 0 (no caching).
+    * <p>
+    * If this value is set to a positive number, then when an event is published, the EventService
+    * caches the event or topic payload data for later retrieval.  This allows subscribers to find out what has most
+    * recently happened before they subscribed.  The cached event(s) are returned from #getLastEvent(Class),
+    * #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String)
+    * <p>
+    * The default can be overridden on a by-event-class or by-topic basis.
+    * @param defaultCacheSizePerClassOrTopic
+    */
+   public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic) {
+      synchronized(cacheLock) {
+         this.defaultCacheSizePerClassOrTopic = defaultCacheSizePerClassOrTopic;
+      }
+   }
+
+   /**
+    * @return the default number of event payloads kept per event class or topic
+    */
+   public int getDefaultCacheSizePerClassOrTopic() {
+      synchronized(cacheLock) {
+         return defaultCacheSizePerClassOrTopic;
+      }
+   }
+
+   /**
+    * Set the number of events cached for a particular class of event.  By default, no events are cached.
+    * <p>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p>
+    * Class hierarchy semantics are respected.  That is, if there are three events, A, X and Y, and X and Y are
+    * both derived from A, then setting the cache size for A applies the cache size for all three.  Setting the
+    * cache size for X applies to X and leaves the settings for A and Y in tact.  Intefaces can be passed
+    * to this method, but they only take effect if the cache size of a class or it's superclasses has been set.
+    * Just like Class.getInterfaces(), if multiple cache sizes are set, the interface names
+    * declared earliest in the implements clause of the eventClass takes effect.
+    * <p>
+    * The cache for an event is not adjusted until the next event of that class is published.
+    * @param eventClass the class of event
+    * @param cacheSize the number of published events to cache for this event
+    */
+   public void setCacheSizeForEventClass(Class eventClass, int cacheSize) {
+      synchronized(cacheLock) {
+         if (rawCacheSizesForEventClass == null) {
+            rawCacheSizesForEventClass = new HashMap();
+         }
+         rawCacheSizesForEventClass.put(eventClass, new Integer(cacheSize));
+         rawCacheSizesForEventClassChanged = true;
+      }
+   }
+
+   /**
+    * Returns the number of events cached for a particular class of event.  By default, no events are cached.
+    * <p>
+    * This result is computed for a particular class from the values passed to
+    * #setCacheSizeForEventClass(Class, int), and respects the class hierarchy.
+    * @param eventClass the class of event
+    * @return the maximum size of the event cache for the given event class
+    * @see #setCacheSizeForEventClass(Class, int)
+    */
+   public int getCacheSizeForEventClass(Class eventClass) {
+      if (eventClass == null) {
+         throw new IllegalArgumentException("eventClass must not be null.");
+      }
+      synchronized(cacheLock) {
+         if (rawCacheSizesForEventClass == null || rawCacheSizesForEventClass.size() == 0) {
+            return getDefaultCacheSizePerClassOrTopic();
+         }
+         if (cacheSizesForEventClass == null) {
+            cacheSizesForEventClass = new HashMap();
+         }
+         if (rawCacheSizesForEventClassChanged) {
+            cacheSizesForEventClass.clear();
+            cacheSizesForEventClass.putAll(rawCacheSizesForEventClass);
+            rawCacheSizesForEventClassChanged = false;
+         }
+
+         //Has this been computed yet or set directly?
+         Integer size = (Integer) cacheSizesForEventClass.get(eventClass);
+         if (size != null) {
+            return size.intValue();
+         } else {
+            //must be computed
+            Class parent = eventClass.getSuperclass();
+            while (parent != null) {
+               Integer parentSize = (Integer) cacheSizesForEventClass.get(parent);
+               if (parentSize != null) {
+                  cacheSizesForEventClass.put(eventClass, parentSize);
+                  return parentSize.intValue();
+               }
+               parent = parent.getSuperclass();
+            }
+            //try interfaces
+            Class[] interfaces = eventClass.getInterfaces();
+            for (int i = 0; i < interfaces.length; i++) {
+               Class anInterface = interfaces[i];
+               Integer interfaceSize = (Integer) cacheSizesForEventClass.get(anInterface);
+               if (interfaceSize != null) {
+                  cacheSizesForEventClass.put(eventClass, interfaceSize);
+                  return interfaceSize.intValue();
+               }
+            }
+         }
+         return getDefaultCacheSizePerClassOrTopic();
+      }
+   }
+
+   /**
+    * Set the number of published data objects cached for a particular event topic.  By default, no caching is done.
+    * <p/>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p/>
+    * Settings for exact topic names take precedence over pattern matching.
+    * <p/>
+    * The cache for a topic is not adjusted until the next publication on that topic.
+    *
+    * @param topicName the topic name
+    * @param cacheSize the number of published data Objects to cache for this topci
+    */
+   public void setCacheSizeForTopic(String topicName, int cacheSize) {
+      synchronized(cacheLock) {
+         if (rawCacheSizesForTopic == null) {
+            rawCacheSizesForTopic = new HashMap();
+         }
+         rawCacheSizesForTopic.put(topicName, new Integer(cacheSize));
+         rawCacheSizesForTopicChanged = true;
+      }
+   }
+
+   /**
+    * Set the number of published data objects cached for topics matching a pattern.  By default, caching is done.
+    * <p/>
+    * This overrides any setting for the DefaultCacheSizePerClassOrTopic.
+    * <p/>
+    * Settings for exact topic names take precedence over pattern matching.  If a topic matches the cache settings
+    * for more than one pattern, the cache size chosen is an undetermined one from one of the matched pattern settings.
+    * <p/>
+    * The cache for a topic is not adjusted until the next publication on that topic.
+    *
+    * @param pattern the pattern matching topic names
+    * @param cacheSize the number of data Objects to cache for this topci
+    */
+   public void setCacheSizeForTopic(Pattern pattern, int cacheSize) {
+      synchronized(cacheLock) {
+         if (rawCacheSizesForPattern == null) {
+            rawCacheSizesForPattern = new HashMap();
+         }
+         rawCacheSizesForPattern.put(pattern, new Integer(cacheSize));
+         rawCacheSizesForPatternChanged = true;
+      }
+   }
+
+   /**
+    * Returns the number of cached data objects published on a particular topic.  By default, no caching is performed.
+    * <p/>
+    * This result is computed for a particular topic from the values passed to #setCacheSizeForTopic(String, int) and
+    * #setCacheSizeForTopic(Pattern, int).
+    *
+    * @param topic the topic name
+    *
+    * @return the maximum size of the data Object cache for the given topic
+    *
+    * @see #setCacheSizeForTopic(String, int)
+    * @see #setCacheSizeForTopic(java.util.regex.Pattern, int)
+    */
+   public int getCacheSizeForTopic(String topic) {
+      if (topic == null) {
+         throw new IllegalArgumentException("topic must not be null.");
+      }
+      synchronized(cacheLock) {
+         if ((rawCacheSizesForTopic == null || (rawCacheSizesForTopic != null && rawCacheSizesForTopic.size() == 0)) &&
+                 (rawCacheSizesForPattern == null || (rawCacheSizesForPattern != null && rawCacheSizesForPattern.size() == 0))) {
+            return getDefaultCacheSizePerClassOrTopic();
+         }
+         if (cacheSizesForTopic == null) {
+            cacheSizesForTopic = new HashMap();
+         }
+         if (rawCacheSizesForTopicChanged || rawCacheSizesForPatternChanged) {
+            cacheSizesForTopic.clear();
+            cacheSizesForTopic.putAll(rawCacheSizesForTopic);
+            rawCacheSizesForTopicChanged = false;
+            rawCacheSizesForPatternChanged = false;
+         }
+
+         //Is this an exact match or has it been matched to a pattern yet?
+         Integer size = (Integer) cacheSizesForTopic.get(topic);
+         if (size != null) {
+            return size.intValue();
+         } else {
+            //try mattching patterns
+            if (rawCacheSizesForPattern != null) {
+               Set patterns = rawCacheSizesForPattern.keySet();
+               for (Iterator iterator = patterns.iterator(); iterator.hasNext();) {
+                  Pattern pattern = (Pattern) iterator.next();
+                  if (pattern.matcher(topic).matches()) {
+                     size = (Integer) rawCacheSizesForPattern.get(pattern);
+                     cacheSizesForTopic.put(topic, size);
+                     return size.intValue();
+                  }
+               }
+            }
+         }
+         return getDefaultCacheSizePerClassOrTopic();
+      }
+   }
+
+   /**
+    * @param eventClass an index into the cache, cannot be an inteface
+    *
+    * @return the last event published for this event class, or null if caching is turned off (the default)
+    */
+   public EventServiceEvent getLastEvent(Class eventClass) {
+      if (eventClass.isInterface()) {
+         throw new IllegalArgumentException("Interfaces are not accepted in get last event, use a specific event class.");
+      }
+      synchronized(cacheLock) {
+         List eventCache = (List) cacheByEvent.get(eventClass);
+         if (eventCache == null || eventCache.size() == 0) {
+            return null;
+         }
+         return (EventServiceEvent) eventCache.get(0);
+      }
+   }
+
+   /**
+    * @param eventClass an index into the cache, cannot be an inteface
+    *
+    * @return the last events published for this event class, or null if caching is turned off (the default)
+    */
+   public List getCachedEvents(Class eventClass) {
+      if (eventClass.isInterface()) {
+         throw new IllegalArgumentException("Interfaces are not accepted in get last event, use a specific event class.");
+      }
+      synchronized(cacheLock) {
+         List eventCache = (List) cacheByEvent.get(eventClass);
+         if (eventCache == null || eventCache.size() == 0) {
+            return null;
+         }
+         return eventCache;
+      }
+   }
+
+   /**
+    * @param topic an index into the cache
+    *
+    * @return the last data Object published on this topic, or null if caching is turned off (the default)
+    */
+   public Object getLastTopicData(String topic) {
+      synchronized(cacheLock) {
+         List topicCache = (List) cacheByTopic.get(topic);
+         if (topicCache == null || topicCache.size() == 0) {
+            return null;
+         }
+         return topicCache.get(0);
+      }
+   }
+
+   /**
+    * @param topic an index into the cache
+    *
+    * @return the last data Objects published on this topic, or null if caching is turned off (the default)
+    */
+   public List getCachedTopicData(String topic) {
+      synchronized(cacheLock) {
+         List topicCache = (List) cacheByTopic.get(topic);
+         if (topicCache == null || topicCache.size() == 0) {
+            return null;
+         }
+         return topicCache;
+      }
+   }
+
+   /**
+    * Clears the event cache for a specific event class or interface and it's any of it's subclasses or implementing
+    * classes.
+    *
+    * @param eventClassToClear the event class to clear the cache for
+    */
+   public void clearCache(Class eventClassToClear) {
+      synchronized(cacheLock) {
+         Set classes = cacheByEvent.keySet();
+         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
+            Class cachedClass = (Class) iterator.next();
+            if (eventClassToClear.isAssignableFrom(cachedClass)) {
+               iterator.remove();
+            }
+         }
+      }
+   }
+
+   /**
+    * Clears the topic data cache for a specific topic name.
+    *
+    * @param topic the topic name to clear the cache for
+    */
+   public void clearCache(String topic) {
+      synchronized(cacheLock) {
+         cacheByTopic.remove(topic);
+      }
+   }
+
+   /**
+    * Clears the topic data cache for all topics that match a particular pattern.
+    *
+    * @param pattern the pattern to match topic caches to
+    */
+   public void clearCache(Pattern pattern) {
+      synchronized(cacheLock) {
+         Set classes = cacheByTopic.keySet();
+         for (Iterator iterator = classes.iterator(); iterator.hasNext();) {
+            String cachedTopic = (String) iterator.next();
+            if (pattern.matcher(cachedTopic).matches()) {
+               iterator.remove();
+            }
+         }
+      }
+   }
+
+   /** Clear all event caches for all topics and event. */
+   public void clearCache() {
+      synchronized(cacheLock) {
+         cacheByEvent.clear();
+         cacheByTopic.clear();
+      }
    }
 
    /** Called during veto exceptions, calls handleException*/
