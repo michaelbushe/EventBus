@@ -20,14 +20,14 @@ package org.bushe.swing.event;
  * <p/>
  * A Container EventService is, unlike the {@link EventBus}, an {@link EventService} that is container specific, in
  * other words it is shared only among components within a container.  The only difference between a Container
- * EventService and any other EventService is that it's found and used by the children of a container.  The api and
+ * EventService and any other EventService is that it's found and used by the children of a container.  The API and
  * available implementations all work the same as any other EventService.
  * <p/>
  * A good candidate for a ContainerEventServiceSupplier is a Form class.  The components that the Form contains can
- * publish EventServiceEvents when they they change state - for example when their values change or when they become
- * invalid or valid.  The Form may have a model that collects the user's entries by subscribing to EventServiceEvents
- * published on the Form's EventService. A FormValidator may also listen to EventServiceEvents published on the Form's
- * EventService to subscribe validation errors.  The Form's components don't have to know about the form, or the model or
+ * publish objects when they they change state - for example when their values change or when they become
+ * invalid or valid.  The Form may have a model that collects the user's entries by subscribing to events
+ * published on the Form's EventService. A FormValidator may also listen to publications on the Form's
+ * EventService to subscribe to validation errors.  The Form's components don't have to know about the form, or the model or
  * the validator.  They just publish events on their Container's EventService, which they can find by using a {@link
  * ContainerEventServiceFinder}.
  * <p/>

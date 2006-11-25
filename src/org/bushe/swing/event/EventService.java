@@ -21,24 +21,26 @@ import java.util.regex.Pattern;
 
 
 /**
- * The core interface.  An EventService provides publish/subscribe event services to a single JVM.
+ * The core interface.  An EventService provides publish/subscribe services to a single JVM using Class-based and String-based 
+ * (i.e. "topic") publications and subscriptions.
  * <p>
- * The EventService publishes {@link EventServiceEvent}s for type-safe event listening or publishes
- * any object on a topic name (String).  See package documentation for usage details.
+ * In the class-based pub/sub, Objects are published on an {@link EventService} and (@link EventSubscriber}s subscribe by providing 
+ * a class or interface. Full class semantics are used, as expected.  That is, if a subscriber subscribes to a class, the 
+ * subscriber is notified if an object of that class is publish or if an object of a subclass of that class is published.  
+ * Likewise if a subscriber subscribes to and interface, it will be notified if any object that implements that interface is 
+ * published.  Subscribers can subscribe "exactly" using {@link #subscribeExactly(Class, EventSubscriber)} so that they are 
+ * notified only if an object of the exact class is published (and will not be notified if subclasses are published, 
+ * since this would not be "exact")
  * <p>
- * Subscribers are subscribed by event class or topic name.
+ * In topic-based pub/sub, a data Object is published on a topic name (String).  {@link EventTopicSubscriber}s subscribe to either 
+ * the exact name of the topic or they may subscribe using a Regular Expression that is used to match topic names.
  * <p>
- * Subscribing an EventSubscriber to an EventServiceEvent class subscribes a subscriber to be notified on the publication
- * of an EventServiceEvent class or any of its subclasses. Optionally, EventSubscribers can be subscribed the exact
- * class (and not subsclasses) by using the {@link #subscribeExactly(Class, EventSubscriber)} method.
- * <p>
- * Similarly, an EventTopicSubscriber can be subscribed to a specific topic name, or a RegEx Pattern such that a
- * subscriber will be notified whenever an event is published on a topic name that matches the subscribing pattern.
+ * See package documentation for usage details and examples.
  * <p>
  * A single subscriber cannot subscribe more than once to an event or topic name.  EventService implementations
  * should handle double-subscription requests by returing false on subscribe().  A single EventSubscriber can subscribe
  * to more than one event class, and a single EventTopicSubscriber can subscribe to more than one topic name or pattern.
- * A single object can implement both EventSubscriber and EventTopicSubscriber interfaces.  Subscribers are guaranteed
+ * A single object may implement both EventSubscriber and EventTopicSubscriber interfaces.  Subscribers are guaranteed
  * to only be called for the classes and/or topic names they subscribe to.  If a subscriber subscribes to a topic and
  * to a regular expression that matches the topic name, this is considered two different subscriptions and the
  * subscriber will be called twice for the publication on the topic.  Similarly, if a subscriber subscribes to a class
@@ -56,7 +58,7 @@ import java.util.regex.Pattern;
  * <p>
  * Publication on a class or topic name can be vetoed by a {@link VetoEventListener}.
  * All VetoEventListeners are checked before any EventSubscribers or EventTopicSubscribers are called.
- * This is unlike the JavaBean's VetoPropertyEventListener which can leave side effects of half-propogated events.
+ * This is unlike the JavaBean's VetoPropertyEventListener which can leave side effects and half-propogated events.
  * VetoEventListeners are subscribed in the same manner as EventSubscribers and EventTopicSubscribers.
  * <p>
  * Subscribers are called in the order in which they are subscribed by default (FIFO).  This is also unlike Swing, where
@@ -64,15 +66,17 @@ import java.util.regex.Pattern;
  * <p>
  * This simple example prints "Hello World"
  * <pre>
+ * EventService eventService = new ThreadSafeEventService();
  * //Create a subscriber
  * EventTopicSubscriber subscriber = new EventTopicSubscriber() {
- *    public void onEvent(String topic, Object evt) {
- *        System.out.println(topic+" "+evt);
+ *    public void onEvent(String topic, Object event) {
+ *        System.out.println(topic+" "+event);
  *    }
  * });
- * EventBus.subscribe("Hello", subscriber);
- * EventBus.publish("Hello", "World");
- * System.out.println(subscriber + " This is just to make sure the subscriber didn't get garbage collected, not necessary if you use subscribeStrongly()");
+ * eventService.subscribe("Hello", subscriber);
+ * eventService.publish("Hello", "World");
+ * System.out.println(subscriber + " Since the reference is used after it is subscribed, it doesn't get garbage collected, 
+ * this is not necessary if you use subscribeStrongly()");
  * </pre>
  * <p>
  * Events and/or topic data can be cached, but are not by default.  To cache events or topic data, call
@@ -84,7 +88,9 @@ import java.util.regex.Pattern;
  * In multithreaded applications, you never know if your subscriber has handled an event while it was being subscribed
  * (before the subscribe() method returned) that is newer or older than the retrieved cached value (taked before or
  * after subscribe() respectively).
- *
+ * <p>
+ * There is nothing special about the term "Event," this could just as easily be called a "Message" Service, this term
+ * is already taken by the JMS, which is similar, but is used across processes and networks.
  * @author Michael Bushe michael@bushe.com
  * @see ThreadSafeEventService for the default implementation
  * @see SwingEventService for the Swing-safe implementation
@@ -93,11 +99,12 @@ import java.util.regex.Pattern;
 public interface EventService {
 
    /**
-    * Publishes an EventServiceEvent so that all subscribers to the EventServiceEvent class will be notified about it.
+    * Publishes an Object so that subscribers will be notified if they subscribed
+    * to the Object's class, one of its subclasses, or to one of its implementing interfaces.
     *
-    * @param evt The event that occured
+    * @param event The event that occured
     */
-   public void publish(EventServiceEvent evt);
+   public void publish(Object event);
 
    /**
     * Publishes an object on a topic name so that all subscribers to that name will be notified about it.
@@ -109,18 +116,18 @@ public interface EventService {
 
    /**
     * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of events of an event class and
-    * its subclasses.
+    * its subclasses, or to an event's interface.
     * <p>
     * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
     * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
-    * the subscriber has not been garbage collected, then the onEvent will be called normally.  If the hard reference
+    * the subscriber has not been garbage collected, then onEvent(Object) will be called normally.  If the hard reference
     * has been garbage collected, the service will unsubscribe it's WeakReference.
     * <p>
     * It's allowable to call unsubscribe() with the same EventSubscriber hard reference to stop a subscription
     * immediately.
     * <p>
-    * The service will create the WeakReference
-    * @param eventClass the class of EventServiceEvent listened to
+    * The service will create the WeakReference on behalf of the caller. on behalf of the caller.
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
     * @return true if the subscriber was subscribed sucessfully, false otherwise
@@ -139,8 +146,8 @@ public interface EventService {
     * It's allowable to call unsubscribe() with the same EventSubscriber hard reference to stop a subscription
     * immediately.
     * <p>
-    * The service will create the WeakReference
-    * @param eventClass the class of EventServiceEvent listened to
+    * The service will create the WeakReference on behalf of the caller.
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
     * @return true if the subscriber was subscribed sucessfully, false otherwise
@@ -188,7 +195,7 @@ public interface EventService {
     * Subscribes a subscriber to an event class and its subclasses.
     * <p>
     * The subscriber will remain subscribed until {@link #unsubscribe(Class, EventSubscriber)}  is called.
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
     * @return true if the subscriber was subscribed sucessfully, false otherwise
@@ -199,7 +206,7 @@ public interface EventService {
     * Subscribes a subscriber to an event class (and not its subclasses).
     * <p>
     * The subscriber will remain subscribed until {@link #unsubscribe(Class, EventSubscriber)}  is called.
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
     * @return true if the subscriber was subscribed sucessfully, false otherwise
@@ -231,7 +238,7 @@ public interface EventService {
    /**
     * Stop the subscription for a subscriber that is subscribed to an event class and its subclasses.
     *
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that is subscribed to the event.  The same reference as that was subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
@@ -241,7 +248,7 @@ public interface EventService {
    /**
     * Stop the subscription for a subscriber that is subscribed to an event class (and not its subclasses).
     *
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that is subscribed to the event.  The same reference as that was subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
@@ -279,8 +286,8 @@ public interface EventService {
     * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
     * immediately.
     * <p/>
-    * The service will create the WeakReference
-    * @param eventClass the class of EventServiceEvent that can be vetoed
+    * The service will create the WeakReference on behalf of the caller.
+    * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
@@ -298,8 +305,8 @@ public interface EventService {
     * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
     * immediately.
     * <p/>
-    * The service will create the WeakReference
-    * @param eventClass the class of EventServiceEvent that can be vetoed
+    * The service will create the WeakReference on behalf of the caller.
+    * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
@@ -332,7 +339,7 @@ public interface EventService {
     * <p>
     * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Class, VetoEventListener)}
     * is called.
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param vetoListener The vetoListener that will accept the events when published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
@@ -344,7 +351,7 @@ public interface EventService {
     * <p>
     * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Class, VetoEventListener)}
     * is called.
-    * @param eventClass the class of EventServiceEvent listened to
+    * @param eventClass the class of published objects to listen to
     * @param vetoListener The vetoListener that will accept the events when published.
     *
     * @return true if the vetoListener was subscribed sucessfully, false otherwise
@@ -382,7 +389,7 @@ public interface EventService {
    /**
     * Stop the subscription for a vetoListener that is subscribed to an event class and its subclasses.
     *
-    * @param eventClass the class of EventServiceEvent that can be vetoed
+    * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The vetoListener that will accept or reject publication of an event.
     *
     * @return true if the vetoListener was subscribed to the event, false if it wasn't
@@ -392,7 +399,7 @@ public interface EventService {
    /**
     * Stop the subscription for a vetoListener that is subscribed to an event class (but not its subclasses).
     *
-    * @param eventClass the class of EventServiceEvent that can be vetoed
+    * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The vetoListener that will accept or reject publication of an event.
     *
     * @return true if the vetoListener was subscribed to the event, false if it wasn't
@@ -585,7 +592,7 @@ public interface EventService {
     * @param eventClass an index into the cache
     * @return the last event published for this event class, or null if caching is turned off (the default)
     */
-   public EventServiceEvent getLastEvent(Class eventClass);
+   public Object getLastEvent(Class eventClass);
 
    /**
     * @param eventClass an index into the cache

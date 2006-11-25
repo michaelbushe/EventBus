@@ -16,9 +16,9 @@
 package org.bushe.swing.event;
 
 /**
- * A simple event that delivers an untyped object.
+ * A simple event that delivers an untyped object with a source object.
  * <p/>
- * Usage: EventBus.publish("ObjectOfInterestTopic", new ObjectEvent(this, objectOfInterest);
+ * Usage: EventBus.publish(new ObjectEvent(this, objectOfInterest);
  *
  * @author Michael Bushe michael@bushe.com
  */

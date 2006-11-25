@@ -16,7 +16,7 @@
 package org.bushe.swing.event;
 
 /**
- * Interface for classes that subscribe to {@link EventServiceEvent}s from an {@link EventService}.
+ * Callback interface for class-based subscribers of an {@link EventService}.
  *
  * @author Michael Bushe michael@bushe.com
  */
@@ -24,11 +24,14 @@ public interface EventSubscriber {
 
    /**
     * Handle a published event.
-    * <p>The EventService calls this method on each publication of subscribed EventServiceEvents.
-    * <p>Prequisite: EventSubscriber has subscribed for the EventServiceEvent type with the EventService.</p>
-    * See {@link EventService}</p>
+    * <p>The EventService calls this method on each publication of an object that matches the class or interface
+    * passed to one of the EventService's class-based subscribe methods, specifically, 
+    * {@link EventService#subscribe(Class, EventSubscriber)}
+    * {@link EventService#subscribeExactly(Class, EventSubscriber)}
+    * {@link EventService#subscribeStrongly(Class, EventSubscriber)}
+    * and {@link EventService#subscribeExactlyStrongly(Class, EventSubscriber)}.
     *
-    * @param evt The EventServiceEvent that is being published.
+    * @param event The Object that is being published.
     */
-   public void onEvent(EventServiceEvent evt);
+   public void onEvent(Object event);
 }

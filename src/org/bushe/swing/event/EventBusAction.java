@@ -34,7 +34,7 @@ public class EventBusAction extends EventServiceAction {
       super(actionName, icon);
    }
 
-   protected EventService getEventService(ActionEvent evt) {
+   protected EventService getEventService(ActionEvent event) {
       return EventBus.getGlobalEventService();
    }
 }

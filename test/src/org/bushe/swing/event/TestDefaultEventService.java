@@ -364,7 +364,7 @@ public class TestDefaultEventService extends TestCase {
       actualReturn = eventService.subscribe(getEventClass(), subscriber);
 
       VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+         public boolean shouldVeto(Object evt) {
             return true;
          }
       };
@@ -553,7 +553,7 @@ public class TestDefaultEventService extends TestCase {
       eventService.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled = new Boolean[1];
       eventService.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
+         public void onEvent(Object evt) {
             wasCalled[0] = Boolean.TRUE;
          }
       });
@@ -563,7 +563,7 @@ public class TestDefaultEventService extends TestCase {
       eventService.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled2 = new Boolean[1];
       eventService.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
+         public void onEvent(Object evt) {
             wasCalled2[0] = Boolean.TRUE;
             timing = (SubscriberTimingEvent) evt;
          }
@@ -680,14 +680,14 @@ public class TestDefaultEventService extends TestCase {
       public int timesTopicCalled = 0;
       public int timesEventCalled = 0;
       public String lastEventString;
-      public EventServiceEvent lastEvent;
+      public Object lastEvent;
 
       public void onEvent(String topic, Object data) {
          timesTopicCalled++;
          lastEventString = topic;
       }
 
-      public void onEvent(EventServiceEvent evt) {
+      public void onEvent(Object evt) {
          timesEventCalled++;
          lastEvent = evt;
       }
@@ -942,7 +942,7 @@ public class TestDefaultEventService extends TestCase {
       es.publish(new EventA());
       List events = es.getCachedEvents(EventA.class);
       assertNull(events);
-      EventServiceEvent lastEvent = es.getLastEvent(EventA.class);
+      Object lastEvent = es.getLastEvent(EventA.class);
       assertNull(lastEvent);
       assertEquals(0, es.getCacheSizeForEventClass(EventA.class));
       assertEquals(0, es.getDefaultCacheSizePerClassOrTopic());
@@ -959,7 +959,7 @@ public class TestDefaultEventService extends TestCase {
       assertEquals(1, es.getCacheSizeForEventClass(EventA.class));
       //subscribe and see if it still works and that the new event is cached
       EventSubscriber sub = new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
+         public void onEvent(Object evt) {
             System.out.println("Fooo");
          }
       };

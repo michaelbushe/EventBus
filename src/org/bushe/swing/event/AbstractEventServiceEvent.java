@@ -16,8 +16,8 @@
 package org.bushe.swing.event;
 
 /**
- * Common base class for EventServiceEvents in the application. Provides the small convenience of holding the event
- * source.
+ * Convenience base class for EventServiceEvents in the application. Provides the small convenience of holding the event
+ * source publication.  It is not necessary to use this event class when using an EventService.
  *
  * @author Michael Bushe michael@bushe.com
  */

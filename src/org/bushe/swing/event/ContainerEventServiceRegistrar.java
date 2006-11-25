@@ -24,12 +24,13 @@ import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
 /**
- * Registers a component with it's Container's EventService while keeping track of the components container.
+ * Registers a component with it's Container's EventService while keeping track of the component's container.
  * <p>
  * Registering with a component's ContainerEventService is tricky since components may not be in their hierarchy when
- * they want to register with it, or components may move (though rarely).  This class subscribes the of registering a
- * component with it's container event service.  It automatically registers when the Container becomes available to a
- * component, and unregisters and re-registers when the component is moved.
+ * they want to register with it, or components may move (though rarely).  This class subscribes a component with 
+ * it's container event service.  If it is unavailable, the registrar waits until the component's Container becomes available 
+ * and subscribes at that time.  If the component changes Containers, the registrar unsuscribes the component from its old 
+ * container and subscribes it to the new one.
  *
  * @author Michael Bushe michael@bushe.com
  */

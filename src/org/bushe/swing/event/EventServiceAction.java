@@ -19,19 +19,21 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 /**
- * Abstract class that translates a Swing ActionEvent to an EventServiceEvent published on an {@link EventService}.
+ * Abstract class that publishes a Swing ActionEvent (or another object) to an {@link EventService}.
  * <p>
- * This abstract class ties the Swing Actions with the Event Bus.  When fired, this action publishes an event on an
+ * This abstract class ties the Swing Actions with the Event Bus.  When fired, an ActionEvent is published on an
  * EventService - either the global EventBus or a Container EventService.
  * <p/>
  * There are two derivatives of this class: The EventBusAction, which publishes the ActionEvent on the global EventBus,
- * and the ContainerEventServiceAction, which publishes the Action on the a local ContainerEventService.
+ * and the ContainerEventServiceAction, which publishes the ActionEvent on the a local ContainerEventService.
  * <p/>
- * By default a topic is published on the EventService.  The topic name is the action's id (which is usually also the
- * action's command name), and the value published on the topic is the ActionEvent.
+ * By default the ActionEvent is published on an EventService topic corresponding to this action's Action.ACTION_COMMAND_KEY.  
+ * Though this behavior is highly configurable.  See {@link #getTopicName(ActionEvent)} and {@link #setTopicName(String)} for
+ * ways to customize the topic used.  Override {@link #getTopicValue(ActionEvent)} to publish an object other than the ActionEvent.
  * <p/>
- * To publish an EventServiceEvent instead of publishing on a topic name, override
- * {@link #getEventServiceEvent(ActionEvent)}
+ * Instead of publishing on a topic, the ActionEvent can be published using class-based publication, use {@link #setPublishesOnTopic(boolean)}
+ * to set this behvior.  When using class-based publication, the ActionEvent is published by default.  Override 
+ * {@link #getEventServiceEvent(ActionEvent)} to publish an object other than the ActionEvent.
  *
  * @author Michael Bushe michael@bushe.com
  */
@@ -39,100 +41,59 @@ public abstract class EventServiceAction extends AbstractAction {
    public static final String EVENT_SERVICE_TOPIC_NAME = "event-service-topic";
 
    private boolean throwsExceptionOnNullEventService = true;
-    public static final String EVENT_BUS_EVENT_CLASS_NAME = "eventBus.eventClassName";
+   public static final String EVENT_BUS_EVENT_CLASS_NAME = "eventBus.eventClassName";
 
-    public EventServiceAction() {
-    }
+   private String topicName;
+   private boolean publishesOnTopic = true;
+
+   public EventServiceAction() {
+   }
 
    public EventServiceAction(String actionName, ImageIcon icon) {
       super(actionName, icon);
    }
 
+   
    /**
-    * @param evt the event passed to #execute(ActionEvent)
-    * <p>
-    * Gets the EventService from {@link #getEventService(ActionEvent evt)}.
-    * Gets event from {@link #getEventServiceEvent(java.awt.event.ActionEvent)}
-    * if null, gets the topic name from {@link #getTopicName(java.awt.event.ActionEvent)} and
-    * the topic value from if null, gets the topic name from {@link #getTopicValue(java.awt.event.ActionEvent)}.
-    * Published the event or the value on the topic on the EventService.
+    * Override to return the EventService on which to publish.  
+    * @param event the event passed to #execute(ActionEvent)
     *
     * @return the event service to publish on, if null and getThrowsExceptionOnNullEventService() is true (default) and
     *         exception is thrown
+    * @see EventBusAction
+    * @see ContainerEventServiceAction
     */
-   protected abstract EventService getEventService(ActionEvent evt);
+   protected abstract EventService getEventService(ActionEvent event);
 
    /**
-    * Publishes the event on the EventService returned by getSwingEventService(evt)
-    * @param evt the action event to turn into an event bus event.
-    * @throws RuntimeException if getThrowsExceptionOnNullEventService() &&  getSwingEventService(evt) == null
+    * @return true if this action publishes on a topic, false if it uses class-based publication.
     */
-   public void actionPerformed(ActionEvent evt) {
-      EventService eventService = getEventService(evt);
-      if (eventService == null) {
-         if (getThrowsExceptionOnNullEventService()) {
-            throw new RuntimeException("Null EventService supplied to EventServiceAction with name:" + getName());
-         } else {
-            return;
-         }
-      }
-      EventServiceEvent event = getEventServiceEvent(evt);
-      if (event != null) {
-         eventService.publish(event);
-      } else {
-         String topic = getTopicName(evt);
-         Object topicValue = getTopicValue(evt);
-         eventService.publish(topic, topicValue);
-      }
-   }
-
-   /**@return the name of the action (javax.swing.Action#NAME)
-    */
-   public Object getName() {
-      return getValue(Action.NAME);
+   public boolean isPublishesOnTopic() {
+       return publishesOnTopic;
    }
 
    /**
-    * Override to publish and event service event instead of publishing on a topic.
-    * <p>
-    * Checks if the {@link EVENT_BUS_EVENT_CLASS_NAME} is defined for this action,
-    * attempts a no-arg constuction of the event and fires it.
-    * <p>
-    * Using SAM, this might looke like:
-    * <code>
-    * <action id="exit-action"
-    *     mnemonic="x"
-    *     name="Exit"
-    *     actionClass="org.bushe.swing.event.eventbus.demo.ShowViewAction">
-    *    <name-value-pair name="eventBus.eventClassName" value="org.bushe.swing.event.eventbus.app.SystemShutdownEvent"/>
-    * </action>
-    * <code>
-    *
-    * @param evt the event passed to #execute(ActionEvent)
-    *
-    * @return an EventServiceEvent to publish, if null, a topic name and value is used.
+    * Sets whether this action publishes on a topic or uses class-based publication.
+    * @param onTopic true if publishes on topic (the default), false if using class-based publication.
     */
-   protected EventServiceEvent getEventServiceEvent(ActionEvent evt) {
-        String eventClassName = (String) getValue(EVENT_BUS_EVENT_CLASS_NAME);
-        if (eventClassName != null) {
-            try {
-                Class cl = Class.forName(eventClassName);
-                EventServiceEvent actionEvent = (EventServiceEvent) cl.newInstance();
-                return actionEvent;
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException("Could not load class "+eventClassName, e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException("Could not load class "+eventClassName, e);
-            } catch (InstantiationException e) {
-                throw new RuntimeException("Could not load class "+eventClassName, e);
-            }
-        }
-        return null;
+   public void setPublishesOnTopic(boolean onTopic) {
+      this.publishesOnTopic = onTopic;
+   }
+   
+   /**
+    * Explicitly sets the topic name this action publishes on.
+    * <p>
+    * A topic name does not need to be explicitly set.  See {@link #getTopicName(ActionEvent)}
+    * to understand how the topic name is determined implicitly.
+    */
+   public void setTopicName(String topicName) {
+       this.topicName = topicName;
    }
 
    /**
     * The topic name is the first non-null value out of:
     * <ol>
+    * <li>A topic name explictly set via {@link #setTopicName(String)}
     * <li>the action's getValue("event-service-topic")  {@link #EVENT_SERVICE_TOPIC_NAME}
     * <li>the action's getValue("ID") (for compatibility with the SAM ActionManager's ID)
     * <li>the action's {@link javax.swing.Action#ACTION_COMMAND_KEY}
@@ -144,26 +105,29 @@ public abstract class EventServiceAction extends AbstractAction {
     * <p/>
     * To use a different name, override this method.
     *
-    * @param evt the event passed to #execute(ActionEvent)
+    * @param event the event passed to #execute(ActionEvent)
     *
     * @return the topic name to publish on, getId() by default
     */
-   protected String getTopicName(ActionEvent evt) {
-      Object topicName = getValue(EVENT_SERVICE_TOPIC_NAME);
-      if (topicName != null) {
-         return topicName+"";
+   public String getTopicName(ActionEvent event) {
+       if (topicName != null) {
+           return topicName;
+       }
+      Object topic = getValue(EVENT_SERVICE_TOPIC_NAME);
+      if (topic != null) {
+         return topic+"";
       } else {
-         topicName = getValue("ID");
-         if (topicName != null) {
-            return topicName+"";
+         topic = getValue("ID");
+         if (topic != null) {
+            return topic+"";
          } else {
-            topicName = getValue(Action.ACTION_COMMAND_KEY);
-            if (topicName != null) {
-               return topicName+"";
+            topic = getValue(Action.ACTION_COMMAND_KEY);
+            if (topic != null) {
+               return topic+"";
             } else {
-               topicName = evt.getActionCommand();
-               if (topicName != null) {
-                  return topicName+"";
+               topic = event.getActionCommand();
+               if (topic != null) {
+                  return topic+"";
                } else {
                   return (String) getName();
                }
@@ -173,15 +137,60 @@ public abstract class EventServiceAction extends AbstractAction {
    }
 
    /**
-    * By default, the id of the action is used as the topic name to publish on.  To use a different name, override this
-    * method.
+    * By default, the ActionEvent is the object published on the topic.  Override this method to publish another object.
     *
-    * @param evt the event passed to #execute(ActionEvent)
+    * @param event the event passed to #execute(ActionEvent)
     *
     * @return the topic value to publish, getId() by default
     */
-   protected Object getTopicValue(ActionEvent evt) {
-      return evt;
+   protected Object getTopicValue(ActionEvent event) {
+      return event;
+   }
+
+   /**@return the name of the action (javax.swing.Action#NAME)
+    */
+   public Object getName() {
+      return getValue(Action.NAME);
+   }
+
+   /**
+    * If isPublishesOnTopic() returns false (i.e., when using class-based rather than topic-based publication), then override
+    * this method to publish an on object other than the ActionEvent.
+    *
+    * @return the Object to publish, cannot be null
+    */
+   protected Object getEventServiceEvent(ActionEvent event) {
+        return event;
+   }
+
+   /**
+    * Publishes the event on the EventService returned by getEventService(event)
+    * <p>
+    * Gets the EventService from {@link #getEventService(ActionEvent event)}.
+    * Checks isPublishesOnTopic().  If true, gets the topic name from {@link #getTopicName(java.awt.event.ActionEvent)} and
+    * the topic value from {@link #getTopicValue(ActionEvent)}, and publishes the value on the topic on the EventService.  If false,
+    * gets event from {@link #getEventServiceEvent(java.awt.event.ActionEvent)}, and publishes the event on the EventService.
+    * <p>
+    * @param event the action event to publish.
+    * @throws RuntimeException if getThrowsExceptionOnNullEventService() &&  getSwingEventService(event) == null
+    */
+   public void actionPerformed(ActionEvent event) {
+      EventService eventService = getEventService(event);
+      if (eventService == null) {
+         if (getThrowsExceptionOnNullEventService()) {
+            throw new RuntimeException("Null EventService supplied to EventServiceAction with name:" + getName());
+         } else {
+            return;
+         }
+      }
+      if (isPublishesOnTopic()){
+         String topic = getTopicName(event);
+         Object topicValue = getTopicValue(event);
+         eventService.publish(topic, topicValue);          
+      } else {
+        Object esEvent = getEventServiceEvent(event);
+        eventService.publish(esEvent);
+      }
    }
 
    /**

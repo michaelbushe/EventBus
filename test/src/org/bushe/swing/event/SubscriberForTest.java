@@ -22,7 +22,7 @@ class SubscriberForTest implements EventSubscriber {
       this.throwException = throwException;
    }
 
-   public void onEvent(EventServiceEvent evt) {
+   public void onEvent(Object evt) {
       callTime = new Date();
       if (waitTime != null) {
          try {

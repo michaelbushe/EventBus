@@ -25,7 +25,7 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
    private Long start;
    private Long end;
    private Long timeLimitMilliseconds;
-   private EventServiceEvent event;
+   private Object event;
    private EventSubscriber subscriber;
    private VetoEventListener vetoEventListener;
    private String stringified;
@@ -41,7 +41,7 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
     * @param vetoEventListener the vetoEventListener that took too long, can be null if the eventListener is not null
     */
    public SubscriberTimingEvent(Object source, Long start, Long end, Long timeLimitMilliseconds,
-           EventServiceEvent event, EventSubscriber subscriber, VetoEventListener vetoEventListener) {
+           Object event, EventSubscriber subscriber, VetoEventListener vetoEventListener) {
       super(source);
       this.start = start;
       this.end = end;
@@ -88,7 +88,7 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
    /**
     * @return the published event
     */
-   public EventServiceEvent getEvent() {
+   public Object getEvent() {
       return event;
    }
 

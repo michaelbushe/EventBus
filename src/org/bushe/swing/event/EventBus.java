@@ -50,13 +50,13 @@ public class EventBus {
    }
 
    /**
-    * @see EventService#publish(EventServiceEvent)
+    * @see EventService#publish(Object)
     */
-   public static void publish(EventServiceEvent evt) {
-      if (evt == null) {
+   public static void publish(Object event) {
+      if (event == null) {
          throw new IllegalArgumentException("Can't publish null.");
       }
-      globalEventService.publish(evt);
+      globalEventService.publish(event);
    }
 
    /**
@@ -367,7 +367,7 @@ public class EventBus {
    /**
     * @see EventService#getLastEvent(Class)
     */
-   public EventServiceEvent getLastEvent(Class eventClass)  {
+   public Object getLastEvent(Class eventClass)  {
       return globalEventService.getLastEvent(eventClass);
    }
 

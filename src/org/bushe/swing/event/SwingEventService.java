@@ -73,20 +73,20 @@ public class SwingEventService extends ThreadSafeEventService {
     * Otherwise this DOES NOT post a new event on the EDT.  The subscribers are called on the same EDT event,
     * just like addXXXListeners would be.
     */
-   protected void publish(final EventServiceEvent event, final String topic, final Object evtObj,
+   protected void publish(final EventServiceEvent event, final String topic, final Object eventObj,
            final List subscribers, final List vetoSubscribers, final StackTraceElement[] callingStack) {
       if (SwingUtilities.isEventDispatchThread()) {
-         super.publish(event, topic, evtObj, subscribers, vetoSubscribers, callingStack);
+         super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
       } else {
          //Make call to this method - stick on the EDT if not on the EDT
          //Check the params first so that this thread can get the exception thrown
          SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                if (LOG.isLoggable(Level.FINE)) {
-                  LOG.fine("publish(" + event + "," + topic + "," + evtObj
+                  LOG.fine("publish(" + event + "," + topic + "," + eventObj
                           + "), called from non-EDT Thread:" + callingStack);
                }
-               SwingEventService.super.publish(event, topic, evtObj, subscribers, vetoSubscribers, callingStack);
+               SwingEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
             }
          });
       }

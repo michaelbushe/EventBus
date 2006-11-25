@@ -23,6 +23,9 @@ import java.util.HashMap;
  * Nothin' fancy, since the EventService is intended for a single VM. Allows mulitple
  * named EventServices to be discovered.
  * <p>
+ * Holds the singleton Swing event service, which is wrapped by the EventBus,
+ * which is mapped to the service name SERVICE_NAME_EVENT_BUS ("EventBus").
+ * <p>
  * Since the default EventService implementation is thread safe, and since it's not
  * good to have lots of events on the EventDispatchThread you may want multiple EventServices
  * running on multiple threads, perhaps pulling events from a server and coalescing them
@@ -30,17 +33,23 @@ import java.util.HashMap;
  * @author Michael Bushe michael@bushe.com
  */
 public class EventServiceLocator {
-
-   private static final EventService EVENT_SERVICE = new SwingEventService();
+   /** The name "EventBus" is reserved for the service that the EventBus wraps.*/
+   public static final String SERVICE_NAME_EVENT_BUS = "EventBus";
+   
+   private static EventService SWING_EVENT_SERVICE;
    private static final Map EVENT_SERVICES = new HashMap();
 
    /** @return the singleton default instance of a SwingEventService  */
-   public static EventService getSwingEventService() {
-      return EVENT_SERVICE;
+   public static synchronized EventService getSwingEventService() {
+         if (SWING_EVENT_SERVICE == null) {
+             SWING_EVENT_SERVICE = new SwingEventService();
+             EVENT_SERVICES.put(SERVICE_NAME_EVENT_BUS, SWING_EVENT_SERVICE);
+         }
+         return SWING_EVENT_SERVICE;
    }
 
    /** @return a named event service instance */
-   public static EventService getEventService(String serviceName) {
+   public static synchronized EventService getEventService(String serviceName) {
       return (EventService) EVENT_SERVICES.get(serviceName);
    }
 
@@ -48,7 +57,7 @@ public class EventServiceLocator {
     * Add a named EventService to the locator
     * @param serviceName a named event service instance
     */
-   public static void setEventService(String serviceName, EventService es) {
+   public static synchronized void setEventService(String serviceName, EventService es) {
       EVENT_SERVICES.put(serviceName, es);
    }
 }

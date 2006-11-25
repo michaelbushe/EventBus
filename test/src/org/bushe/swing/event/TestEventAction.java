@@ -115,16 +115,17 @@ public class TestEventAction extends TestCase {
 
    public void testEventBusEventAction() {
       EventBusAction action = new EventBusAction("FooAction", null) {
-         protected EventServiceEvent getEventServiceEvent(ActionEvent evt) {
+         protected Object getEventServiceEvent(ActionEvent evt) {
             return new MyEventServiceEvent(aSource, evt);
          }
       };
       EventBus.subscribe(MyEventServiceEvent.class, new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
-            assertEquals(evt.getSource(), aSource);
+         public void onEvent(Object evt) {
+            assertEquals(((EventServiceEvent)evt).getSource(), aSource);
             subscribedEvents.add(evt);
          }
       });
+      action.setPublishesOnTopic(false);
       action.actionPerformed(new ActionEvent(this, 0, "FooAction"));
       try {
          Thread.sleep(500);//Calling the EDT, need to slow this thread

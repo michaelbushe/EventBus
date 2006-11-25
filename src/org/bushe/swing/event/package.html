@@ -18,8 +18,8 @@
 <p>This simple example prints &quot;Hello World&quot;</p>
 <pre><br>class MySubscriber implements EventTopicSubscriber {
    //EventTopicSubscriber implementation
-   public void onEvent(String topic, Object evt) {
-   	System.out.println(topic+&quot; &quot;+evt);
+   public void onEvent(String topic, Object event) {
+   	System.out.println(topic+&quot; &quot;+event);
    }
 }
 
@@ -243,7 +243,7 @@ client for the non-EDT threads (which is typically the case).<br>
       //An aside - the best way to create menus is with the SwingEventManager! See http://sam.dev.java.net  :-)
       //The exit menu item's action is a special EventBusAction that fires an ApplicationClosingEvent() when clicked.
       MenuItem exit = new JMenuItem(new EventBusAction() {
-         protected EventServiceEvent getEventServiceEvent(ActionEvent evt) {
+         protected EventServiceEvent getEventServiceEvent(ActionEvent event) {
             return new ApplicationClosingEvent();
          }
       });

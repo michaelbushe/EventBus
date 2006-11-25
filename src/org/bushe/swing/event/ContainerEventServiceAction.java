@@ -20,9 +20,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 /**
- * When fired, this action translates an ActionEvent to an {@link EventServiceEvent} published on a Container EventService.
- * <p/>
- * The source of the EventServiceEvent is the ActionEvent.
+ * When fired, this action poublishes an ActionEvent on a Container EventService.
+ * See {@link EventServiceAction} for more information.
  * <p/>
  * By default, the Container EventService is found by asking the ContainerEventServiceFinder to find the EventService
  * for the source of the fired ActionEvent, which must be a java.awt.Component and contained in a hierarchy (the source
@@ -48,11 +47,11 @@ public class ContainerEventServiceAction extends EventServiceAction {
       super(actionName, icon);
    }
 
-   protected EventService getEventService(ActionEvent evt) {
+   protected EventService getEventService(ActionEvent event) {
       Component comp = null;
       try {
-         if (evt.getSource() instanceof Component) {
-            comp = (Component) evt.getSource();
+         if (event.getSource() instanceof Component) {
+            comp = (Component) event.getSource();
          }
          if (comp == null) {
             if (getThrowsExceptionOnNullEventService()) {

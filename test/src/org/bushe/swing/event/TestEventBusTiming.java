@@ -86,7 +86,7 @@ public class TestEventBusTiming extends TestCase {
       EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled = new Boolean[1];
       EventBus.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
+         public void onEvent(Object evt) {
             wasCalled[0] = Boolean.TRUE;
          }
       });
@@ -99,7 +99,7 @@ public class TestEventBusTiming extends TestCase {
       EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled2 = new Boolean[1];
       EventBus.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
-         public void onEvent(EventServiceEvent evt) {
+         public void onEvent(Object evt) {
             wasCalled2[0] = Boolean.TRUE;
             timing = (SubscriberTimingEvent) evt;
          }

@@ -294,7 +294,7 @@ public class TestEventBus extends TestCase {
       actualReturn = EventBus.subscribe(getEventClass(), subscriber);
 
       VetoEventListener vetoListener = new VetoEventListener() {
-         public boolean shouldVeto(EventServiceEvent evt) {
+         public boolean shouldVeto(Object evt) {
             return true;
          }
       };

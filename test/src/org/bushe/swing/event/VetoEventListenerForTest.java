@@ -13,7 +13,7 @@ class VetoEventListenerForTest implements VetoEventListener {
    VetoEventListenerForTest(boolean throwException) {
       this.throwException = throwException;
    }
-   public boolean shouldVeto(EventServiceEvent evt) {
+   public boolean shouldVeto(Object evt) {
       if (throwException) {
          throw new IllegalArgumentException("veto ex");
       }

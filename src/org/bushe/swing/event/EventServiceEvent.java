@@ -16,7 +16,13 @@
 package org.bushe.swing.event;
 
 /**
- * Interface for events that get processed by the EventService
+ * Convenience interface for events that get processed by the EventService, its
+ * usage is not required in any way.  Any object can be published on an 
+ * EventService or on the EventBus.
+ * <p>
+ * It is a good practice to specify the source of the event when using pub/sub,
+ * especially in Swing applications.
+ * 
  * @see AbstractEventServiceEvent for a simple base class
  * @author Michael Bushe michael@bushe.com
  */
