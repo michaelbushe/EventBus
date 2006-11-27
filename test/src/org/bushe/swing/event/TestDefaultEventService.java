@@ -585,10 +585,26 @@ public class TestDefaultEventService extends TestCase {
       EventService es = EventServiceLocator.getSwingEventService();
       assertTrue(es instanceof SwingEventService);
       es = new ThreadSafeEventService(null, false);
-      EventServiceLocator.setEventService("foo", es);
+      try {
+         EventServiceLocator.setEventService("foo", es);
+      } catch (EventServiceExistsException e) {
+         fail("First set should succeed.");
+      }
       EventService es2 = EventServiceLocator.getEventService("foo");
       assertTrue(es2 == es);
-      EventServiceLocator.setEventService("foo", null);
+      try {
+         es = new ThreadSafeEventService(null, false);
+         EventServiceLocator.setEventService("foo", es);
+         fail("Second set should fail.");
+      } catch (EventServiceExistsException e) {
+      }
+      es2 = EventServiceLocator.getEventService("foo");
+      assertFalse(es2 == es);
+      try {
+         EventServiceLocator.setEventService("foo", null);
+      } catch (EventServiceExistsException e) {
+         fail("Null should succeed.");
+      }
       es2 = EventServiceLocator.getEventService("foo");
       assertNull(es2);
       assertEquals(EventServiceLocator.getSwingEventService(), EventBus.getGlobalEventService());

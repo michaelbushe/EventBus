@@ -50,14 +50,23 @@ public class EventServiceLocator {
 
    /** @return a named event service instance */
    public static synchronized EventService getEventService(String serviceName) {
-      return (EventService) EVENT_SERVICES.get(serviceName);
+      EventService es = (EventService) EVENT_SERVICES.get(serviceName);
+      if (es == null && SERVICE_NAME_EVENT_BUS.equals(serviceName)) {
+         es = getSwingEventService();
+      }
+      return es;
    }
 
    /**
     * Add a named EventService to the locator
     * @param serviceName a named event service instance
+    * @throws EventServiceExistsException if a service by this name already exists
     */
-   public static synchronized void setEventService(String serviceName, EventService es) {
-      EVENT_SERVICES.put(serviceName, es);
+   public static synchronized void setEventService(String serviceName, EventService es) throws EventServiceExistsException {
+      if (EVENT_SERVICES.get(serviceName) != null && es != null) {
+         throw new EventServiceExistsException("An event service by the name "+serviceName+ "already exists.  Perhaps multiple threads tried to create a service about the same time?");
+      } else {
+         EVENT_SERVICES.put(serviceName, es);
+      }
    }
 }

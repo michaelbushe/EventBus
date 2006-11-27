@@ -22,7 +22,7 @@ package org.bushe.swing.event.annotation;
  * public class MyAppController {  //no interface necessary
  *   public MyAppController { //nothing to do in the constructor
  *   }
- *   @EventSubscriber{eventClass=AppClosingEvent.class}
+ *   @EventSubscriber
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {//Use your own method name with typesafety
  *      //do something
  *   }
@@ -60,13 +60,13 @@ package org.bushe.swing.event.annotation;
  * <pre>
  * public class MyAppController {
  *   public MyAppController {
- *       EventServiceAnnotationTool.enhance(this);//this line can be avoided with a compile-time tool or an Aspect
+ *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
- *   @EventSubscriber{eventClass=AppStartingEvent.class}
+ *   @EventSubscriber
  *   public void onAppStartingEvent(AppStartingEvent appStartingEvent) {
  *      //do something
  *   }
- *   @EventSubscriber{eventClass=AppClosingEvent.class}
+ *   @EventSubscriber
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {
  *      //do something
  *   }
@@ -74,18 +74,29 @@ package org.bushe.swing.event.annotation;
  * </pre>
  * Brief, clear, and easy.
  */
-/*
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.util.regex.Pattern;
+
+import org.bushe.swing.event.EventServiceLocator;
+import org.bushe.swing.event.ThreadSafeEventService;
+import org.bushe.swing.event.EventService;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface EventSubscriber {
-    Class eventClass();
-    boolean exact() default false;
-    ReferenceStrength referenceSemantics() default ReferenceStrength.WEAK;
-    String value() default "";
+   /** The class to subscribe to, if not specified, a subscription is created for the type of the method parameter.*/
+   Class eventClass() default UseTheClassOfTheAnnotatedMethodsParameter.class;
+   /** Whether or not to subcribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
+   boolean exact() default false;
+   /** Whether to subscribe weakly or strongly. */
+   ReferenceStrength referenceStrength() default ReferenceStrength.WEAK;
+   /** The event service to subscribe to, default to the EventServiceLocator.SERVICE_NAME_EVENT_BUS. */
+   String eventServiceName() default EventServiceLocator.SERVICE_NAME_EVENT_BUS;
+   /** Whether or not to autocreate the event service if it doesn't exist on subscription, default is true.
+    * If the service needs to be created, it must have a default constructor.*/
+   Class<? extends EventService> autoCreateEventServiceClass() default ThreadSafeEventService.class;
 }
-*/

@@ -161,6 +161,14 @@ public class EventBus {
    }
 
    /**
+    * @see EventService#subscribeVetoListener(Class, VetoEventListener)
+    */
+   public static boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener) {
+      return globalEventService.subscribeVetoListenerExactly(eventClass, vetoListener);
+   }
+
+
+   /**
     * @see EventService#subscribeVetoListener(String, VetoTopicEventListener)
     */
    public static boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
@@ -233,84 +241,84 @@ public class EventBus {
    /**
     * @see EventService#getSubscribers(Class)
     */
-   public List getSubscribers(Class eventClass) {
+   public static List getSubscribers(Class eventClass) {
       return globalEventService.getSubscribers(eventClass);
    }
 
    /**
     * @see EventService#getSubscribersToType(Class)
     */
-   public List getSubscribersToType(Class eventClass) {
+   public static List getSubscribersToType(Class eventClass) {
       return globalEventService.getSubscribersToType(eventClass);
    }
 
    /**
     * @see EventService#getSubscribersToExactClass(Class)
     */
-   public List getSubscribersToExactClass(Class eventClass) {
+   public static List getSubscribersToExactClass(Class eventClass) {
       return globalEventService.getSubscribersToExactClass(eventClass);
    }
 
    /**
     * @see EventService#getSubscribers(String)
     */
-   public List getSubscribers(String topic) {
+   public static List getSubscribers(String topic) {
       return globalEventService.getSubscribers(topic);
    }
 
    /**
     * @see EventService#getSubscribersToTopic(String)
     */
-   public List getSubscribersToTopic(String topic) {
+   public static List getSubscribersToTopic(String topic) {
       return globalEventService.getSubscribersToTopic(topic);
    }
 
    /**
     * @see EventService#getSubscribers(Class)
     */
-   public List getSubscribersByPattern(String topic) {
+   public static List getSubscribersByPattern(String topic) {
       return globalEventService.getSubscribersByPattern(topic);
    }
 
    /**
     * @see EventService#getSubscribers(Class)
     */
-   public List getVetoSubscribers(Class eventClass) {
+   public static List getVetoSubscribers(Class eventClass) {
       return globalEventService.getVetoSubscribers(eventClass);
    }
 
    /**
     * @see EventService#getVetoSubscribersToExactClass(Class)
     */
-   public List getVetoSubscribersToExactClass(Class eventClass) {
+   public static List getVetoSubscribersToExactClass(Class eventClass) {
       return globalEventService.getVetoSubscribersToExactClass(eventClass);
    }
 
    /**
     * @see EventService#getVetoSubscribers(Class)
     */
-   public List getVetoSubscribers(String topic) {
+   public static List getVetoSubscribers(String topic) {
       return globalEventService.getVetoSubscribers(topic);
    }
 
    /**
     * @see EventService#getVetoSubscribersToType(Class)
     */
-   public List getVetoSubscribersToType(Class eventClass) {
+   public static List getVetoSubscribersToType(Class eventClass) {
       return globalEventService.getVetoSubscribersToType(eventClass);
    }
 
    /**
     * @see EventService#getVetoSubscribers(Pattern)
     */
-   public List getVetoSubscribers(Pattern pattern) {
+   public static List getVetoSubscribers(Pattern pattern) {
       return globalEventService.getVetoSubscribers(pattern);
    }
 
    /**
     * @see EventService#clearAllSubscribers()
     */
-   public void clearAllSubscribers() {
+   public static void clearAllSubscribers() {
       globalEventService.clearAllSubscribers();
    }
 
@@ -318,105 +326,105 @@ public class EventBus {
    /**
     * @see EventService#setDefaultCacheSizePerClassOrTopic(int)
     */
-   public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic) {
+   public static void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic) {
       globalEventService.setDefaultCacheSizePerClassOrTopic(defaultCacheSizePerClassOrTopic);
    }
 
    /**
     * @see org.bushe.swing.event.EventService#getDefaultCacheSizePerClassOrTopic()
     */
-   public int getDefaultCacheSizePerClassOrTopic() {
+   public static int getDefaultCacheSizePerClassOrTopic() {
       return globalEventService.getDefaultCacheSizePerClassOrTopic();
    }
 
    /**
     * @see EventService#setCacheSizeForEventClass(Class, int)
     */
-   public void setCacheSizeForEventClass(Class eventClass, int cacheSize) {
+   public static void setCacheSizeForEventClass(Class eventClass, int cacheSize) {
       globalEventService.setCacheSizeForEventClass(eventClass, cacheSize);
    }
 
    /**
     * @see EventService#getCacheSizeForEventClass(Class)
     */
-   public int getCacheSizeForEventClass(Class eventClass)  {
+   public static int getCacheSizeForEventClass(Class eventClass)  {
       return globalEventService.getCacheSizeForEventClass(eventClass);
    }
 
    /**
     * @see EventService#setCacheSizeForTopic(String, int)
     */
-   public void setCacheSizeForTopic(String topicName, int cacheSize)  {
+   public static void setCacheSizeForTopic(String topicName, int cacheSize)  {
       globalEventService.setCacheSizeForTopic(topicName, cacheSize);
    }
 
    /**
     * @see EventService#setCacheSizeForTopic(java.util.regex.Pattern, int)
     */
-   public void setCacheSizeForTopic(Pattern pattern, int cacheSize)  {
+   public static void setCacheSizeForTopic(Pattern pattern, int cacheSize)  {
       globalEventService.setCacheSizeForTopic(pattern, cacheSize);
    }
 
    /**
     * @see EventService#getCacheSizeForTopic(String)
     */
-   public int getCacheSizeForTopic(String topic)  {
+   public static int getCacheSizeForTopic(String topic)  {
       return globalEventService.getCacheSizeForTopic(topic);
    }
 
    /**
     * @see EventService#getLastEvent(Class)
     */
-   public Object getLastEvent(Class eventClass)  {
+   public static Object getLastEvent(Class eventClass)  {
       return globalEventService.getLastEvent(eventClass);
    }
 
    /**
     * @see EventService#getCachedEvents(Class)
     */
-   public List getCachedEvents(Class eventClass)  {
+   public static List getCachedEvents(Class eventClass)  {
       return globalEventService.getCachedEvents(eventClass);
    }
 
    /**
     * @see EventService#getLastTopicData(String)
     */
-   public Object getLastTopicData(String topic)  {
+   public static Object getLastTopicData(String topic)  {
       return globalEventService.getLastTopicData(topic);
    }
 
    /**
     * @see EventService#getCachedTopicData(String)
     */
-   public List getCachedTopicData(String topic) {
+   public static List getCachedTopicData(String topic) {
       return globalEventService.getCachedTopicData(topic);
    }
 
    /**
     * @see EventService#clearCache(Class)
     */
-   public void clearCache(Class eventClass)  {
+   public static void clearCache(Class eventClass)  {
       globalEventService.clearCache(eventClass);
    }
 
    /**
     * @see EventService#clearCache(String)
     */
-   public void clearCache(String topic) {
+   public static void clearCache(String topic) {
       globalEventService.clearCache(topic);
    }
 
    /**
     * @see EventService#clearCache(java.util.regex.Pattern)
     */
-   public void clearCache(Pattern pattern) {
+   public static void clearCache(Pattern pattern) {
       globalEventService.clearCache(pattern);
    }
 
    /**
     * @see org.bushe.swing.event.EventService#clearCache()
     */
-   public void clearCache() {
+   public static void clearCache() {
       globalEventService.clearCache();
    }
 }

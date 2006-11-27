@@ -47,13 +47,13 @@ BE Swing Event Bus Build
 
     <target name="compileSource" depends="-init" description="Compiles the source.">
        <echo message="classes = ${classes}"/>
-       <javac srcdir="${src}" destdir="${classes}" debug="false" source="1.4">
+       <javac srcdir="${src}" destdir="${classes}" debug="false" source="1.5">
          <classpath path="./lib/jdic.jar"/>
        </javac>
     </target>
 
     <target name="compileTest" depends="compileSource" description="Compiles the test source.">
-      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" source="1.4">
+      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" source="1.5">
          <classpath>
             <pathelement path="${classes}"/>
             <fileset dir="${testLib}" includes="*.jar"/>

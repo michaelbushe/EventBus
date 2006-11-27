@@ -16,7 +16,7 @@
        <a href="https://eventbus.dev.java.net/servlets/ProjectMembershipRequest">Request project role</a> 
 </p>
  
- <div id="projecthome" class="app">
+<div id="projecthome" class="app">
 
 <div class="axial"><table border="0" cellspacing="0" cellpadding="4" width="100%" id="main">
   <tr valign="top"> 
@@ -25,10 +25,11 @@
           <h1>Event Bus</h1>
           <h2>EventBus News</h2>
           <ul>
+          	<li>The Event Bus has released an alpha 1.1 alpha version with Annotations!</li>
           	<li>The Event Bus has reached version 1.0!  With the recently added caching feature (thanks to Hans Muller for the inspiration), 
-          		  the EventBus is now feature complete for the 1.0 release.  The 1.0 release will be the last release for JDK 1.4.  
-          		  Work will now begin on Annotations and Generics, which of course will require 1.5.  Further 1.4 work, such as bug fixes
-          		  will be done on the JDK_14 branch.</li>
+          		  and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature complete 
+          		  for the 1.0 release.  The 1.0 release will be the last release for JDK 1.4.   Work will now begin on Annotations and Generics, 
+          		  which of course will require 1.5.  Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.</li>
             <li>Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
         	  <li>Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
           </ul>
@@ -61,22 +62,92 @@
             avoiding memory leaks. 
           <p>Though code complete, this project is new, so the project website 
             is not yet complete. 
-          <h2>Download Release Snapshot</h2>
-          <p>The current release is 1.0.  This release is compiled in JDK 1.4.  Future releases will require JDK 1.5. 
+          <h2>Download Release Snapshots</h2>
+          <p>The current release is 1.1 alpha with Annotations.  This release is compiled in JDK 1.5.  
           <p><a href="EventBus.jar">EventBus.jar</a> 
           <p><a href="EventBus-src.jar">EventBus-src.jar</a> 
           <p><a href="EventBus-doc.jar">EventBus-doc.jar</a> 
           <p><a href="EventBus-all.jar">EventBus-all.jar</a> 
+          <p>The is release is 1.0.  This release is compiled in JDK 1.4.
+          <p><a href="EventBus-1.0ForJDK1.4.jar.jar">EventBus.jar</a> 
+          <p><a href="EventBus-src-1.0ForJDK1.4.jar.jar">EventBus-src-1.0ForJDK1.4.jar.jar</a> 
+          <p><a href="EventBus-doc-1.0ForJDK1.4.jar.jar">EventBus-doc-1.0ForJDK1.4.jar.jar</a> 
+          <p><a href="EventBus-all-1.0ForJDK1.4.jar.jar">EventBus-all-1.0ForJDK1.4.jar.jar</a> 
           <h2>JavaDoc</h2>
           <p>Take a look at the online <a href="doc/api/index.html">JavaDocs</a></p>
+          <h2>Examples</h2>
+          <p> More examples on the way, but here's a quick one on making a status 
+            bar:
+          <p>StatusEvent.java
+          <pre>public StatusEvent { 
+   Sting statusText;
+   
+   public StatusEvent(String statusText) { 
+      this.statusText = statusText;
+   }
+   public String getStatusText() {
+      return statusText;
+   }
+}</pre>
+          <p>StatusBar.java
+          <pre>public StatusBar extends JLabel implements EventSubscriber {
+   public StatusBar() {
+      EventBus.subscribe(StatusEvent.class, this);
+   }
+   public void onEvent(Object evt) {
+      StatusEvent statusEvent = (StatusEvent)evt;
+	  this.setText(statusEvent.getStatusText();
+   }
+   }
+
+}
+</pre>
+          <p>AnySwingControll.java </p>
+          <pre>...   
+EventBus.publish(new StatusEvent(view, &quot;All data loaded.&quot;));</pre>
+          <pre>&nbsp;
+</pre>
+<p>
+	With Annotations, it's a bit simpler:
+          <p>StatusEvent.java
+          <pre>public StatusEvent { 
+   Sting statusText;
+   
+   public StatusEvent(String statusText) { 
+      this.statusText = statusText;
+   }
+   public String getStatusText() {
+      return statusText;
+   }
+}</pre>
+          <p>StatusBar.java
+          <pre>public StatusBar extends JLabel implements EventSubscriber {
+   public StatusBar() {
+      AnnotationProcessor.process(this);
+   }
+   @Subscribe(eventClass=StatusEvent.class)
+   public void onEvent(StatusEvent statusEvent) {
+	  this.setText(statusEvent.getStatusText();
+   }
+   }
+
+}
+</pre>
+          <p>AnySwingControll.java </p>
+          <pre>...   This stays the same.
+EventBus.publish(new StatusEvent(view, &quot;All data loaded.&quot;));</pre>
+          <pre>&nbsp;
+</pre>
+	
           <h2>Future</h2>
-          <p>The goals after the initial release are: </div>
+          <p>Future goals include: </div>
       </div>
       <ul>
         <li> 
           <div> 
             <div class="app"> Create tutorials </div>
             <ul>
+              <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
               <li>Simple usage Swing component usages for such components as a 
                 progress bar.
               <li>moving information from non-Swing threads to Swing components 
@@ -91,43 +162,6 @@
       </ul>
       <div> 
         <div class="app"> 
-          <h2>Examples</h2>
-          <p> More examples on the way, but here's a quick one on making a status 
-            bar:
-          <p>StatusEvent.java
-          <pre>public StatusEvent implements EventServiceEvent { 
-   Object source;
-   Sting statusText;
-   
-   public StatusEvent(Object source, String statusText) { 
-      this.source = source;
-      this.statusText = statusText;
-   }
-   public Object getSource() {
-      return source;
-   }
-   public String getStatusText() {
-      return statusText;
-   }
-}</pre>
-          <p>StatusBar.java
-          <pre>public StatusBar extends JLabel implements EventSubscriber {
-   public StatusBar() {
-      EventBus.subscribe(StatusEvent.class, this);
-   }
-   public void onEvent(EventServiceEvent evt) {
-      StatusEvent statusEvent = (StatusEvent)evt;
-	  this.setText(statusEvent.getStatusText();
-   }
-   }
-
-}
-</pre>
-          <p>AnySwingControll.java </p>
-          <pre>...   
-EventBus.publish(new StatusEvent(view, &quot;All data loaded.&quot;));</pre>
-          <pre>&nbsp;
-</pre>
           <p> 
           <table border="0" cellpadding="0" cellspacing="0">
             <tr> 

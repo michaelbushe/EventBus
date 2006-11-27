@@ -103,6 +103,13 @@ public class ThreadSafeEventService implements EventService {
 
 
    /**
+    * Creates a ThreadSafeEventService that does not monitor timing of handlers.
+    */
+   public ThreadSafeEventService() {
+      this(null, false);
+   }
+
+   /**
     * Creates a ThreadSafeEventService while providing time monitoring options.
     *
     * @param timeThresholdForEventTimingEventPublication the longest time a subscriber should spend handling an event,
@@ -700,8 +707,8 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#getSubscribers(Class)  */
    public List getSubscribers(Class eventClass) {
       synchronized (listenerLock) {
-         List exactMatches = getSubscribersToType(eventClass);
-         List hierarchyMatches = getSubscribersToExactClass(eventClass);
+         List hierarchyMatches = getSubscribersToType(eventClass);
+         List exactMatches = getSubscribersToExactClass(eventClass);
          List result = new ArrayList();
          if (exactMatches != null) {
             result.addAll(exactMatches);
@@ -1302,8 +1309,10 @@ public class ThreadSafeEventService implements EventService {
    /** All exception handling goes through this method.  Logs a warning by default.*/
    protected void handleException(final String action, final Object event, final String topic,
            final Object eventObj, Throwable e, StackTraceElement[] callingStack, String sourceString) {
-      String contextMsg = "Exception " + action + " event class=" + event == null ? "none" : event.getClass().getName()
-              + ", event=" + event + ", topic=" + topic + ", eventObj=" + eventObj;
+      String eventClassString = (event == null ? "none" : event.getClass().getName());
+      String eventString = event+"";
+      String contextMsg = "Exception " + action + " event class=" + eventClassString
+              + ", event=" + eventString + ", topic=" + topic + ", eventObj=" + eventObj;
       SwingException clientEx = new SwingException(contextMsg, e, callingStack);
       String msg = "Exception thrown by;" + sourceString;
       LOG.log(Level.WARNING, msg, clientEx);

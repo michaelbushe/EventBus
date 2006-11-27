@@ -18,6 +18,9 @@ package org.bushe.swing.event;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.TypeVariable;
 
 import junit.framework.TestCase;
 
@@ -485,5 +488,50 @@ public class TestEventBus extends TestCase {
       waitForEDT();
       assertEquals("testPublish(completed)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
+   }
+
+   public void testNumOfMethods() {
+      Method[] esMethods = EventService.class.getMethods();
+      Method[] ebMethods = EventBus.class.getMethods();
+      //Are all the es methods in the eb?
+      for (int i = 0; i < esMethods.length; i++) {
+         Method esMethod = esMethods[i];
+         boolean foundMatch = false;
+nextMethod:
+         for (int j = 0; j < ebMethods.length; j++) {
+            Method ebMethod = ebMethods[j];
+            if (esMethod.getName().equals(ebMethod.getName())) {
+               TypeVariable<Method>[] esTypes = esMethod.getTypeParameters();
+               TypeVariable<Method>[] ebTypes = esMethod.getTypeParameters();
+               if (esTypes.length != ebTypes.length) {
+                  break;
+               }
+               for (int typeCount = 0; typeCount < ebTypes.length; typeCount++) {
+                  TypeVariable<Method> ebType = ebTypes[typeCount];
+                  TypeVariable<Method> esType = esTypes[typeCount];
+                  if (!ebType.equals(esType)) {
+                     continue nextMethod;
+                  }
+               }
+               foundMatch = true;
+            }
+         }
+         if (!foundMatch) {
+            System.out.println("No match for es method:"+esMethod.getName()+", "+esMethod);
+         }
+         assertTrue(foundMatch);
+      }
+
+      //Are all the eb methods static?
+      ebMethods = EventBus.class.getDeclaredMethods();
+      for (int i = 0; i < ebMethods.length; i++) {
+         Method ebMethod = ebMethods[i];
+         int modifiers = ebMethod.getModifiers();
+         boolean isStatic = Modifier.isStatic(modifiers);
+         if (!isStatic) {
+            System.out.println("EventBus has a non-static method:"+ebMethod);
+         }
+         assertTrue(isStatic);
+      }
    }
 }
