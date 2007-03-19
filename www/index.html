@@ -125,7 +125,7 @@ EventBus.publish(new StatusEvent(view, &quot;All data loaded.&quot;));</pre>
    public StatusBar() {
       AnnotationProcessor.process(this);
    }
-   @Subscribe(eventClass=StatusEvent.class)
+   @EventSubscriber(eventClass=StatusEvent.class)
    public void onEvent(StatusEvent statusEvent) {
 	  this.setText(statusEvent.getStatusText();
    }
