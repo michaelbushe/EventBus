@@ -1,21 +1,19 @@
 package org.bushe.swing.event.annotation;
 
-import java.lang.reflect.Method;
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Method;
 
 import org.bushe.swing.event.EventService;
 
-/**
- * Common base class for EventService Proxies
- */
+/** Common base class for EventService Proxies */
 public abstract class AbstractProxySubscriber {
    protected Object realSubscriber;
    protected Method subscriptionMethod;
    protected ReferenceStrength referenceStrength;
    protected EventService eventService;
 
-   protected AbstractProxySubscriber(Object realSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
-           EventService es) {
+   protected AbstractProxySubscriber(Object realSubscriber, Method subscriptionMethod,
+           ReferenceStrength referenceStrength, EventService es) {
       this.referenceStrength = referenceStrength;
       eventService = es;
       if (realSubscriber == null) {

@@ -3,9 +3,14 @@ package org.bushe.swing.event.annotation;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JComboBox;
+
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventServiceExistsException;
+import org.bushe.swing.event.EventBus;
 
 /**
  * Enhances classes that use EventService Annotations.
@@ -58,8 +63,44 @@ public class AnnotationProcessor {
          if (topicPatternAnnotation != null) {
             process(topicPatternAnnotation, obj, method);
          }
+//         Publisher publisherAnnotation = (Publisher) method.getAnnotation(Publisher.class);
+//         if (publisherAnnotation != null) {
+//            process(publisherAnnotation, obj);
+//         }
       }
    }
+
+//   private static void process(Publisher publisherAnnotation, Object obj) {
+//      Class cl = obj.getClass();
+//      if (JComboBox.class.equals(cl)) {
+//         JComboBox combo = (JComboBox)obj;
+//         combo.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//               EventBus.publish(e);
+//            }
+//         });
+//      }
+      //JCheckBoxMeuItem
+      //addMenuDragMouseListener, addMenuKeyListener
+      //JButton, JCheckBox
+      //addActionListener, addChangeListener, addItemListener,
+      //JComponent
+      //addAncestorListener, addVetoableChangeListener
+      //Container
+      //addContainerListener, addPropertyChangeListener, addPropertyChangeListener,
+      //Component
+      //addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener,
+      //addInputMethodListener, addKeyListener,
+      //addMouseListener, addMouseMotionListener,
+      //addMouseWheelListener
+
+      // HierarchyBounds + Hierarchy both use Hierarchy event
+      // addMouseListener, addMouseMotionListener both use MouseEvent
+      // addPropertyChangeListener, addVetoableChangeListener addChangeListener all use PropertyChangeEvent
+
+      //JEditorPane
+      //addHyperlinkListener
+//   }
 
    private static void process(EventTopicPatternSubscriber topicPatternAnnotation, Object obj, Method method) {
       //Check args
