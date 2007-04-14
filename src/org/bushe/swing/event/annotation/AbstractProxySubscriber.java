@@ -22,11 +22,9 @@ public abstract class AbstractProxySubscriber {
       if (subscriptionMethod == null) {
          throw new IllegalArgumentException("The subscriptionMethod cannot be null when constructing a proxy subscriber.");
       }
-      if (referenceStrength == ReferenceStrength.WEAK) {
-         this.realSubscriber = new WeakReference(realSubscriber);
-      } else {
-         this.realSubscriber = realSubscriber;
-      }
+      //Always strong, see:
+      //https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+      this.realSubscriber = realSubscriber;
       this.subscriptionMethod = subscriptionMethod;
    }
 }

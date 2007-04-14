@@ -40,18 +40,6 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
       Object[] args = new Object[]{topic, data};
       try {
          Object obj = realSubscriber;
-         if (referenceStrength == ReferenceStrength.WEAK) {
-            obj = ((WeakReference)realSubscriber).get();
-            if (obj == null) {
-               unsubscribe(topic);
-               realSubscriber = null;
-               subscriptionMethod = null;
-               referenceStrength = null;
-               eventService = null;
-               topic = null;
-               return;
-            }
-         }
          subscriptionMethod.invoke(obj, args);
       } catch (IllegalAccessException e) {
          throw new RuntimeException("IllegalAccessException when invoking annotated method from EventService publication.  Topic:"+topic+", data:"+data + ", subscriber:"+realSubscriber+", subscription Method="+subscriptionMethod, e);

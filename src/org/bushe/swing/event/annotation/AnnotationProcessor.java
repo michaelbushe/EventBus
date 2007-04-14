@@ -3,14 +3,9 @@ package org.bushe.swing.event.annotation;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventServiceExistsException;
-import org.bushe.swing.event.EventBus;
 
 /**
  * Enhances classes that use EventService Annotations.
@@ -119,9 +114,9 @@ public class AnnotationProcessor {
       ProxyTopicPatternSubscriber subscriber = new ProxyTopicPatternSubscriber(obj, method, topicPatternAnnotation.referenceStrength(),
               eventService, topicPattern, pattern);
 
+      //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
       if (topicPatternAnnotation.referenceStrength() == ReferenceStrength.WEAK) {
-//         eventService.subscribe(pattern, subscriber);
-         eventService.subscribeStrongly(pattern, subscriber);
+         eventService.subscribe(pattern, subscriber);
       } else {
          eventService.subscribeStrongly(pattern, subscriber);
       }
@@ -142,9 +137,9 @@ public class AnnotationProcessor {
       //Create proxy and subscribe
       ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), eventService,  topic);
 
+      //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
       if (topicAnnotation.referenceStrength() == ReferenceStrength.WEAK) {
-//         eventService.subscribe(topic, subscriber);
-         eventService.subscribeStrongly(topic, subscriber);
+         eventService.subscribe(topic, subscriber);
       } else {
          eventService.subscribeStrongly(topic, subscriber);
       }
@@ -170,18 +165,17 @@ public class AnnotationProcessor {
       EventService eventService = getEventServiceFromAnnotation(eventServiceName, eventServiceClass);
 
       //Create proxy and subscribe
-      ProxySubscriber subscriber = new ProxySubscriber(obj, method, annotation.referenceStrength(), eventService,  eventClass);
+      //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), eventService,  eventClass);
       if (annotation.exact()) {
          if (annotation.referenceStrength() == ReferenceStrength.WEAK) {
-//            eventService.subscribeExactly(eventClass, subscriber);
-            eventService.subscribeExactlyStrongly(eventClass, subscriber);
+            eventService.subscribeExactly(eventClass, subscriber);
          } else {
             eventService.subscribeExactlyStrongly(eventClass, subscriber);
          }
       } else {
          if (annotation.referenceStrength() == ReferenceStrength.WEAK) {
-//            eventService.subscribe(eventClass, subscriber);
-            eventService.subscribeStrongly(eventClass, subscriber);
+            eventService.subscribe(eventClass, subscriber);
          } else {
             eventService.subscribeStrongly(eventClass, subscriber);
          }

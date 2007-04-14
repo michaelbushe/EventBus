@@ -9,7 +9,7 @@ import org.bushe.swing.event.EventService;
 /**
  * A class is subscribed to an EventService on behalf of another object.
  */
-public class ProxySubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventSubscriber {
+public class BaseProxySubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventSubscriber {
    private Class subscription;
 
    /**
@@ -20,7 +20,7 @@ public class ProxySubscriber extends AbstractProxySubscriber implements org.bush
     * @param es the EventService we will be subscribed to, since we may need to unsubscribe when weak refs no longer exist
     * @param subscription the class to subscribe to, used for unsubscription only
     */
-   public ProxySubscriber(Object realSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
+   public BaseProxySubscriber(Object realSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
            EventService es, Class subscription) {
       super(realSubscriber, subscriptionMethod, referenceStrength, es);
       this.subscription = subscription;
@@ -39,18 +39,6 @@ public class ProxySubscriber extends AbstractProxySubscriber implements org.bush
       Object[] args = new Object[]{event};
       try {
          Object obj = realSubscriber;
-         if (referenceStrength == ReferenceStrength.WEAK) {
-            obj = ((WeakReference)realSubscriber).get();
-            if (obj == null) {
-               eventService.unsubscribe(subscription, this);
-               realSubscriber = null;
-               subscriptionMethod = null;
-               referenceStrength = null;
-               eventService = null;
-               subscription = null;
-               return;
-            }
-         }
          subscriptionMethod.invoke(obj, args);
       } catch (IllegalAccessException e) {
          throw new RuntimeException("IllegalAccessException when invoking annotated method from EventService publication.  Event class:"+event.getClass()+", Event:"+event + ", subscriber:"+realSubscriber+", subscription Method="+subscriptionMethod, e);

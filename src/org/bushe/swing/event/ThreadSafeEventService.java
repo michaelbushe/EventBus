@@ -902,7 +902,7 @@ public class ThreadSafeEventService implements EventService {
          return true;
       }
 
-      //search for a WeakReference
+      //search for a WeakReference and ProxySubscribers
       for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
          Object item = iter.next();
          if (item instanceof WeakReference) {
