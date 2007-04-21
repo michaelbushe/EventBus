@@ -154,6 +154,38 @@ public class EventBus {
    }
 
    /**
+    * For usage with annotatations.
+    * @see EventService#unsubscribe(Class, Object)
+    */
+   public static boolean unsubscribe(Class eventClass, Object object) {
+      return globalEventService.unsubscribe(eventClass, object);
+   }
+
+   /**
+    * For usage with annotatations.
+    * @see EventService#unsubscribeExactly(Class, Object)
+    */
+   public static boolean unsubscribeExactly(Class eventClass, Object subscriber) {
+      return globalEventService.unsubscribeExactly(eventClass, subscriber);
+   }
+
+   /**
+    * For usage with annotatations.
+    * @see EventService#unsubscribe(String, Object)
+    */
+   public static boolean unsubscribe(String topic, Object subscriber) {
+      return globalEventService.unsubscribe(topic, subscriber);
+   }
+
+   /**
+    * For usage with annotatations.
+    * @see EventService#unsubscribe(Pattern, Object)
+    */
+   public static boolean unsubscribe(Pattern topicPattern, Object subscriber) {
+      return globalEventService.unsubscribe(topicPattern, subscriber);
+   }
+
+   /**
     * @see EventService#subscribeVetoListener(Class, VetoEventListener)
     */
    public static boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
@@ -322,7 +354,6 @@ public class EventBus {
       globalEventService.clearAllSubscribers();
    }
 
-
    /**
     * @see EventService#setDefaultCacheSizePerClassOrTopic(int)
     */
@@ -427,4 +458,5 @@ public class EventBus {
    public static void clearCache() {
       globalEventService.clearCache();
    }
+
 }

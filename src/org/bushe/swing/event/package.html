@@ -18,7 +18,7 @@
 <p>This simple example prints &quot;Hello World&quot; using class-based publication.</p>
 <pre>
 <br>
-class HelloThingy {
+class HelloThingy { //the same for all the examples
 	public String getWorld() {
 	   return "World";
 	}
@@ -28,7 +28,7 @@ class MySubscriber implements EventSubscriber {
    //EventSubscriber implementation
    public void onEvent(Object event) {
       HelloThingy helloEvent = (HelloThingy)event;
-   	  System.out.println(&quot;Hello&quot;+helloEvent.getWorld());
+   	System.out.println(&quot;Hello&quot;+helloEvent.getWorld());
    }
 }
 <br>
@@ -40,6 +40,24 @@ class HelloEventBus {
    }
 }
 </pre>
+<p>Alternatively, this example can be coded using EventBus annotations and the AnnotationProcessor:</p>
+<pre>
+class MySubscriber {
+   @EventSubscriber(eventClass=HelloThingy.class)
+   public void printOutHelloWorld(HelloThingy event) {
+   	System.out.println(&quot;Hello&quot;+helloEvent.getWorld());
+   }
+}
+<br>
+class HelloEventBus {
+   public static void main(String args[]) {
+      MySubscriber subscriber = new MySubscriber();
+      AnnotationProcessor.process(subscriber);//makes a subscriber to call subscriber.printOutHelloWorld
+      EventBus.publish(new HelloThingy());
+   }
+}
+</pre>
+
 <p>This second example prints &quot;Hello World&quot; using topic-based publication.</p>
 <pre><br>class MySubscriber implements EventTopicSubscriber {
    //EventTopicSubscriber implementation
@@ -52,6 +70,24 @@ class HelloEventBus {
    public static void main(String args[]) {
       MySubscriber subscriber = new MySubscriber();
       EventBus.subscribe(&quot;Hello&quot;, subscriber);
+      EventBus.publish(&quot;Hello&quot;, &quot;World&quot;);
+   }
+}
+</pre>
+<p>Alternatively, this example can also be coded using EventBus annotations and the AnnotationProcessor:</p>
+<pre>
+<br>
+<pre><br>class MySubscriber {
+   @EventTopicSubscriber(topic=&quot;Hello&quot;);
+   public void printOutHelloWorld(String topic, Object event) {
+   	System.out.println(topic+&quot; &quot;+event);
+   }
+}
+
+class HelloEventBus {
+   public static void main(String args[]) {
+      MySubscriber subscriber = new MySubscriber();
+      AnnotationProcessor.process(subscriber);//makes a subscriber to call subscriber.printOutHelloWorld
       EventBus.publish(&quot;Hello&quot;, &quot;World&quot;);
    }
 }

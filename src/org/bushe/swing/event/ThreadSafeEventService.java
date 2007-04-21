@@ -494,6 +494,79 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
+   /** @see EventService#unsubscribe(Class, Object)  */
+   public boolean unsubscribe(Class eventClass, Object subcribedByProxy) {
+      EventSubscriber subscriber = (EventSubscriber) getProxySubscriber(eventClass, subcribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribe(eventClass, subscriber);
+      }
+   }
+
+   /** @see EventService#unsubscribeExactly(Class, Object)   */
+   public boolean unsubscribeExactly(Class eventClass, Object subcribedByProxy) {
+      Object subscriber = getProxySubscriber(eventClass, subcribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribeExactly(eventClass, subscriber);
+      }
+   }
+
+   /** @see EventService#unsubscribe(String, Object)   */
+   public boolean unsubscribe(String topic, Object subcribedByProxy) {
+      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(topic, subcribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribe(topic, subscriber);
+      }
+   }
+
+   /** @see EventService#unsubscribe(java.util.regex.Pattern, Object)   */
+   public boolean unsubscribe(Pattern pattern, Object subcribedByProxy) {
+      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(pattern, subcribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribe(pattern, subscriber);
+      }
+   }
+
+   private ProxySubscriber getProxySubscriber(Class eventClass, Object subcribedByProxy) {
+      List subscribers = getSubscribers(eventClass);
+      return getProxySubscriber(subscribers, subcribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(String topic, Object subcribedByProxy) {
+      List subscribers = getSubscribers(topic);
+      return getProxySubscriber(subscribers, subcribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(Pattern pattern, Object subcribedByProxy) {
+      List subscribers = getSubscribersToPattern(pattern);
+      return getProxySubscriber(subscribers, subcribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(List subscribers, Object subcribedByProxy) {
+      for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
+         Object subscriber = iter.next();
+         if (subscriber instanceof WeakReference) {
+            WeakReference wr = (WeakReference) subscriber;
+            subscriber = wr.get();
+         }
+         if (subscriber instanceof ProxySubscriber) {
+            ProxySubscriber proxy = (ProxySubscriber) subscriber;
+            subscriber = proxy.getProxiedSubscriber();
+            if (subscriber == subcribedByProxy) {
+               return proxy;
+            }
+         }
+      }
+      return null;
+   }
+
    /** @see EventService#unsubscribeVetoListener(Class, VetoEventListener) */
    public boolean unsubscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       return unsubscribeVetoListener(eventClass, vetoListenersByClass, vetoListener);
@@ -891,7 +964,7 @@ public class ThreadSafeEventService implements EventService {
     * @param key key for a List in the map
     * @param toRemove the object to remove form the list with the key of the map
     *
-    * @return a copy of the set
+    * @return true if toRemove was unsibscribed
     */
    private boolean removeFromSetResolveWeakReferences(Map map, Object key, Object toRemove) {
       List subscribers = (List) map.get(key);
@@ -905,14 +978,32 @@ public class ThreadSafeEventService implements EventService {
       //search for a WeakReference and ProxySubscribers
       for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
          Object item = iter.next();
+         if (item instanceof ProxySubscriber) {
+            ProxySubscriber proxy = (ProxySubscriber) item;
+            item = proxy.getProxiedSubscriber();
+            if (item == toRemove) {
+               iter.remove();
+               proxy.proxyUnsubscribed();
+               return true;
+            }
+         }
          if (item instanceof WeakReference) {
             WeakReference wr = (WeakReference) item;
-            if (wr.get() == null) {
+            Object realRef = wr.get();
+            if (realRef == null) {
                //clean up a garbage collected reference
                iter.remove();
-            } else if (wr.get() == toRemove) {
+            } else if (realRef == toRemove) {
                iter.remove();
                return true;
+            } else if (realRef instanceof ProxySubscriber) {
+               ProxySubscriber proxy = (ProxySubscriber) realRef;
+               item = proxy.getProxiedSubscriber();
+               if (item == toRemove) {
+                  iter.remove();
+                  proxy.proxyUnsubscribed();
+                  return true;
+               }
             }
          }
       }

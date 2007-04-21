@@ -62,11 +62,11 @@ package org.bushe.swing.event.annotation;
  *   public MyAppController {
  *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
- *   @EventSubscriber
+ *   @EventSubscriber(eventClass=AppStartingEvent.class)
  *   public void onAppStartingEvent(AppStartingEvent appStartingEvent) {
  *      //do something
  *   }
- *   @EventSubscriber
+ *   @EventSubscriber(eventClass=AppAppClosingEvent.class)
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {
  *      //do something
  *   }

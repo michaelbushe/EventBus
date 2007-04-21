@@ -1,5 +1,5 @@
 <!--
-BE Swing Event Bus Build
+EventBus Build
 -->
 <project name="EventBus" default="dist" basedir=".">
 
@@ -37,6 +37,7 @@ BE Swing Event Bus Build
         </tstamp>
         <echo>Build Directory: ${build}</echo>
         <echo>Build Started: ${build.start.time}</echo>
+        <echo>Java version: ${ant.java.version}</echo>
         <mkdir dir="${build}"/>
         <mkdir dir="${dist}"/>
         <mkdir dir="${classes}"/>
@@ -45,15 +46,15 @@ BE Swing Event Bus Build
         <mkdir dir="${coverageReport}"/>
     </target>
 
-    <target name="compileSource" depends="-init" description="Compiles the source.">
+   <target name="compileSource" depends="-init" description="Compiles the source.">
        <echo message="classes = ${classes}"/>
-       <javac srcdir="${src}" destdir="${classes}" debug="false" source="1.5">
+       <javac srcdir="${src}" destdir="${classes}" debug="false" source="1.5" target="1.5">
          <classpath path="./lib/jdic.jar"/>
        </javac>
     </target>
 
     <target name="compileTest" depends="compileSource" description="Compiles the test source.">
-      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" source="1.5">
+      <javac srcdir="${testSrc}" destdir="${testClasses}"  debug="true" source="1.5" target="1.5">
          <classpath>
             <pathelement path="${classes}"/>
             <fileset dir="${testLib}" includes="*.jar"/>

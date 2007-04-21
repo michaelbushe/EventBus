@@ -95,6 +95,8 @@ import java.util.regex.Pattern;
  * @see ThreadSafeEventService for the default implementation
  * @see SwingEventService for the Swing-safe implementation
  * @see EventBus for simple access to the Swing-safe implementation
+ * @see  @org.bushe.swing.event.annotation.EventSubscriber for subscription annotations
+ * @see  @org.bushe.swing.event.annotation.EventTopicSubscriber for subscription annotations
  */
 public interface EventService {
 
@@ -635,4 +637,52 @@ public interface EventService {
     * Clear all event caches for all topics and event.
     */
    public void clearCache();
+
+   /**
+    * When using annotations, an object may be subscribed by proxy.  This unsubscibe
+    * method will unsubscribe an object that is subscribed with a ProxySubscriber.
+    * <p>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then
+    * the normal unsubscribe methods will still unsubscribe the object.
+    *
+    * @param eventClass class this object is subscribed to by proxy
+    * @param subcribedByProxy object subscribed by proxy
+    */
+   boolean unsubscribe(Class eventClass, Object subcribedByProxy);
+
+   /**
+    * When using annotations, an object may be subscribed by proxy.  This unsubscibe
+    * method will unsubscribe an object that is subscribed with a ProxySubscriber.
+    * <p>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then
+    * the normal unsubscribe methods will still unsubscribe the object.
+    *
+    * @param eventClass class this object is subscribed to by proxy
+    * @param subcribedByProxy object subscribed by proxy
+    */
+   boolean unsubscribeExactly(Class eventClass, Object subcribedByProxy);
+
+   /**
+    * When using annotations, an object may be subscribed by proxy.  This unsubscibe
+    * method will unsubscribe an object that is subscribed with a ProxySubscriber.
+    * <p>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then
+    * the normal unsubscribe methods will still unsubscribe the object.
+    *
+    * @param topic the topic this object is subscribed to by proxy
+    * @param subcribedByProxy object subscribed by proxy
+    */
+   boolean unsubscribe(String topic, Object subcribedByProxy);
+
+   /**
+    * When using annotations, an object may be subscribed by proxy.  This unsubscibe
+    * method will unsubscribe an object that is subscribed with a ProxySubscriber.
+    * <p>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then
+    * the normal unsubscribe methods will still unsubscribe the object.
+    *
+    * @param pattern the RegEx expression this object is subscribed to by proxy
+    * @param subcribedByProxy object subscribed by proxy
+    */
+   boolean unsubscribe(Pattern pattern, Object subcribedByProxy);
 }
