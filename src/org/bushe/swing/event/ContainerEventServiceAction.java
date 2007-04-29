@@ -62,7 +62,7 @@ public class ContainerEventServiceAction extends EventServiceAction {
          }
       } catch (ClassCastException ex) {
          if (getThrowsExceptionOnNullEventService()) {
-            throw new RuntimeException("ActionEvent source was not a component (" + (comp == null?"null":comp.getClass()+"") + "), must override getContainerEventService in action with id:" + getName(), ex);
+            throw new RuntimeException("ActionEvent source was not a component (" + (comp == null ? "null" : comp.getClass() + "") + "), must override getContainerEventService in action with id:" + getName(), ex);
          }
       }
       return null;

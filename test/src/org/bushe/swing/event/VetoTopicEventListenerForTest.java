@@ -10,9 +10,11 @@ class VetoTopicEventListenerForTest implements VetoTopicEventListener {
    VetoTopicEventListenerForTest() {
       this(false);
    }
+
    VetoTopicEventListenerForTest(boolean throwException) {
       this.throwException = throwException;
    }
+
    public boolean shouldVeto(String topic, Object data) {
       if (throwException) {
          throw new IllegalArgumentException("veto ex");

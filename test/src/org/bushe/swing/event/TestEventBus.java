@@ -15,9 +15,6 @@
  */
 package org.bushe.swing.event;
 
-import java.util.List;
-import java.util.regex.Pattern;
-import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.TypeVariable;
@@ -107,13 +104,13 @@ public class TestEventBus extends TestCase {
    }
 
    /**
-    * Since we are using the event bus from a non-awt thread, stay alive for a sec
-    * to give time for the EDT to start and post the message
+    * Since we are using the event bus from a non-awt thread, stay alive for a sec to give time for the EDT to start and
+    * post the message
     */
    private void waitForEDT() {
       try {
          Thread.sleep(1000);
-      } catch (Throwable e){
+      } catch (Throwable e) {
       }
    }
 
@@ -497,7 +494,7 @@ public class TestEventBus extends TestCase {
       for (int i = 0; i < esMethods.length; i++) {
          Method esMethod = esMethods[i];
          boolean foundMatch = false;
-nextMethod:
+         nextMethod:
          for (int j = 0; j < ebMethods.length; j++) {
             Method ebMethod = ebMethods[j];
             if (esMethod.getName().equals(ebMethod.getName())) {
@@ -517,7 +514,7 @@ nextMethod:
             }
          }
          if (!foundMatch) {
-            System.out.println("No match for es method:"+esMethod.getName()+", "+esMethod);
+            System.out.println("No match for es method:" + esMethod.getName() + ", " + esMethod);
          }
          assertTrue(foundMatch);
       }
@@ -529,7 +526,7 @@ nextMethod:
          int modifiers = ebMethod.getModifiers();
          boolean isStatic = Modifier.isStatic(modifiers);
          if (!isStatic) {
-            System.out.println("EventBus has a non-static method:"+ebMethod);
+            System.out.println("EventBus has a non-static method:" + ebMethod);
          }
          assertTrue(isStatic);
       }

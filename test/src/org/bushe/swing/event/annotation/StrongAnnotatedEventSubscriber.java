@@ -22,7 +22,7 @@ public class StrongAnnotatedEventSubscriber {
       lastCall = call;
    }
 
-   @EventSubscriber(referenceStrength=ReferenceStrength.STRONG)
+   @EventSubscriber(referenceStrength = ReferenceStrength.STRONG)
    public void doStrong(File it) {
       lastCall = "doStrong";
       timesCalled++;

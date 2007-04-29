@@ -16,10 +16,11 @@
 package org.bushe.swing.event;
 
 /**
- * This event is published internally to report timing for subscribe on an EventService.  Applications
- * may subscribe to this event to do handle subscribers that take too long.
- * @see ThreadSafeEventService
+ * This event is published internally to report timing for subscribe on an EventService.  Applications may subscribe to
+ * this event to do handle subscribers that take too long.
+ *
  * @author Michael Bushe michael@bushe.com
+ * @see ThreadSafeEventService
  */
 public class SubscriberTimingEvent extends AbstractEventServiceEvent {
    private Long start;
@@ -32,12 +33,14 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
 
    /**
     * Create a timing event
+    *
     * @param source event source
     * @param start system time at start of the notification of listener
     * @param end system time at end of the notification of listener
     * @param timeLimitMilliseconds expected maximum time
     * @param event the published event
-    * @param subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not null
+    * @param subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not
+    * null
     * @param vetoEventListener the vetoEventListener that took too long, can be null if the eventListener is not null
     */
    public SubscriberTimingEvent(Object source, Long start, Long end, Long timeLimitMilliseconds,
@@ -64,58 +67,45 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
       }
    }
 
-   /**
-    * @return system time at start of the notification of listener
-    */
+   /** @return system time at start of the notification of listener */
    public Long getStart() {
       return start;
    }
 
-   /**
-    * @return system time at end of the notification of listener
-    */
+   /** @return system time at end of the notification of listener */
    public Long getEnd() {
       return end;
    }
 
-   /**
-    * @return expected maximum time
-    */
+   /** @return expected maximum time */
    public Long getTimeLimitMilliseconds() {
       return timeLimitMilliseconds;
    }
 
-   /**
-    * @return the published event
-    */
+   /** @return the published event */
    public Object getEvent() {
       return event;
    }
 
    /**
-    * @return subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not null
+    * @return subscriber the event subscriber that went over the time limit, can be null if vetoEventListener is not
+    *         null
     */
    public EventSubscriber getSubscriber() {
       return subscriber;
    }
 
-   /**
-    * @return the vetoEventListener that took too long, can be null if the eventListener is not null
-    */
+   /** @return the vetoEventListener that took too long, can be null if the eventListener is not null */
    public VetoEventListener getVetoEventListener() {
       return vetoEventListener;
    }
 
-   /**
-    * @return true if a veto listener took too long, false if an EventSubscriber took took long
-    */
+   /** @return true if a veto listener took too long, false if an EventSubscriber took took long */
    public boolean isVetoExceeded() {
       return vetoEventListener != null;
    }
 
-   /**
-    * @return true if an EventSubscriber took too long, false if a veto listener took took long
-    */
+   /** @return true if an EventSubscriber took too long, false if a veto listener took took long */
    public boolean isEventHandlingExceeded() {
       return subscriber == null;
    }

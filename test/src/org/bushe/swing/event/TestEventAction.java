@@ -17,10 +17,10 @@ package org.bushe.swing.event;
 
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.Action;
 
 import junit.framework.TestCase;
 
@@ -31,6 +31,7 @@ public class TestEventAction extends TestCase {
 
    private class MyEventServiceEvent extends AbstractEventServiceEvent {
       private ActionEvent evt;
+
       public MyEventServiceEvent(Object source, ActionEvent evt) {
          super(source);
          this.evt = evt;
@@ -121,7 +122,7 @@ public class TestEventAction extends TestCase {
       };
       EventBus.subscribe(MyEventServiceEvent.class, new EventSubscriber() {
          public void onEvent(Object evt) {
-            assertEquals(((EventServiceEvent)evt).getSource(), aSource);
+            assertEquals(((EventServiceEvent) evt).getSource(), aSource);
             subscribedEvents.add(evt);
          }
       });

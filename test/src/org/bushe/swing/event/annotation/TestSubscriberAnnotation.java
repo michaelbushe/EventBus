@@ -1,31 +1,20 @@
 package org.bushe.swing.event.annotation;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeMap;
-import java.util.Set;
-import java.util.HashSet;
-import java.util.TimerTask;
-import java.util.UUID;
-import java.util.Collection;
-import java.util.prefs.NodeChangeEvent;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.awt.Color;
-import java.awt.EventQueue;
-
-import javax.swing.JList;
-import javax.swing.JComponent;
-import javax.swing.JToggleButton;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 
 import junit.framework.TestCase;
 
 import org.bushe.swing.event.EventBus;
-import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.EventServiceLocator;
 
 public class TestSubscriberAnnotation extends TestCase {
 
@@ -154,7 +143,6 @@ public class TestSubscriberAnnotation extends TestCase {
       System.out.println(subscriber);
    }
 
-
 //Would like to test this, but an exception isn't thrown, since you want all the subscribers to be called
 //even if calling any one throws an exception
 //   public void testTopicWrongType() {
@@ -169,13 +157,13 @@ public class TestSubscriberAnnotation extends TestCase {
 //   }
 
    /**
-    * Since we are using the event bus from a non-awt thread, stay alive for a sec
-    * to give time for the EDT to start and post the message
+    * Since we are using the event bus from a non-awt thread, stay alive for a sec to give time for the EDT to start and
+    * post the message
     */
    private void waitForEDT() {
       try {
          Thread.sleep(1000);
-      } catch (Throwable e){
+      } catch (Throwable e) {
       }
    }
 

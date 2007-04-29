@@ -4,12 +4,12 @@ import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 import org.bushe.swing.event.EventService;
-import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventServiceExistsException;
+import org.bushe.swing.event.EventServiceLocator;
 
 /**
  * Enhances classes that use EventService Annotations.
- * <p>
+ * <p/>
  * This class makes the EventService annotations "come alive."  This can be used in code like so:
  * <pre>
  * public class MyAppController {
@@ -26,16 +26,12 @@ import org.bushe.swing.event.EventServiceExistsException;
  *   }
  * }
  * </pre>
- * <p>
- * This class can be leveraged in outside of source code in other ways in which Annoations are used:
- * <ul>
- * <li>In an Aspect-Oriented tool
- * <li>In a Swing Framework classloader that wants to load and understand events.
- * <li>In other Inversion of Control containers, such as Spring or PicoContainer.
- * <li>In the apt tool, though this does not generate code.
- * <li>In a Annotation Processing Tool plugin, when it becomes available.
- * </ul>
- * Support for these other methods are not yet implemented.
+ * <p/>
+ * This class can be leveraged in outside of source code in other ways in which Annoations are used: <ul> <li>In an
+ * Aspect-Oriented tool <li>In a Swing Framework classloader that wants to load and understand events. <li>In other
+ * Inversion of Control containers, such as Spring or PicoContainer. <li>In the apt tool, though this does not generate
+ * code. <li>In a Annotation Processing Tool plugin, when it becomes available. </ul> Support for these other methods
+ * are not yet implemented.
  */
 public class AnnotationProcessor {
    public static void process(Object obj) {
@@ -75,26 +71,26 @@ public class AnnotationProcessor {
 //            }
 //         });
 //      }
-      //JCheckBoxMeuItem
-      //addMenuDragMouseListener, addMenuKeyListener
-      //JButton, JCheckBox
-      //addActionListener, addChangeListener, addItemListener,
-      //JComponent
-      //addAncestorListener, addVetoableChangeListener
-      //Container
-      //addContainerListener, addPropertyChangeListener, addPropertyChangeListener,
-      //Component
-      //addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener,
-      //addInputMethodListener, addKeyListener,
-      //addMouseListener, addMouseMotionListener,
-      //addMouseWheelListener
+   //JCheckBoxMeuItem
+   //addMenuDragMouseListener, addMenuKeyListener
+   //JButton, JCheckBox
+   //addActionListener, addChangeListener, addItemListener,
+   //JComponent
+   //addAncestorListener, addVetoableChangeListener
+   //Container
+   //addContainerListener, addPropertyChangeListener, addPropertyChangeListener,
+   //Component
+   //addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener,
+   //addInputMethodListener, addKeyListener,
+   //addMouseListener, addMouseMotionListener,
+   //addMouseWheelListener
 
-      // HierarchyBounds + Hierarchy both use Hierarchy event
-      // addMouseListener, addMouseMotionListener both use MouseEvent
-      // addPropertyChangeListener, addVetoableChangeListener addChangeListener all use PropertyChangeEvent
+   // HierarchyBounds + Hierarchy both use Hierarchy event
+   // addMouseListener, addMouseMotionListener both use MouseEvent
+   // addPropertyChangeListener, addVetoableChangeListener addChangeListener all use PropertyChangeEvent
 
-      //JEditorPane
-      //addHyperlinkListener
+   //JEditorPane
+   //addHyperlinkListener
 //   }
 
    private static void process(EventTopicPatternSubscriber topicPatternAnnotation, Object obj, Method method) {
@@ -135,7 +131,7 @@ public class AnnotationProcessor {
       EventService eventService = getEventServiceFromAnnotation(eventServiceName, eventServiceClass);
 
       //Create proxy and subscribe
-      ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), eventService,  topic);
+      ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), eventService, topic);
 
       //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
       if (topicAnnotation.referenceStrength() == ReferenceStrength.WEAK) {
@@ -166,7 +162,7 @@ public class AnnotationProcessor {
 
       //Create proxy and subscribe
       //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), eventService,  eventClass);
+      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), eventService, eventClass);
       if (annotation.exact()) {
          if (annotation.referenceStrength() == ReferenceStrength.WEAK) {
             eventService.subscribeExactly(eventClass, subscriber);
@@ -194,9 +190,9 @@ public class AnnotationProcessor {
             try {
                eventService = eventServiceClass.newInstance();
             } catch (InstantiationException e) {
-               throw new RuntimeException("Could not instance of create EventService class "+eventServiceClass, e);
+               throw new RuntimeException("Could not instance of create EventService class " + eventServiceClass, e);
             } catch (IllegalAccessException e) {
-               throw new RuntimeException("Could not instance of create EventService class "+eventServiceClass, e);
+               throw new RuntimeException("Could not instance of create EventService class " + eventServiceClass, e);
             }
             try {
                EventServiceLocator.setEventService(eventServiceName, eventService);

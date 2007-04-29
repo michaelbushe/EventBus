@@ -96,7 +96,7 @@ public class TestContainerEventService extends TestCase {
       //Set the lastEventObject whenever the event fires on the right Container Event Service
       EventTopicSubscriber buttonContainerTopicSubscriber = new EventTopicSubscriber() {
          public void onEvent(String topic, Object data) {
-            System.out.println("topic="+topic+", data="+data);
+            System.out.println("topic=" + topic + ", data=" + data);
             setLastEventObject(data);
          }
       };
@@ -127,7 +127,7 @@ public class TestContainerEventService extends TestCase {
       EventService subPanel2ES = subPanel2.getContainerEventService();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
       waitForEDT();
-      assertEquals( "TopLevelBus", getLastEventObject());//still
+      assertEquals("TopLevelBus", getLastEventObject());//still
       subPanel2.add(button);
       waitForEDT();
       subPanel2ES.publish("RegEvent", "SuppliedBus");

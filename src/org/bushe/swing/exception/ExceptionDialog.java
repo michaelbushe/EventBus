@@ -15,52 +15,53 @@
  */
 package org.bushe.swing.exception;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Properties;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Properties;
 import java.util.StringTokenizer;
-import java.awt.Component;
-import java.awt.Frame;
 import java.awt.BorderLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Color;
+import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.Icon;
+import javax.swing.InputMap;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
-import javax.swing.JSeparator;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BorderFactory;
-import javax.swing.KeyStroke;
-import javax.swing.Action;
-import javax.swing.AbstractAction;
-import javax.swing.InputMap;
-import javax.swing.JComponent;
-import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
-import javax.swing.JButton;
-import javax.swing.Icon;
-import javax.swing.UIManager;
+import javax.swing.JSeparator;
+import javax.swing.JTextArea;
+import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import org.jdesktop.jdic.desktop.Desktop;
 import org.jdesktop.jdic.desktop.Message;
 
 /**
  * A dialog that displays exception that occur in the AWT Event Queue.
- * <p>
+ * <p/>
  * It is fully customizable.
+ *
  * @author Michael Bushe michael@bushe.com
-  */
+ */
 public class ExceptionDialog extends JDialog {
    public static final int PREFERRED_WIDTH = 600;
    private Throwable throwable;
@@ -82,8 +83,9 @@ public class ExceptionDialog extends JDialog {
 
    /**
     * Called during construction to initialze the components and calls doLayout() with them.
-    * <p>
+    * <p/>
     * You can overridde this method to create your own components and layout.
+    *
     * @param t the throwable to show
     */
    protected void initUI(Throwable t) {
@@ -98,6 +100,7 @@ public class ExceptionDialog extends JDialog {
 
    /**
     * Layouts the component on the context pane.
+    *
     * @param errorIconLabel the icon gotten from createErrorIconLabel()
     * @param messageLabel the
     * @param buttonPanel
@@ -147,9 +150,7 @@ public class ExceptionDialog extends JDialog {
       centerContentPanel.add(detailsPanel, gbc);
    }
 
-   /**
-    * @return a JSeparator that gets swapped out with the detail pane.
-    */
+   /** @return a JSeparator that gets swapped out with the detail pane. */
    protected JSeparator createSeparator() {
       JSeparator separator = new JSeparator();
       separator.setPreferredSize(new Dimension(PREFERRED_WIDTH, 3));
@@ -159,16 +160,14 @@ public class ExceptionDialog extends JDialog {
       return separator;
    }
 
-   /**
-    * Ensures the dialog disposes on close, escape, or X.
-    */
+   /** Ensures the dialog disposes on close, escape, or X. */
    protected void setupClose() {
       setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
       KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
       Action actionListener = new AbstractAction() {
          public void actionPerformed(ActionEvent actionEvent) {
-           setVisible(false);
-        }
+            setVisible(false);
+         }
       };
       InputMap inputMap = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
       inputMap.put(stroke, "ESCAPE");
@@ -176,8 +175,11 @@ public class ExceptionDialog extends JDialog {
    }
 
    /**
-    * The component that shows the component details message.  Calles getComponentDetailMessage(throwable) for the text.
+    * The component that shows the component details message.  Calles getComponentDetailMessage(throwable) for the
+    * text.
+    *
     * @param t the throwable being displayed
+    *
     * @return a scroll pane with a text area by default.
     */
    protected Component createDetailsComponent(Throwable t) {
@@ -191,22 +193,19 @@ public class ExceptionDialog extends JDialog {
       return scrollPane;
    }
 
-   /**
-    * @return the string in the details message pane, returns determineDetailMessage(throwable) by default
-    */
+   /** @return the string in the details message pane, returns determineDetailMessage(throwable) by default */
    protected String getDetailComponentMessageText() {
       return determineDetailMessage(throwable);
    }
 
-   /**
-    * @return the string in mail message, returns determineDetailMessage(throwable) by default
-    */
+   /** @return the string in mail message, returns determineDetailMessage(throwable) by default */
    protected String getEmailMessageText() {
       return determineDetailMessage(throwable);
    }
 
    /**
     * Get the panel of control buttons.
+    *
     * @return by default a panel with OK, Copy, and, if emailAddress is not null, Email
     */
    protected JComponent createButtonPanelComponent() {
@@ -240,7 +239,7 @@ public class ExceptionDialog extends JDialog {
 
       if (detailsComponent != null) {
          boolean defaultDetailsVisible = getDefaultDetailsVisible();
-         final JButton detailsButton = new JButton(defaultDetailsVisible?"Details >>":"<< Details");
+         final JButton detailsButton = new JButton(defaultDetailsVisible ? "Details >>" : "<< Details");
          detailsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                if ("<< Details".equals(detailsButton.getText())) {
@@ -274,36 +273,29 @@ public class ExceptionDialog extends JDialog {
 
    /**
     * Should the details component be visible by default?
+    *
     * @return flase by default
     */
    protected boolean getDefaultDetailsVisible() {
       return false;
    }
 
-   /**
-    * @return a JLabel with the getErrorIcon() for an icon.
-    */
+   /** @return a JLabel with the getErrorIcon() for an icon. */
    protected JLabel createErrorIconLabel() {
       return new JLabel(getErrorIcon());
    }
 
-   /**
-    * @return a JLabel with "The following error occurred:"
-    */
+   /** @return a JLabel with "The following error occurred:" */
    protected JLabel createTitleComponent() {
       return new JLabel("The following error occurred:");
    }
 
-   /**
-    *@return a JLabel with the text of getMessageText(throwable)
-    */
+   /** @return a JLabel with the text of getMessageText(throwable) */
    protected JLabel createErrorMessageComponent() {
       return new JLabel(getMessageText(throwable));
    }
 
-   /**
-    * @return the TSOpenPane's error icon from the look and feel (UIManager.getIcon("OptionPane.errorIcon"))
-    */
+   /** @return the TSOpenPane's error icon from the look and feel (UIManager.getIcon("OptionPane.errorIcon")) */
    protected Icon getErrorIcon() {
       return UIManager.getIcon("OptionPane.errorIcon");
    }
@@ -317,61 +309,62 @@ public class ExceptionDialog extends JDialog {
       Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
    }
 
-   /**
-    * Called when the user clicks the email button.
-    */
+   /** Called when the user clicks the email button. */
    protected void email() {
       if (emailAddress != null) {
-            SwingUtilities.invokeLater(new Runnable() {
-               public void run() {
-                  try {
-                     Message emailMessage = new Message();
-                     List to = new ArrayList();
-                     to.add(emailAddress);
-                     emailMessage.setToAddrs(to);
-                     emailMessage.setSubject(getErrorEmailSubject());
-                     emailMessage.setBody(getEmailMessageText());
-                     Desktop.mail(emailMessage);
-                  } catch (Throwable ex) {
-                     //May catch DesktopException or ClassNotFoundException, etc.
-                     throw new RuntimeException("Could not email previous error.  Likely a Java Desktop Integration configuraiton issue.  "+ex, ex);
-                  }
+         SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+               try {
+                  Message emailMessage = new Message();
+                  List to = new ArrayList();
+                  to.add(emailAddress);
+                  emailMessage.setToAddrs(to);
+                  emailMessage.setSubject(getErrorEmailSubject());
+                  emailMessage.setBody(getEmailMessageText());
+                  Desktop.mail(emailMessage);
+               } catch (Throwable ex) {
+                  //May catch DesktopException or ClassNotFoundException, etc.
+                  throw new RuntimeException("Could not email previous error.  Likely a Java Desktop Integration configuraiton issue.  " + ex, ex);
                }
-            });
+            }
+         });
       }
    }
 
    /**
     * Computes the detail shown in the details component.
+    *
     * @param t the throwable we are throwing an exception for
+    *
     * @return by default a timestamp, the root Cause and stack, and full stack
     */
    protected String determineDetailMessage(Throwable t) {
-      String msg = ""+new Date()+"\n";
+      String msg = "" + new Date() + "\n";
       Throwable root = getRootCause(t);
       if (root == t) {
-         msg = msg + t.getMessage()+"\n";
+         msg = msg + t.getMessage() + "\n";
          msg = msg + AWTExceptionHandler.stackTraceToString(t);
       } else {
-         msg = msg + "Root Cause:"+ root.getMessage()+"\n";
+         msg = msg + "Root Cause:" + root.getMessage() + "\n";
          msg = msg + AWTExceptionHandler.stackTraceToString(root);
-         msg = msg + "Full Trace:"+ t.getMessage()+"\n";
+         msg = msg + "Full Trace:" + t.getMessage() + "\n";
          msg = msg + AWTExceptionHandler.stackTraceToString(t);
       }
-      String jvmProps =  "\n" + "JVM properties:";
+      String jvmProps = "\n" + "JVM properties:";
       Properties props = System.getProperties();
       Iterator keyIt = props.keySet().iterator();
       while (keyIt.hasNext()) {
-         Object o =  keyIt.next();
-         jvmProps = jvmProps + "\n" + o +"="+props.get(o);
+         Object o = keyIt.next();
+         jvmProps = jvmProps + "\n" + o + "=" + props.get(o);
       }
       return msg + jvmProps;
    }
 
    /**
-    * Gets the message from the root cause, breaks it up into an 80 character
-    * wide html message.
-    * @param t  the throwable.
+    * Gets the message from the root cause, breaks it up into an 80 character wide html message.
+    *
+    * @param t the throwable.
+    *
     * @return a nice message for a throwable, ready to be JLabel'ed.
     */
    protected String getMessageText(Throwable t) {
@@ -392,7 +385,7 @@ public class ExceptionDialog extends JDialog {
          while (tok.hasMoreTokens()) {
             String token = tok.nextToken();
             if (line.length() + token.length() > 80) {
-               msg = msg + line+"<br>";
+               msg = msg + line + "<br>";
                line = "";
             } else {
                line = line + token;
@@ -403,23 +396,19 @@ public class ExceptionDialog extends JDialog {
       return msg + "</html>";
    }
 
-   /**
-    * @return return the subject of the error email.  "Application Error" by default.
-    */
+   /** @return return the subject of the error email.  "Application Error" by default. */
    protected String getErrorEmailSubject() {
       return "Application Error";
    }
 
-   /**
-    * Called on window close to dispose.
-    */
+   /** Called on window close to dispose. */
    protected void close() {
       dispose();
    }
 
    //Isn'throwable this in some later JDK API?  I know I saw it somewhere...
    private Throwable getRootCause(Throwable t) {
-      while(t.getCause() != null) {
+      while (t.getCause() != null) {
          t = t.getCause();
       }
       return t;

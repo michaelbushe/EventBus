@@ -1,11 +1,9 @@
 package org.bushe.swing.event.annotation;
 
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
-/**
- * Test class for class-based subscriptions
- */
+/** Test class for class-based subscriptions */
 public class WeakClassAnnotatedEventSubcriber {
    static int timesColorChanged = 0;
    static String lastCall = null;
@@ -19,7 +17,7 @@ public class WeakClassAnnotatedEventSubcriber {
       timesCalled = times;
    }
 
-   @EventSubscriber(eventClass= List.class, referenceStrength = ReferenceStrength.WEAK)
+   @EventSubscriber(eventClass = List.class, referenceStrength = ReferenceStrength.WEAK)
    public void doList(Collection collection) {
       timesCalled++;
    }

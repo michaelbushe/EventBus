@@ -18,93 +18,125 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-src.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-src.jar" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceAction.html" />
-      <change type="NEW" beforePath="" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventSubscriber.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/AbstractEventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/AbstractEventServiceEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/SwingException.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/SwingException.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AnnotationProcessor.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AnnotationProcessor.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoTopicEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoTopicEventListener.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ThreadSafeEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ThreadSafeEventService.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ReferenceStrength.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ReferenceStrength.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventTopicSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventTopicSubscriber.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/VetoTopicEventListener.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/VetoTopicEventListener.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventSubscriber.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventService.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SubscriberTimingEvent.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SubscriberTimingEvent.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SubscriberTimingEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SubscriberTimingEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/UseTheClassOfTheAnnotatedMethodsParameter.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/UseTheClassOfTheAnnotatedMethodsParameter.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/SwingException.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/SwingException.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/SwingException.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/SwingException.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceRegistrar.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceRegistrar.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBusAction.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBusAction.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/stylesheet.css" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/stylesheet.css" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/ExceptionDialog.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/ExceptionDialog.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceAction.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/AbstractEventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/AbstractEventServiceEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventAction.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventAction.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestContainerEventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestContainerEventService.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-noframe.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-noframe.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/deprecated-list.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/deprecated-list.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-tree.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-tree.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ThreadSafeEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ThreadSafeEventService.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceRegistrar.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceRegistrar.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ObjectEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ObjectEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventSubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/ExceptionDialog.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/ExceptionDialog.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBusAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBusAction.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-doc.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-doc.jar" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-all.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-all.jar" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/resources/inherit.gif" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/resources/inherit.gif" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.AWTErrorLogger.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.AWTErrorLogger.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/AWTExceptionHandler.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/AWTExceptionHandler.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceSupplier.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceSupplier.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/VetoEventListener.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/VetoEventListener.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iws" afterPath="$PROJECT_DIR$/EventBus.iws" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-tree.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-tree.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoEventListener.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceAction.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceAction.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBusAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBusAction.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-src.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-src.jar" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBus.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBus.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-frame.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-frame.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-frame.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-frame.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/index.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/index.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventSubscriber.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/package-list" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/package-list" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/AbstractEventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/AbstractEventServiceEvent.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/SwingException.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/SwingException.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceLocator.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceLocator.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBus.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBus.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/help-doc.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/help-doc.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventService.html" />
-      <change type="NEW" beforePath="" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ProxySubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/index-all.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/index-all.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoTopicEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoTopicEventListener.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ThreadSafeEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ThreadSafeEventService.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventTopicSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventTopicSubscriber.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventSubscriber.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventService.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SubscriberTimingEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SubscriberTimingEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ProxySubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ProxySubscriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceFinder.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceFinder.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/index.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/index.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceExistsException.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceExistsException.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBusServiceClass.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBusServiceClass.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/VetoEventListenerForTest.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/VetoEventListenerForTest.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceEvent.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/SwingException.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/SwingException.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-use.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-use.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceRegistrar.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceRegistrar.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus.jar" />
-      <change type="NEW" beforePath="" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/ExceptionDialog.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/exception/ExceptionDialog.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/SubscriberTimingEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/SubscriberTimingEvent.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/ant.bat" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/ant.bat" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/serialized-form.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/serialized-form.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/stylesheet.css" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/stylesheet.css" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus.jar" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceFinder.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceFinder.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/ExceptionDialog.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/ExceptionDialog.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/serialized-form.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/serialized-form.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ThreadSafeEventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ThreadSafeEventService.java" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceAction.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/AbstractEventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/AbstractEventServiceEvent.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/build.xml" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/build.xml" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-frame.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-frame.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongAnnotatedEventSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongAnnotatedEventSubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-tree.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-tree.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-summary.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-summary.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-noframe.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/allclasses-noframe.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-tree.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/overview-tree.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/deprecated-list.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/deprecated-list.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ThreadSafeEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ThreadSafeEventService.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoEventListener.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SwingEventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SwingEventService.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceEvent.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceEvent.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestDefaultEventService.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestDefaultEventService.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-summary.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-summary.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoEventListener.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceSupplier.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceSupplier.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicSubscriber.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceFinder.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceFinder.html" />
-      <change type="NEW" beforePath="" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceAction.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoTopicEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/VetoTopicEventListener.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceAction.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceSupplier.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceSupplier.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceRegistrar.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceRegistrar.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventServiceEvent.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SwingEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/SwingEventService.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ObjectEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/ObjectEvent.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/SwingEventService.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/SwingEventService.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventTopicSubscriber.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventTopicSubscriber.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/ExceptionDialog.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/ExceptionDialog.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBusAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBusAction.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-use.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-use.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceAction.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceAction.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceAction.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/AWTExceptionHandler.AWTErrorLogger.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/AWTExceptionHandler.AWTErrorLogger.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-doc.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-doc.jar" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ContainerEventServiceAction.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-use.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/package-use.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBusTiming.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBusTiming.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceLocator.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventServiceLocator.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBus.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBus.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/resources/inherit.gif" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/resources/inherit.gif" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-all.jar" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/EventBus-all.jar" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceRegistrar.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceRegistrar.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBus.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/EventBus.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.AWTErrorLogger.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/AWTExceptionHandler.AWTErrorLogger.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ObjectEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ObjectEvent.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/VetoTopicEventListenerForTest.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/VetoTopicEventListenerForTest.java" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-frame.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-frame.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ObjectEvent.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/ObjectEvent.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-summary.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-summary.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iws" afterPath="$PROJECT_DIR$/EventBus.iws" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-tree.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/package-tree.html" />
+      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceLocator.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceLocator.java" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/AWTExceptionHandler.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/exception/class-use/AWTExceptionHandler.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoEventListener.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/class-use/VetoEventListener.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/constant-values.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/constant-values.html" />
-      <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBusAction.html" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/www/doc/api/org/bushe/swing/event/EventBusAction.html" />
       <change type="MODIFICATION" beforePath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java" afterPath="C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java" />
     </list>
   </component>
@@ -263,7 +295,7 @@
       <file leaf-file-name="AbstractProxySubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="22" selection-start="275" selection-end="275" vertical-scroll-proportion="0.14964789">
+            <state line="8" column="22" selection-start="239" selection-end="239" vertical-scroll-proportion="0.1443124">
               <folding />
             </state>
           </provider>
@@ -272,7 +304,7 @@
       <file leaf-file-name="ProxySubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ProxySubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="17" selection-start="701" selection-end="701" vertical-scroll-proportion="0.3207547">
+            <state line="12" column="17" selection-start="704" selection-end="704" vertical-scroll-proportion="0.34634975">
               <folding />
             </state>
           </provider>
@@ -281,7 +313,7 @@
       <file leaf-file-name="AnnotatedEventSubcriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="13" selection-start="1077" selection-end="1077" vertical-scroll-proportion="0.75814754">
+            <state line="42" column="13" selection-start="970" selection-end="970" vertical-scroll-proportion="0.028145695">
               <folding />
             </state>
           </provider>
@@ -290,7 +322,7 @@
       <file leaf-file-name="StrongClassAnnotatedEventSubcriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="13" selection-start="351" selection-end="351" vertical-scroll-proportion="0.20411664">
+            <state line="6" column="13" selection-start="157" selection-end="157" vertical-scroll-proportion="0.14072847">
               <folding />
             </state>
           </provider>
@@ -299,7 +331,7 @@
       <file leaf-file-name="WeakClassAnnotatedEventSubcriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="86" selection-start="540" selection-end="540" vertical-scroll-proportion="0.5831904">
+            <state line="19" column="87" selection-start="537" selection-end="537" vertical-scroll-proportion="0.5066225">
               <folding />
             </state>
           </provider>
@@ -308,11 +340,11 @@
       <file leaf-file-name="AnnotationProcessor.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="168" column="43" selection-start="7354" selection-end="7354" vertical-scroll-proportion="0.10915493">
+            <state line="164" column="43" selection-start="7289" selection-end="7289" vertical-scroll-proportion="0.1188455">
               <folding>
-                <marker date="1176587955578" expanded="true" signature="2656:3861" placeholder="{...}" />
-                <marker date="1176587955578" expanded="true" signature="2836:2963" placeholder="{...}" />
-                <marker date="1176587955578" expanded="true" signature="2895:2950" placeholder="{...}" />
+                <marker date="1177133818718" expanded="true" signature="2646:3797" placeholder="{...}" />
+                <marker date="1177133818718" expanded="true" signature="2826:2953" placeholder="{...}" />
+                <marker date="1177133818718" expanded="true" signature="2885:2940" placeholder="{...}" />
               </folding>
             </state>
           </provider>
@@ -321,7 +353,7 @@
       <file leaf-file-name="BadEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/BadEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="45" selection-start="321" selection-end="321" vertical-scroll-proportion="0.20950705">
+            <state line="7" column="45" selection-start="321" selection-end="321" vertical-scroll-proportion="0.19701986">
               <folding />
             </state>
           </provider>
@@ -330,7 +362,7 @@
       <file leaf-file-name="ClassNotFoundException.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ClassNotFoundException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="35" column="13" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.02915952">
+            <state line="35" column="13" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.028145695">
               <folding />
             </state>
           </provider>
@@ -339,7 +371,7 @@
       <file leaf-file-name="EventBus.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBus.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="189" column="0" selection-start="6882" selection-end="6882" vertical-scroll-proportion="0.94542253">
+            <state line="38" column="21" selection-start="1939" selection-end="1939" vertical-scroll-proportion="0.663837">
               <folding />
             </state>
           </provider>
@@ -348,7 +380,7 @@
       <file leaf-file-name="build.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/build.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="61" column="13" selection-start="2524" selection-end="2529" vertical-scroll-proportion="0.33450705">
+            <state line="61" column="13" selection-start="2524" selection-end="2529" vertical-scroll-proportion="0.028862478">
               <folding />
             </state>
           </provider>
@@ -357,7 +389,7 @@
       <file leaf-file-name="EventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="687" column="0" selection-start="34188" selection-end="34188" vertical-scroll-proportion="1.3204225">
+            <state line="728" column="0" selection-start="34482" selection-end="34482" vertical-scroll-proportion="1.3310696">
               <folding />
             </state>
           </provider>
@@ -366,7 +398,7 @@
       <file leaf-file-name="package.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="108" column="0" selection-start="3931" selection-end="3931" vertical-scroll-proportion="1.0757042">
+            <state line="110" column="0" selection-start="3935" selection-end="3935" vertical-scroll-proportion="0.028862478">
               <folding />
             </state>
           </provider>
@@ -375,7 +407,7 @@
       <file leaf-file-name="EventSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23943663">
+            <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23089983">
               <folding />
             </state>
           </provider>
@@ -384,7 +416,7 @@
       <file leaf-file-name="EventServiceLocator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceLocator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="37" column="0" selection-start="1856" selection-end="1856" vertical-scroll-proportion="0.63497454">
               <folding />
             </state>
           </provider>
@@ -393,7 +425,7 @@
       <file leaf-file-name="EventSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="0" selection-start="2272" selection-end="2331" vertical-scroll-proportion="0.7165493">
+            <state line="69" column="0" selection-start="2272" selection-end="2331" vertical-scroll-proportion="0.46519524">
               <folding />
             </state>
           </provider>
@@ -402,7 +434,7 @@
       <file leaf-file-name="EventTopicPatternSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="15" selection-start="528" selection-end="528" vertical-scroll-proportion="0.23943663">
+            <state line="15" column="15" selection-start="529" selection-end="529" vertical-scroll-proportion="0.23089983">
               <folding />
             </state>
           </provider>
@@ -411,7 +443,7 @@
       <file leaf-file-name="EventTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="90" column="15" selection-start="2832" selection-end="2837" vertical-scroll-proportion="1.0809859">
+            <state line="90" column="15" selection-start="2802" selection-end="2807" vertical-scroll-proportion="0.9677419">
               <folding />
             </state>
           </provider>
@@ -420,7 +452,7 @@
       <file leaf-file-name="BaseProxySubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="56" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.50880283">
+            <state line="21" column="6" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.51952463">
               <folding />
             </state>
           </provider>
@@ -429,7 +461,7 @@
       <file leaf-file-name="ProxyTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="118" selection-start="410" selection-end="410" vertical-scroll-proportion="0.20950705">
+            <state line="8" column="118" selection-start="370" selection-end="370" vertical-scroll-proportion="0.032258064">
               <folding />
             </state>
           </provider>
@@ -438,16 +470,43 @@
       <file leaf-file-name="EventTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23327616">
+            <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23089983">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestSubscriberAnnotation.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="TestSubscriberAnnotation.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="92" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.5626072">
+            <state line="2" column="1" selection-start="44" selection-end="44" vertical-scroll-proportion="0.028862478">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContainerEventServiceFinder.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceFinder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="1" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.31748727">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContainerEventServiceSupplier.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceSupplier.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="41" selection-start="2087" selection-end="2087" vertical-scroll-proportion="0.5483871">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SwingEventService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SwingEventService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="84" column="19" selection-start="4391" selection-end="4391" vertical-scroll-proportion="1.0713073">
               <folding />
             </state>
           </provider>
@@ -456,7 +515,7 @@
       <file leaf-file-name="EventDispatchThread.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/jdk1.5/src.zip!/java/awt/EventDispatchThread.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="6" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.3327616">
+            <state line="42" column="6" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.028145695">
               <folding />
             </state>
           </provider>
@@ -465,7 +524,7 @@
       <file leaf-file-name="TestSubscriberAnnotationMemoryLeaks.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="4" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.11663808">
+            <state line="49" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.14770798">
               <folding />
             </state>
           </provider>
@@ -474,7 +533,25 @@
       <file leaf-file-name="ThreadSafeEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ThreadSafeEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="496" column="0" selection-start="23056" selection-end="24554" vertical-scroll-proportion="0.5387324">
+            <state line="101" column="3" selection-start="5781" selection-end="5781" vertical-scroll-proportion="0.028862478">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDefaultEventService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestDefaultEventService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="691" column="38" selection-start="27967" selection-end="27967" vertical-scroll-proportion="0.31748727">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ContainerEventServiceAction.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceAction.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="67" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.2886248">
               <folding />
             </state>
           </provider>
@@ -483,7 +560,7 @@
       <file leaf-file-name="WeakReference.java" pinned="false" current="false" current-in-tab="false">
         <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ref/WeakReference.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="39" selection-start="1854" selection-end="1854" vertical-scroll-proportion="1.2401372">
+            <state line="50" column="39" selection-start="1854" selection-end="1854" vertical-scroll-proportion="1.2102649">
               <folding />
             </state>
           </provider>
@@ -656,48 +733,6 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus.ipr" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
     </subPane>
   </component>
   <component name="ProjectReloadState">
@@ -711,7 +746,7 @@
       <showLibraryContents />
       <hideEmptyPackages PackagesPane="false" ProjectPane="false" />
       <abbreviatePackageNames />
-      <showStructure Favorites="false" PackagesPane="false" Scope="false" ProjectPane="false" />
+      <showStructure Scope="false" ProjectPane="false" PackagesPane="false" Favorites="false" />
       <autoscrollToSource />
       <autoscrollFromSource />
       <sortByType />
@@ -756,14 +791,14 @@
     </key>
   </component>
   <component name="RestoreUpdateTree" />
-  <component name="RunManager" selected="JUnit.TestSubscriberAnnotation">
-    <tempConfiguration default="false" name="TestSubscriberAnnotation" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
-      <pattern value="org.bushe.swing.event.annotation.*" />
+  <component name="RunManager" selected="JUnit.TestDefaultEventService">
+    <tempConfiguration default="false" name="TestDefaultEventService" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <pattern value="org.bushe.swing.event.*" />
       <module name="EventBus" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="PACKAGE_NAME" value="org.bushe.swing.event.annotation" />
-      <option name="MAIN_CLASS_NAME" value="org.bushe.swing.event.annotation.TestSubscriberAnnotation" />
+      <option name="PACKAGE_NAME" value="org.bushe.swing.event" />
+      <option name="MAIN_CLASS_NAME" value="org.bushe.swing.event.TestDefaultEventService" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="" />
@@ -774,27 +809,15 @@
         <value defaultName="wholeProject" />
       </option>
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="1718" />
+        <option name="DEBUG_PORT" value="4660" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
       <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" value="" />
-      <option name="VM_PARAMETERS" value="" />
-      <option name="PROGRAM_PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/demo" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" value="" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <module name="" />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -832,6 +855,16 @@
       <option name="SHMEM_ADDRESS" value="javadebug" />
       <option name="HOST" value="localhost" />
       <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/demo" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <module name="" />
     </configuration>
     <configuration default="false" name="InternalFrameDemo" type="Application" factoryName="Application" enabled="false" merge="false">
       <option name="MAIN_CLASS_NAME" value="org.bushe.swing.action.editor.InternalFrameDemo" />
@@ -962,8 +995,8 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295964" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1740413" order="0" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2427293" order="1" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16076696" order="0" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50223714" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18879056" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32550335" order="8" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
@@ -972,11 +1005,11 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.05899705" order="1" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32885906" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32885906" order="2" />
       <window_info id="JavaDoc Browser" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="File View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30536914" order="4" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30536914" order="4" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33295965" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
@@ -1078,66 +1111,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="351" selection-end="351" vertical-scroll-proportion="0.20411664">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="86" selection-start="540" selection-end="540" vertical-scroll-proportion="0.5831904">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="168" column="43" selection-start="7354" selection-end="7354" vertical-scroll-proportion="0.10915493">
-          <folding>
-            <marker date="1176587955578" expanded="true" signature="2656:3861" placeholder="{...}" />
-            <marker date="1176587955578" expanded="true" signature="2836:2963" placeholder="{...}" />
-            <marker date="1176587955578" expanded="true" signature="2895:2950" placeholder="{...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/BadEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="45" selection-start="321" selection-end="321" vertical-scroll-proportion="0.20950705">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ClassNotFoundException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="13" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.02915952">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceLocator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="15" selection-start="528" selection-end="528" vertical-scroll-proportion="0.23943663">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="56" selection-start="1046" selection-end="1046" vertical-scroll-proportion="0.50880283">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ref/Reference.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="39" column="22" selection-start="1421" selection-end="1421" vertical-scroll-proportion="0.029010238">
@@ -1166,13 +1139,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestDefaultEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="171" column="6" selection-start="6502" selection-end="6502" vertical-scroll-proportion="0.02977233">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestEventBus.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="18" selection-start="993" selection-end="993" vertical-scroll-proportion="0.02977233">
@@ -1194,128 +1160,216 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ref/WeakReference.java">
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="39" selection-start="1854" selection-end="1854" vertical-scroll-proportion="1.2401372">
+        <state line="8" column="22" selection-start="239" selection-end="239" vertical-scroll-proportion="0.1443124">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ProxySubscriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="17" selection-start="701" selection-end="701" vertical-scroll-proportion="0.3207547">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23327616">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="118" selection-start="410" selection-end="410" vertical-scroll-proportion="0.20950705">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="22" selection-start="275" selection-end="275" vertical-scroll-proportion="0.14964789">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="2272" selection-end="2331" vertical-scroll-proportion="0.7165493">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23943663">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="90" column="15" selection-start="2832" selection-end="2837" vertical-scroll-proportion="1.0809859">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="108" column="0" selection-start="3931" selection-end="3931" vertical-scroll-proportion="1.0757042">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="687" column="0" selection-start="34188" selection-end="34188" vertical-scroll-proportion="1.3204225">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="4" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.11663808">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SwingEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="10" selection-start="1671" selection-end="1671" vertical-scroll-proportion="0.02977233">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ThreadSafeEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="496" column="0" selection-start="23056" selection-end="24554" vertical-scroll-proportion="0.5387324">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="189" column="0" selection-start="6882" selection-end="6882" vertical-scroll-proportion="0.94542253">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/build.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="13" selection-start="2524" selection-end="2529" vertical-scroll-proportion="0.33450705">
+        <state line="12" column="17" selection-start="704" selection-end="704" vertical-scroll-proportion="0.34634975">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="13" selection-start="1077" selection-end="1077" vertical-scroll-proportion="0.75814754">
+        <state line="42" column="13" selection-start="970" selection-end="970" vertical-scroll-proportion="0.028145695">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/jdk1.5/src.zip!/java/awt/EventDispatchThread.java">
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/StrongClassAnnotatedEventSubcriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="6" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.3327616">
+        <state line="6" column="13" selection-start="157" selection-end="157" vertical-scroll-proportion="0.14072847">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/WeakClassAnnotatedEventSubcriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="87" selection-start="537" selection-end="537" vertical-scroll-proportion="0.5066225">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="164" column="43" selection-start="7289" selection-end="7289" vertical-scroll-proportion="0.1188455">
+          <folding>
+            <marker date="1177133818718" expanded="true" signature="2646:3797" placeholder="{...}" />
+            <marker date="1177133818718" expanded="true" signature="2826:2953" placeholder="{...}" />
+            <marker date="1177133818718" expanded="true" signature="2885:2940" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/BadEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="45" selection-start="321" selection-end="321" vertical-scroll-proportion="0.19701986">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ClassNotFoundException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="13" selection-start="1367" selection-end="1367" vertical-scroll-proportion="0.028145695">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/build.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="61" column="13" selection-start="2524" selection-end="2529" vertical-scroll-proportion="0.028862478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="728" column="0" selection-start="34482" selection-end="34482" vertical-scroll-proportion="1.3310696">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/package.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="0" selection-start="3935" selection-end="3935" vertical-scroll-proportion="0.028862478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23089983">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="0" selection-start="2272" selection-end="2331" vertical-scroll-proportion="0.46519524">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="15" selection-start="529" selection-end="529" vertical-scroll-proportion="0.23089983">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/EventTopicSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="90" column="15" selection-start="2802" selection-end="2807" vertical-scroll-proportion="0.9677419">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/BaseProxySubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="6" selection-start="1024" selection-end="1024" vertical-scroll-proportion="0.51952463">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="118" selection-start="370" selection-end="370" vertical-scroll-proportion="0.032258064">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventTopicSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="17" selection-start="820" selection-end="820" vertical-scroll-proportion="0.23089983">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="92" selection-start="1738" selection-end="1738" vertical-scroll-proportion="0.5626072">
+        <state line="2" column="1" selection-start="44" selection-end="44" vertical-scroll-proportion="0.028862478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceSupplier.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="41" selection-start="2087" selection-end="2087" vertical-scroll-proportion="0.5483871">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/SwingEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="84" column="19" selection-start="4391" selection-end="4391" vertical-scroll-proportion="1.0713073">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/jdk1.5/src.zip!/java/awt/EventDispatchThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="6" selection-start="1344" selection-end="1344" vertical-scroll-proportion="0.028145695">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotationMemoryLeaks.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="49" column="0" selection-start="1992" selection-end="1992" vertical-scroll-proportion="0.14770798">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ThreadSafeEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="3" selection-start="5781" selection-end="5781" vertical-scroll-proportion="0.028862478">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/jdk1.5/src.zip!/java/lang/ref/WeakReference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="39" selection-start="1854" selection-end="1854" vertical-scroll-proportion="1.2102649">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventServiceLocator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="37" column="0" selection-start="1856" selection-end="1856" vertical-scroll-proportion="0.63497454">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/EventBus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="21" selection-start="1939" selection-end="1939" vertical-scroll-proportion="0.663837">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/test/src/org/bushe/swing/event/TestDefaultEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="691" column="38" selection-start="27967" selection-end="27967" vertical-scroll-proportion="0.31748727">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceAction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="67" selection-start="1099" selection-end="1099" vertical-scroll-proportion="0.2886248">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://C:/BE/Gigs/bushe.org/Dev/Projects/EventBus/EventBus/src/org/bushe/swing/event/ContainerEventServiceFinder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="1" selection-start="1267" selection-end="1267" vertical-scroll-proportion="0.31748727">
           <folding />
         </state>
       </provider>

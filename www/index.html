@@ -25,22 +25,25 @@
           <h1>Event Bus</h1>
           <h2>EventBus News</h2>
           <ul>
-          	<li>The Event Bus has released an alpha 1.1 alpha version with Annotations!</li>
-          	<li>The Event Bus has reached version 1.0!  With the recently added caching feature (thanks to Hans Muller for the inspiration), 
+          	<li><i>29-Apr-2007</i> The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable EventBus implementation.</li>
+          	<li><i>18-Mar-2007</i> Will the EventBus find life in outer space?  (Now there's a "Watch the News at 10" headline!)  
+          	  <a href="http://kepler.nasa.gov/">NASA's Kepler Mission</a> is using the EventBus in software
+          	  that analyses hundreds of thousands of stars for planets that may support life.</li>
+          	<li><i>27-Dec-2006</i> The Event Bus has released an alpha 1.1 alpha version with Annotations!</li>
+          	<li><i>26-Nov-2006</i> The Event Bus has reached version 1.0!  With the recently added caching feature (thanks to Hans Muller for the inspiration), 
           		  and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature complete 
           		  for the 1.0 release.  The 1.0 release will be the last release for JDK 1.4.   Work will now begin on Annotations and Generics, 
           		  which of course will require 1.5.  Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.</li>
-            <li>Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
-        	  <li>Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
+            <li><i>22-Nov-2006</i> Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
+        	  <li><i>20-July-2006</i> Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
           </ul>
           <h2>About the EventBus</h2>
-          <p> The Event Bus is a Swing-oriented single-process publish/subscribe 
-            event routing library. The EventBus is fully-functional, with very 
-            good API documentation and test coverage (80+%). It has been deployed 
-            in production. 
+          <p> The Event Bus is a single-process publish/subscribe event routing library, with Swing extensions. 
+            The EventBus is fully-functional, with very good API documentation and test coverage (80+%). It has been deployed 
+            in many production environments, including financial and scientific applications. 
           <p>The Event Bus is easy to use and yet very powerful. It requires no 
             setup and the API is small and clear. The EventBus solves many problems, 
-            particularly with Swing applications.
+            particularly with Swing applications and promotes loose coupling.
           <p>The <a href="HopOnTheEventBus-Web.ppt">slides from the EventBus presentation at JavaOne 2006</a> 
           	demonstrate many ways to use the EventBus.  The code from the talk is not yet available, but will be soon.</a>
           <p>Though not Swing-specific, the EventBus has Swing support and the 
@@ -48,27 +51,28 @@
             and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
             Info Bus from JDK 1.1 days</a>, but it is much simpler and smaller.
             The idea is similar to a computer system bus - components plug into 
-            it and listen for information passed on it. This is different from 
-            the Swing listener paradigm where listeners attach to and listen on 
-            specific components. The Event Bus is related to messaging systems 
-            like JMS whereby processes publish messages on a topic and other systems 
-            can listen on the topic. The JMS implementation takes care of efficiently 
+            a single bus and each can listen for information passed on it. The EventBus is different from 
+            the tightly-coupled Swing listener paradigm where listeners attach to and listen on 
+            specific components. Another difference is that the EventBus is not limited to Swing events.  
+            Any object can be published on the EventBus.   In typicaly usage, you create events for your own applications,
+            or publish objects that you already have in your application domain.  
+          <p>Components can subscribe to events passed on the Event Bus by Class or by String (called a topic name). 
+            Subscriptions use weak references by default, avoiding memory leaks common in swing application when 
+            listeners are not removed.   
+          <p>The Event Bus is related to messaging systems 
+            like JMS whereby many processes publish messages on a topic and other systems 
+            can listen on the topic. JMS implementations take care of efficiently 
             routing the messages. The major advantage to JMS and the EventBus 
             is that it introduces a decoupling layer. Components only have to 
             know about the bus, not each subscriber and publisher that they may 
-            be interested in. 
-          <p>Components can subscribe to events passed on the Event Bus by Event 
-            Class or by a topic name (String). Subscriptions can be done weakly, 
-            avoiding memory leaks. 
-          <p>Though code complete, this project is new, so the project website 
-            is not yet complete. 
+            be interested in.  The EventBus differs from JMS since it meant to be used by a single JVM. 
           <h2>Download Release Snapshots</h2>
-          <p>The current release is 1.1 alpha with Annotations.  This release is compiled in JDK 1.5.  
+          <p>The current release is 1.1 beta with Annotations.  This release is compiled in JDK 1.5.  
           <p><a href="EventBus.jar">EventBus.jar</a> 
           <p><a href="EventBus-src.jar">EventBus-src.jar</a> 
           <p><a href="EventBus-doc.jar">EventBus-doc.jar</a> 
           <p><a href="EventBus-all.jar">EventBus-all.jar</a> 
-          <p>The is release is 1.0.  This release is compiled in JDK 1.4.
+          <p>If you are using JDK 1.4, you must use release 1.0.  These jars are compiled with JDK 1.4.
           <p><a href="EventBus-1.0ForJDK1.4.jar">EventBus.jar</a> 
           <p><a href="EventBus-src-1.0ForJDK1.4.jar">EventBus-src-1.0ForJDK1.4.jar</a> 
           <p><a href="EventBus-doc-1.0ForJDK1.4.jar">EventBus-doc-1.0ForJDK1.4.jar</a> 
@@ -76,8 +80,10 @@
           <h2>JavaDoc</h2>
           <p>Take a look at the online <a href="doc/api/index.html">JavaDocs</a></p>
           <h2>Examples</h2>
-          <p> More examples on the way, but here's a quick one on making a status 
-            bar:
+          <p> A typical use case for the EventBus is a status bar.  Applications can avoid coupling
+              components to status bars (and vice versa) by publishing status events on the EventBus
+              and having the status bar subscribe to status events.  (A key advantage of the EventBus is that the 
+              contracts between components are defined by the events that are published between them.) :
           <p>StatusEvent.java
           <pre>public StatusEvent { 
    Sting statusText;
@@ -89,6 +95,9 @@
       return statusText;
    }
 }</pre>
+          <p>AnySwingController.java </p>
+          <pre>...   
+EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
           <p>StatusBar.java
           <pre>public StatusBar extends JLabel implements EventSubscriber {
    public StatusBar() {
@@ -102,43 +111,20 @@
 
 }
 </pre>
-          <p>AnySwingControll.java </p>
-          <pre>...   
-EventBus.publish(new StatusEvent(&quot;All data loaded.&quot;));</pre>
-          <pre>&nbsp;
-</pre>
 <p>
-	With Annotations, it's a bit simpler:
-          <p>StatusEvent.java
-          <pre>public StatusEvent { 
-   Sting statusText;
-   
-   public StatusEvent(String statusText) { 
-      this.statusText = statusText;
-   }
-   public String getStatusText() {
-      return statusText;
-   }
-}</pre>
-          <p>StatusBar.java
-          <pre>public StatusBar extends JLabel implements EventSubscriber {
-   public StatusBar() {
-      AnnotationProcessor.process(this);
-   }
-   @EventSubscriber(eventClass=StatusEvent.class)
-   public void onEvent(StatusEvent statusEvent) {
-	  this.setText(statusEvent.getStatusText();
-   }
-   }
-
-}
-</pre>
-          <p>AnySwingControll.java </p>
-          <pre>...   This stays the same.
-EventBus.publish(new StatusEvent(&quot;All data loaded.&quot;));</pre>
-          <pre>&nbsp;
-</pre>
-	
+	With Annotations, it's a bit simpler (StatusEvent.java and AnySwingController.java stay the same):
+   <p>StatusBar.java
+      <pre>public StatusBar extends JLabel {
+              public StatusBar() {
+                 AnnotationProcessor.process(this);
+              }
+              @EventSubscriber(eventClass=StatusEvent.class)
+              public void onEvent(StatusEvent statusEvent) {
+                 this.setText(statusEvent.getStatusText();
+              }
+           }
+      </pre>
+<p>
           <h2>Future</h2>
           <p>Future goals include: </div>
       </div>
@@ -148,17 +134,14 @@ EventBus.publish(new StatusEvent(&quot;All data loaded.&quot;));</pre>
             <div class="app"> Create tutorials </div>
             <ul>
               <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
-              <li>Simple usage Swing component usages for such components as a 
-                progress bar.
-              <li>moving information from non-Swing threads to Swing components 
-                via events.
-              <li>mvc models through events.
-              <li>form validation solutions through events.
-              <li>integrating services-oriented Swing with events.
+              <li>A set of Swing components or adapters for components for common usages like progress bars.
+              <li>Moving information from non-Swing threads to Swing components via events.
+              <li>MVC through events examples.
+              <li>Examples for validation through events.
+              <li>Integrating JMS, WebServices and SOA with the EventBus.
             </ul>
           </div>
         </li>
-        <li>Get eyes on it and feedback!</li>
       </ul>
       <div> 
         <div class="app"> 

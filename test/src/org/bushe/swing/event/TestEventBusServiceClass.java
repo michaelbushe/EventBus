@@ -1,9 +1,5 @@
 package org.bushe.swing.event;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.TypeVariable;
-import java.lang.reflect.Modifier;
-
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */

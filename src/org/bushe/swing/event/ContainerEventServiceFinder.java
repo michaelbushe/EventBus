@@ -32,9 +32,9 @@ import javax.swing.RootPaneContainer;
  * componentization, and splits events usage into logical subsets.
  * <p/>
  * The finder will walk up a component's hierarchy searching for a parent that implements ContainerEventServiceSupplier.
- *  If it find one, it returns it.  If it doesn't find one, the top level JComponent (specifically, the highest parent
- * in the hierarchy, typically a JRootPane) has a client property added to it (if not already set) that has the value of
- * a new SwingEventService, which is then returned.  The EventBus is never returned.
+ * If it find one, it returns it.  If it doesn't find one, the top level JComponent (specifically, the highest parent in
+ * the hierarchy, typically a JRootPane) has a client property added to it (if not already set) that has the value of a
+ * new SwingEventService, which is then returned.  The EventBus is never returned.
  *
  * @author Michael Bushe michael@bushe.com
  */

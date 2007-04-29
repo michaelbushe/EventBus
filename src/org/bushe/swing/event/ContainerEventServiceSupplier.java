@@ -24,12 +24,11 @@ package org.bushe.swing.event;
  * available implementations all work the same as any other EventService.
  * <p/>
  * A good candidate for a ContainerEventServiceSupplier is a Form class.  The components that the Form contains can
- * publish objects when they they change state - for example when their values change or when they become
- * invalid or valid.  The Form may have a model that collects the user's entries by subscribing to events
- * published on the Form's EventService. A FormValidator may also listen to publications on the Form's
- * EventService to subscribe to validation errors.  The Form's components don't have to know about the form, or the model or
- * the validator.  They just publish events on their Container's EventService, which they can find by using a {@link
- * ContainerEventServiceFinder}.
+ * publish objects when they they change state - for example when their values change or when they become invalid or
+ * valid.  The Form may have a model that collects the user's entries by subscribing to events published on the Form's
+ * EventService. A FormValidator may also listen to publications on the Form's EventService to subscribe to validation
+ * errors.  The Form's components don't have to know about the form, or the model or the validator.  They just publish
+ * events on their Container's EventService, which they can find by using a {@link ContainerEventServiceFinder}.
  * <p/>
  * This class does not ever have to be implemented.  The ContainerEventServiceFinder will create a ContainerEventService
  * on JRootPanes by default.  So each dialog and Frame will have their own automatically.  You only want to implement

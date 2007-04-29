@@ -79,7 +79,7 @@ public class TestEventBusTiming extends TestCase {
    }
 
    public void testNothing() {
-      
+
    }
 
    public void broker_timeHandling() {
@@ -93,7 +93,7 @@ public class TestEventBusTiming extends TestCase {
       EventBus.publish(createEvent());
       try {
          Thread.sleep(500);
-      } catch (Throwable e){
+      } catch (Throwable e) {
       }
       assertTrue(wasCalled[0] == null);
       EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
@@ -107,7 +107,7 @@ public class TestEventBusTiming extends TestCase {
       EventBus.publish(createEvent());
       try {
          Thread.sleep(3000);
-      } catch (Throwable e){
+      } catch (Throwable e) {
       }
       assertTrue(wasCalled2[0] == Boolean.TRUE);
       assertNotNull(timing.getSource());

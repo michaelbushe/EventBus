@@ -15,9 +15,10 @@
  */
 package org.bushe.swing.event;
 
-import java.util.List;
-import java.util.regex.Pattern;
 import java.io.Serializable;
+import java.util.List;
+import java.util.Collection;
+import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 
@@ -141,7 +142,7 @@ public class TestDefaultEventService extends TestCase {
       assertEquals(3, subscribers.size());
       for (int i = 0; i < subscribers.size(); i++) {
          EventSubscriber subscriber = (EventSubscriber) subscribers.get(i);
-         eventService.unsubscribe(getEventClass(),subscriber);
+         eventService.unsubscribe(getEventClass(), subscriber);
       }
       eventService.subscribe(getEventClass(), (EventSubscriber) subscribers.get(1));
       eventService.subscribe(getEventClass(), (EventSubscriber) subscribers.get(0));
@@ -611,11 +612,9 @@ public class TestDefaultEventService extends TestCase {
    }
 
    /**
-    * Test for ISSUE #1:
-    * If a class implements both subscriber interfaces I've seen a topci 'event' be
-    * published from a publish methog with the correct (topic) signature, yet be
-    * subscribed at the wrong subscriber method (the one with the signature for real event
-    * classes, not topics
+    * Test for ISSUE #1: If a class implements both subscriber interfaces I've seen a topci 'event' be published from a
+    * publish methog with the correct (topic) signature, yet be subscribed at the wrong subscriber method (the one with
+    * the signature for real event classes, not topics
     */
    public void testSimultaneousTopicAndClass() {
       DoubleSubscriber doubleSubscriber = new DoubleSubscriber();
@@ -692,6 +691,29 @@ public class TestDefaultEventService extends TestCase {
       assertEquals(null, subscriber.lastEventString);
    }
 
+   //Parameterized Type
+//   public void testParameterizedEvent() {
+//      final int[] timesCalled = new int[1];
+//      DataRequestEvent<String> stringRequestEvent = new DataRequestEvent<String>();
+//      DataRequestEvent<Integer> integerRequestEvent = new DataRequestEvent<Integer>();
+//      eventService.subscribe(integerRequestEvent.getClass(), new EventSubscriber() {
+//         public void onEvent(Object event) {
+//            timesCalled[0]++;
+//         }
+//      });
+//      eventService.publish(stringRequestEvent);
+//      eventService.publish(integerRequestEvent);
+//      assertEquals(1, timesCalled[0]);
+//   }
+
+   public class DataRequestEvent<E> {
+      private Collection<E> data;
+      public Collection<E> getData() {
+         return data;
+      }
+   }
+
+
    class DoubleSubscriber implements EventTopicSubscriber, EventSubscriber {
       public int timesTopicCalled = 0;
       public int timesEventCalled = 0;
@@ -714,6 +736,7 @@ public class TestDefaultEventService extends TestCase {
          super(source);
       }
    }
+
    class DerivedEvent extends TopLevelEvent {
       public DerivedEvent(Object source) {
          super(source);
@@ -872,17 +895,17 @@ public class TestDefaultEventService extends TestCase {
       es.publish("X", publishedEventObjX1);
       es.publish("IceCream.Vanilla", publishedEventObj6);
       es.publish("IceCream.Chocolate", publishedEventObjC1);
-      es.publish("X",publishedEventObjX2);//see if reuse is OK
-      es.publish("X",publishedEventObjX3);
-      es.publish("IceCream.Chocolate",publishedEventObjC2);
-      es.publish("X",publishedEventObjX4);
+      es.publish("X", publishedEventObjX2);//see if reuse is OK
+      es.publish("X", publishedEventObjX3);
+      es.publish("IceCream.Chocolate", publishedEventObjC2);
+      es.publish("X", publishedEventObjX4);
       es.publish("IceCream.Vanilla", publishedEventObj4);
       es.publish("IceCream.Vanilla", publishedEventObj5);
       es.publish("IceCream.Vanilla", publishedEventObj6);
-      es.publish("X",publishedEventObjX5);
-      es.publish("IceCream.Chocolate",publishedEventObjC3);
-      es.publish("X",publishedEventObjX6);
-      es.publish("IceCream.Chocolate",publishedEventObjC4);
+      es.publish("X", publishedEventObjX5);
+      es.publish("IceCream.Chocolate", publishedEventObjC3);
+      es.publish("X", publishedEventObjX6);
+      es.publish("IceCream.Chocolate", publishedEventObjC4);
 
       lastEventObj = es.getLastTopicData("IceCream.Vanilla");
       assertTrue(lastEventObj == publishedEventObj6);
@@ -1083,10 +1106,10 @@ public class TestDefaultEventService extends TestCase {
       assertTrue(publishedEventB3 == events.get(4));
 
       //Test that overridding a sublcass event class with 2 changes and a derived class with 5 ...
-         //caches 5 for the derived class
-         //cahces 2 for the subclass
-         //chaches 2 for another derived class
-        // and that intefaces only take effect if the cache size of a class or it's superclasses has been set.
+      //caches 5 for the derived class
+      //cahces 2 for the subclass
+      //chaches 2 for another derived class
+      // and that intefaces only take effect if the cache size of a class or it's superclasses has been set.
       es.setCacheSizeForEventClass(EventA.class, 2);
       es.setCacheSizeForEventClass(EventX.class, 5);
       es.setCacheSizeForEventClass(Serializable.class, 3);
@@ -1214,10 +1237,11 @@ public class TestDefaultEventService extends TestCase {
    }
 
    //Derived 2
-   public static class EventY extends EventA  {
+   public static class EventY extends EventA {
       /** @return The issuer of the event. */
       public Object getSource() {
          return null;
       }
    }
+
 }

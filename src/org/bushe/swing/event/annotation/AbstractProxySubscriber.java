@@ -1,6 +1,5 @@
 package org.bushe.swing.event.annotation;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 
 import org.bushe.swing.event.EventService;

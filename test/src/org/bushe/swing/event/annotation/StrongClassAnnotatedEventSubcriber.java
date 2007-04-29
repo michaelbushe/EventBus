@@ -1,18 +1,9 @@
 package org.bushe.swing.event.annotation;
 
-import java.util.List;
 import java.util.Collection;
-import java.util.Iterator;
-import java.io.File;
-import java.awt.Color;
-import javax.swing.JToggleButton;
-import javax.swing.JComponent;
+import java.util.List;
 
-import org.bushe.swing.event.ThreadSafeEventService;
-
-/**
- * Test class for class-based subscriptions
- */
+/** Test class for class-based subscriptions */
 public class StrongClassAnnotatedEventSubcriber {
    static int timesColorChanged = 0;
    static String lastCall = null;
@@ -26,7 +17,7 @@ public class StrongClassAnnotatedEventSubcriber {
       timesCalled = times;
    }
 
-   @EventSubscriber(eventClass=List.class, referenceStrength = ReferenceStrength.STRONG)
+   @EventSubscriber(eventClass = List.class, referenceStrength = ReferenceStrength.STRONG)
    public void doList(Collection collection) {
       timesCalled++;
    }

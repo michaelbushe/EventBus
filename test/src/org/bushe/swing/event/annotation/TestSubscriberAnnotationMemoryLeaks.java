@@ -1,20 +1,11 @@
 package org.bushe.swing.event.annotation;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.io.File;
-import java.awt.Color;
-import javax.swing.SwingUtilities;
-import javax.swing.JToggleButton;
-import javax.swing.JButton;
 
 import junit.framework.TestCase;
 
-import org.bushe.swing.event.*;
-import org.bushe.swing.event.EventSubscriber;
+import org.bushe.swing.event.EventBus;
 
 public class TestSubscriberAnnotationMemoryLeaks extends TestCase {
 
@@ -87,13 +78,13 @@ public class TestSubscriberAnnotationMemoryLeaks extends TestCase {
    }
 
    /**
-    * Since we are using the event bus from a non-awt thread, stay alive for a sec
-    * to give time for the EDT to start and post the message
+    * Since we are using the event bus from a non-awt thread, stay alive for a sec to give time for the EDT to start and
+    * post the message
     */
    private void waitForEDT() {
       try {
          Thread.sleep(1000);
-      } catch (Throwable e){
+      } catch (Throwable e) {
       }
    }
 

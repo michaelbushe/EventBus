@@ -21,17 +21,18 @@ import java.awt.Frame;
 import javax.swing.JDialog;
 
 /**
- * Plug this class into the AWT Thread to handle Swing Exceptions.
- * To plug in the exception handler, add it as a JVM property like so:
+ * Plug this class into the AWT Thread to handle Swing Exceptions. To plug in the exception handler, add it as a JVM
+ * property like so:
  * <pre>
  * java -Dsun.awt.exception.handler=org.bushe.swing.exception.AWTExceptionHandler
  * </pre>
- * <p>
- * When this property is set, this class is instantiated and called by the EDT to when exceptions
- * occur in the AWT Thread
- * <p>
+ * <p/>
+ * When this property is set, this class is instantiated and called by the EDT to when exceptions occur in the AWT
+ * Thread
+ * <p/>
  * This class is hopefully customizable enough for most any application.
- * <p>
+ * <p/>
+ *
  * @author Michael Bushe michael@bushe.com
  * @see java.awt.EventDispatchThread#handleException(Throwable)
  */
@@ -41,8 +42,8 @@ public class AWTExceptionHandler {
    private static AWTErrorLogger logger;
 
    /**
-    * An implementation of this interface can be passed to the AWTExcpetionHandler to handle
-    * logging on behalf of the AWTExceptionHandler.
+    * An implementation of this interface can be passed to the AWTExcpetionHandler to handle logging on behalf of the
+    * AWTExceptionHandler.
     */
    public static interface AWTErrorLogger {
       public void log(Throwable t);
@@ -53,6 +54,7 @@ public class AWTExceptionHandler {
 
    /**
     * This returns null by default and if it returns null, no Email button is shown in the error dialog.
+    *
     * @return the current email address that the Email button on the error dialog will send to.
     */
    public static String getErrorEmailAddress() {
@@ -60,8 +62,9 @@ public class AWTExceptionHandler {
    }
 
    /**
-    * If set to a non-null value, the Email button will be shown in the error dialog that will
-    * trigger the user's email client to send an error email to the error email address.
+    * If set to a non-null value, the Email button will be shown in the error dialog that will trigger the user's email
+    * client to send an error email to the error email address.
+    *
     * @param emailAddy current email address that the Email button on the error dialog will send to.
     */
    public static void setErrorEmailAddress(String emailAddy) {
@@ -78,20 +81,22 @@ public class AWTExceptionHandler {
 
    /**
     * Called by the AWT EventQueue to handle the exception
+    *
     * @param t the throwable to handle
     */
-    public void handle(Throwable t) {
-       Frame f = getFrameForMessageDialog();
-       if (f == null) {
-          handleThrowableWithoutFrame(t);
-       } else {
-          handleThrowableWithFrame(f, t);
-       }
-    }
+   public void handle(Throwable t) {
+      Frame f = getFrameForMessageDialog();
+      if (f == null) {
+         handleThrowableWithoutFrame(t);
+      } else {
+         handleThrowableWithFrame(f, t);
+      }
+   }
 
    /**
-    * This method is called when there is no frame.  Typically you will
-    * log, but just prints to system.err, or the supplied AWTErrorLogger.
+    * This method is called when there is no frame.  Typically you will log, but just prints to system.err, or the
+    * supplied AWTErrorLogger.
+    *
     * @param t
     */
    protected void handleThrowableWithoutFrame(Throwable t) {
@@ -99,8 +104,8 @@ public class AWTExceptionHandler {
    }
 
    /**
-    * This method is called when there is a frame.  It pops up
-    * the ErrorDialog with the message
+    * This method is called when there is a frame.  It pops up the ErrorDialog with the message
+    *
     * @param t the throwable to handle
     */
    protected void handleThrowableWithFrame(Frame f, Throwable t) {
@@ -112,6 +117,7 @@ public class AWTExceptionHandler {
 
    /**
     * Logs the error the current implementation of the Logger.
+    *
     * @param t the throwable to log.
     */
    protected void logError(Throwable t) {
@@ -125,8 +131,10 @@ public class AWTExceptionHandler {
 
    /**
     * Creates an ErrorDialog.  Feel free to override with yout own.
+    *
     * @param f the owning frame from getFrameForMessageDialog()
     * @param t the throwable to display
+    *
     * @return a dialog to show
     */
    protected JDialog createErrorDialog(Frame f, Throwable t) {
@@ -135,6 +143,7 @@ public class AWTExceptionHandler {
 
    /**
     * Finds the frame for hte error message.
+    *
     * @return the best frame to use for placement of the error dialog
     */
    protected Frame getFrameForMessageDialog() {
@@ -151,18 +160,20 @@ public class AWTExceptionHandler {
 
    /**
     * Given a throwable, it returns the stack trace as a string
+    *
     * @param t the throwable to processes
+    *
     * @return the Stack trace as it would look in t.printStackTrace()
     */
    public static String stackTraceToString(Throwable t) {
-       if (t == null) {
-           return "No stack trace available.";
-       }
-       StringWriter stringWriter = new StringWriter();
-       PrintWriter printWriter = new PrintWriter(stringWriter);
-       t.printStackTrace(printWriter);
-       printWriter.flush();
-       return stringWriter.getBuffer().toString();
+      if (t == null) {
+         return "No stack trace available.";
+      }
+      StringWriter stringWriter = new StringWriter();
+      PrintWriter printWriter = new PrintWriter(stringWriter);
+      t.printStackTrace(printWriter);
+      printWriter.flush();
+      return stringWriter.getBuffer().toString();
    }
 
 

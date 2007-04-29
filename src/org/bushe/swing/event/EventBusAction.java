@@ -15,8 +15,8 @@
  */
 package org.bushe.swing.event;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
+import javax.swing.ImageIcon;
 
 /**
  * When fired, this action publishes events on the EventBus.
@@ -27,7 +27,7 @@ import java.awt.event.ActionEvent;
  */
 public class EventBusAction extends EventServiceAction {
    public EventBusAction() {
-       this(null, null);
+      this(null, null);
    }
 
    public EventBusAction(String actionName, ImageIcon icon) {
