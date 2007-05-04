@@ -16,6 +16,8 @@
 package org.bushe.swing.event;
 
 import java.lang.ref.WeakReference;
+import java.lang.reflect.Type;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -76,6 +78,7 @@ import org.bushe.swing.exception.SwingException;
 public class ThreadSafeEventService implements EventService {
    protected static final Logger LOG = Logger.getLogger(EventService.class.getName());
 
+   private Map subscribersByEventType = new HashMap();
    private Map subscribersByEventClass = new HashMap();
    private Map subscribersByExactEventClass = new HashMap();
    private Map subscribersByTopic = new HashMap();
@@ -158,6 +161,11 @@ public class ThreadSafeEventService implements EventService {
          LOG.fine("Subscribing by class, class:" + cl + ", subscriber:" + eh);
       }
       return subscribe(cl, subscribersByEventClass, new WeakReference(eh));
+   }
+
+   /** @see EventService#subscribe(java.lang.reflect.Type, EventSubscriber) */
+   public boolean subscribe(Type type, EventSubscriber eh) {
+      return subscribe(type, subscribersByEventType, new WeakReference(eh));
    }
 
    /** @see EventService#subscribeExactly(Class,EventSubscriber) */
@@ -619,6 +627,17 @@ public class ThreadSafeEventService implements EventService {
       publish(event, null, null, getSubscribers(event.getClass()), getVetoSubscribers(event.getClass()), null);
    }
 
+   /** @see EventService#publish(java.lang.reflect.Type, Object)  */
+   public void publish(Type genericType, Object event) {
+      if (genericType == null) {
+         throw new IllegalArgumentException("genericType must not be null.");
+      }
+      if (event == null) {
+         throw new IllegalArgumentException("Cannot publish null event.");
+      }
+      publish(event, null, null, getSubscribers(genericType), null/*getVetoSubscribers(genericType)*/, null);
+   }
+
    /** @see EventService#publish(String,Object) */
    public void publish(String topicName, Object eventObj) {
       publish(null, topicName, eventObj, getSubscribers(topicName), getVetoSubscribers(topicName), null);
@@ -780,7 +799,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#getSubscribers(Class) */
    public List getSubscribers(Class eventClass) {
       synchronized (listenerLock) {
-         List hierarchyMatches = getSubscribersToType(eventClass);
+         List hierarchyMatches = getSubscribersToClass(eventClass);
          List exactMatches = getSubscribersToExactClass(eventClass);
          List result = new ArrayList();
          if (exactMatches != null) {
@@ -793,11 +812,11 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   /** @see EventService#getSubscribersToType(Class) */
-   public List getSubscribersToType(Class eventClass) {
+   /** @see EventService#getSubscribersToClass(Class) */
+   public List getSubscribersToClass(Class eventClass) {
       synchronized (listenerLock) {
          Map classMap = subscribersByEventClass;
-         return getEventOrVetoSubscribersToType(classMap, eventClass);
+         return getEventOrVetoSubscribersToClass(classMap, eventClass);
       }
    }
 
@@ -805,6 +824,13 @@ public class ThreadSafeEventService implements EventService {
    public List getSubscribersToExactClass(Class eventClass) {
       synchronized (listenerLock) {
          return getSubscribers(eventClass, subscribersByExactEventClass);
+      }
+   }
+
+   /** @see EventService#getSubscribers(Class) */
+   public List getSubscribers(Type eventType) {
+      synchronized (listenerLock) {
+         return getEventOrVetoSubscribersToType(subscribersByEventType, eventType);
       }
    }
 
@@ -857,7 +883,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#getVetoSubscribers(Class) */
    public List getVetoSubscribers(Class eventClass) {
       synchronized (listenerLock) {
-         List exactMatches = getVetoSubscribersToType(eventClass);
+         List exactMatches = getVetoSubscribersToClass(eventClass);
          List hierarchyMatches = getVetoSubscribersToExactClass(eventClass);
          List result = new ArrayList();
          if (exactMatches != null) {
@@ -870,11 +896,11 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   /** @see EventService#getVetoSubscribersToType(Class) */
-   public List getVetoSubscribersToType(Class eventClass) {
+   /** @see EventService#getVetoSubscribersToClass(Class) */
+   public List getVetoSubscribersToClass(Class eventClass) {
       synchronized (listenerLock) {
          Map classMap = vetoListenersByClass;
-         return getEventOrVetoSubscribersToType(classMap, eventClass);
+         return getEventOrVetoSubscribersToClass(classMap, eventClass);
       }
    }
 
@@ -906,20 +932,73 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   private List getEventOrVetoSubscribersToType(Map classMap, Class eventClass) {
+   private List getEventOrVetoSubscribersToClass(Map classMap, Class eventClass) {
       List result = new ArrayList();
       Set keys = classMap.keySet();
       for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-         Class type = (Class) iterator.next();
-         if (type.isAssignableFrom(eventClass)) {
+         Class cl = (Class) iterator.next();
+         if (cl.isAssignableFrom(eventClass)) {
             if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Hierachical match " + type + " matched event of class " + eventClass);
+               LOG.fine("Hierachical match " + cl + " matched event of class " + eventClass);
             }
-            Collection subscribers = (Collection) classMap.get(type);
+            Collection subscribers = (Collection) classMap.get(cl);
             result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
          }
       }
       return result;
+   }
+
+   private List getEventOrVetoSubscribersToType(Map typeMap, Type eventType) {
+      List result = new ArrayList();
+      Set keys = typeMap.keySet();
+      for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+         Type type = (Type) iterator.next();
+         if (eventType instanceof ParameterizedType && type instanceof ParameterizedType) {
+            ParameterizedType mapPT = (ParameterizedType)type;
+            ParameterizedType eventPT = (ParameterizedType)eventType;
+            if (eventPT.getRawType().equals(mapPT.getRawType())) {
+               Type[] mapTypeArgs = mapPT.getActualTypeArguments();
+               Type[] eventTypeArgs = eventPT.getActualTypeArguments();
+               if (mapTypeArgs[0].equals(eventTypeArgs[0])) {
+                  if (LOG.isLoggable(Level.FINE)) {
+                     LOG.fine("Exact parameterized type match for event type " + eventType);
+                  }
+                  Collection subscribers = (Collection) typeMap.get(type);
+                  if (subscribers != null) {
+                     result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
+                  }
+               }
+            }
+         }
+      }
+      return result;
+//            Type o = p.getOwnerType();
+//            if (o != null) {
+//
+//            }
+//            p.getActualTypeArguments();
+//         }
+         /*
+	} else if (type instanceof TypeVariable<?>) {
+	    TypeVariable<?> v = (TypeVariable<?>)type;
+	    out.print(v.getName());
+	} else if (type instanceof GenericArrayType) {
+	    GenericArrayType a = (GenericArrayType)type;
+	    printType(a.getGenericComponentType());
+	    out.print("[]");
+	} else if (type instanceof WildcardType) {
+	    WildcardType w = (WildcardType)type;
+	    Type[] upper = w.getUpperBounds();
+	    Type[] lower = w.getLowerBounds();
+	    if (upper.length==1 && lower.length==0) {
+		out.print("? extends ");
+		printType(upper[0]);
+	    } else if (upper.length==0 && lower.length==1) {
+		out.print("? super ");
+		printType(lower[0]);
+	    } else assert false;
+	}         
+          */
    }
 
    private void checkTimeLimit(long start, Object event, EventSubscriber subscriber, VetoEventListener l) {

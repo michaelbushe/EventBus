@@ -228,9 +228,9 @@ public class EventBus {
       return globalEventService.getSubscribers(eventClass);
    }
 
-   /** @see EventService#getSubscribersToType(Class) */
-   public static List getSubscribersToType(Class eventClass) {
-      return globalEventService.getSubscribersToType(eventClass);
+   /** @see EventService#getSubscribersToClass(Class) */
+   public static List getSubscribersToClass(Class eventClass) {
+      return globalEventService.getSubscribersToClass(eventClass);
    }
 
    /** @see EventService#getSubscribersToExactClass(Class) */
@@ -268,9 +268,9 @@ public class EventBus {
       return globalEventService.getVetoSubscribers(topic);
    }
 
-   /** @see EventService#getVetoSubscribersToType(Class) */
-   public static List getVetoSubscribersToType(Class eventClass) {
-      return globalEventService.getVetoSubscribersToType(eventClass);
+   /** @see EventService#getVetoSubscribersToClass(Class) */
+   public static List getVetoSubscribersToClass(Class eventClass) {
+      return globalEventService.getVetoSubscribersToClass(eventClass);
    }
 
    /** @see EventService#getVetoSubscribers(Pattern) */

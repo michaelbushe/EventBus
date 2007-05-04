@@ -17,6 +17,7 @@ package org.bushe.swing.event;
 
 import java.util.List;
 import java.util.regex.Pattern;
+import java.lang.reflect.Type;
 
 
 /**
@@ -110,6 +111,31 @@ public interface EventService {
    public void publish(Object event);
 
    /**
+    * Use this method to publish generified objects to subscribers of Types, i.e. subscribers that use
+    * {@link #subscribe(Type, EventSubscriber)}, and to publish to subscribers to the non-generic type, i.e.,
+    * those that use {@link #subscribe(Class, EventSubscriber)} .
+    * <p>
+    * Due to generic type erasure, the type must be supplied by the caller.  You can get a declared object's
+    * type by using the {@link org.bushe.swing.event.generics.TypeReference} class.  For Example:
+    * <pre>
+    * TypeReference<List<Trade>> subscribingTypeReference = new TypeReference<List<Trade>>(){};
+    * EventBus.subscribe(subscribingTypeReference.getType(), mySubscriber);
+    * EventBus.subscribe(List.class, thisSubscriberWillGetCalledToo);
+    * ...
+    * //Likely in some other class
+    * TypeReference<List<Trade>> publishingTypeReference = new TypeReference<List<Trade>>(){};
+    * List<Trade> trades = new ArrayList<Trade>();
+    * EventBus.publish(publishingTypeReference.getType(), trades);
+    * trades.add(trade);
+    * EventBus.publish(typeReference.getType(), trades);
+    * </pre>
+    * <p>
+    * @param genericType the generified type of the event.  Due to generic type erasure, this must be supplied.
+    * @param event The event that occured
+    */
+   public void publish(Type genericType, Object event);
+
+   /**
     * Publishes an object on a topic name so that all subscribers to that name will be notified about it.
     *
     * @param topic The name of the topic subscribed to
@@ -137,6 +163,8 @@ public interface EventService {
     * @return true if the subscriber was subscribed sucessfully, false otherwise
     */
    public boolean subscribe(Class eventClass, EventSubscriber subscriber);
+
+   public boolean subscribe(Type type, EventSubscriber subscriber);
 
    /**
     * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of events of an event class (not its
@@ -444,7 +472,7 @@ public interface EventService {
    public boolean unsubscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
    /**
-    * Union of getSubscribersToType(Class) and getSubscribersToExactClass(Class)
+    * Union of getSubscribersToClass(Class) and getSubscribersToExactClass(Class)
     *
     * @param eventClass the eventClass of interest
     *
@@ -459,7 +487,7 @@ public interface EventService {
     * @return the subscribers that are subscribed to match to a class and its subtypes, but not those subscribed by
     *         exact class
     */
-   public List getSubscribersToType(Class eventClass);
+   public List getSubscribersToClass(Class eventClass);
 
    /**
     * @param eventClass the eventClass of interest
@@ -514,7 +542,7 @@ public interface EventService {
     *
     * @return the veto subscribers that are subscribed to the eventClass and its subclasses
     */
-   public List getVetoSubscribersToType(Class eventClass);
+   public List getVetoSubscribersToClass(Class eventClass);
 
    /**
     * @param topic the topic of interest

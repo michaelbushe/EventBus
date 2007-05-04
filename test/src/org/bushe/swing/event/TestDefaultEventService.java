@@ -19,8 +19,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Collection;
 import java.util.regex.Pattern;
+import java.lang.reflect.InvocationTargetException;
 
 import junit.framework.TestCase;
+
+import org.bushe.swing.event.generics.TypeReference;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestDefaultEventService extends TestCase {
@@ -664,10 +667,10 @@ public class TestDefaultEventService extends TestCase {
       DoubleSubscriber subscriber = new DoubleSubscriber();
 
       eventService.subscribe(TopLevelEvent.class, subscriber);
-      List subscribers = eventService.getSubscribersToType(TopLevelEvent.class);
+      List subscribers = eventService.getSubscribersToClass(TopLevelEvent.class);
       assertNotNull(subscribers);
       assertEquals(1, subscribers.size());
-      subscribers = eventService.getSubscribersToType(DerivedEvent.class);
+      subscribers = eventService.getSubscribersToClass(DerivedEvent.class);
       assertNotNull(subscribers);
       assertEquals(1, subscribers.size());
       subscribers = eventService.getSubscribers(DerivedEvent.class);
@@ -692,19 +695,32 @@ public class TestDefaultEventService extends TestCase {
    }
 
    //Parameterized Type
-//   public void testParameterizedEvent() {
-//      final int[] timesCalled = new int[1];
-//      DataRequestEvent<String> stringRequestEvent = new DataRequestEvent<String>();
-//      DataRequestEvent<Integer> integerRequestEvent = new DataRequestEvent<Integer>();
-//      eventService.subscribe(integerRequestEvent.getClass(), new EventSubscriber() {
-//         public void onEvent(Object event) {
-//            timesCalled[0]++;
-//         }
-//      });
-//      eventService.publish(stringRequestEvent);
-//      eventService.publish(integerRequestEvent);
-//      assertEquals(1, timesCalled[0]);
-//   }
+   public void testParameterizedEvent() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
+      final int[] timesCalled = new int[1];
+      DataRequestEvent<String> stringRequestEvent = new DataRequestEvent<String>();
+      DataRequestEvent<Integer> integerRequestEvent = new DataRequestEvent<Integer>();
+
+      TypeReference<DataRequestEvent<String>> stringTypeReference = new TypeReference<DataRequestEvent<String>>(){};
+      TypeReference<DataRequestEvent<Integer>> integerTypeReference = new TypeReference<DataRequestEvent<Integer>>(){};
+//      DataRequestEvent<String> dre = stringTypeReference.newInstance();
+//      System.out.println("dre.getClass()"+dre.getClass());
+      System.out.println("stringTypeReference"+ stringTypeReference);
+      System.out.println("stringTypeReference.getType()"+ stringTypeReference.getType());
+//      You can't simply do this, the TypeReference's generic type is important here
+//      Type superclass = integerRequestEvent.getClass().getGenericSuperclass();
+//      Type type = ((ParameterizedType) superclass).getActualTypeArguments()[0];
+//      System.out.println("superclass="+superclass);
+//      System.out.println("type="+type);
+
+      eventService.subscribe(stringTypeReference.getType(), new EventSubscriber() {
+         public void onEvent(Object event) {
+            timesCalled[0]++;
+         }
+      });
+      eventService.publish(stringTypeReference.getType(), stringRequestEvent);
+      eventService.publish(integerTypeReference.getType(), integerRequestEvent);
+      assertEquals(1, timesCalled[0]);
+   }
 
    public class DataRequestEvent<E> {
       private Collection<E> data;
@@ -712,7 +728,6 @@ public class TestDefaultEventService extends TestCase {
          return data;
       }
    }
-
 
    class DoubleSubscriber implements EventTopicSubscriber, EventSubscriber {
       public int timesTopicCalled = 0;
