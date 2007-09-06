@@ -51,4 +51,44 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
    protected void unsubscribe(String topic) {
       eventService.unsubscribe(topic, this);
    }
+
+   public int hashCode() {
+      int result = super.hashCode();
+      if (topic != null) {
+         result = result^topic.hashCode();
+      }
+      return result;
+   }
+
+   public boolean equals(Object obj) {
+      if (obj instanceof ProxyTopicSubscriber) {
+         if (!super.equals(obj)) {
+            return false;
+         }
+         ProxyTopicSubscriber proxyTopicSubscriber = (ProxyTopicSubscriber) obj;
+         if (topic != proxyTopicSubscriber.topic) {
+            if (topic == null) {
+               return false;
+            } else {
+               if (!topic.equals(proxyTopicSubscriber.topic)) {
+                  return false;
+               }
+            }
+         }
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+
+   public String toString() {
+      return "ProxyTopicSubscriber{" +
+              "topic='" + topic + '\'' +
+              "realSubscriber=" + realSubscriber +
+              ", subscriptionMethod=" + subscriptionMethod +
+              ", referenceStrength=" + referenceStrength +
+              ", eventService=" + eventService +
+              '}';
+   }
 }

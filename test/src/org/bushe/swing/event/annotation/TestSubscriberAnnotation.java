@@ -143,6 +143,43 @@ public class TestSubscriberAnnotation extends TestCase {
       System.out.println(subscriber);
    }
 
+   public void testAnotherIssue15MultipleAnnotatedSubscribers() {
+      EventBus.clearAllSubscribers();
+      System.gc();
+      Issue15Subscriber i15s1 = new Issue15Subscriber();
+      Issue15Subscriber2 i15s2 = new Issue15Subscriber2();
+      EventBus.publish(new ArrayList());
+      waitForEDT();
+      assertEquals(1, i15s2.getTimesCalled());
+      assertEquals(1, i15s1.getTimesCalled());
+      //Ensure the garbage collector can't clean up the refs
+      System.out.println(i15s1);
+      System.out.println(i15s2);
+   }
+
+   //This one works with the DoubleAnnotatedEventSubcriber and AnotherDoubleAnnotatedEventSubcriber (and Single),
+   //but fails with AnnotatedEventSubcriber and AnotherAnnotatedEventSubcriber
+   public void testIssue15MultipleAnnotatedSubscribers() {
+      EventBus.clearAllSubscribers();
+      System.gc();
+      DoubleAnnotatedEventSubcriber subscriber = new DoubleAnnotatedEventSubcriber();
+      AnnotationProcessor.process(subscriber);
+      DoubleAnnotatedEventSubcriber secondSubscriber = new DoubleAnnotatedEventSubcriber();
+      AnnotationProcessor.process(secondSubscriber);
+      AnotherDoubleAnnotatedEventSubcriber anotherSubscriber = new AnotherDoubleAnnotatedEventSubcriber();
+      AnnotationProcessor.process(anotherSubscriber);
+      AnotherDoubleAnnotatedEventSubcriber secondAnotherSubscriber = new AnotherDoubleAnnotatedEventSubcriber();
+      AnnotationProcessor.process(secondAnotherSubscriber);
+      EventBus.publish(new ArrayList());
+      waitForEDT();
+      assertEquals(2, AnotherDoubleAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(2, DoubleAnnotatedEventSubcriber.getTimesCalled());
+      //Ensure the garbage collector can't clean up the refs
+      System.out.println("finished with:"+subscriber);
+      System.out.println("finished with:"+secondSubscriber);
+      System.out.println("finished with:"+anotherSubscriber);
+   }
+
 //Would like to test this, but an exception isn't thrown, since you want all the subscribers to be called
 //even if calling any one throws an exception
 //   public void testTopicWrongType() {

@@ -18,6 +18,7 @@ package org.bushe.swing.event;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -264,6 +265,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see org.bushe.swing.event.EventService#clearAllSubscribers() */
    public void clearAllSubscribers() {
       synchronized (listenerLock) {
+         this.subscribersByEventType.clear();
          this.subscribersByEventClass.clear();
          this.subscribersByTopic.clear();
          this.vetoListenersByClass.clear();
@@ -950,20 +952,71 @@ public class ThreadSafeEventService implements EventService {
 
    private List getEventOrVetoSubscribersToType(Map typeMap, Type eventType) {
       List result = new ArrayList();
-      Set keys = typeMap.keySet();
-      for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-         Type type = (Type) iterator.next();
-         if (eventType instanceof ParameterizedType && type instanceof ParameterizedType) {
-            ParameterizedType mapPT = (ParameterizedType)type;
-            ParameterizedType eventPT = (ParameterizedType)eventType;
-            if (eventPT.getRawType().equals(mapPT.getRawType())) {
-               Type[] mapTypeArgs = mapPT.getActualTypeArguments();
+      Set mapKeySet = typeMap.keySet();
+      for (Object mapKey : mapKeySet) {
+         Type subscriberType = (Type) mapKey;
+         if (eventType instanceof ParameterizedType && subscriberType instanceof ParameterizedType) {
+            ParameterizedType subscriberPT = (ParameterizedType) subscriberType;
+            ParameterizedType eventPT = (ParameterizedType) eventType;
+            if (eventPT.getRawType().equals(subscriberPT.getRawType())) {
+               Type[] mapTypeArgs = subscriberPT.getActualTypeArguments();
                Type[] eventTypeArgs = eventPT.getActualTypeArguments();
-               if (mapTypeArgs[0].equals(eventTypeArgs[0])) {
-                  if (LOG.isLoggable(Level.FINE)) {
-                     LOG.fine("Exact parameterized type match for event type " + eventType);
+               if (mapTypeArgs == null || eventTypeArgs == null || mapTypeArgs.length != eventTypeArgs.length) {
+                  continue;
+               }
+               boolean parameterArgsMatch = true;
+               for (int argCount = 0; argCount < mapTypeArgs.length; argCount++) {
+                  Type eventTypeArg = eventTypeArgs[argCount];
+                  if (!(eventTypeArg instanceof Class)) {
+                     throw new IllegalArgumentException("Only simple Class parameterized types can be published, not wildcards, etc.  Published attempt made for:"+eventTypeArg);                     
                   }
-                  Collection subscribers = (Collection) typeMap.get(type);
+                  Type subscriberTypeArg = mapTypeArgs[argCount];
+                  if (subscriberTypeArg instanceof WildcardType) {
+                     WildcardType wildcardSubscriberTypeArg = (WildcardType) subscriberTypeArg;
+                     Type[] upperBound = wildcardSubscriberTypeArg.getUpperBounds();
+                     Type[] lowerBound = wildcardSubscriberTypeArg.getLowerBounds();
+                     if (upperBound != null && upperBound.length > 0) {
+                        if (upperBound[0] instanceof Class) {
+                           Class upper = (Class) upperBound[0];
+                           if (eventTypeArg instanceof Class) {
+                              if (!upper.isAssignableFrom((Class) eventTypeArg)) {
+                                 parameterArgsMatch = false;
+                                 break;
+                              }
+                           } else {
+                              parameterArgsMatch = false;
+                              break;
+                           }
+                        } else {
+                           throw new IllegalArgumentException("Only Class and Interface types are supported as types of wildcard subscriptions.  Type:"+upperBound[0]);
+                        }
+                     }
+                     if (lowerBound != null && lowerBound.length > 0) {
+                        if (lowerBound[0] instanceof Class) {
+                           Class lower = (Class) lowerBound[0];
+                           if (eventTypeArg instanceof Class) {
+                              if (!((Class)eventTypeArg).isAssignableFrom(lower)) {
+                                 parameterArgsMatch = false;
+                                 break;
+                              }
+                           } else {
+                              parameterArgsMatch = false;
+                              break;
+                           }
+                        } else {
+                           throw new IllegalArgumentException("Only Class and Interface types are supported as types of wildcard subscriptions.  Type:"+upperBound[0]);
+                        }
+                     }
+                  } else if (!subscriberTypeArg.equals(eventTypeArg)) {
+                     parameterArgsMatch = false;
+                     break;
+                  }
+               }
+               if (parameterArgsMatch) {
+                  if (LOG.isLoggable(Level.FINE)) {
+                     LOG.fine("Exact parameterized subscriberType match for event subscriberType " + eventType);
+                  }
+                  Collection subscribers = (Collection) typeMap.get(subscriberType);
                   if (subscribers != null) {
                      result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
                   }

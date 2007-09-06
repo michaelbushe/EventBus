@@ -127,7 +127,7 @@ public interface EventService {
     * List<Trade> trades = new ArrayList<Trade>();
     * EventBus.publish(publishingTypeReference.getType(), trades);
     * trades.add(trade);
-    * EventBus.publish(typeReference.getType(), trades);
+    * EventBus.publish(publishingTypeReference.getType(), trades);
     * </pre>
     * <p>
     * @param genericType the generified type of the event.  Due to generic type erasure, this must be supplied.

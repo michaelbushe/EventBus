@@ -17,6 +17,7 @@ package org.bushe.swing.event;
 
 import java.util.List;
 import java.util.regex.Pattern;
+import java.lang.reflect.Type;
 
 /**
  * The EventBus provides Swing event publication and subscription services.  It is a simple static wrapper around a
@@ -66,9 +67,22 @@ public class EventBus {
       globalEventService.publish(topic, o);
    }
 
+   /** @see EventService#publish(java.lang.reflect.Type, Object)  */
+   public static void publish(Type genericType, Object o) {
+      if (genericType == null) {
+         throw new IllegalArgumentException("Can't publish to null topic.");
+      }
+      globalEventService.publish(genericType, o);
+   }
+
    /** @see EventService#subscribe(Class,EventSubscriber) */
    public static boolean subscribe(Class eventClass, EventSubscriber subscriber) {
       return globalEventService.subscribe(eventClass, subscriber);
+   }
+
+   /** @see EventService#subscribe(java.lang.reflect.Type, EventSubscriber)  */
+   public static boolean subscribe(Type genericType, EventSubscriber subscriber) {
+      return globalEventService.subscribe(genericType, subscriber);
    }
 
    /** @see EventService#subscribeExactly(Class,EventSubscriber) */

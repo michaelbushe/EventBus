@@ -20,7 +20,7 @@ package org.bushe.swing.event;
  *
  * @author Michael Bushe michael@bushe.com
  */
-public interface EventSubscriber {
+public interface EventSubscriber<T> {
 
    /**
     * Handle a published event. <p>The EventService calls this method on each publication of an object that matches the
@@ -31,5 +31,5 @@ public interface EventSubscriber {
     *
     * @param event The Object that is being published.
     */
-   public void onEvent(Object event);
+   public void onEvent(T event);
 }

@@ -1,9 +1,11 @@
 package org.bushe.swing.event.annotation;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.ProxySubscriber;
+import org.bushe.swing.event.EventBus;
 
 /** Common base class for EventService Proxies */
 public abstract class AbstractProxySubscriber implements ProxySubscriber {
@@ -39,5 +41,50 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber {
     */
    public void proxyUnsubscribed() {
       realSubscriber = null;
+   }
+
+   public int hashCode() {
+      int result = 0;
+      if (realSubscriber != null) {
+         result = realSubscriber.hashCode();
+      }
+      if (eventService != null) {
+         result = result^eventService.hashCode();
+      }
+      if (referenceStrength != null) {
+         result = result^referenceStrength.hashCode();
+      }
+      return result;
+   }
+
+   public boolean equals(Object obj) {
+      if (obj instanceof AbstractProxySubscriber) {
+         AbstractProxySubscriber bps = (AbstractProxySubscriber) obj;
+         if (realSubscriber != bps.realSubscriber) {
+            return false;
+         }
+         if (eventService != bps.eventService) {
+            return false;
+         }
+         if (referenceStrength != bps.referenceStrength) {
+            return false;
+         }
+         if (subscriptionMethod != bps.subscriptionMethod) {
+            return false;
+         }
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+
+   public String toString() {
+      return "AbstractProxySubscriber{" +
+              "realSubscriber=" + realSubscriber +
+              ", subscriptionMethod=" + subscriptionMethod +
+              ", referenceStrength=" + referenceStrength +
+              ", eventService=" + eventService +
+              '}';
    }
 }

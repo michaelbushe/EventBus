@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.ProxySubscriber;
 
 /** A class is subscribed to an EventService on behalf of another object. */
 public class BaseProxySubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventSubscriber {
@@ -45,5 +46,45 @@ public class BaseProxySubscriber extends AbstractProxySubscriber implements org.
       } catch (InvocationTargetException e) {
          throw new RuntimeException("InvocationTargetException when invoking annotated method from EventService publication.  Event class:" + event.getClass() + ", Event:" + event + ", subscriber:" + realSubscriber + ", subscription Method=" + subscriptionMethod, e);
       }
+   }
+
+   public int hashCode() {
+      int result = super.hashCode();
+      if (subscription != null) {
+         result = result^subscription.hashCode();
+      }
+      return result;
+   }
+
+   public boolean equals(Object obj) {
+      if (obj instanceof BaseProxySubscriber) {
+         if (!super.equals(obj)) {
+            return false;
+         }
+         BaseProxySubscriber bps = (BaseProxySubscriber) obj;
+         if (subscription != bps.subscription) {
+            if (subscription == null) {
+               return false;
+            } else {
+               if (!subscription.equals(bps.subscription)) {
+                  return false;
+               }
+            }
+         }
+         return true;
+      } else {
+         return false;
+      }
+   }
+
+
+   public String toString() {
+      return "BaseProxySubscriber{" +
+              "subscription=" + subscription +
+              "realSubscriber=" + realSubscriber +
+              ", subscriptionMethod=" + subscriptionMethod +
+              ", referenceStrength=" + referenceStrength +
+              ", eventService=" + eventService +
+              '}';
    }
 }

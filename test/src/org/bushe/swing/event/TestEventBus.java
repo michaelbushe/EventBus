@@ -499,13 +499,25 @@ public class TestEventBus extends TestCase {
             Method ebMethod = ebMethods[j];
             if (esMethod.getName().equals(ebMethod.getName())) {
                TypeVariable<Method>[] esTypes = esMethod.getTypeParameters();
-               TypeVariable<Method>[] ebTypes = esMethod.getTypeParameters();
+               TypeVariable<Method>[] ebTypes = ebMethod.getTypeParameters();
                if (esTypes.length != ebTypes.length) {
                   break;
                }
                for (int typeCount = 0; typeCount < ebTypes.length; typeCount++) {
-                  TypeVariable<Method> ebType = ebTypes[typeCount];
                   TypeVariable<Method> esType = esTypes[typeCount];
+                  TypeVariable<Method> ebType = ebTypes[typeCount];
+                  if (!ebType.equals(esType)) {
+                     continue nextMethod;
+                  }
+               }
+               Class[] esParams = esMethod.getParameterTypes();
+               Class[] ebParams = ebMethod.getParameterTypes();
+               if (esParams.length != ebParams.length) {
+                  continue nextMethod;
+               }
+               for (int typeCount = 0; typeCount < ebParams.length; typeCount++) {
+                  Class esType = esParams[typeCount];
+                  Class ebType = ebParams[typeCount];
                   if (!ebType.equals(esType)) {
                      continue nextMethod;
                   }
@@ -514,7 +526,7 @@ public class TestEventBus extends TestCase {
             }
          }
          if (!foundMatch) {
-            System.out.println("No match for es method:" + esMethod.getName() + ", " + esMethod);
+            System.out.println("No match for es method:" + esMethod.getName() + ", " + esMethod +", i="+i);
          }
          assertTrue(foundMatch);
       }
