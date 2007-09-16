@@ -1,8 +1,9 @@
 package org.bushe.swing.event.generics;
 
+import java.util.List;
+
 /**
- * Created by IntelliJ IDEA. User: Michael Bushe Date: May 2, 2007 Time: 12:33:39 AM To change this template use File |
- * Settings | File Templates.
+ * Test event for Bill Wholer's typed events.
  */
-public class DataRequestEvent<T extends Number> {
+public class DataRequestEvent<T extends List> {
 }

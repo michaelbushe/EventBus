@@ -70,7 +70,7 @@ public class EventBus {
    /** @see EventService#publish(java.lang.reflect.Type, Object)  */
    public static void publish(Type genericType, Object o) {
       if (genericType == null) {
-         throw new IllegalArgumentException("Can't publish to null topic.");
+         throw new IllegalArgumentException("Can't publish to null type.");
       }
       globalEventService.publish(genericType, o);
    }

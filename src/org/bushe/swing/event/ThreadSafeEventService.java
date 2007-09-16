@@ -967,8 +967,8 @@ public class ThreadSafeEventService implements EventService {
                boolean parameterArgsMatch = true;
                for (int argCount = 0; argCount < mapTypeArgs.length; argCount++) {
                   Type eventTypeArg = eventTypeArgs[argCount];
-                  if (!(eventTypeArg instanceof Class)) {
-                     throw new IllegalArgumentException("Only simple Class parameterized types can be published, not wildcards, etc.  Published attempt made for:"+eventTypeArg);                     
+                  if (eventTypeArg instanceof WildcardType) {
+                     throw new IllegalArgumentException("Only simple Class parameterized types can be published, not wildcards, etc.  Published attempt made for:"+eventTypeArg);
                   }
                   Type subscriberTypeArg = mapTypeArgs[argCount];
                   if (subscriberTypeArg instanceof WildcardType) {

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Type;
 
 import java.awt.Container;
 import java.awt.Component;
@@ -703,12 +704,12 @@ public class TestDefaultEventService extends TestCase {
    //Parameterized Type
    public void testParameterizedEvent() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
       final int[] timesCalled = new int[1];
-      DataRequestEvent<String> stringRequestEvent = new DataRequestEvent<String>();
-      DataRequestEvent<Integer> integerRequestEvent = new DataRequestEvent<Integer>();
+      ParameterizedEvent<String> stringRequestEvent = new ParameterizedEvent<String>();
+      ParameterizedEvent<Integer> integerRequestEvent = new ParameterizedEvent<Integer>();
 
-      TypeReference<DataRequestEvent<String>> stringTypeReference = new TypeReference<DataRequestEvent<String>>(){};
-      TypeReference<DataRequestEvent<Integer>> integerTypeReference = new TypeReference<DataRequestEvent<Integer>>(){};
-//      DataRequestEvent<String> dre = stringTypeReference.newInstance();
+      TypeReference<ParameterizedEvent<String>> stringTypeReference = new TypeReference<ParameterizedEvent<String>>(){};
+      TypeReference<ParameterizedEvent<Integer>> integerTypeReference = new TypeReference<ParameterizedEvent<Integer>>(){};
+//      ParameterizedEvent<String> dre = stringTypeReference.newInstance();
 //      System.out.println("dre.getClass()"+dre.getClass());
 //      System.out.println("stringTypeReference"+ stringTypeReference);
 //      System.out.println("stringTypeReference.getType()"+ stringTypeReference.getType());
@@ -731,13 +732,13 @@ public class TestDefaultEventService extends TestCase {
 
    public void testParameterizedEventMultiParams() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
       final int[] timesCalled = new int[1];
-      DataRequestEvent2<String, String> stringRequestEvent = new DataRequestEvent2<String, String>();
-      DataRequestEvent2<Integer, String> integerRequestEvent = new DataRequestEvent2<Integer, String>();
-      DataRequestEvent2<String, Integer> switchRequestEvent = new DataRequestEvent2<String, Integer>();
+      DoublyParameterizedEvent<String, String> stringRequestEvent = new DoublyParameterizedEvent<String, String>();
+      DoublyParameterizedEvent<Integer, String> integerRequestEvent = new DoublyParameterizedEvent<Integer, String>();
+      DoublyParameterizedEvent<String, Integer> switchRequestEvent = new DoublyParameterizedEvent<String, Integer>();
 
-      TypeReference<DataRequestEvent2<String, String>> stringTypeReference = new TypeReference<DataRequestEvent2<String, String>>(){};
-      TypeReference<DataRequestEvent2<Integer, String>> integerTypeReference = new TypeReference<DataRequestEvent2<Integer, String>>(){};
-      TypeReference<DataRequestEvent2<String, Integer>> switchTypeReference = new TypeReference<DataRequestEvent2<String, Integer>>(){};
+      TypeReference<DoublyParameterizedEvent<String, String>> stringTypeReference = new TypeReference<DoublyParameterizedEvent<String, String>>(){};
+      TypeReference<DoublyParameterizedEvent<Integer, String>> integerTypeReference = new TypeReference<DoublyParameterizedEvent<Integer, String>>(){};
+      TypeReference<DoublyParameterizedEvent<String, Integer>> switchTypeReference = new TypeReference<DoublyParameterizedEvent<String, Integer>>(){};
 
       eventService.subscribe(stringTypeReference.getType(), new EventSubscriber() {
          public void onEvent(Object event) {
@@ -759,23 +760,23 @@ public class TestDefaultEventService extends TestCase {
 
    public void testWildcardSubscription() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException, InstantiationException {
       final int[] timesCalled = new int[1];
-      DataRequestEvent<JComponent> jComponentRequestEvent = new DataRequestEvent<JComponent>();
+      ParameterizedEvent<JComponent> jComponentRequestEvent = new ParameterizedEvent<JComponent>();
 
-      TypeReference<DataRequestEvent<? extends Container>> containerWildcardTypeRef = new TypeReference<DataRequestEvent<? extends Container>>(){};
+      TypeReference<ParameterizedEvent<? extends Container>> containerWildcardTypeRef = new TypeReference<ParameterizedEvent<? extends Container>>(){};
 
       eventService.subscribe(containerWildcardTypeRef.getType(), new EventSubscriber() {
          public void onEvent(Object event) {
             timesCalled[0]++;
          }
       });
-      TypeReference<DataRequestEvent<JComponent>> jComponentTypeRef = new TypeReference<DataRequestEvent<JComponent>>(){};
+      TypeReference<ParameterizedEvent<JComponent>> jComponentTypeRef = new TypeReference<ParameterizedEvent<JComponent>>(){};
 
       eventService.publish(jComponentTypeRef.getType(), jComponentRequestEvent);
       assertEquals(1, timesCalled[0]);
 
       //publishing a Component should not hit the wildcard since it doesn't extend Component
-      TypeReference<DataRequestEvent<Component>> componentTypeRef = new TypeReference<DataRequestEvent<Component>>(){};
-      DataRequestEvent<Component> componentRequestEvent = new DataRequestEvent<Component>();
+      TypeReference<ParameterizedEvent<Component>> componentTypeRef = new TypeReference<ParameterizedEvent<Component>>(){};
+      ParameterizedEvent<Component> componentRequestEvent = new ParameterizedEvent<Component>();
       eventService.publish(componentTypeRef.getType(), componentRequestEvent);
       assertEquals(1, timesCalled[0]);
 
@@ -789,7 +790,7 @@ public class TestDefaultEventService extends TestCase {
 
       //Test super wildcard, should be opposite of above
       eventService.clearAllSubscribers();
-      TypeReference<DataRequestEvent<? super Container>> containerSuperWildcardTypeRef = new TypeReference<DataRequestEvent<? super Container>>(){};
+      TypeReference<ParameterizedEvent<? super Container>> containerSuperWildcardTypeRef = new TypeReference<ParameterizedEvent<? super Container>>(){};
       eventService.subscribe(containerSuperWildcardTypeRef.getType(), new EventSubscriber() {
          public void onEvent(Object event) {
             timesCalled[0]++;
@@ -803,14 +804,14 @@ public class TestDefaultEventService extends TestCase {
       //Test exact matches
    }
 
-   public class DataRequestEvent<E> {
+   public class ParameterizedEvent<E> {
       private Collection<E> data;
       public Collection<E> getData() {
          return data;
       }
    }
 
-   public class DataRequestEvent2<E,F> {
+   public class DoublyParameterizedEvent<E,F> {
       private Map<E,F> data;
       public Map<E,F> getData() {
          return data;
@@ -846,6 +847,26 @@ public class TestDefaultEventService extends TestCase {
       }
    }
 
+
+   /**
+    * Test match for generic type's of generic types
+    */
+   public void testGenericGeneric() {
+      final int[] timesCalled = new int[1];
+      DataRequestEvent<List<Integer>> request = new DataRequestEvent<List<Integer>>();
+      Type type = new TypeReference<DataRequestEvent<List<Integer>>>() {}.getType();
+      eventService.subscribe(type, new EventSubscriber() {
+         public void onEvent(Object event) {
+            timesCalled[0]++;
+         }
+      });
+      eventService.publish(type, request);
+      assertEquals(1, timesCalled[0]);
+      DataRequestEvent<List<String>> stringRequest = new DataRequestEvent<List<String>>();
+      Type stringType = new TypeReference<DataRequestEvent<List<String>>>() {}.getType();
+      eventService.publish(stringType , stringRequest);
+      assertEquals(1, timesCalled[0]);
+   }
 
    public void testTopicsCache() {
       Object a1 = new Object();
