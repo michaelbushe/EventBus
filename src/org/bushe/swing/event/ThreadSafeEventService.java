@@ -1,5 +1,5 @@
 /**
- * Copyright 2005 Bushe Enterprises, Inc., Hopkinton, MA, USA, www.bushe.com
+ * Copyright 2005-2007 Bushe Enterprises, Inc., Hopkinton, MA, USA, www.bushe.com
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,24 +21,36 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import org.bushe.swing.event.annotation.ReferenceStrength;
 import org.bushe.swing.exception.SwingException;
 
 /**
  * A thread-safe EventService implementation.
+ * <h2>Multithreading</h2> 
  * <p/>
  * This implementation is <b>not Swing thread-safe</b>.  If publication occurs on a thread other than the Swing
  * EventDispatchThread, subscribers will receive the event on the calling thread, and not the EDT.  Swing components
  * should use the SwingEventService instead, which is the implementation used by the EventBus.
+ * <p/>
+ * Two threads may be accessing the ThreadSafeEventService at the same time, on unsubscribing a
+ * listener for topic "A" and the other publishing on topic "A".  If the unsubsubscribing thread gets the lock first,
+ * then it is unsubscubscribed, end of story.  If the publisher gets the lock first, then a snapshot copy of the current
+ * listeners is made during the publication, the lock is released and the subscribers are called.  Between the time the
+ * lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting in an
+ * unsubscribed object receiving notifiction of the event.
  * <p/>
  * On event publication, subscribers are called in the order in which they subscribed.
  * <p/>
@@ -56,20 +68,73 @@ import org.bushe.swing.exception.SwingException;
  * and is published after the subscriber finishes.  The service can log a warning for SubscriberTimingEvents, see the
  * constructor {@link ThreadSafeEventService (long, boolean)}.  The timing is checked for veto subscribers too.
  * <p/>
- * Multithreaded note: Two threads may be accessing the ThreadSafeEventService at the same time, on unsubscribing a
- * listener for topic "A" and the other publishing on topic "A".  If the unsubsubscribing thread gets the lock first,
- * then it is unsubscubscribed, end of story.  If the publisher gets the lock first, then a snapshot copy of the current
- * listeners is made during the publication, the lock is released and the subscribers are called.  Between the time the
- * lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting in an
- * unsubscribed object receiving notifiction of the event.
+ * <h2>Logging</h2> 
  * <p/>
  * Exceptions are logged by default, override {@link #handleException(String,Object,String,Object,Throwable,
- *StackTraceElement[],String)} to handleException exceptions in another way.  Each call to a subscriber is wrapped in
+ * StackTraceElement[],String)} to handleException exceptions in another way.  Each call to a subscriber is wrapped in
  * a try block to ensure one listener does not interfere with another.
  * <p/>
  * Fine logging can be turned via java.util.logging using the name "org.bushe.swing.event.ThreadSafeEventService".  This
  * aids in debugging which subscription and publication issues.
- *
+ * <p/>
+ * <h2>Cleanup of Stale WeakReferences and Stale Annotation Proxies</h2> 
+ * <p/>
+ * The EventService may need to clean up stale WeakReferences and ProxySubscribers created for EventBus annotations.  (Aside: EventBus 
+ * Annotations are handled by the creation of proxies to the annotated objects.  Since the annotations create weak references 
+ * by default, annotation proxies must held strongly by the EventService, otherwise the proxy is garbage collected.)  When 
+ * a WeakReference's referent or an ProxySubscriber's proxiedObject (the annotated object) is claimed by the garbage collector, 
+ * the EventService still holds onto the actual WeakReference or ProxySubscriber subscribed to the EventService (which are pretty tiny).  
+ * <p/>
+ * There are two ways that these stale WeakReferences and ProxySubscribers are cleaned up.  
+ * <ol>
+ * <li>On every publish, subscribe and unsubscribe, every subscriber and veto subscriber to a class or topic is checked to see 
+ * if it is a stale WeakReference or a stale ProxySubscriber (one whose getProxySubscriber() returns null).  If the subscriber 
+ * is stale, it is unsubscribed from the EventService  immediately.  If it is a ProxySubscriber, it's  proxyUnsubscribed() 
+ * method is called after it is unsubscribed.  (This isn't as expecive as it sounds, since checks to avoid double subscription is
+ * necessary anyway).
+ * <li>Another cleanup thread may get started to clean up remaining stale subscribers.  This cleanup thread only comes into
+ * play for subscribers to topic or classes that haven't been used (published/subscribed/unsibscribed to).  A detailed description
+ * of the cleanup thread follows.
+ * </ol>
+ * <h3>The Cleanup Thread</h3>
+ * If a topic or class is never published to again, WeakReferences and ProxySubscribers can be left behind if they 
+ * are not cleaned up.  To prevent loitering stale subscribers, the ThreadSafeEventService may periodically run through 
+ * all the EventSubscribers and VetoSubscribers for all topics and classes and clean up stale proxies.  Proxies for 
+ * Annotations that have a ReferenceStrength.STRONG are never cleaned up in normal usage.   (By specifying 
+ * ReferenceStrength.STRONG, the programmer is buying into unsubscribing annotated objects themselves.  There is 
+ * one caveat: If getProxiedSubscriber() returns null, even for a ProxySubscriber with a STRONG reference strength, that proxy 
+ * is cleaned up as it is assumed it is stale or just wrong.  This would not occur normally in EventBus usage, but only 
+ * if someone is implementing their own custom ProxySubscriber and/or AnnotationProcessor.)
+ * <p/>
+ * Cleanup is pretty rare in general.  Not only are stale subscribers cleaned up with regular usage, stale 
+ * subscribers on abandonded topics and classes do not take up a lot of memory, hence, they are allowed to build up to a certain degree. 
+ * Cleanup does not occur until the number of WeakReferences and SubscriptionsProxy's with WeakReference strength
+ * subscribed to an EventService for all the EventService's subscriptions in total exceed the <tt>cleanupStartThreshhold</tt>, 
+ * which is set to <tt>CLEANUP_START_THRESHOLD_DEFAULT</tt> (500) by default.  The default is overridable in the constructor 
+ * or via #setCleanupStartThreshhold(Integer).  If set to null, cleanup will never start.  
+ * <p/>
+ * Once the cleanup start threshold is exceeded, a <tt>java.util.Timer</tt> is started to clean up stale subscribers periodically 
+ * in another thread.  The timer will fire every <tt>cleanupPeriodMS</tt> milliseconds, which is set to the 
+ * <tt>CLEANUP_PERIOD_MS_DEFAULT<tt> (20 minutes) by default.  The default is overridable in the constructor or 
+ * via #setCleanupPeriodMS(Integer).  If set to null, cleanup will not start.  This is implemented with a <tt>java.util.Timer</tt>,
+ * so Timer's warnings apply - setting this too low will cause cleanups to bunch up and hog the cleanup thread.
+ * <p/>
+ * After a cleanup cycle completes, if the number of stale subscribers falls at or below the <tt>cleanupStopThreshhold</tt> 
+ * cleanup stops until the <tt>cleanupStartThreshhold</tt> is exceeded again. The <tt>cleanupStopThreshhold</tt> is set 
+ * to <tt>CLEANUP_STOP_THRESHOLD_DEFAULT</tt> (100) by default.  The default is overridable in the constructor or via 
+ * #setCleanupStopThreshhold(Integer).  If set to null or 0, cleanup will not stop if it is ever started.  
+ * <p/>
+ * Cleanup can be monitored by subscribing to the {@link CleanupEvent} class. 
+ * <p/>
+ * All cleanup parameters are tunable "live" and checked after each subscription and after each cleanup cycle.
+ * To make cleanup never run, set cleanupStartThreshhold to Integer.MAX_VALUE and cleanupPeriodMS to null.
+ * To get cleanup to run continuously, set set cleanupStartThreshhold to 0 and cleanupPeriodMS to some reasonable value,
+ * perhaps 1000 (1 second) or so (not recommended, cleanup is conducted with regular usage and the cleanup thread is
+ * rarely created or invoked).
+ * <p/>
+ * Cleanup is not run in a daemon thread, and thus will not stop the JVM from exiting.
+ * <p/>
+ * 
  * @author Michael Bushe michael@bushe.com
  * @todo perhaps publication should double-check to see if a subscriber is still subscribed
  * @todo (param) a JMS-like selector (can be done in base classes by implements like a commons filter
@@ -77,6 +142,10 @@ import org.bushe.swing.exception.SwingException;
  * @see EventService for a complete description of the API
  */
 public class ThreadSafeEventService implements EventService {
+   public static final Integer CLEANUP_START_THRESHOLD_DEFAULT = 250;
+   public static final Integer CLEANUP_STOP_THRESHOLD_DEFAULT = 100;
+   public static final Long CLEANUP_PERIOD_MS_DEFAULT = 20L*60L*1000L;
+
    protected static final Logger LOG = Logger.getLogger(EventService.class.getName());
 
    private Map subscribersByEventType = new HashMap();
@@ -102,40 +171,77 @@ public class ThreadSafeEventService implements EventService {
    private boolean rawCacheSizesForTopicChanged;
    private Map rawCacheSizesForPattern;
    private boolean rawCacheSizesForPatternChanged;
-
+   private Integer cleanupStartThreshhold;
+   private Integer cleanupStopThreshold;
+   private Long cleanupPeriodMS;
+   private int weakRefPlusProxySubscriberCount;
+   private Timer cleanupTimer;
+   private TimerTask cleanupTimerTask;
 
    /** Creates a ThreadSafeEventService that does not monitor timing of handlers. */
    public ThreadSafeEventService() {
-      this(null, false);
+      this(null, false, null, null, null);
    }
 
    /**
     * Creates a ThreadSafeEventService while providing time monitoring options.
     *
     * @param timeThresholdForEventTimingEventPublication the longest time a subscriber should spend handling an event,
-    * The service will pulish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
+    * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * EventSubscriberTimingEvent will be issued.
     */
    public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication) {
-      this(timeThresholdForEventTimingEventPublication, false);
+      this(timeThresholdForEventTimingEventPublication, false, null, null, null);
+   }
+
+   /**
+    * Creates a ThreadSafeEventService while providing time monitoring options.
+    *
+    * @param timeThresholdForEventTimingEventPublication the longest time a subscriber should spend handling an event,
+    * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
+    * EventSubscriberTimingEvent will be issued.
+    * @param subscribeTimingEventsInternally add a subscriber to the SubscriberTimingEvent internally and call the
+    * protected subscribeTiming() method when they occur.  This logs a warning to a java.util.logging logger by
+    * default.
+    */
+   public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication, boolean subscribeTimingEventsInternally) {
+      this(timeThresholdForEventTimingEventPublication, subscribeTimingEventsInternally, null, null, null);
+   }
+
+   /**
+    * Creates a ThreadSafeEventService while providing proxy cleanup customization.
+    * Proxies are used with Annotations.
+    * 
+    * @param cleanupStartThreshold see class javadoc.
+    * @param cleanupStopThreshold see class javadoc.
+    * @param cleanupPeriodMS see class javadoc.
+    */
+   public ThreadSafeEventService(Integer  cleanupStartThreshold, 
+           Integer cleanupStopThreshold, Long cleanupPeriodMS) {
+      this(null, false,  cleanupStartThreshold, 
+           cleanupStopThreshold, cleanupPeriodMS);
    }
 
    /**
     * Creates a ThreadSafeEventService while providing time monitoring options.
     *
     * @param timeThresholdForEventTimingEventPublication the longest time a subscriber should spend handling an event.
-    * The service will pulish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
+    * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * SubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the SubscriberTimingEvent internally and call the
     * protected subscribeTiming() method when they occur.  This logs a warning to a java.util.logging logger by
     * default.
+    * @param cleanupStartThreshold see class javadoc.
+    * @param cleanupStopThreshold see class javadoc.
+    * @param cleanupPeriodMS see class javadoc.
     *
     * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and
     * subscribeTimingEventsInternally is true.
     * @todo (nonSwing-only?) start a timer call and when it calls back, report the time if exceeded.
     */
    public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication,
-           boolean subscribeTimingEventsInternally) {
+           boolean subscribeTimingEventsInternally, Integer  cleanupStartThreshold, 
+           Integer cleanupStopThreshold, Long cleanupPeriodMS) {
       if (timeThresholdForEventTimingEventPublication == null && subscribeTimingEventsInternally) {
          throw new IllegalArgumentException("null, true in constructor is not valid.  If you want to send timing messages for all events and subscribe them internally, pass 0, true");
       }
@@ -147,6 +253,82 @@ public class ThreadSafeEventService implements EventService {
                subscribeTiming((SubscriberTimingEvent) event);
             }
          });
+      }      
+      if (cleanupStartThreshold == null) {
+         this.cleanupStartThreshhold = CLEANUP_START_THRESHOLD_DEFAULT;
+      } else {
+         this.cleanupStartThreshhold =  cleanupStartThreshold;         
+      }
+      if (cleanupStopThreshold == null) {
+         this.cleanupStopThreshold = CLEANUP_STOP_THRESHOLD_DEFAULT;
+      } else {
+         this.cleanupStopThreshold = cleanupStopThreshold;         
+      }
+      if (cleanupPeriodMS == null) {
+         this.cleanupPeriodMS = CLEANUP_PERIOD_MS_DEFAULT;
+      } else {
+         this.cleanupPeriodMS = cleanupPeriodMS;         
+      }
+   }
+
+   /**
+    * Gets the threshold above which cleanup starts.  See the class javadoc on cleanup.
+    * @return the threshold at which cleanup starts
+    */
+   public Integer getCleanupStartThreshhold() {
+      synchronized (listenerLock) {
+         return cleanupStartThreshhold;
+      }
+   }
+
+   /**
+    * Sets the threshold above which cleanup starts.  See the class javadoc on cleanup.
+    * @param the threshold at which cleanup starts
+    */
+   public void setCleanupStartThreshhold(Integer cleanupStartThreshhold) {
+      synchronized (listenerLock) {
+         this.cleanupStartThreshhold = cleanupStartThreshhold;
+      }
+   }
+
+   /**
+    * Gets the threshold below which cleanup stops.  See the class javadoc on cleanup.
+    * @param the threshold at which cleanup stops (it may start again)
+    */
+   public Integer getCleanupStopThreshold() {
+      synchronized (listenerLock) {
+         return cleanupStopThreshold;
+      }
+   }
+
+   /**
+    * Sets the threshold below which cleanup stops.  See the class javadoc on cleanup.
+    * @param the threshold at which cleanup stops (it may start again).  
+    */
+   public void setCleanupStopThreshold(Integer cleanupStopThreshold) {
+      synchronized (listenerLock) {
+         this.cleanupStopThreshold = cleanupStopThreshold;
+      }
+   }
+
+   /**
+    * Get the cleanup interval. See the class javadoc on cleanup.
+    * @param the interval in milliseconds between cleanup runs.  
+    */
+   public Long getCleanupPeriodMS() {
+      synchronized (listenerLock) {
+         return cleanupPeriodMS;
+      }
+   }
+
+   /**
+    * Sets the cleanup interval. See the class javadoc on cleanup.
+    * @param the interval in milliseconds between cleanup runs.  Passing null 
+    * stops cleanup.  
+    */
+   public void setCleanupPeriodMS(Long cleanupPeriodMS) {
+      synchronized (listenerLock) {
+         this.cleanupPeriodMS = cleanupPeriodMS;
       }
    }
 
@@ -265,77 +447,30 @@ public class ThreadSafeEventService implements EventService {
    /** @see org.bushe.swing.event.EventService#clearAllSubscribers() */
    public void clearAllSubscribers() {
       synchronized (listenerLock) {
-         this.subscribersByEventType.clear();
-         this.subscribersByEventClass.clear();
-         this.subscribersByTopic.clear();
-         this.vetoListenersByClass.clear();
-         this.vetoListenersByTopic.clear();
-         this.subscribersByExactEventClass.clear();
-         this.subscribersByTopicPattern.clear();
-         this.vetoListenersByExactClass.clear();
-         this.vetoListenersByTopicPattern.clear();
+         unsubscribeAllInMap(subscribersByEventType);
+         unsubscribeAllInMap(subscribersByEventClass);
+         unsubscribeAllInMap(subscribersByExactEventClass);
+         unsubscribeAllInMap(subscribersByTopic);
+         unsubscribeAllInMap(subscribersByTopicPattern);
+         unsubscribeAllInMap(vetoListenersByClass);
+         unsubscribeAllInMap(vetoListenersByExactClass);
+         unsubscribeAllInMap(vetoListenersByTopic);
+         unsubscribeAllInMap(vetoListenersByTopicPattern);
       }
    }
-
-   /**
-    * All subscribe methods call this method.  Extending classes only have to override this method to subscribe all
-    * subscriber subscriptions.
-    * <p/>
-    * Overriding this method is only for the adventurous.  This basically gives you just enough rope to hang yourself.
-    *
-    * @param o the topic String or event Class to subscribe to
-    * @param subscriberMap the internal map of subscribers to use (by topic or class)
-    * @param eh the EventSubscriber or EventTopicSubscriber to subscribe, or a WeakReference to either
-    *
-    * @return boolean if the subscriber is subscribed (was not subscribed).
-    *
-    * @throws IllegalArgumentException if eh or o is null
-    */
-   protected boolean subscribe(final Object o, final Map subscriberMap, final Object eh) {
-      if (o == null) {
-         throw new IllegalArgumentException("Can't subscribe to null.");
-      }
-      if (eh == null) {
-         throw new IllegalArgumentException("Can't subscribe null subscriber to " + o);
-      }
-      boolean alreadyExists = false;
+   
+   private void unsubscribeAllInMap(Map subscriberMap) {
       synchronized (listenerLock) {
-         List subscribers = (List) subscriberMap.get(o);
-         if (subscribers == null) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Creating new subscriber map for :" + o);
-            }
-            subscribers = new ArrayList();
-            subscriberMap.put(o, subscribers);
-         } else {
-            //Two weak references to the same object don't compare equal, also need to make sure a weak ref and a hard
-            //ref aren't both subscribed
-            Object compareEH = eh;
-            if (eh instanceof WeakReference) {
-               compareEH = ((WeakReference) eh).get();
-               if (compareEH == null) {
-                  return false;//already garbage collected?  Weird.
-               }
-            }
-            for (Iterator iterator = subscribers.iterator(); iterator.hasNext();) {
-               Object existingSubscriber = iterator.next();
-               if (existingSubscriber instanceof WeakReference) {
-                  existingSubscriber = ((WeakReference) existingSubscriber).get();
-                  if (existingSubscriber == null) {
-                     iterator.remove();//was garbage collected
-                  }
-               }
-               if (compareEH.equals(existingSubscriber)) {
-                  iterator.remove();//will add to the end of the calling list
-                  alreadyExists = true;
-               }
+         Set subscriptionKeys = subscriberMap.keySet();
+         for (Object key : subscriptionKeys) {
+            List subscribers = (List) subscriberMap.get(key);
+            while (!subscribers.isEmpty()) {
+               unsubscribe(key, subscriberMap, subscribers.get(0));               
             }
          }
-         subscribers.add(eh);
-         return !alreadyExists;
-      }
+      }      
    }
-
+ 
    /** @see EventService#subscribeVetoListener(Class,VetoEventListener) */
    public boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
@@ -436,23 +571,90 @@ public class ThreadSafeEventService implements EventService {
     *
     * @throws IllegalArgumentException if vl or o is null
     */
-   protected boolean subscribeVetoListener(final Object o, final Map vetoListenerMap, final Object vl) {
+   protected boolean subscribeVetoListener(final Object subscription, final Map vetoListenerMap, final Object vetoListener) {
       if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("subscribeVetoListenerStrongly(" + o + "," + vl + ")");
+         LOG.fine("subscribeVetoListener(" + subscription + "," + vetoListener + ")");
       }
-      if (vl == null) {
-         throw new IllegalArgumentException("Can't subscribe null veto listener to " + o);
+      if (vetoListener == null) {
+         throw new IllegalArgumentException("Can't subscribe null veto listener to " + subscription);
       }
-      if (o == null) {
+      if (subscription == null) {
          throw new IllegalArgumentException("Can't subscribe veto listener to null.");
       }
+      return subscribe(subscription, vetoListenerMap, vetoListener);
+   }
+
+   /**
+    * All subscribe methods call this method, including veto subscriptions.  
+    * Extending classes only have to override this method to subscribe all
+    * subscriber subscriptions.
+    * <p/>
+    * Overriding this method is only for the adventurous.  This basically gives you just enough rope to hang yourself.
+    *
+    * @param o the topic String or event Class to subscribe to
+    * @param subscriberMap the internal map of subscribers to use (by topic or class)
+    * @param subscriber the EventSubscriber or EventTopicSubscriber to subscribe, or a WeakReference to either
+    *
+    * @return boolean if the subscriber is subscribed (was not subscribed).
+    *
+    * @throws IllegalArgumentException if subscriber or topicOrClass is null
+    */
+   protected boolean subscribe(final Object topicOrClass, final Map subscriberMap, final Object subscriber) {
+      if (topicOrClass == null) {
+         throw new IllegalArgumentException("Can't subscribe to null.");
+      }
+      if (subscriber == null) {
+         throw new IllegalArgumentException("Can't subscribe null subscriber to " + topicOrClass);
+      }
+      boolean alreadyExists = false;
+      boolean isWeakRef = subscriber instanceof WeakReference;
+      boolean isWeakProxySubscriber = (subscriber instanceof ProxySubscriber) 
+              && ((ProxySubscriber)subscriber).getReferenceStrength() == ReferenceStrength.WEAK;
       synchronized (listenerLock) {
-         List vetoListeners = (List) vetoListenerMap.get(o);
-         if (vetoListeners == null) {
-            vetoListeners = new ArrayList();
-            vetoListenerMap.put(o, vetoListeners);
+         List currentSubscribers = (List) subscriberMap.get(topicOrClass);
+         if (currentSubscribers == null) {
+            if (LOG.isLoggable(Level.FINE)) {
+               LOG.fine("Creating new subscriber map for :" + topicOrClass);
+            }
+            currentSubscribers = new ArrayList();
+            subscriberMap.put(topicOrClass, currentSubscribers);
+         } else {
+            //Double subscription check and stale subscriber cleanup
+            //Need to compare the underlying referents for WeakReferences and ProxySubscribers
+            //to make sure a weak ref and a hard ref aren't both subscribed
+            //to the same topic and object
+            Object realSubscriber = subscriber;
+            if (isWeakRef) {
+               realSubscriber = ((WeakReference) subscriber).get();
+               if (isWeakProxySubscriber) {
+                  throw new IllegalArgumentException("ProxySubscribers should always be subscribed strongly.");
+               }
+            }
+            //Use the proxied subscriber for comparison if a ProxySubscribers is used
+            //Subscribing the same object by proxy and subscribing explicitly should 
+            //not subscribe the same object twice
+            if (isWeakProxySubscriber) { 
+               realSubscriber = ((ProxySubscriber) subscriber).getProxiedSubscriber();
+            }
+            if (realSubscriber == null) {
+               return false;//already garbage collected?  Weird.
+            }
+            for (Iterator iterator = currentSubscribers.iterator(); iterator.hasNext();) {
+               Object currentSubscriber = iterator.next();
+               Object realCurrentSubscriber = getRealSubscriberAndCleanStaleSubscriberIfNecessary(iterator, currentSubscriber);
+               if (realSubscriber.equals(realCurrentSubscriber)) {
+                  //Already subscribed.  
+                  //Remove temporarily, to add to the end of the calling list
+                  iterator.remove();
+                  alreadyExists = true;
+               }
+            }
          }
-         return vetoListeners.add(vl);
+         currentSubscribers.add(subscriber);
+         if (isWeakProxySubscriber || isWeakRef) { 
+            incWeakRefPlusProxySubscriberCount();
+         }
+         return !alreadyExists;
       }
    }
 
@@ -474,33 +676,6 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#unsubscribe(String,EventTopicSubscriber) */
    public boolean unsubscribe(Pattern topicPattern, EventTopicSubscriber eh) {
       return unsubscribe(topicPattern, subscribersByTopicPattern, eh);
-   }
-
-   /**
-    * All event subscriber unsubscriptions call this method.  Extending classes only have to override this method to
-    * subscribe all subscriber unsubscriptions.
-    *
-    * @param o the topic or event class to unsubsribe from
-    * @param subscriberMap the map of subscribers to use (by topic of class)
-    * @param eh the subscriber to unsubscribe, either an EventSubscriber or an EventTopicSubscriber, or a WeakReference
-    * to either
-    *
-    * @return boolean if the subscriber is unsubscribed (was subscribed).
-    */
-   protected boolean unsubscribe(Object o, Map subscriberMap, Object eh) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("unsubscribe(" + o + "," + eh + ")");
-      }
-      if (o == null) {
-         throw new IllegalArgumentException("Can't unsubscribe to null.");
-      }
-      if (eh == null) {
-         throw new IllegalArgumentException("Can't unsubscribe null subscriber to " + o);
-      }
-      synchronized (listenerLock) {
-         return removeFromSetResolveWeakReferences(subscriberMap, o, eh);
-
-      }
    }
 
    /** @see EventService#unsubscribe(Class,Object) */
@@ -540,6 +715,32 @@ public class ThreadSafeEventService implements EventService {
          return false;
       } else {
          return unsubscribe(pattern, subscriber);
+      }
+   }
+
+   /**
+    * All event subscriber unsubscriptions call this method.  Extending classes only have to override this method to
+    * subscribe all subscriber unsubscriptions.
+    *
+    * @param o the topic or event class to unsubsribe from
+    * @param subscriberMap the map of subscribers to use (by topic of class)
+    * @param eh the subscriber to unsubscribe, either an EventSubscriber or an EventTopicSubscriber, or a WeakReference
+    * to either
+    *
+    * @return boolean if the subscriber is unsubscribed (was subscribed).
+    */
+   protected boolean unsubscribe(Object o, Map subscriberMap, Object subscriber) {
+      if (LOG.isLoggable(Level.FINE)) {
+         LOG.fine("unsubscribe(" + o + "," + subscriber + ")");
+      }
+      if (o == null) {
+         throw new IllegalArgumentException("Can't unsubscribe to null.");
+      }
+      if (subscriber == null) {
+         throw new IllegalArgumentException("Can't unsubscribe null subscriber to " + o);
+      }
+      synchronized (listenerLock) {
+         return removeFromSetResolveWeakReferences(subscriberMap, o, subscriber);
       }
    }
 
@@ -860,19 +1061,21 @@ public class ThreadSafeEventService implements EventService {
    }
 
    public List getSubscribersByPattern(String topic) {
-      List result = new ArrayList();
-      Set keys = subscribersByTopicPattern.keySet();
-      for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-         Pattern patternKey = (Pattern) iterator.next();
-         if (patternKey.matcher(topic).matches()) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Pattern " + patternKey + " matched topic name " + topic);
+      synchronized (listenerLock) {
+         List result = new ArrayList();
+         Set keys = subscribersByTopicPattern.keySet();
+         for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+            Pattern patternKey = (Pattern) iterator.next();
+            if (patternKey.matcher(topic).matches()) {
+               if (LOG.isLoggable(Level.FINE)) {
+                  LOG.fine("Pattern " + patternKey + " matched topic name " + topic);
+               }
+               Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
+               result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
             }
-            Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
-            result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
          }
+         return result;
       }
-      return result;
    }
 
 
@@ -1091,7 +1294,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Given a Map (of Lists of subscribers or veto listeners), removes the toRemove element from the List in the map for
-    * the given key.  If WeakReferences are encountered,
+    * the given key.  The entire map is checked for WeakReferences and ProxySubscribers and they are all unsubscribed if stale.
     *
     * @param map map of lists
     * @param key key for a List in the map
@@ -1105,36 +1308,44 @@ public class ThreadSafeEventService implements EventService {
          return false;
       }
       if (subscribers.remove(toRemove)) {
+         if (toRemove instanceof WeakReference) {
+            decWeakRefPlusProxySubscriberCount();            
+         }
+         if (toRemove instanceof ProxySubscriber) {
+            ((ProxySubscriber)toRemove).proxyUnsubscribed();
+            decWeakRefPlusProxySubscriberCount();
+         }
          return true;
       }
 
-      //search for a WeakReference and ProxySubscribers
+      //search for WeakReferences and ProxySubscribers
       for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
-         Object item = iter.next();
-         if (item instanceof ProxySubscriber) {
-            ProxySubscriber proxy = (ProxySubscriber) item;
-            item = proxy.getProxiedSubscriber();
-            if (item == toRemove) {
-               iter.remove();
-               proxy.proxyUnsubscribed();
+         Object existingSubscriber = iter.next();
+         if (existingSubscriber instanceof ProxySubscriber) {
+            ProxySubscriber proxy = (ProxySubscriber) existingSubscriber;
+            existingSubscriber = proxy.getProxiedSubscriber();
+            if (existingSubscriber == toRemove) {
+               removeProxySubscriber(proxy, iter);
                return true;
             }
          }
-         if (item instanceof WeakReference) {
-            WeakReference wr = (WeakReference) item;
+         if (existingSubscriber instanceof WeakReference) {
+            WeakReference wr = (WeakReference) existingSubscriber;
             Object realRef = wr.get();
             if (realRef == null) {
                //clean up a garbage collected reference
                iter.remove();
+               decWeakRefPlusProxySubscriberCount();
+               return true;
             } else if (realRef == toRemove) {
                iter.remove();
+               decWeakRefPlusProxySubscriberCount();
                return true;
             } else if (realRef instanceof ProxySubscriber) {
                ProxySubscriber proxy = (ProxySubscriber) realRef;
-               item = proxy.getProxiedSubscriber();
-               if (item == toRemove) {
-                  iter.remove();
-                  proxy.proxyUnsubscribed();
+               existingSubscriber = proxy.getProxiedSubscriber();
+               if (existingSubscriber == toRemove) {
+                  removeProxySubscriber(proxy, iter);
                   return true;
                }
             }
@@ -1158,11 +1369,20 @@ public class ThreadSafeEventService implements EventService {
       List copyOfSubscribersOrVetolisteners = new ArrayList(subscribersOrVetoListeners.size());
       for (Iterator iter = subscribersOrVetoListeners.iterator(); iter.hasNext();) {
          Object elem = iter.next();
-         if (elem instanceof WeakReference) {
+         if (elem instanceof ProxySubscriber) {
+            ProxySubscriber proxy = (ProxySubscriber)elem;
+            elem = proxy.getProxiedSubscriber();
+            if (elem == null) {
+               removeProxySubscriber(proxy, iter);
+            } else {
+               copyOfSubscribersOrVetolisteners.add(proxy);               
+            }
+         } else if (elem instanceof WeakReference) {
             Object hardRef = ((WeakReference) elem).get();
             if (hardRef == null) {
                //Was reclaimed, unsubscribe
                iter.remove();
+               decWeakRefPlusProxySubscriberCount();
             } else {
                copyOfSubscribersOrVetolisteners.add(hardRef);
             }
@@ -1545,4 +1765,129 @@ public class ThreadSafeEventService implements EventService {
       LOG.log(Level.WARNING, msg, clientEx);
    }
 
+   /**
+    * Unsubscribe a subscriber if it is a stale ProxySubscriber. Used during subscribe() and
+    * in the cleanup Timer.  See the class javadoc.
+    * <p/>
+    * Not private since I don't claim I'm smart enough to anticipate all needs, but I
+    * am smart enough to doc the rules you must follow to override this method.  Those
+    * rules may change (changes will be doc'ed), override at your own risk.
+    * <p/>
+    * Overriders MUST call iterator.remove() to unsubscribe the proxy if the subscriber is
+    * a ProxySubscriper and is stale and should be cleaned up.  If the ProxySubscriber 
+    * is unsubscribed, then implementers MUST also call proxyUnsubscribed() on the subscriber.
+    * Overriders MUST also remove the proxy from the weakProxySubscriber list by calling
+    * removeStaleProxyFromList.  Method assumes caller is holding the listenerList 
+    * lock (else how can you pass the iterator?).
+    * @param iterator current iterator
+    * @param existingSubscriber the current value of the iterator
+    * @return the real value of the param, or the proxied subscriber of the param if 
+    * the param is a a ProxySubscriber
+    */
+   protected Object getRealSubscriberAndCleanStaleSubscriberIfNecessary(Iterator iterator, Object existingSubscriber) {
+      ProxySubscriber existingProxySubscriber = null;
+      if (existingSubscriber instanceof WeakReference) {
+         existingSubscriber = ((WeakReference) existingSubscriber).get();
+         if (existingSubscriber == null) {
+            iterator.remove();
+            decWeakRefPlusProxySubscriberCount();
+         }         
+      }
+      if (existingSubscriber instanceof ProxySubscriber) {
+         existingProxySubscriber = (ProxySubscriber) existingSubscriber;
+         existingSubscriber = existingProxySubscriber.getProxiedSubscriber();
+         if (existingProxySubscriber == null) {
+            removeProxySubscriber(existingProxySubscriber, iterator);
+         }
+      }
+      return existingSubscriber;
+   }
+
+   protected void removeProxySubscriber(ProxySubscriber proxy, Iterator iter) {
+      iter.remove();
+      proxy.proxyUnsubscribed();
+      decWeakRefPlusProxySubscriberCount();
+   }
+
+   /**
+    * Increment the count of stale proxies and start a cleanup task if necessary
+    */
+   protected void incWeakRefPlusProxySubscriberCount() {
+      synchronized(listenerLock) {
+         weakRefPlusProxySubscriberCount++;
+         if (cleanupStartThreshhold == null || cleanupPeriodMS == null) {
+            return;
+         }
+         if (weakRefPlusProxySubscriberCount >= cleanupStartThreshhold) {
+            startCleanup();
+         }
+      }
+   }
+
+   /**
+    * Decrement the count of stale proxies
+    */
+   protected void decWeakRefPlusProxySubscriberCount() {
+      synchronized(listenerLock) {
+         weakRefPlusProxySubscriberCount--;
+         if (weakRefPlusProxySubscriberCount < 0) {
+            weakRefPlusProxySubscriberCount = 0;
+         }
+      }
+   }
+
+   private void startCleanup() {
+      synchronized(listenerLock) {
+         if (cleanupTimer == null) {
+            cleanupTimer = new Timer();
+         } 
+         if (cleanupTimerTask == null) {
+            cleanupTimerTask = new CleanupTimerTask();
+            cleanupTimer.schedule(cleanupTimerTask, 0L, cleanupPeriodMS);            
+         }
+      }
+   }
+   
+   class CleanupTimerTask extends TimerTask {
+      @Override
+      public void run() {
+         synchronized(listenerLock) {
+            ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.STARTING, weakRefPlusProxySubscriberCount, null));
+            if (weakRefPlusProxySubscriberCount <= cleanupStopThreshold) {
+               this.cancel();
+               cleanupTimer = null;
+               cleanupTimerTask = null;
+               ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.UNDER_STOP_THRESHOLD_CLEANING_CANCELLED, weakRefPlusProxySubscriberCount, null));
+               return;
+            }
+            ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.OVER_STOP_THRESHOLD_CLEANING_BEGUN, weakRefPlusProxySubscriberCount, null));               
+            List<Map> allSubscriberMaps = new ArrayList<Map>();
+            allSubscriberMaps.add(subscribersByEventType);
+            allSubscriberMaps.add(subscribersByEventClass);
+            allSubscriberMaps.add(subscribersByExactEventClass);
+            allSubscriberMaps.add(subscribersByTopic);
+            allSubscriberMaps.add(subscribersByTopicPattern);
+            allSubscriberMaps.add(vetoListenersByClass);
+            allSubscriberMaps.add(vetoListenersByExactClass);
+            allSubscriberMaps.add(vetoListenersByTopic);
+            allSubscriberMaps.add(vetoListenersByTopicPattern);
+            
+            int staleCount = 0;
+            for (Map subscriberMap : allSubscriberMaps) {
+               Set subscriptions = subscriberMap.keySet();
+               for (Object subscription : subscriptions) {
+                  List subscribers = (List) subscriberMap.get(subscription);
+                  for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
+                     Object subscriber = iter.next();
+                     Object realSubscriber = getRealSubscriberAndCleanStaleSubscriberIfNecessary(iter, subscriber);                      
+                     if (realSubscriber == null) {
+                        staleCount++;
+                     }
+                  }
+               }
+            }
+            ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.FINISHED_CLEANING, weakRefPlusProxySubscriberCount, staleCount));
+         }         
+      }      
+   }
 }

@@ -37,11 +37,11 @@ public class SwingEventService extends ThreadSafeEventService {
     * event to launch a modal dialog, the timings will be as long as the dialog is up - this is the way Swing works.
     */
    public SwingEventService() {
-      super(new Long(200), false);
+      super(new Long(200), false, null, null, null);
    }
 
    public SwingEventService(Long timeThresholdForEventTimingEventPublication) {
-      super(timeThresholdForEventTimingEventPublication, false);
+      super(timeThresholdForEventTimingEventPublication, false, null, null, null);
    }
 
    /**
@@ -64,7 +64,7 @@ public class SwingEventService extends ThreadSafeEventService {
     * subscribeTimingEventsInternally is true.
     */
    public SwingEventService(Long timeThresholdForEventTimingEventPublication, boolean subscribeTimingEventsInternally) {
-      super(timeThresholdForEventTimingEventPublication, subscribeTimingEventsInternally);
+      super(timeThresholdForEventTimingEventPublication, subscribeTimingEventsInternally, null, null, null);
    }
 
    /**
@@ -73,7 +73,7 @@ public class SwingEventService extends ThreadSafeEventService {
     * DOES NOT post a new event on the EDT.  The subscribers are called on the same EDT event, just like addXXXListeners
     * would be.
     */
-   protected void publish(final EventServiceEvent event, final String topic, final Object eventObj,
+   protected void publish(final Object event, final String topic, final Object eventObj,
            final List subscribers, final List vetoSubscribers, final StackTraceElement[] callingStack) {
       if (SwingUtilities.isEventDispatchThread()) {
          super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);

@@ -25,6 +25,7 @@
           <h1>Event Bus</h1>
           <h2>EventBus News</h2>
           <ul>
+          	<li><i>11-Nov-2007</i>EventBus 1.1 released. <b>Important:</b> All users of 1.0 should upgrade to version 1.1, which contains a Swing threading bug fix and production Annotation implementation.  If you are using release 1.0 for JDK 1.4, upgrade to 1.0.1 for JDK 1.4 (below).</li>
           	<li><i>6-Sept-2007</i> The Event Bus has released 1.1 beta2, adding generics support and fixing an Annotation issues.  This is a solid beta, though some of the generics APIs are not yet complete (vetos, unsubscribes).</li>
           	<li><i>29-Apr-2007</i> The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable EventBus implementation.</li>
           	<li><i>18-Mar-2007</i> Will the EventBus find life in outer space?  (Now there's a "Watch the News at 10" headline!)  
@@ -35,18 +36,18 @@
           		  and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature complete 
           		  for the 1.0 release.  The 1.0 release will be the last release for JDK 1.4.   Work will now begin on Annotations and Generics, 
           		  which of course will require 1.5.  Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.</li>
-            <li><i>22-Nov-2006</i> Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
-        	  <li><i>20-July-2006</i> Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
+                <li><i>22-Nov-2006</i> Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
+        	<li><i>20-July-2006</i> Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
           </ul>
           <h2>About the EventBus</h2>
           <p> The Event Bus is a single-process publish/subscribe event routing library, with Swing extensions. 
             The EventBus is fully-functional, with very good API documentation and test coverage (80+%). It has been deployed 
-            in many production environments, including financial and scientific applications. 
+            in many production environments, including financial, engineering and scientific applications. 
           <p>The Event Bus is easy to use and yet very powerful. It requires no 
             setup and the API is small and clear. The EventBus solves many problems, 
-            particularly with Swing applications and promotes loose coupling.
+            and promotes loose coupling, particularly with Swing applications.
           <p>The <a href="HopOnTheEventBus-Web.ppt">slides from the EventBus presentation at JavaOne 2006</a> 
-          	demonstrate many ways to use the EventBus.  The code from the talk is not yet available, but will be soon.</a>
+          	demonstrate many ways to use the EventBus.</a>
           <p>Though not Swing-specific, the EventBus has Swing support and the 
             Event Bus hopes to make Swing applications more componentized, modular 
             and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
@@ -68,16 +69,19 @@
             know about the bus, not each subscriber and publisher that they may 
             be interested in.  The EventBus differs from JMS since it meant to be used by a single JVM. 
           <h2>Download Release Snapshots</h2>
-          <p>The current release is 1.1 beta2 with Annotations and Generics.  This release is compiled in JDK 1.5.  
-          <p><a href="EventBus.jar">EventBus.jar</a> 
-          <p><a href="EventBus-src.jar">EventBus-src.jar</a> 
-          <p><a href="EventBus-doc.jar">EventBus-doc.jar</a> 
-          <p><a href="EventBus-all.jar">EventBus-all.jar</a> 
-          <p>If you are using JDK 1.4, you must use release 1.0.  These jars are compiled with JDK 1.4.
-          <p><a href="EventBus-1.0ForJDK1.4.jar">EventBus.jar</a> 
-          <p><a href="EventBus-src-1.0ForJDK1.4.jar">EventBus-src-1.0ForJDK1.4.jar</a> 
-          <p><a href="EventBus-doc-1.0ForJDK1.4.jar">EventBus-doc-1.0ForJDK1.4.jar</a> 
-          <p><a href="EventBus-all-1.0ForJDK1.4.jar">EventBus-all-1.0ForJDK1.4.jar</a> 
+          <h3>Production Release</h3>
+          <p>The latest beta release is 1.1.  This release is compiled in JDK 1.6, with a JDK 1.4 binary available.  
+          <p><a href="EventBus.jar">EventBus-1.1.jar</a> 
+          <p><a href="EventBus-src.jar">EventBus-src-1.1.jar</a> 
+          <p><a href="EventBus-doc.jar">EventBus-doc-1.1.jar</a> 
+          <p><a href="EventBus-all.jar">EventBus-all-1.1.jar</a> 
+          <h3>Production Release for JDK 1.4</h3>
+          <p>If you are using JDK 1.4, you must use release 1.0.1.  These jars are compiled with JDK 1.4.
+          <p><a href="EventBus-1.0.1ForJDK1.4.jar">EventBus.jar</a> 
+          <p><a href="EventBus-src-1.0.1ForJDK1.4.jar">EventBus-src-1.0.1ForJDK1.4.jar</a> 
+          <p><a href="EventBus-doc-1.0.1ForJDK1.4.jar">EventBus-doc-1.0.1ForJDK1.4.jar</a> 
+          <p><a href="EventBus-all-1.0.1ForJDK1.4.jar">EventBus-all-1.0.1ForJDK1.4.jar</a> 
+          
           <h2>JavaDoc</h2>
           <p>Take a look at the online <a href="doc/api/index.html">JavaDocs</a></p>
           <h2>Examples</h2>
@@ -128,6 +132,12 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
 <p>
           <h2>Future</h2>
           <p>Future goals include: </div>
+            <ul>
+              <li>More generic methods
+              <li>Bring back log4j logging. 
+              <li>@VetoSubscriber annotation 
+              <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
+            </ul>
       </div>
       <ul>
         <li> 

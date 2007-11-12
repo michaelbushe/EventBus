@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import org.bushe.swing.event.EventService;
 
 /**
- *
+ * A Proxy Subscriber for Annotations that use topic patterns
  */
 public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
    private Pattern pattern;
@@ -14,7 +14,7 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
    /**
     * Creates a proxy.  This does not subscribe it.
     *
-    * @param realSubscriber the subscriber that the proxy will call when an event is publixhed
+    * @param proxiedSubscriber the subscriber that the proxy will call when an event is published
     * @param subscriptionMethod the method the proxy will call, must have an Object as it's first and only parameter
     * @param referenceStrength if the subscription is weak, the reference from the proxy to the real subscriber should
     * be too
@@ -22,15 +22,15 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
     * exist
     * @param patternString the Regular Expression for topics to subscribe to, used for unsubscription only
     */
-   public ProxyTopicPatternSubscriber(Object realSubscriber, Method subscriptionMethod,
+   public ProxyTopicPatternSubscriber(Object proxiedSubscriber, Method subscriptionMethod,
            ReferenceStrength referenceStrength,
            EventService es, String patternString, Pattern pattern) {
-      super(realSubscriber, subscriptionMethod, referenceStrength, es, patternString);
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, es, patternString);
       this.pattern = pattern;
    }
 
    protected void unsubscribe(String topic) {
-      eventService.unsubscribe(pattern, this);
+      getEventService().unsubscribe(pattern, this);
       pattern = null;
    }
 
@@ -54,20 +54,13 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
       return true;
    }
 
-   public int hashCode() {
-      int result = super.hashCode();
-      result = 31 * result + (pattern != null ? pattern.hashCode() : 0);
-      return result;
-   }
-
-
    public String toString() {
       return "ProxyTopicPatternSubscriber{" +
               "pattern=" + pattern +
-              "realSubscriber=" + realSubscriber +
-              ", subscriptionMethod=" + subscriptionMethod +
-              ", referenceStrength=" + referenceStrength +
-              ", eventService=" + eventService +
+              "realSubscriber=" + getProxiedSubscriber() +
+              ", subscriptionMethod=" + getSubscriptionMethod() +
+              ", referenceStrength=" + getReferenceStrength() +
+              ", eventService=" + getEventService() +
               '}';
    }
 }

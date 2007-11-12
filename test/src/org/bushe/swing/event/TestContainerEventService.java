@@ -57,7 +57,7 @@ public class TestContainerEventService extends TestCase {
          }
       });
       esBar.publish("FooTopic", "Foo");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(1, subscribedEvents.size());
    }
 
@@ -81,15 +81,8 @@ public class TestContainerEventService extends TestCase {
          }
       });
       esBar.publish("FooTopic", "Foo");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(0, subscribedEvents.size());
-   }
-
-   private void waitForEDT() {
-      try {
-         Thread.sleep(1000);//Calling hte EDT, need to slow this thread
-      } catch (InterruptedException e) {
-      }
    }
 
    public void testContainerEventServiceRegistrar() {
@@ -122,23 +115,23 @@ public class TestContainerEventService extends TestCase {
       assertEquals(getLastEventObject(), null);
       EventService topPanelES = ContainerEventServiceFinder.getEventService(panel);
       topPanelES.publish("RegEvent", "TopLevelBus");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
       EventService subPanel2ES = subPanel2.getContainerEventService();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());//still
       subPanel2.add(button);
-      waitForEDT();
+      EDTUtil.waitForEDT();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("SuppliedBus", getLastEventObject());//detected move
       subPanel.add(button);
       topPanelES.publish("RegEvent", "TopLevelBus");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
       subPanel2ES.publish("RegEvent", "SuppliedBus");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
    }
 

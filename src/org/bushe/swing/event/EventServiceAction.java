@@ -62,8 +62,8 @@ public abstract class EventServiceAction extends AbstractAction {
     *
     * @param event the event passed to #execute(ActionEvent)
     *
-    * @return the event service to publish on, if null and getThrowsExceptionOnNullEventService() is true (default) and
-    *         exception is thrown
+    * @return the event service to publish on, if null and 
+    * getThrowsExceptionOnNullEventService() is true (default) an exception is thrown
     *
     * @see EventBusAction
     * @see ContainerEventServiceAction
@@ -99,9 +99,8 @@ public abstract class EventServiceAction extends AbstractAction {
     * #setTopicName(String)} <li>the action's getValue("event-service-topic")  {@link #EVENT_SERVICE_TOPIC_NAME} <li>the
     * action's getValue("ID") (for compatibility with the SAM ActionManager's ID) <li>the action's {@link
     * javax.swing.Action#ACTION_COMMAND_KEY} <li>the action event's {@link javax.swing.Action#ACTION_COMMAND_KEY}
-    * <li>the aciton's {@link javax.swing.Action#NAME} the value is used (if the value is not a String, the value's
-    * toString() is used). This can be configured via XML by like so: <code> <name-value-pair name="event-service-topic"
-    * value="com.wellmanage.trading.nts.client.fx.MyTopicName"/> </code>
+    * <li>the action's {@link javax.swing.Action#NAME} the value is used (if the value is not a String, the value's
+    * toString() is used). 
     * <p/>
     * To use a different name, override this method.
     *
@@ -174,7 +173,7 @@ public abstract class EventServiceAction extends AbstractAction {
     *
     * @param event the action event to publish.
     *
-    * @throws RuntimeException if getThrowsExceptionOnNullEventService() &&  getSwingEventService(event) == null
+    * @throws RuntimeException if getThrowsExceptionOnNullEventService() &&  getEventService(event) == null
     */
    public void actionPerformed(ActionEvent event) {
       EventService eventService = getEventService(event);
@@ -196,7 +195,7 @@ public abstract class EventServiceAction extends AbstractAction {
    }
 
    /**
-    * By default, exceptions are throw if getSwingEventService(0 returns null.
+    * By default, exceptions are throw if getEventService() returns null.
     *
     * @return false to suppress this behavior
     */
@@ -205,7 +204,7 @@ public abstract class EventServiceAction extends AbstractAction {
    }
 
    /**
-    * By default, exceptions are throw if getSwingEventService(0 returns null.
+    * By default, exceptions are thrown if getEventService() returns null.
     *
     * @param throwsExceptionOnNullEventService true to suppress the exception when there is no event service
     */

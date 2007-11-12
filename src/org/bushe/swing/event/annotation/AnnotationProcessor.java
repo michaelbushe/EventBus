@@ -110,12 +110,10 @@ public class AnnotationProcessor {
       ProxyTopicPatternSubscriber subscriber = new ProxyTopicPatternSubscriber(obj, method, topicPatternAnnotation.referenceStrength(),
               eventService, topicPattern, pattern);
 
-      //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      if (topicPatternAnnotation.referenceStrength() == ReferenceStrength.WEAK) {
-         eventService.subscribe(pattern, subscriber);
-      } else {
-         eventService.subscribeStrongly(pattern, subscriber);
-      }
+      //See Issue #18
+      //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+      //Since two WeakReferences are not treated as one.  So this always has to be strong and we'll have to clean up occasionally.
+      eventService.subscribeStrongly(pattern, subscriber);
    }
 
    private static void process(EventTopicSubscriber topicAnnotation, Object obj, Method method) {
@@ -133,12 +131,10 @@ public class AnnotationProcessor {
       //Create proxy and subscribe
       ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), eventService, topic);
 
-      //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      if (topicAnnotation.referenceStrength() == ReferenceStrength.WEAK) {
-         eventService.subscribe(topic, subscriber);
-      } else {
-         eventService.subscribeStrongly(topic, subscriber);
-      }
+      //See Issue #18
+      //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+      //Since two WeakReferences are not treated as one.  So this always has to be strong and we'll have to clean up occasionally.
+      eventService.subscribeStrongly(topic, subscriber);
    }
 
    private static void process(EventSubscriber annotation, Object obj, Method method) {
@@ -164,17 +160,15 @@ public class AnnotationProcessor {
       //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
       BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), eventService, eventClass);
       if (annotation.exact()) {
-         if (annotation.referenceStrength() == ReferenceStrength.WEAK) {
-            eventService.subscribeExactly(eventClass, subscriber);
-         } else {
-            eventService.subscribeExactlyStrongly(eventClass, subscriber);
-         }
+         //See Issue #18
+         //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+         //Since two WeakReferences are not treated as one.  So this always has to be strong and we'll have to clean up occasionally.
+         eventService.subscribeExactlyStrongly(eventClass, subscriber);
       } else {
-         if (annotation.referenceStrength() == ReferenceStrength.WEAK) {
-            eventService.subscribe(eventClass, subscriber);
-         } else {
-            eventService.subscribeStrongly(eventClass, subscriber);
-         }
+         //See Issue #18
+         //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
+         //Since two WeakReferences are not treated as one.  So this always has to be strong and we'll have to clean up occasionally.
+         eventService.subscribeStrongly(eventClass, subscriber);
       }
    }
 

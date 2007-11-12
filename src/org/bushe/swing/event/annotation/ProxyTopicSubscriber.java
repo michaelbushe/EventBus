@@ -12,7 +12,7 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
    /**
     * Creates a proxy.  This does not subscribe it.
     *
-    * @param realSubscriber the subscriber that the proxy will call when an event is publixhed
+    * @param proxiedSubscriber the subscriber that the proxy will call when an event is published
     * @param subscriptionMethod the method the proxy will call, must have an Object as it's first and only parameter
     * @param referenceStrength if the subscription is weak, the reference from the proxy to the real subscriber should
     * be too
@@ -20,9 +20,9 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
     * exist
     * @param topic the topic to subscribe to, used for unsubscription only
     */
-   public ProxyTopicSubscriber(Object realSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
+   public ProxyTopicSubscriber(Object proxiedSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
            EventService es, String topic) {
-      super(realSubscriber, subscriptionMethod, referenceStrength, es);
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, es);
       this.topic = topic;
       Class[] params = subscriptionMethod.getParameterTypes();
       if (params == null || params.length != 2 || !String.class.equals(params[0]) || params[1].isPrimitive()) {
@@ -39,27 +39,23 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
    public void onEvent(String topic, Object data) {
       Object[] args = new Object[]{topic, data};
       try {
-         Object obj = realSubscriber;
-         subscriptionMethod.invoke(obj, args);
+         Object obj = getProxiedSubscriber();
+         if (obj == null) {
+            return;
+         }
+         getSubscriptionMethod().invoke(obj, args);
       } catch (IllegalAccessException e) {
-         throw new RuntimeException("IllegalAccessException when invoking annotated method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + realSubscriber + ", subscription Method=" + subscriptionMethod, e);
+         throw new RuntimeException("IllegalAccessException when invoking annotated method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod(), e);
       } catch (InvocationTargetException e) {
-         throw new RuntimeException("InvocationTargetException when invoking annotated method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + realSubscriber + ", subscription Method=" + subscriptionMethod, e);
+         throw new RuntimeException("InvocationTargetException when invoking annotated method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod(), e);
       }
    }
 
    protected void unsubscribe(String topic) {
-      eventService.unsubscribe(topic, this);
+      getEventService().unsubscribe(topic, this);
    }
 
-   public int hashCode() {
-      int result = super.hashCode();
-      if (topic != null) {
-         result = result^topic.hashCode();
-      }
-      return result;
-   }
-
+   @Override
    public boolean equals(Object obj) {
       if (obj instanceof ProxyTopicSubscriber) {
          if (!super.equals(obj)) {
@@ -82,13 +78,14 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
    }
 
 
+   @Override
    public String toString() {
       return "ProxyTopicSubscriber{" +
               "topic='" + topic + '\'' +
-              "realSubscriber=" + realSubscriber +
-              ", subscriptionMethod=" + subscriptionMethod +
-              ", referenceStrength=" + referenceStrength +
-              ", eventService=" + eventService +
+              "realSubscriber=" + getProxiedSubscriber() +
+              ", subscriptionMethod=" + getSubscriptionMethod() +
+              ", referenceStrength=" + getReferenceStrength() +
+              ", eventService=" + getEventService() +
               '}';
    }
 }

@@ -75,6 +75,7 @@ public class EventBus {
       globalEventService.publish(genericType, o);
    }
 
+
    /** @see EventService#subscribe(Class,EventSubscriber) */
    public static boolean subscribe(Class eventClass, EventSubscriber subscriber) {
       return globalEventService.subscribe(eventClass, subscriber);

@@ -1,4 +1,21 @@
+/**
+ * Copyright 2007 Bushe Enterprises, Inc., Hopkinton, MA, USA, www.bushe.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.bushe.swing.event;
+
+import org.bushe.swing.event.annotation.ReferenceStrength;
 
 /**
  * An interface that can be implemented when proxies are used for subscription.  When an unsubscribe method is called on
@@ -11,6 +28,7 @@ package org.bushe.swing.event;
  * @author Michael Bushe
  */
 public interface ProxySubscriber {
+
    /** @return the object this proxy is subscribed on behalf of */
    public Object getProxiedSubscriber();
 
@@ -19,4 +37,9 @@ public interface ProxySubscriber {
     * reference to it's proxied subscriber
     */
    public void proxyUnsubscribed();
+
+   /**
+    * @return the reference strength from this proxy to the proxied subscriber
+    */
+   public ReferenceStrength getReferenceStrength();  
 }

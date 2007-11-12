@@ -15,6 +15,7 @@
  */
 package org.bushe.swing.event;
 
+import java.awt.EventQueue;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.TypeVariable;
@@ -83,7 +84,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
@@ -102,18 +103,23 @@ public class TestEventBus extends TestCase {
       }
 
    }
+   
+   public static class SwingThreadTestEventSubscriber implements EventSubscriber {
+      public boolean wasOnSwingThread;
 
-   /**
-    * Since we are using the event bus from a non-awt thread, stay alive for a sec to give time for the EDT to start and
-    * post the message
-    */
-   private void waitForEDT() {
-      try {
-         Thread.sleep(1000);
-      } catch (Throwable e) {
+      public void onEvent(Object event) {
+         wasOnSwingThread = EventQueue.isDispatchThread();
       }
    }
 
+   public void testSwingThreading() {   
+      SwingThreadTestEventSubscriber sub = new SwingThreadTestEventSubscriber();
+      EventBus.subscribe(Number.class, sub);
+      EventBus.publish(1);
+      EDTUtil.waitForEDT();
+      assertTrue("Expected the EventBus to dispatch on the EDT", sub.wasOnSwingThread);
+   }
+   
    public void testSubscribeWeakly() {
       boolean actualReturn;
       EventSubscriber subscriber = createEventSubscriber(false);
@@ -127,7 +133,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
@@ -137,7 +143,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
@@ -214,14 +220,14 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       EventBus.unsubscribeVetoListener(getEventClass(), vetoListener);
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -241,14 +247,14 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       EventBus.unsubscribeVetoListener(getEventClass(), vetoListener);
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 2, testCounter.eventsHandledCount);
@@ -272,14 +278,14 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish("FooTopic", "Bar");
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 0 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
       EventBus.unsubscribeVetoListener("FooTopic", vetoListener);
       EventBus.publish("FooTopic", "Bar");
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -303,7 +309,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
@@ -315,7 +321,7 @@ public class TestEventBus extends TestCase {
       } catch (InterruptedException e) {
       }
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
@@ -338,7 +344,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish("FooTopic", "Bar");
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 0, testCounter.eventsHandledCount);
@@ -346,7 +352,7 @@ public class TestEventBus extends TestCase {
       vetoListener = null;
       System.gc();
       EventBus.publish("FooTopic", "Bar");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 1, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
@@ -373,7 +379,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
@@ -385,7 +391,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
@@ -413,7 +419,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish("FooTopic", "Foo");
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
@@ -425,7 +431,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish("FooTopic", "Foo");
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testPublish(total)", 0, testCounter.eventsHandledCount);
@@ -439,25 +445,25 @@ public class TestEventBus extends TestCase {
    public void testPublish() {
       try {
          EventBus.publish(null);
-         waitForEDT();
+         EDTUtil.waitForEDT();
          fail("publish(null) should have thrown exception");
       } catch (Exception e) {
       }
 
       try {
          EventBus.publish((String) null, createEvent());
-         waitForEDT();
+         EDTUtil.waitForEDT();
          fail("publish(null, x) should have thrown exception");
       } catch (Exception e) {
       }
 
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("testPublish(completed)", 0, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
 
       EventBus.publish("Foo", "Bar");
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("testPublish(completed)", 0, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
 
@@ -469,7 +475,7 @@ public class TestEventBus extends TestCase {
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
       EventBus.publish(createEvent());
-      waitForEDT();
+      EDTUtil.waitForEDT();
 
       //The test passes if 2 subscribers completed and 2 subscribers threw exception.
       assertEquals("testPublish(completed)", 4, testCounter.eventsHandledCount);
@@ -482,7 +488,7 @@ public class TestEventBus extends TestCase {
       ObjectEvent evt = new ObjectEvent("Foo", "Bar");
       assertEquals(evt.getEventObject(), "Bar");
       EventBus.publish(evt);
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("testPublish(completed)", 1, testCounter.eventsHandledCount);
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
    }

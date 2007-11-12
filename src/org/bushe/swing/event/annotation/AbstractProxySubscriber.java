@@ -1,75 +1,98 @@
 package org.bushe.swing.event.annotation;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
-import java.util.List;
 
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.ProxySubscriber;
-import org.bushe.swing.event.EventBus;
 
 /** Common base class for EventService Proxies */
 public abstract class AbstractProxySubscriber implements ProxySubscriber {
-   protected Object realSubscriber;
-   protected Method subscriptionMethod;
-   protected ReferenceStrength referenceStrength;
-   protected EventService eventService;
+   private Object proxiedSubscriber;
+   private Method subscriptionMethod;
+   private ReferenceStrength referenceStrength;
+   private EventService eventService;
 
-   protected AbstractProxySubscriber(Object realSubscriber, Method subscriptionMethod,
+   protected AbstractProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod,
            ReferenceStrength referenceStrength, EventService es) {
       this.referenceStrength = referenceStrength;
       eventService = es;
-      if (realSubscriber == null) {
+      if (proxiedSubscriber == null) {
          throw new IllegalArgumentException("The realSubscriber cannot be null when constructing a proxy subscriber.");
       }
       if (subscriptionMethod == null) {
          throw new IllegalArgumentException("The subscriptionMethod cannot be null when constructing a proxy subscriber.");
       }
-      //Always strong, see:
-      //https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      this.realSubscriber = realSubscriber;
+      if (ReferenceStrength.WEAK.equals(referenceStrength)) {
+         this.proxiedSubscriber = new WeakReference(proxiedSubscriber);
+      } else {
+         this.proxiedSubscriber = proxiedSubscriber;
+      }
       this.subscriptionMethod = subscriptionMethod;
    }
 
    /** @return the object this proxy is subscribed on behalf of */
    public Object getProxiedSubscriber() {
-      return realSubscriber;
+      if (proxiedSubscriber instanceof WeakReference) {
+         return ((WeakReference)proxiedSubscriber).get();
+      }
+      return proxiedSubscriber;
+   }
+   
+   /** @return the subscriptionMethod passed in the constructor */
+   public Method getSubscriptionMethod() {
+      return subscriptionMethod;
+   }
+
+   /** @return the EventService passed in the constructor */
+   public EventService getEventService() {
+      return eventService;
+   }
+
+   /** @return the ReferenceStregth passed in the constructor */
+   public ReferenceStrength getReferenceStrength() {
+      return referenceStrength;
    }
 
    /**
-    * Called by EventServices to inform the proxy that it is unsubscribed.  The ProxySubscriber should null the
-    * reference to it's proxied subscriber
+    * Called by EventServices to inform the proxy that it is unsubscribed.  
+    * The ProxySubscriber should perform any necessary cleanup.
+    * <p>
+    * <b>Overridding classes must call super.proxyUnsubscribed() or risk
+    * things not being cleanup up properly.</b>
     */
    public void proxyUnsubscribed() {
-      realSubscriber = null;
+      proxiedSubscriber = null;
    }
 
-   public int hashCode() {
-      int result = 0;
-      if (realSubscriber != null) {
-         result = realSubscriber.hashCode();
-      }
-      if (eventService != null) {
-         result = result^eventService.hashCode();
-      }
-      if (referenceStrength != null) {
-         result = result^referenceStrength.hashCode();
-      }
-      return result;
+   @Override
+   public final int hashCode() {
+      throw new RuntimeException("Proxy subscribers are not allowed in Hash " +
+              "Maps, since the underlying values use Weak References that" +
+              "may disappear, the calculations may not be the same in" +
+              "successive calls as required by hashCode.");
    }
 
+   @Override
    public boolean equals(Object obj) {
       if (obj instanceof AbstractProxySubscriber) {
          AbstractProxySubscriber bps = (AbstractProxySubscriber) obj;
-         if (realSubscriber != bps.realSubscriber) {
-            return false;
-         }
-         if (eventService != bps.eventService) {
-            return false;
-         }
          if (referenceStrength != bps.referenceStrength) {
             return false;
          }
          if (subscriptionMethod != bps.subscriptionMethod) {
+            return false;
+         }
+         if (ReferenceStrength.WEAK == referenceStrength) {
+            if (((WeakReference)proxiedSubscriber).get() != ((WeakReference)bps.proxiedSubscriber).get()) {
+               return false;
+            }            
+         } else {
+            if (proxiedSubscriber != bps.proxiedSubscriber) {
+               return false;
+            }
+         }
+         if (eventService != bps.eventService) {
             return false;
          }
          return true;
@@ -78,10 +101,11 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber {
       }
    }
 
-
+   @Override
    public String toString() {
       return "AbstractProxySubscriber{" +
-              "realSubscriber=" + realSubscriber +
+              "realSubscriber=" + (proxiedSubscriber instanceof WeakReference?
+                       ((WeakReference)proxiedSubscriber).get():proxiedSubscriber) +
               ", subscriptionMethod=" + subscriptionMethod +
               ", referenceStrength=" + referenceStrength +
               ", eventService=" + eventService +

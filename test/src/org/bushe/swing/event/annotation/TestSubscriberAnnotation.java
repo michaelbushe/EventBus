@@ -1,5 +1,7 @@
 package org.bushe.swing.event.annotation;
 
+import org.bushe.swing.event.EDTUtil;
+
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import org.bushe.swing.event.EventServiceLocator;
 
 public class TestSubscriberAnnotation extends TestCase {
 
+   @Override
    public void setUp() {
       EventBus.getGlobalEventService();
       EventBus.clearAllSubscribers();
@@ -32,7 +35,7 @@ public class TestSubscriberAnnotation extends TestCase {
       EventBus.publish(Color.BLUE);
       Collection subs = EventBus.getSubscribers(Color.class);
       assertEquals(0, subs.size());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(0, AnnotatedEventSubcriber.getTimesColorChanged());
       SwingUtilities.invokeAndWait(new Runnable() {
          public void run() {
@@ -40,28 +43,27 @@ public class TestSubscriberAnnotation extends TestCase {
          }
       });
 
-//@TODO WHy does this pass in IDEA, but fail on the command line?  The rest passes, strange.
-//      subs = EventBus.getSubscribers(Color.class);
-//      assertEquals(1, subs.size());
-//      EventBus.publish(Color.BLUE);
-//      waitForEDT();
-//      assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
+      subs = EventBus.getSubscribers(Color.class);
+      assertEquals(1, subs.size());
+      EventBus.publish(Color.BLUE);
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
    }
 
    public void testWeakReference() {
       AnnotatedEventSubcriber.setTimesColorChanged(0);
       AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
       EventBus.publish(Color.BLUE);
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(0, AnnotatedEventSubcriber.getTimesColorChanged());
       AnnotationProcessor.process(subscriber);
       EventBus.publish(Color.BLUE);
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
       subscriber = null;
       System.gc();
       EventBus.publish(Color.BLUE);
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
       System.gc();
    }
@@ -70,12 +72,12 @@ public class TestSubscriberAnnotation extends TestCase {
       AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
       AnnotationProcessor.process(subscriber);
       EventBus.publish(new ArrayList());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("doList", AnnotatedEventSubcriber.getLastCall());
       AnnotatedEventSubcriber.setLastCall(null);
       //it was subscribed to a list, though the method param is Collection, it shouldn't get called
       EventBus.publish(new HashSet());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(null, AnnotatedEventSubcriber.getLastCall());
    }
 
@@ -83,11 +85,11 @@ public class TestSubscriberAnnotation extends TestCase {
       AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
       AnnotationProcessor.process(subscriber);
       EventBus.publish(new JToggleButton());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("doJToggleButtonExactly", AnnotatedEventSubcriber.getLastCall());
       assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
       EventBus.publish(new JButton());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("doJToggleButtonExactly", AnnotatedEventSubcriber.getLastCall());
       assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
    }
@@ -105,12 +107,12 @@ public class TestSubscriberAnnotation extends TestCase {
       StrongAnnotatedEventSubscriber subscriber = new StrongAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
       EventBus.publish(new File("foo"));
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("doStrong", StrongAnnotatedEventSubscriber.getLastCall());
       assertEquals(1, StrongAnnotatedEventSubscriber.getTimesCalled());
       System.gc();
       EventBus.publish(new File("foo"));
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals("doStrong", StrongAnnotatedEventSubscriber.getLastCall());
       assertEquals(2, StrongAnnotatedEventSubscriber.getTimesCalled());
    }
@@ -119,6 +121,7 @@ public class TestSubscriberAnnotation extends TestCase {
       AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
       AnnotationProcessor.process(subscriber);
       EventBus.publish("File.Open", new File("foo"));
+      EDTUtil.waitForEDT();
       assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
       EventBus.publish("File.Fooooooo", new File("foo"));
       assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
@@ -143,13 +146,26 @@ public class TestSubscriberAnnotation extends TestCase {
       System.out.println(subscriber);
    }
 
+   public void testIssue15MultipleAnnotatedSubscribers() {
+      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotationProcessor.process(subscriber);
+      AnotherAnnotatedEventSubcriber anotherAubscriber = new AnotherAnnotatedEventSubcriber();
+      AnnotationProcessor.process(anotherAubscriber);
+      EventBus.publish(new ArrayList());
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnotherAnnotatedEventSubcriber.getTimesCalled());
+      EDTUtil.waitForEDT();
+      System.out.println(subscriber);
+      System.out.println(anotherAubscriber);
+   }
+
    public void testAnotherIssue15MultipleAnnotatedSubscribers() {
       EventBus.clearAllSubscribers();
       System.gc();
       Issue15Subscriber i15s1 = new Issue15Subscriber();
       Issue15Subscriber2 i15s2 = new Issue15Subscriber2();
       EventBus.publish(new ArrayList());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(1, i15s2.getTimesCalled());
       assertEquals(1, i15s1.getTimesCalled());
       //Ensure the garbage collector can't clean up the refs
@@ -159,7 +175,7 @@ public class TestSubscriberAnnotation extends TestCase {
 
    //This one works with the DoubleAnnotatedEventSubcriber and AnotherDoubleAnnotatedEventSubcriber (and Single),
    //but fails with AnnotatedEventSubcriber and AnotherAnnotatedEventSubcriber
-   public void testIssue15MultipleAnnotatedSubscribers() {
+   public void testYetAnotherIssue15MultipleAnnotatedSubscribers() {
       EventBus.clearAllSubscribers();
       System.gc();
       DoubleAnnotatedEventSubcriber subscriber = new DoubleAnnotatedEventSubcriber();
@@ -171,7 +187,7 @@ public class TestSubscriberAnnotation extends TestCase {
       AnotherDoubleAnnotatedEventSubcriber secondAnotherSubscriber = new AnotherDoubleAnnotatedEventSubcriber();
       AnnotationProcessor.process(secondAnotherSubscriber);
       EventBus.publish(new ArrayList());
-      waitForEDT();
+      EDTUtil.waitForEDT();
       assertEquals(2, AnotherDoubleAnnotatedEventSubcriber.getTimesCalled());
       assertEquals(2, DoubleAnnotatedEventSubcriber.getTimesCalled());
       //Ensure the garbage collector can't clean up the refs
@@ -191,17 +207,5 @@ public class TestSubscriberAnnotation extends TestCase {
 //         fail("Should get an IllegalArgumentException");
 //      } catch (Exception ex) {
 //      }
-//   }
-
-   /**
-    * Since we are using the event bus from a non-awt thread, stay alive for a sec to give time for the EDT to start and
-    * post the message
-    */
-   private void waitForEDT() {
-      try {
-         Thread.sleep(1000);
-      } catch (Throwable e) {
-      }
-   }
-
+//   }      
 }
