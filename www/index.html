@@ -25,6 +25,8 @@
           <h1>Event Bus</h1>
           <h2>EventBus News</h2>
           <ul>
+          	<li><i>27-Nov-2007</i>EventBus 1.2 beta released. The 1.2 beta release provides flexible logging - give it a whirl in your app and please send feedback.  You don't need anything but EventBus.jar, but if you want to use log4j or any other logger support by Apache Commons Logging, then include the common-logging-* jars and 
+          		the jar of the logger of your choice (such as log4j.  Logging is a great way to debug event issues which are often hard to track down due to their decoupled nature.  The EventBus provides lots of DEBUG output so you can see who is subscribed to what.</li>
           	<li><i>11-Nov-2007</i>EventBus 1.1 released. <b>Important:</b> All users of 1.0 should upgrade to version 1.1, which contains a Swing threading bug fix and production Annotation implementation.  If you are using release 1.0 for JDK 1.4, upgrade to 1.0.1 for JDK 1.4 (below).</li>
           	<li><i>6-Sept-2007</i> The Event Bus has released 1.1 beta2, adding generics support and fixing an Annotation issues.  This is a solid beta, though some of the generics APIs are not yet complete (vetos, unsubscribes).</li>
           	<li><i>29-Apr-2007</i> The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable EventBus implementation.</li>
@@ -69,12 +71,17 @@
             know about the bus, not each subscriber and publisher that they may 
             be interested in.  The EventBus differs from JMS since it meant to be used by a single JVM. 
           <h2>Download Release Snapshots</h2>
+          The links below should take you to the proper folder.  If they don't work, use the Documents & Files link on the sidebar.
+
           <h3>Production Release</h3>
-          <p>The latest beta release is 1.1.  This release is compiled in JDK 1.6, with a JDK 1.4 binary available.  
-          <p><a href="EventBus.jar">EventBus-1.1.jar</a> 
-          <p><a href="EventBus-src.jar">EventBus-src-1.1.jar</a> 
-          <p><a href="EventBus-doc.jar">EventBus-doc-1.1.jar</a> 
-          <p><a href="EventBus-all.jar">EventBus-all-1.1.jar</a> 
+          <p>The stable release is 1.1.  This release works with JDK 1.5 and later.  
+          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8339&expandFolder=8339&folderID=8423">1.1 Stable Release Folder</a>
+          
+          <h3>Beta Release</h3>
+          <p>The latest beta release is 1.2.  This release works with JDK 1.5 and later.  
+          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8423&expandFolder=8423&folderID=0">1.2 Beta Release Folder</a>
+           The logging jars are provided for convenience and are the versions used to test against.
+           
           <h3>Production Release for JDK 1.4</h3>
           <p>If you are using JDK 1.4, you must use release 1.0.1.  These jars are compiled with JDK 1.4.
           <p><a href="EventBus-1.0.1ForJDK1.4.jar">EventBus.jar</a> 

@@ -21,7 +21,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -30,10 +29,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
+import org.bushe.swing.event.Logger.Level;
 import org.bushe.swing.event.annotation.ReferenceStrength;
 import org.bushe.swing.exception.SwingException;
 
@@ -70,12 +68,11 @@ import org.bushe.swing.exception.SwingException;
  * <p/>
  * <h2>Logging</h2> 
  * <p/>
+ * All logging goes through the {@link Logger}.  The Logger is configurable and supports multiple logging systems.
+ * <p/>
  * Exceptions are logged by default, override {@link #handleException(String,Object,String,Object,Throwable,
  * StackTraceElement[],String)} to handleException exceptions in another way.  Each call to a subscriber is wrapped in
  * a try block to ensure one listener does not interfere with another.
- * <p/>
- * Fine logging can be turned via java.util.logging using the name "org.bushe.swing.event.ThreadSafeEventService".  This
- * aids in debugging which subscription and publication issues.
  * <p/>
  * <h2>Cleanup of Stale WeakReferences and Stale Annotation Proxies</h2> 
  * <p/>
@@ -136,7 +133,6 @@ import org.bushe.swing.exception.SwingException;
  * <p/>
  * 
  * @author Michael Bushe michael@bushe.com
- * @todo perhaps publication should double-check to see if a subscriber is still subscribed
  * @todo (param) a JMS-like selector (can be done in base classes by implements like a commons filter
  * @todo (param) register a Comparator to sort subscriber's calling order - for a class or topic
  * @see EventService for a complete description of the API
@@ -148,6 +144,8 @@ public class ThreadSafeEventService implements EventService {
 
    protected static final Logger LOG = Logger.getLogger(EventService.class.getName());
 
+   //Making these generic collections is a bad idea, it doesn't compile since it's better to have all the maps
+   //go through the same set of code to do all the real publish and subscribe work
    private Map subscribersByEventType = new HashMap();
    private Map subscribersByEventClass = new HashMap();
    private Map subscribersByExactEventClass = new HashMap();
@@ -157,19 +155,19 @@ public class ThreadSafeEventService implements EventService {
    private Map vetoListenersByExactClass = new HashMap();
    private Map vetoListenersByTopic = new HashMap();
    private Map vetoListenersByTopicPattern = new HashMap();
-   private Object listenerLock = new Object();
-   private Object cacheLock = new Object();
+   private final Object listenerLock = new Object();
+   private final Object cacheLock = new Object();
    private Long timeThresholdForEventTimingEventPublication;
-   private Map cacheByEvent = new HashMap/*<Class, LinkedList>*/();
+   private Map<Class, List> cacheByEvent = new HashMap<Class, List>();
    private int defaultCacheSizePerClassOrTopic = 0;
-   private Map cacheSizesForEventClass;
-   private Map rawCacheSizesForEventClass;
+   private Map<Class, Integer> cacheSizesForEventClass;
+   private Map<Class, Integer> rawCacheSizesForEventClass;
    private boolean rawCacheSizesForEventClassChanged;
-   private Map cacheByTopic = new HashMap/*<Class, LinkedList>*/();
-   private Map cacheSizesForTopic;
-   private Map rawCacheSizesForTopic;
+   private Map<String, List> cacheByTopic = new HashMap<String, List>();
+   private Map<String, Integer> cacheSizesForTopic;
+   private Map<String, Integer> rawCacheSizesForTopic;
    private boolean rawCacheSizesForTopicChanged;
-   private Map rawCacheSizesForPattern;
+   private Map<Pattern, Integer> rawCacheSizesForPattern;
    private boolean rawCacheSizesForPatternChanged;
    private Integer cleanupStartThreshhold;
    private Integer cleanupStopThreshold;
@@ -201,7 +199,7 @@ public class ThreadSafeEventService implements EventService {
     * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * EventSubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the SubscriberTimingEvent internally and call the
-    * protected subscribeTiming() method when they occur.  This logs a warning to a java.util.logging logger by
+    * protected subscribeTiming() method when they occur.  This logs a warning to the {@link Logger} by
     * default.
     */
    public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication, boolean subscribeTimingEventsInternally) {
@@ -229,7 +227,7 @@ public class ThreadSafeEventService implements EventService {
     * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * SubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the SubscriberTimingEvent internally and call the
-    * protected subscribeTiming() method when they occur.  This logs a warning to a java.util.logging logger by
+    * protected subscribeTiming() method when they occur.  This logs a warning to the {@link Logger} by
     * default.
     * @param cleanupStartThreshold see class javadoc.
     * @param cleanupStopThreshold see class javadoc.
@@ -283,7 +281,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Sets the threshold above which cleanup starts.  See the class javadoc on cleanup.
-    * @param the threshold at which cleanup starts
+    * @param cleanupStartThreshhold threshold at which cleanup starts
     */
    public void setCleanupStartThreshhold(Integer cleanupStartThreshhold) {
       synchronized (listenerLock) {
@@ -293,7 +291,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Gets the threshold below which cleanup stops.  See the class javadoc on cleanup.
-    * @param the threshold at which cleanup stops (it may start again)
+    * @return threshold at which cleanup stops (it may start again)
     */
    public Integer getCleanupStopThreshold() {
       synchronized (listenerLock) {
@@ -303,7 +301,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Sets the threshold below which cleanup stops.  See the class javadoc on cleanup.
-    * @param the threshold at which cleanup stops (it may start again).  
+    * @param cleanupStopThreshold threshold at which cleanup stops (it may start again).
     */
    public void setCleanupStopThreshold(Integer cleanupStopThreshold) {
       synchronized (listenerLock) {
@@ -313,7 +311,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Get the cleanup interval. See the class javadoc on cleanup.
-    * @param the interval in milliseconds between cleanup runs.  
+    * @return interval in milliseconds between cleanup runs.
     */
    public Long getCleanupPeriodMS() {
       synchronized (listenerLock) {
@@ -323,8 +321,8 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Sets the cleanup interval. See the class javadoc on cleanup.
-    * @param the interval in milliseconds between cleanup runs.  Passing null 
-    * stops cleanup.  
+    * @param cleanupPeriodMS interval in milliseconds between cleanup runs.  Passing null 
+    * stops cleanup.
     */
    public void setCleanupPeriodMS(Long cleanupPeriodMS) {
       synchronized (listenerLock) {
@@ -340,15 +338,15 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by class, class:" + cl + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by class, class:" + cl + ", subscriber:" + eh);
       }
-      return subscribe(cl, subscribersByEventClass, new WeakReference(eh));
+      return subscribe(cl, subscribersByEventClass, new WeakReference<EventSubscriber>(eh));
    }
 
    /** @see EventService#subscribe(java.lang.reflect.Type, EventSubscriber) */
    public boolean subscribe(Type type, EventSubscriber eh) {
-      return subscribe(type, subscribersByEventType, new WeakReference(eh));
+      return subscribe(type, subscribersByEventType, new WeakReference<EventSubscriber>(eh));
    }
 
    /** @see EventService#subscribeExactly(Class,EventSubscriber) */
@@ -359,10 +357,10 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by class, class:" + cl + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by class, class:" + cl + ", subscriber:" + eh);
       }
-      return subscribe(cl, subscribersByExactEventClass, new WeakReference(eh));
+      return subscribe(cl, subscribersByExactEventClass, new WeakReference<EventSubscriber>(eh));
    }
 
    /** @see EventService#subscribe(String,EventTopicSubscriber) */
@@ -373,10 +371,10 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event topic subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by topic name, name:" + topic + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by topic name, name:" + topic + ", subscriber:" + eh);
       }
-      return subscribe(topic, subscribersByTopic, new WeakReference(eh));
+      return subscribe(topic, subscribersByTopic, new WeakReference<EventTopicSubscriber>(eh));
    }
 
    /** @see EventService#subscribe(Pattern,EventTopicSubscriber) */
@@ -387,16 +385,16 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
       }
-      return subscribe(pat, subscribersByTopicPattern, new WeakReference(eh));
+      return subscribe(pat, subscribersByTopicPattern, new WeakReference<EventTopicSubscriber>(eh));
    }
 
    /** @see EventService#subscribeStrongly(Class,EventSubscriber) */
    public boolean subscribeStrongly(Class cl, EventSubscriber eh) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing weakly by class, class:" + cl + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing weakly by class, class:" + cl + ", subscriber:" + eh);
       }
       if (eh == null) {
          throw new IllegalArgumentException("Subscriber cannot be null.");
@@ -412,16 +410,16 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by class, class:" + cl + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by class, class:" + cl + ", subscriber:" + eh);
       }
       return subscribe(cl, subscribersByExactEventClass, eh);
    }
 
    /** @see EventService#subscribeStrongly(String,EventTopicSubscriber) */
    public boolean subscribeStrongly(String name, EventTopicSubscriber eh) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing weakly by topic name, name:" + name + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing weakly by topic name, name:" + name + ", subscriber:" + eh);
       }
       if (eh == null) {
          throw new IllegalArgumentException("Subscriber cannot be null.");
@@ -437,8 +435,8 @@ public class ThreadSafeEventService implements EventService {
       if (eh == null) {
          throw new IllegalArgumentException("Event subscriber must not be null");
       }
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
       }
       return subscribe(pat, subscribersByTopicPattern, eh);
    }
@@ -479,7 +477,7 @@ public class ThreadSafeEventService implements EventService {
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
       }
-      return subscribeVetoListener(eventClass, vetoListenersByClass, new WeakReference(vetoListener));
+      return subscribeVetoListener(eventClass, vetoListenersByClass, new WeakReference<VetoEventListener>(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListenerExactly(Class,VetoEventListener) */
@@ -490,7 +488,7 @@ public class ThreadSafeEventService implements EventService {
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
       }
-      return subscribeVetoListener(eventClass, vetoListenersByExactClass, new WeakReference(vetoListener));
+      return subscribeVetoListener(eventClass, vetoListenersByExactClass, new WeakReference<VetoEventListener>(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListener(String,VetoTopicEventListener) */
@@ -501,7 +499,7 @@ public class ThreadSafeEventService implements EventService {
       if (topic == null) {
          throw new IllegalArgumentException("topic cannot be null.");
       }
-      return subscribeVetoListener(topic, vetoListenersByTopic, new WeakReference(vetoListener));
+      return subscribeVetoListener(topic, vetoListenersByTopic, new WeakReference<VetoTopicEventListener>(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListener(Pattern,VetoTopicEventListener) */
@@ -512,7 +510,7 @@ public class ThreadSafeEventService implements EventService {
       if (topicPattern == null) {
          throw new IllegalArgumentException("topicPattern cannot be null.");
       }
-      return subscribeVetoListener(topicPattern, vetoListenersByTopicPattern, new WeakReference(vetoListener));
+      return subscribeVetoListener(topicPattern, vetoListenersByTopicPattern, new WeakReference<VetoTopicEventListener>(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListenerStrongly(Class,VetoEventListener) */
@@ -563,17 +561,17 @@ public class ThreadSafeEventService implements EventService {
     * All veto subscriptions methods call this method.  Extending classes only have to override this method to subscribe
     * all veto subscriptions.
     *
-    * @param o the topic, Pattern, or event class to subsribe to
+    * @param subscription the topic, Pattern, or event class to subsribe to
     * @param vetoListenerMap the internal map of veto listeners to use (by topic of class)
-    * @param vl the veto listener to subscribe, may be a VetoEventListener or a WeakReference to one
+    * @param vetoListener the veto listener to subscribe, may be a VetoEventListener or a WeakReference to one
     *
     * @return boolean if the veto listener is subscribed (was not subscribed).
     *
     * @throws IllegalArgumentException if vl or o is null
     */
    protected boolean subscribeVetoListener(final Object subscription, final Map vetoListenerMap, final Object vetoListener) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("subscribeVetoListener(" + subscription + "," + vetoListener + ")");
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("subscribeVetoListener(" + subscription + "," + vetoListener + ")");
       }
       if (vetoListener == null) {
          throw new IllegalArgumentException("Can't subscribe null veto listener to " + subscription);
@@ -591,7 +589,7 @@ public class ThreadSafeEventService implements EventService {
     * <p/>
     * Overriding this method is only for the adventurous.  This basically gives you just enough rope to hang yourself.
     *
-    * @param o the topic String or event Class to subscribe to
+    * @param topicOrClass the topic String or event Class to subscribe to
     * @param subscriberMap the internal map of subscribers to use (by topic or class)
     * @param subscriber the EventSubscriber or EventTopicSubscriber to subscribe, or a WeakReference to either
     *
@@ -599,7 +597,7 @@ public class ThreadSafeEventService implements EventService {
     *
     * @throws IllegalArgumentException if subscriber or topicOrClass is null
     */
-   protected boolean subscribe(final Object topicOrClass, final Map subscriberMap, final Object subscriber) {
+   protected boolean subscribe(final Object topicOrClass, final Map<Object, Object> subscriberMap, final Object subscriber) {
       if (topicOrClass == null) {
          throw new IllegalArgumentException("Can't subscribe to null.");
       }
@@ -613,8 +611,8 @@ public class ThreadSafeEventService implements EventService {
       synchronized (listenerLock) {
          List currentSubscribers = (List) subscriberMap.get(topicOrClass);
          if (currentSubscribers == null) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Creating new subscriber map for :" + topicOrClass);
+            if (LOG.isLoggable(Level.DEBUG)) {
+               LOG.debug("Creating new subscriber map for :" + topicOrClass);
             }
             currentSubscribers = new ArrayList();
             subscriberMap.put(topicOrClass, currentSubscribers);
@@ -724,14 +722,14 @@ public class ThreadSafeEventService implements EventService {
     *
     * @param o the topic or event class to unsubsribe from
     * @param subscriberMap the map of subscribers to use (by topic of class)
-    * @param eh the subscriber to unsubscribe, either an EventSubscriber or an EventTopicSubscriber, or a WeakReference
+    * @param subscriber the subscriber to unsubscribe, either an EventSubscriber or an EventTopicSubscriber, or a WeakReference
     * to either
     *
     * @return boolean if the subscriber is unsubscribed (was subscribed).
     */
    protected boolean unsubscribe(Object o, Map subscriberMap, Object subscriber) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("unsubscribe(" + o + "," + subscriber + ")");
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("unsubscribe(" + o + "," + subscriber + ")");
       }
       if (o == null) {
          throw new IllegalArgumentException("Can't unsubscribe to null.");
@@ -808,8 +806,8 @@ public class ThreadSafeEventService implements EventService {
     * @return boolean if the veto listener is unsubscribed (was subscribed).
     */
    protected boolean unsubscribeVetoListener(Object o, Map vetoListenerMap, Object vl) {
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("unsubscribeVetoListener(" + o + "," + vl + ")");
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("unsubscribeVetoListener(" + o + "," + vl + ")");
       }
       if (o == null) {
          throw new IllegalArgumentException("Can't unsubscribe veto listener to null.");
@@ -866,11 +864,11 @@ public class ThreadSafeEventService implements EventService {
       }
 
       //topic or event
-      if (LOG.isLoggable(Level.FINE)) {
+      if (LOG.isLoggable(Level.DEBUG)) {
          if (event != null) {
-            LOG.fine("Publishing event: class=" + event.getClass() + ", event=" + event);
+            LOG.debug("Publishing event: class=" + event.getClass() + ", event=" + event);
          } else if (topic != null) {
-            LOG.fine("Publishing event: topic=" + topic + ", eventObj=" + eventObj);
+            LOG.debug("Publishing event: topic=" + topic + ", eventObj=" + eventObj);
          }
       }
 
@@ -896,8 +894,8 @@ public class ThreadSafeEventService implements EventService {
                if (shouldVeto) {
                   handleVeto(vl, event, vtl, topic, eventObj);
                   checkTimeLimit(start, event, null, vl);
-                  if (LOG.isLoggable(Level.FINE)) {
-                     LOG.fine("Publication vetoed. Event:" + event + ", Topic:" + topic + ", veto subscriber:" + vl);
+                  if (LOG.isLoggable(Level.DEBUG)) {
+                     LOG.debug("Publication vetoed. Event:" + event + ", Topic:" + topic + ", veto subscriber:" + vl);
                   }
                   return;
                }
@@ -911,14 +909,14 @@ public class ThreadSafeEventService implements EventService {
       addEventToCache(event, topic, eventObj);
 
       if (subscribers == null || subscribers.isEmpty()) {
-         if (LOG.isLoggable(Level.FINE)) {
-            LOG.fine("No subscribers for event or topic. Event:" + event + ", Topic:" + topic);
+         if (LOG.isLoggable(Level.DEBUG)) {
+            LOG.debug("No subscribers for event or topic. Event:" + event + ", Topic:" + topic);
          }
          return;
       }
 
-      if (LOG.isLoggable(Level.FINE)) {
-         LOG.fine("Publishing to subscribers :" + subscribers);
+      if (LOG.isLoggable(Level.DEBUG)) {
+         LOG.debug("Publishing to subscribers :" + subscribers);
       }
 
       for (int i = 0; i < subscribers.size(); i++) {
@@ -1067,8 +1065,8 @@ public class ThreadSafeEventService implements EventService {
          for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
             Pattern patternKey = (Pattern) iterator.next();
             if (patternKey.matcher(topic).matches()) {
-               if (LOG.isLoggable(Level.FINE)) {
-                  LOG.fine("Pattern " + patternKey + " matched topic name " + topic);
+               if (LOG.isLoggable(Level.DEBUG)) {
+                  LOG.debug("Pattern " + patternKey + " matched topic name " + topic);
                }
                Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
                result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
@@ -1143,8 +1141,8 @@ public class ThreadSafeEventService implements EventService {
       for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
          Class cl = (Class) iterator.next();
          if (cl.isAssignableFrom(eventClass)) {
-            if (LOG.isLoggable(Level.FINE)) {
-               LOG.fine("Hierachical match " + cl + " matched event of class " + eventClass);
+            if (LOG.isLoggable(Level.DEBUG)) {
+               LOG.debug("Hierachical match " + cl + " matched event of class " + eventClass);
             }
             Collection subscribers = (Collection) classMap.get(cl);
             result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
@@ -1216,8 +1214,8 @@ public class ThreadSafeEventService implements EventService {
                   }
                }
                if (parameterArgsMatch) {
-                  if (LOG.isLoggable(Level.FINE)) {
-                     LOG.fine("Exact parameterized subscriberType match for event subscriberType " + eventType);
+                  if (LOG.isLoggable(Level.DEBUG)) {
+                     LOG.debug("Exact parameterized subscriberType match for event subscriberType " + eventType);
                   }
                   Collection subscribers = (Collection) typeMap.get(subscriberType);
                   if (subscribers != null) {
@@ -1268,7 +1266,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    protected void subscribeTiming(SubscriberTimingEvent event) {
-      LOG.log(Level.WARNING, event + "");
+      LOG.log(Level.WARN, event + "");
    }
 
    /**
@@ -1283,11 +1281,11 @@ public class ThreadSafeEventService implements EventService {
    protected void handleVeto(VetoEventListener vl, Object event,
            VetoTopicEventListener vtl, String topic, Object eventObj) {
       //@todo register object that want to know about the veto and notify them of the veto
-      if (LOG.isLoggable(Level.FINE)) {
+      if (LOG.isLoggable(Level.DEBUG)) {
          if (event != null) {
-            LOG.fine("Vetoing event: class=" + event.getClass() + ", event=" + event + ", vetoer:" + vl);
+            LOG.debug("Vetoing event: class=" + event.getClass() + ", event=" + event + ", vetoer:" + vl);
          } else {
-            LOG.fine("Vetoing event: topic=" + topic + ", eventObj=" + eventObj + ", vetoer:" + vtl);
+            LOG.debug("Vetoing event: topic=" + topic + ", eventObj=" + eventObj + ", vetoer:" + vtl);
          }
       }
    }
@@ -1762,7 +1760,7 @@ public class ThreadSafeEventService implements EventService {
               + ", event=" + eventString + ", topic=" + topic + ", eventObj=" + eventObj;
       SwingException clientEx = new SwingException(contextMsg, e, callingStack);
       String msg = "Exception thrown by;" + sourceString;
-      LOG.log(Level.WARNING, msg, clientEx);
+      LOG.log(Level.WARN, msg, clientEx);
    }
 
    /**
@@ -1857,9 +1855,11 @@ public class ThreadSafeEventService implements EventService {
                this.cancel();
                cleanupTimer = null;
                cleanupTimerTask = null;
+               LOG.debug("Cancelled scheduled weak reference and proxy cleanup.");
                ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.UNDER_STOP_THRESHOLD_CLEANING_CANCELLED, weakRefPlusProxySubscriberCount, null));
                return;
             }
+            LOG.debug("Starting a weak reference and proxy cleanup.");
             ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.OVER_STOP_THRESHOLD_CLEANING_BEGUN, weakRefPlusProxySubscriberCount, null));               
             List<Map> allSubscriberMaps = new ArrayList<Map>();
             allSubscriberMaps.add(subscribersByEventType);

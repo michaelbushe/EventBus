@@ -50,6 +50,10 @@ EventBus Build
        <echo message="classes = ${classes}"/>
        <javac srcdir="${src}" destdir="${classes}" debug="false" source="1.5" target="1.5">
          <classpath path="./lib/jdic.jar"/>
+         <classpath path="./lib/commons-logging-1.1.jar"/>
+         <classpath path="./lib/commons-logging-adapters-1.1.jar"/>
+         <classpath path="./lib/commons-logging-api-1.1.jar"/>
+         <classpath path="./lib/log4j-1.2.15.jar"/>
        </javac>
     </target>
 

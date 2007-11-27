@@ -1,5 +1,7 @@
 package org.bushe.swing.event;
 
+import javax.swing.JComponent;
+
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
@@ -26,5 +28,12 @@ public class TestEventBusServiceClass extends TestCase {
       } catch (Throwable ex) {
          System.out.println("Got ex");
       }
+   }
+
+   public void testGeneric() {
+      EventBus.subscribe(String.class, new EventSubscriber<JComponent>() {
+         public void onEvent(JComponent event) {
+         }
+      });
    }
 }

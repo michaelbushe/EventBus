@@ -328,18 +328,23 @@ class HelloEventBus {
 
 <h2>Miscellany</h2>
 
-<p>The EventBus uses Apache Commons Logging so it will integrate with your logging framework - log4j, java.util.logging,
-   etc.
-   The hope was to have the EventBus not dependent on any other jar, but we felt this tradeoff was worth it.
+<p>The EventBus has very flexible logging options.  Logging is a good tool to use to track down the source of problem.
+	 It's common to think - the EventBus is not publishing right!  But it probably, almost certainly is doing exactly what
+	 you told it to do.  The EventBus has numerous DEBUG logging statements to help you determine who is subscribed to what.
+	 The EventBus.jar can be deployed alone, in which case java.util.logging is used by default.  It can also be
+	 deployed with other logging systems, such as log4j, through the use of Apache Commons Logging.  If you application
+	 already has logging involved, the EventBus will likely just work with it.  See the Apache Commons Logging site for
+	 more information.
+   
 <p>A few of exception handling classes are included in the EventBus distributions. They don't have anything
    to do with the EventBus per se, but I simply didn't want to create another project for them. :-) SwingExcpetion
    is a handy exception when invokeLater() is called since the call stack that calls the invokeLater() can be captured
    (and is captured by the SwingEventService).
 
    The AWTExceptionHandler can plug into Swing to provide centralized handling of exceptions. Also included is a a
-   dialog
-   that handles excpetions, including emailing exceptions and copying them to the clipboard. It is a particularly handy
-   when using the EventBus from multiple threads. When using the email feature of the dialog jdic.jar is required on the
-   classpath and the associated binary (such as jdic.dll) are required in the java.library.path.
+   dialog that handles exceptions, including emailing exceptions and copying them to the clipboard via jdic. It is a particularly 
+   handy when using the EventBus from multiple threads. When using the email feature of the dialog jdic.jar is required on the
+   classpath and the associated binary (such as jdic.dll) are required in the java.library.path.  If you are not using these
+   dialogs, you don't need to deploy jdic.jar with the EventBus.jar. 
 </body>
 </html>

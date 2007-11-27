@@ -16,9 +16,7 @@
 package org.bushe.swing.event;
 
 import java.util.List;
-import java.util.logging.Level;
 import javax.swing.SwingUtilities;
-
 
 /**
  * An {@link EventService} implementation for Swing.
@@ -57,8 +55,8 @@ public class SwingEventService extends ThreadSafeEventService {
     * The service will pulish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * SubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the EventSubscriberTimingEvent internally and call the
-    * protected {@link #subscribeTiming(SubscriberTimingEvent)} method when they occur.  This logs a warning to a
-    * java.util.logging logger by default.
+    * protected {@link #subscribeTiming(SubscriberTimingEvent)} method when they occur.  This logs a warning to the
+    * {@link Logger} logger by default.
     *
     * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and
     * subscribeTimingEventsInternally is true.
@@ -82,8 +80,8 @@ public class SwingEventService extends ThreadSafeEventService {
          //Check the params first so that this thread can get the exception thrown
          SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-               if (LOG.isLoggable(Level.FINE)) {
-                  LOG.fine("publish(" + event + "," + topic + "," + eventObj
+               if (LOG.isLoggable(Logger.Level.DEBUG)) {
+                  LOG.debug("publish(" + event + "," + topic + "," + eventObj
                           + "), called from non-EDT Thread:" + callingStack);
                }
                SwingEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);

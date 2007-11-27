@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.lang.reflect.Type;
 
-
 /**
  * The core interface.  An EventService provides publish/subscribe services to a single JVM using Class-based and
  * String-based (i.e. "topic") publications and subscriptions.
