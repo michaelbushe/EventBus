@@ -23,7 +23,7 @@ import javax.swing.ImageIcon;
  * <p/>
  *
  * @author Michael Bushe michael@bushe.com
- * @see EventServiceAction for further documentation
+ * @see EventServiceAction
  */
 public class EventBusAction extends EventServiceAction {
    public EventBusAction() {

@@ -12,19 +12,21 @@ import org.bushe.swing.event.EventServiceLocator;
  * <p/>
  * This class makes the EventService annotations "come alive."  This can be used in code like so:
  * <pre>
+ * <code>
  * public class MyAppController {
  *   public MyAppController {
  *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
- *   @EventSubscriber
+ *   &#64;EventSubscriber
  *   public void onAppStartingEvent(AppStartingEvent appStartingEvent) {
  *      //do something
  *   }
- *   @EventSubscriber
+ *   &#64;EventSubscriber
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {
  *      //do something
  *   }
  * }
+ * </code>
  * </pre>
  * <p/>
  * This class can be leveraged in outside of source code in other ways in which Annoations are used: <ul> <li>In an

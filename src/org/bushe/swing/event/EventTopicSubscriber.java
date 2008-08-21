@@ -20,7 +20,7 @@ package org.bushe.swing.event;
  *
  * @author Michael Bushe michael@bushe.com
  */
-public interface EventTopicSubscriber {
+public interface EventTopicSubscriber<T> {
 
    /**
     * Handle an event published on a topic.
@@ -34,5 +34,5 @@ public interface EventTopicSubscriber {
     * @param topic the name of the topic published on
     * @param data the data object published on the topic
     */
-   public void onEvent(String topic, Object data);
+   public void onEvent(String topic, T data);
 }

@@ -6,7 +6,7 @@ import java.util.Date;
  * @author Michael Bushe
  * @since Nov 19, 2005 11:01:06 PM
  */
-class SubscriberForTest implements EventSubscriber {
+public class SubscriberForTest implements EventSubscriber {
    private boolean throwException;
    private Long waitTime;
    private EBTestCounter testDefaultEventService;

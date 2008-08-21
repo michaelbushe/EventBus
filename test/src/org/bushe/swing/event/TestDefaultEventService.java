@@ -29,8 +29,8 @@ import javax.swing.JComponent;
 
 import junit.framework.TestCase;
 
-import org.bushe.swing.event.generics.TypeReference;
 import org.bushe.swing.event.generics.DataRequestEvent;
+import org.bushe.swing.event.generics.TypeReference;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestDefaultEventService extends TestCase {

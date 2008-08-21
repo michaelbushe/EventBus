@@ -18,8 +18,8 @@ package org.bushe.swing.event;
 /**
  * A interface implemented by a Swing Container to supply an EventService local to it's child components.
  * <p/>
- * A Container EventService is, unlike the {@link EventBus}, an {@link EventService} that is container specific, in
- * other words it is shared only among components within a container.  The only difference between a Container
+ * A Container EventService is an {@link EventService} which, unlike the {@link EventBus}, is specific to a container,
+ * in other words, it is shared only among components within a Swing Container.  The only difference between a Container
  * EventService and any other EventService is that it's found and used by the children of a container.  The API and
  * available implementations all work the same as any other EventService.
  * <p/>
@@ -30,9 +30,10 @@ package org.bushe.swing.event;
  * errors.  The Form's components don't have to know about the form, or the model or the validator.  They just publish
  * events on their Container's EventService, which they can find by using a {@link ContainerEventServiceFinder}.
  * <p/>
- * This class does not ever have to be implemented.  The ContainerEventServiceFinder will create a ContainerEventService
- * on JRootPanes by default.  So each dialog and Frame will have their own automatically.  You only want to implement
- * this interface when you want to limit events to subscribers in containers smaller than a JRootPane.
+ * This class does not ever have to be implemented or used directly.  The ContainerEventServiceFinder will create a
+ * ContainerEventService on JRootPanes by default on demand.  Hence, each dialog and Frame will have their own
+ * automatically as needed.  You only want to implement this interface when you want to limit events to subscribers
+ * in containers smaller than a JRootPane, such as a Form's JPanel.
  *
  * @author Michael Bushe michael@bushe.com
  */

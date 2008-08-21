@@ -4,7 +4,7 @@ package org.bushe.swing.event;
  * @author Michael Bushe
  * @since Nov 19, 2005 11:00:53 PM
  */
-class TopicSubscriberForTest implements EventTopicSubscriber {
+public class TopicSubscriberForTest implements EventTopicSubscriber {
    private boolean throwException;
    private Long waitTime;
    private EBTestCounter testDefaultEventService;

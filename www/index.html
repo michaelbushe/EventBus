@@ -25,6 +25,25 @@
           <h1>Event Bus</h1>
           <h2>EventBus News</h2>
           <ul>
+          	<li><i>21-Aug-2008</i>EventBus 1.2 Released.
+                                  <p>EventBus 1.2 delivers significant new features:
+                                  	<ul>
+                                  		<li>@EventSubscriber and @EventTopicSubscriber annotations take the boilerplate out EventBus coding.</li>
+                                  		<li>Configurable EventBus implementation for support of non-Swing applications.</li>
+                                  		<li>Generics support - subscribing to List<Trade>, for example, and Subscribers take generic types for typesafe coding.</li>
+                                  		<li>Improved logging which can leverage log4j, java.util.logging, and commons-logging.</li>
+                                  		<li>Even better documentation.</li>
+                                    </ul>	 
+                                  </p>
+						</li>
+          	<li><i>18-Jan-2008</i>EventBus is being used by Wellfleet Software for an implementation of ebXML Registry and Repository 4.0 specifications.
+                                  <p>According to Farrukh Najmi, the lead architect for the project: </p>
+                                  <p>"EventBus has been a tremendous improvement over tradition Swing PropertyChangeListener / firePropertyChangeEvent API. 
+                                  	The biggest benefit of EventBus is that the resulting design is very loosely coupled. We found that EventBus was simple to 
+                                  	use with minimal learning curve, had a small footprint and of a very high quality. We even plan to use it in non-Swing, 
+                                  	server-based GUIs."</p>
+						</li>
+          	<li><i>30-Nov-2007</i> ZD Net has published <a href="http://www.zdnetasia.com/techguide/java/0,39044898,62034699,00.htm">this article</a> on the EventBus.</li>
           	<li><i>27-Nov-2007</i> EventBus 1.2 beta released. The 1.2 beta release provides flexible logging - give it a whirl in your app and please send feedback.  You don't need anything but EventBus.jar, but if you want to use log4j or any other logger support by Apache Commons Logging, then include the common-logging-* jars and 
           		the jar of the logger of your choice (such as log4j, conveniently included in the release folder).  Logging is a great way to debug event issues which are often hard to track down due to their decoupled nature.  The EventBus provides lots of DEBUG output so you can see who is subscribed to what.</li>
           	<li><i>11-Nov-2007</i> EventBus 1.1 released. <b>Important:</b> All users of 1.0 should upgrade to version 1.1, which contains a Swing threading bug fix and production Annotation implementation.  If you are using release 1.0 for JDK 1.4, upgrade to 1.0.1 for JDK 1.4 (below).</li>
@@ -53,7 +72,7 @@
           <p>Though not Swing-specific, the EventBus has Swing support and the 
             Event Bus hopes to make Swing applications more componentized, modular 
             and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
-            Info Bus from JDK 1.1 days</a>, but it is much simpler and smaller.
+            InfoBus from JDK 1.1 days</a>, but it is much simpler and smaller.
             The idea is similar to a computer system bus - components plug into 
             a single bus and each can listen for information passed on it. The EventBus is different from 
             the tightly-coupled Swing listener paradigm where listeners attach to and listen on 
@@ -74,9 +93,10 @@
           The links below should take you to the proper folder.  If they don't work, use the Documents & Files link on the sidebar.
 
           <h3>Production Release</h3>
-          <p>The stable release is 1.1.  This release works with JDK 1.5 and later.  
-          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8339&expandFolder=8339&folderID=8339">1.1 Stable Release Folder</a>
+          <p>The stable release is 1.2.  This release works with JDK 1.5 and later.  
+          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=9787&expandFolder=9787&folderID=9787">1.2 Stable Release Folder</a>
           
+<!--
           <h3>Beta Release</h3>
           <p>The latest beta release is 1.2.  This release works with JDK 1.5 and later.  
           <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8423&expandFolder=8423&folderID=8423">1.2 Beta Release Folder</a>
@@ -85,9 +105,10 @@
           <h3>Production Release for JDK 1.4</h3>
           <p>If you are using JDK 1.4, you must use release 1.0.1.  These jars are compiled with JDK 1.4.
           <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8425&expandFolder=8425&folderID=8425">1.0.1 for JDK 1.4 Stable Release Folder</a>
-
+-->
           <h2>JavaDoc</h2>
-          <p>Take a look at the online <a href="doc/api/index.html">JavaDocs</a></p>
+          <p>EventBus doucmentation is quite good and is available as download as well as <a href="doc/api/index.html">online</a>.  Please
+          	 see the library and package descriptions for a list of features and examples in addition to those supplied here.</p>
           <h2>Examples</h2>
           <p> A typical use case for the EventBus is a status bar.  Applications can avoid coupling
               components to status bars (and vice versa) by publishing status events on the EventBus
@@ -135,19 +156,10 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
       </pre>
 <p>
           <h2>Future</h2>
-          <p>Future goals include: </div>
+          <p>the EventBus is a complete usage package as it stands today, however, the idea will be pushed in new directions.  Future goals include: </div>
             <ul>
               <li>More generic methods
-              <li>Bring back log4j logging. 
               <li>@VetoSubscriber annotation 
-              <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
-            </ul>
-      </div>
-      <ul>
-        <li> 
-          <div> 
-            <div class="app"> Create tutorials </div>
-            <ul>
               <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
               <li>A set of Swing components or adapters for components for common usages like progress bars.
               <li>Moving information from non-Swing threads to Swing components via events.
@@ -155,9 +167,7 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
               <li>Examples for validation through events.
               <li>Integrating JMS, WebServices and SOA with the EventBus.
             </ul>
-          </div>
-        </li>
-      </ul>
+      </div>
       <div> 
         <div class="app"> 
           <p> 

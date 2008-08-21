@@ -90,7 +90,7 @@ EventBus Build
          <jvmarg value="-Demma.coverage.out.merge=true"/>
          <jvmarg value="-Djava.util.logging.config.file=${test}/testlogging.properties" />
          <formatter type="xml" />
-         <batchtest fork="yes" todir="${junitXml}">
+         <batchtest todir="${junitXml}">
             <fileset dir="${testClasses}">
                <include name="${testPackage}/${testCase}.class" />
                <!-- exclude inner classes -->
@@ -134,7 +134,7 @@ EventBus Build
 
     <target name="doc" description="Creates the documention (but not the doc jar)." depends="-init">
         <mkdir dir="${apidoc}"/>
-        <javadoc  destdir="${apidoc}" author="true" version="true" use="true"
+        <javadoc  destdir="${apidoc}" author="true" version="true" use="true" Overview="${src}/org/bushe/swing/event/overview.html"
            windowtitle="${ant.project.name}">
            <fileset dir="${src}" defaultexcludes="yes">
               <include name="org/**/*.java" />

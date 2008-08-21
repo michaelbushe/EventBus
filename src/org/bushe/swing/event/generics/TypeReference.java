@@ -23,8 +23,12 @@ public abstract class TypeReference<T> {
  }
 
  /**
-  * Instantiates a new instance of {@code T} using the default, no-arg
+  * @return a new instance of {@code T} using the default, no-arg
   * constructor.
+  * @throws IllegalAccessException on security reflection issues
+  * @throws NoSuchMethodException there's not getRawType on the type
+  * @throws java.lang.reflect.InvocationTargetException if a reflective call causes an exception in the underlying instance
+  * @throws InstantiationException if the instance cannot be instantiated
   */
  @SuppressWarnings("unchecked")
  public T newInstance()
@@ -40,10 +44,9 @@ public abstract class TypeReference<T> {
  }
 
  /**
-  * Gets the referenced type.
+  * @return the referenced type.
   */
  public Type getType() {
      return this.type;
  }
 }
-

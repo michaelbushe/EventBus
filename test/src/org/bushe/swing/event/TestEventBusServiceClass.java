@@ -29,11 +29,4 @@ public class TestEventBusServiceClass extends TestCase {
          System.out.println("Got ex");
       }
    }
-
-   public void testGeneric() {
-      EventBus.subscribe(String.class, new EventSubscriber<JComponent>() {
-         public void onEvent(JComponent event) {
-         }
-      });
-   }
 }

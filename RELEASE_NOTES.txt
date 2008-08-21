@@ -1,4 +1,20 @@
 Release Notes for the Event Bus
+
+Version 1.2
+Issue 7: Added further configuration of EventServiceLocator and EventBus services through setEventService(String, EventService)
+Issue 11: Added Subscription Annotations @EventSubscriber & @EventTopicSubscriber
+Issue 15: Not all annotation-based subscriptions notified
+Issue 18: EventSubscriber annotation broken for weak strength
+Issue 19: Apache log4j logging option (very flexible logging with log4j, java.util.logging, and commons logging)
+Issue 20: Remove calls to System.out.println in ThreadSafeEventService
+
+Version 1.1
+Issue 13: EventServiceAction Javadoc error
+
+Version 1.0
+Issue 12: Remove dependency on EventServiceEvent, allow publish for any class/object
+Issue 10: Event Caching added
+
 0.9.6
 ISSUE 9: VetoTopicEventListener added
 

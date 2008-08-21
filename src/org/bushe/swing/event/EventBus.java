@@ -21,16 +21,16 @@ import java.lang.reflect.Type;
 
 /**
  * The EventBus provides Swing event publication and subscription services.  It is a simple static wrapper around a
- * global instance of an {@link EventService}, specifically a {@link SwingEventService}.
+ * global instance of an {@link EventService}, specifically a {@link SwingEventService} by default.
  * <p/>
  * For Swing Applications the EventBus is nearly all you need, besides some of your own Event classes (if so desired).
  * <p/>
- * The EventBus is really just a convenience class that provides a static wrapper around a global instance of the {@link
- * SwingEventService}.  For details on the API and implementation, see {@link EventService}, {@link SwingEventService},
- * and its parent {@link ThreadSafeEventService}. This class exists solely for simplicity.  Calling
- * <code>EventBus.subscribeXXX/publishXXX</code> is equivalent to <code>EventServiceLocator.getSwingEventService().subscribeXXX/publishXXX</code>,
- * it is just shorter to type.  See {@link org.bushe.swing.event.EventServiceLocator} for details on how a custom
- * EventService can be installed instead of the default SwingEventService. 
+ * The EventBus is really just a convenience class that provides a static wrapper around a global {@link
+ * EventService} instance.  This class exists solely for simplicity.  Calling
+ * <code>EventBus.subscribeXXX/publishXXX</code> is equivalent to
+ * <code>EventServiceLocator.getEventBusService().subscribeXXX/publishXXX</code>,
+ * it is just shorter to type.  See {@link org.bushe.swing.event.EventServiceLocator} for details on how to customize
+ * the global EventService in place of the default SwingEventService. 
  *
  * @author Michael Bushe michael@bushe.com
  * @see EventService
@@ -39,7 +39,7 @@ import java.lang.reflect.Type;
  */
 public class EventBus {
 
-   private static EventService globalEventService = EventServiceLocator.getSwingEventService();
+   private static EventService globalEventService = EventServiceLocator.getEventBusService();
 
    /**
     * The EventBus uses a global static EventService.  This method is not necessary in usual usage, use the other static
@@ -251,6 +251,11 @@ public class EventBus {
    /** @see EventService#getSubscribersToExactClass(Class) */
    public static List getSubscribersToExactClass(Class eventClass) {
       return globalEventService.getSubscribersToExactClass(eventClass);
+   }
+
+   /** @see EventService#getSubscribers(Type) */
+   public static List getSubscribers(Type type) {
+      return globalEventService.getSubscribers(type);
    }
 
    /** @see EventService#getSubscribers(String) */

@@ -5,7 +5,11 @@ import java.lang.reflect.Method;
 
 import org.bushe.swing.event.EventService;
 
-/** A class that subscribes to an EventService on behalf of another object. */
+/** A class that subscribes to an EventService on behalf of another object.
+ * This class is not used directly (though you could), but rather through the use of the
+ * {@link @org.bushe.swing.event.annotation.EventTopicSubscriber}.  Advanced EventBus
+ * users could use this class in Aspect-Oriented code.  Consider using the
+ * {@link AnnotationProcessor} instead, it may suit your needs and be easier.*/
 public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventTopicSubscriber {
    private String topic;
 

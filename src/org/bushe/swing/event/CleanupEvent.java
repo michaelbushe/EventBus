@@ -21,8 +21,9 @@ package org.bushe.swing.event;
  */
 public class CleanupEvent {
 
+   /** The status of the cleanup.*/
    public enum Status {
-      /** Timer has started the cleanup task. Will be followed by at elast one more CleanupEvent.*/
+      /** Timer has started the cleanup task. Will be followed by at least one more CleanupEvent.*/
       STARTING,
       /** Task has determined there's cleanup to do.*/
       OVER_STOP_THRESHOLD_CLEANING_BEGUN, 

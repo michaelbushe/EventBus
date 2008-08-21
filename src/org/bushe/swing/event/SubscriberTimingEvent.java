@@ -16,7 +16,7 @@
 package org.bushe.swing.event;
 
 /**
- * This event is published internally to report timing for subscribe on an EventService.  Applications may subscribe to
+ * This event is published internally to report timing for subscribers on an EventService.  Applications may subscribe to
  * this event to do handle subscribers that take too long.
  *
  * @author Michael Bushe michael@bushe.com
@@ -53,7 +53,7 @@ public class SubscriberTimingEvent extends AbstractEventServiceEvent {
       this.subscriber = subscriber;
       this.vetoEventListener = vetoEventListener;
       String type = "EventServiceSubscriber";
-      String thing = ", EventServiceSubscriber" + subscriber;
+      String thing = ", EventServiceSubscriber:" + subscriber;
       if (vetoEventListener != null) {
          type = "VetoEventListener";
          thing = ", VetoEventListener" + vetoEventListener;

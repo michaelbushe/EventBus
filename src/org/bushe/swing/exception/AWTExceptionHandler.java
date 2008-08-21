@@ -42,7 +42,7 @@ public class AWTExceptionHandler {
    private static AWTErrorLogger logger;
 
    /**
-    * An implementation of this interface can be passed to the AWTExcpetionHandler to handle logging on behalf of the
+    * An implementation of this interface can be passed to the AWTExceptionHandler to handle logging on behalf of the
     * AWTExceptionHandler.
     */
    public static interface AWTErrorLogger {

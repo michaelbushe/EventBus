@@ -19,8 +19,8 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * Aids in Troubleshooting Swing Application Exceptions or any exception where the caller's stack may not be the
- * exception stack (such as producer-consumer mechanisms).
+ * Aids in troubleshooting Swing application exceptions or any exception where the caller's stack may not be the
+ * exception stack (such as producer-consumer patterns that cross threads).
  * <p/>
  * Swing exceptions usually occur on the Swing Event Dispatch Thread, and often occur when code puts events on the EDT.
  * This code is often in a non-EDT thread such as a thread that is receiving data from a server.  If the non-EDT threads

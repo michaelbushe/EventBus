@@ -43,19 +43,20 @@ import org.bushe.swing.exception.SwingException;
  * EventDispatchThread, subscribers will receive the event on the calling thread, and not the EDT.  Swing components
  * should use the SwingEventService instead, which is the implementation used by the EventBus.
  * <p/>
- * Two threads may be accessing the ThreadSafeEventService at the same time, on unsubscribing a
- * listener for topic "A" and the other publishing on topic "A".  If the unsubsubscribing thread gets the lock first,
- * then it is unsubscubscribed, end of story.  If the publisher gets the lock first, then a snapshot copy of the current
- * listeners is made during the publication, the lock is released and the subscribers are called.  Between the time the
- * lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting in an
- * unsubscribed object receiving notifiction of the event.
+ * Two threads may be accessing the ThreadSafeEventService at the same time, one unsubscribing a
+ * listener for topic "A" and the other publishing on topic "A".  If the unsubscribing thread gets the lock first,
+ * then it is unsubscribed, end of story.  If the publisher gets the lock first, then a snapshot copy of the current
+ * subscribers is made during the publication, the lock is released and the subscribers are called.  Between the time
+ * the lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting
+ * in an unsubscribed object receiving notifiction of the event after it was unsubscribed (but just once).
  * <p/>
  * On event publication, subscribers are called in the order in which they subscribed.
  * <p/>
  * Events and/or topic data can be cached, but are not by default.  To cache events or topic data, call
- * #setDefaultCacheSizePerClassOrTopic(int), #setCacheSizeForEventClass(Class, int), or #setCacheSizeForTopic(String,
- * int), #setCacheSizeForTopic(Pattern, int).  Retrieve cached values with #getLastEvent(Class),
- * #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String).  Using caching while subscribing
+ * {@link #setDefaultCacheSizePerClassOrTopic(int)}, {@link #setCacheSizeForEventClass(Class, int)}, or
+ * {@link #setCacheSizeForTopic(String, int)}, {@link #setCacheSizeForTopic(Pattern, int)}.  Retrieve cached values
+ * with {@link #getLastEvent(Class)}, {@link #getLastTopicData(String)}, {@link #getCachedEvents(Class)}, or
+ * {@link #getCachedTopicData(String)}.  Using caching while subscribing
  * is most likely to make sense only if you subscribe and publish on the same thread (so caching is very useful for
  * Swing applications since both happen on the EDT in a single-threaded manner). In multithreaded applications, you
  * never know if your subscriber has handled an event while it was being subscribed (before the subscribe() method
@@ -67,7 +68,7 @@ import org.bushe.swing.exception.SwingException;
  * constructor {@link ThreadSafeEventService (long, boolean)}.  The timing is checked for veto subscribers too.
  * <p/>
  * <h2>Logging</h2> 
- * <p/>
+ * <p/>                       
  * All logging goes through the {@link Logger}.  The Logger is configurable and supports multiple logging systems.
  * <p/>
  * Exceptions are logged by default, override {@link #handleException(String,Object,String,Object,Throwable,
@@ -472,7 +473,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListener(Class,VetoEventListener) */
    public boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
@@ -483,7 +484,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListenerExactly(Class,VetoEventListener) */
    public boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
@@ -494,7 +495,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListener(String,VetoTopicEventListener) */
    public boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (topic == null) {
          throw new IllegalArgumentException("topic cannot be null.");
@@ -505,7 +506,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListener(Pattern,VetoTopicEventListener) */
    public boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (topicPattern == null) {
          throw new IllegalArgumentException("topicPattern cannot be null.");
@@ -516,7 +517,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListenerStrongly(Class,VetoEventListener) */
    public boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
@@ -527,7 +528,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListenerExactlyStrongly(Class,VetoEventListener) */
    public boolean subscribeVetoListenerExactlyStrongly(Class eventClass, VetoEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoEventListener cannot be null.");
       }
       if (eventClass == null) {
          throw new IllegalArgumentException("eventClass cannot be null.");
@@ -549,7 +550,7 @@ public class ThreadSafeEventService implements EventService {
    /** @see EventService#subscribeVetoListenerStrongly(Pattern,VetoTopicEventListener) */
    public boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoTopicEventListener vetoListener) {
       if (vetoListener == null) {
-         throw new IllegalArgumentException("VetoListener cannot be null.");
+         throw new IllegalArgumentException("VetoTopicEventListener cannot be null.");
       }
       if (topicPattern == null) {
          throw new IllegalArgumentException("topicPattern cannot be null.");
@@ -612,7 +613,7 @@ public class ThreadSafeEventService implements EventService {
          List currentSubscribers = (List) subscriberMap.get(topicOrClass);
          if (currentSubscribers == null) {
             if (LOG.isLoggable(Level.DEBUG)) {
-               LOG.debug("Creating new subscriber map for :" + topicOrClass);
+               LOG.debug("Creating new subscriber map for:" + topicOrClass);
             }
             currentSubscribers = new ArrayList();
             subscriberMap.put(topicOrClass, currentSubscribers);
@@ -916,7 +917,7 @@ public class ThreadSafeEventService implements EventService {
       }
 
       if (LOG.isLoggable(Level.DEBUG)) {
-         LOG.debug("Publishing to subscribers :" + subscribers);
+         LOG.debug("Publishing to subscribers:" + subscribers);
       }
 
       for (int i = 0; i < subscribers.size(); i++) {
@@ -1028,7 +1029,7 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   /** @see EventService#getSubscribers(Class) */
+   /** @see EventService#getSubscribers(Type) */
    public List getSubscribers(Type eventType) {
       synchronized (listenerLock) {
          return getEventOrVetoSubscribersToType(subscribersByEventType, eventType);
@@ -1266,7 +1267,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    protected void subscribeTiming(SubscriberTimingEvent event) {
-      LOG.log(Level.WARN, event + "");
+      LOG.log(Level.INFO, event + "");
    }
 
    /**
@@ -1751,7 +1752,9 @@ public class ThreadSafeEventService implements EventService {
       handleException("handling event topic", event, null, null, e, callingStack, str);
    }
 
-   /** All exception handling goes through this method.  Logs a warning by default. */
+   /**
+    * All exception handling goes through this method.  Logs a warning by default.
+    */
    protected void handleException(final String action, final Object event, final String topic,
            final Object eventObj, Throwable e, StackTraceElement[] callingStack, String sourceString) {
       String eventClassString = (event == null ? "none" : event.getClass().getName());

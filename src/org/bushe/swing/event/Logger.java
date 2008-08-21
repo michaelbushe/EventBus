@@ -13,8 +13,7 @@ import java.util.HashMap;
  * by apache commons logging, which of course requires other jars.
  * <p/>
  * The EventBus logging uses the names of its classes as the log, primarily
- * "org.bushe.swing.event.ThreadSafeEventService".  This
- * aids in debugging which subscription and publication issues.
+ * "org.bushe.swing.event.EventService".  This aids in debugging which subscription and publication issues.
  * <p/>
  * Implementation note: There are no imports in this class to make things
  * explicit.  There is also no explicit use of classes outside java.util,
@@ -35,6 +34,7 @@ public class Logger {
    private static final Class[] CLASS_ARGS_ONE = new Class[]{Object.class};
    private static final Class[] CLASS_ARGS_TWO = new Class[]{Object.class, Throwable.class};
 
+   /** Allows switching between Java and Commons logging.*/
    public static enum LoggerType {
       /*java.util.logging*/
       JAVA,
@@ -42,6 +42,7 @@ public class Logger {
       COMMONS
    }
 
+   /** Standardized logging levels. */
    public static enum Level {
       FATAL,
       ERROR,

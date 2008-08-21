@@ -1,5 +1,15 @@
 package org.bushe.swing.event.annotation;
 
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.EventServiceLocator;
+import org.bushe.swing.event.ThreadSafeEventService;
+
 /**
  * An Annotation for subscribing to EventService Topics.
  * <p>
@@ -22,7 +32,7 @@ package org.bushe.swing.event.annotation;
  * public class MyAppController {  //no interface necessary
  *   public MyAppController { //nothing to do in the constructor
  *   }
- *   @EventTopicSubscriber{topci="AppClosingEvent"}
+ *   &#64;EventTopicSubscriber{topic="AppClosingEvent"}
  *   public void onAppClosing(String topic, Object data) {
  *      //do something
  *   }
@@ -56,17 +66,17 @@ package org.bushe.swing.event.annotation;
  *   }
  * }
  * </pre>
- * You can do this:
+ * Instead of all that, you can do this:
  * <pre>
  * public class MyAppController {
  *   public MyAppController {
  *       EventServiceAnnotationTool.enhance(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
- *   @EventTopicSubscriber{topic="AppStartingEvent"}
+ *   &#64;EventTopicSubscriber{topic="AppStartingEvent"}
  *   public void onAppStartingEvent(Object data) {
  *      //do something
  *   }
- *   @EventTopicSubscriber{topic="AppClosingEvent"}
+ *   &#64;EventTopicSubscriber{topic="AppClosingEvent"}
  *   public void onAppClosingEvent(Foo data) {
  *      //do something
  *   }
@@ -74,16 +84,6 @@ package org.bushe.swing.event.annotation;
  * </pre>
  * Brief, clear, and easy.
  */
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import org.bushe.swing.event.EventService;
-import org.bushe.swing.event.EventServiceLocator;
-import org.bushe.swing.event.ThreadSafeEventService;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface EventTopicSubscriber {

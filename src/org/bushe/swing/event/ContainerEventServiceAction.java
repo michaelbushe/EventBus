@@ -20,7 +20,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 
 /**
- * When fired, this action poublishes an ActionEvent on a Container EventService.
+ * When fired, this action publishes an ActionEvent on a Container EventService.
  * See {@link EventServiceAction} for more information.
  * <p/>
  * By default, the Container EventService is found by asking the ContainerEventServiceFinder to find the EventService

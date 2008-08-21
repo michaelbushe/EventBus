@@ -165,7 +165,7 @@ public abstract class EventServiceAction extends AbstractAction {
    /**
     * Publishes the event on the EventService returned by getEventService(event)
     * <p/>
-    * Gets the EventService from {@link #getEventService(ActionEventevent)}. Checks isPublishesOnTopic().  If true,
+    * Gets the EventService from {@link #getEventService(java.awt.event.ActionEvent)}. Checks isPublishesOnTopic().  If true,
     * gets the topic name from {@link #getTopicName(java.awt.event.ActionEvent)} and the topic value from {@link
     * #getTopicValue(ActionEvent)}, and publishes the value on the topic on the EventService.  If false, gets event from
     * {@link #getEventServiceEvent(java.awt.event.ActionEvent)}, and publishes the event on the EventService.

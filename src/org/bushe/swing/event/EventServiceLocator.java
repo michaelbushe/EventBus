@@ -19,19 +19,31 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A ServiceLocator pattern class for getting an instance of an EventService. Nothin' fancy, since the EventService is
- * intended for a single VM. Allows mulitple named EventServices to be discovered.
+ * A central registry of EventServices.  Used by the {@link EventBus}.
  * <p/>
- * Holds the singleton Swing event service, which is wrapped by the EventBus, which is returned by getSwingEventService
- * and mapped to the service name SERVICE_NAME_EVENT_BUS ("EventBus").  This is not settable.
+ * By default, holds one SwingEventEervice, which is mapped to {@link #SERVICE_NAME_SWING_EVENT_SERVICE} and returned
+ * by {@link #getSwingEventService()}.  Also by default this same instance is returned by {@link #getEventBusService()},
+ * is mapped to {@link #SERVICE_NAME_EVENT_BUS} and wrapped by the EventBus.
  * <p/>
  * Since the default EventService implementation is thread safe, and since it's not good to have lots of events on the
  * EventDispatchThread you may want multiple EventServices running on multiple threads, perhaps pulling events from a
  * server and coalescing them into one or more events that are pushed onto the EDT.
  * <p/>
- * The EventServiceLocator is used by the EventBus to locate the implementation of the SwingEventService the EventBus
- * delegates all its calls to.  To change the default implementation class from SwingEventService to your own class,
- * call:
+ * To change the default implementation class for the EventBus' EventService, use the API:
+ * <pre>
+ * EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_EVENT_BUS, new SomeEventServiceImpl());
+ * </pre>
+ * Or use system properties by:
+ * <pre>
+ * System.setProperty(EventServiceLocator.SERVICE_NAME_EVENT_BUS, YourEventServiceImpl.class.getName());
+ * </pre>
+ * Likewise, you can set this on the command line via -Dorg.bushe.swing.event.swingEventServiceClass=foo.YourEventServiceImpl
+ * <p/>
+ * To change the default implementation class for the SwingEventService, use the API:
+ * <pre>
+ * EventServiceLocator.setEventService(EventServiceLocator.SERVICE_NAME_SWING_EVENT_SERVICE, new SomeSwingEventServiceImpl());
+ * </pre>
+ * Or use system properties by:
  * <pre>
  * System.setProperty(EventServiceLocator.SWING_EVENT_SERVICE_CLASS, YourEventServiceImpl.class.getName());
  * </pre>
@@ -40,82 +52,112 @@ import java.util.Map;
  * @author Michael Bushe michael@bushe.com
  */
 public class EventServiceLocator {
-   /** The name "EventBus" is reserved for the service that the EventBus wraps. */
+   /** The name "EventBus" is reserved for the service that the EventBus wraps and is returned by {@link #getEventBusService}.*/
    public static final String SERVICE_NAME_EVENT_BUS = "EventBus";
+   /** The name "SwingEventService" is reserved for the service that is returned by {@link #getSwingEventService}. */
+   public static final String SERVICE_NAME_SWING_EVENT_SERVICE = "SwingEventService";
+   
    /**
-    * Set this Java property to a Class that implements EventService to use that class instead of SwingEventService as
-    * the swing EventBus.  Must be set on startup or before the SwingEventService is created.
+    * Set this Java property to a Class that implements EventService to use an instance of that class instead of
+    * the instance returned by {@link #getSwingEventService}.  Must be set before {@link #getEventBusService()} is called.
+    */
+   public static final String EVENT_BUS_CLASS = "org.bushe.swing.event.eventBusClass";
+   /**
+    * Set this Java property to a Class that implements EventService to use an instance of that class instead of
+    * {@link SwingEventService} as service returned by {@link #getSwingEventService}.  Must be set on startup or
+    * before the method {@link #getSwingEventService}is called.
     */
    public static final String SWING_EVENT_SERVICE_CLASS = "org.bushe.swing.event.swingEventServiceClass";
 
+   private static EventService EVENT_BUS_SERVICE;
    private static EventService SWING_EVENT_SERVICE;
+
    private static final Map EVENT_SERVICES = new HashMap();
 
-   /** @return the singleton default instance of a SwingEventService */
+   /** @return the singleton instance of the EventService used by the EventBus */
+   public static synchronized EventService getEventBusService() {
+      if (EVENT_BUS_SERVICE == null) {
+         EVENT_BUS_SERVICE = getEventService(EVENT_BUS_CLASS, getSwingEventService());
+         EVENT_SERVICES.put(SERVICE_NAME_EVENT_BUS, EVENT_BUS_SERVICE);
+      }
+      return EVENT_BUS_SERVICE;
+   }
+
+   /** @return the singleton instance of a SwingEventService */
    public static synchronized EventService getSwingEventService() {
       if (SWING_EVENT_SERVICE == null) {
-         String swingEventServiceClass = System.getProperty(SWING_EVENT_SERVICE_CLASS);
-         if (swingEventServiceClass != null) {
-            Class sesClass;
-            try {
-               sesClass = Class.forName(swingEventServiceClass);
-            } catch (ClassNotFoundException e) {
-               throw new RuntimeException("Could not find class specified in the property " + SWING_EVENT_SERVICE_CLASS + ".  Class=" + swingEventServiceClass, e);
-            }
-            Object service;
-            try {
-               service = sesClass.newInstance();
-            } catch (InstantiationException e) {
-               throw new RuntimeException("InstantiationException creating instance of class set from Java property" + SWING_EVENT_SERVICE_CLASS + ".  Class=" + swingEventServiceClass, e);
-            } catch (IllegalAccessException e) {
-               throw new RuntimeException("IllegalAccessException creating instance of class set from Java property" + SWING_EVENT_SERVICE_CLASS + ".  Class=" + swingEventServiceClass, e);
-            }
-            try {
-               SWING_EVENT_SERVICE = (EventService) service;
-            } catch (ClassCastException ex) {
-               throw new RuntimeException("ClassCastException casting to " + EventService.class + " from instance of class set from Java property" + SWING_EVENT_SERVICE_CLASS + ".  Class=" + swingEventServiceClass, ex);
-            }
-         } else {
-            SWING_EVENT_SERVICE = new SwingEventService();
-         }
-         EVENT_SERVICES.put(SERVICE_NAME_EVENT_BUS, SWING_EVENT_SERVICE);
+         SWING_EVENT_SERVICE = getEventService(SWING_EVENT_SERVICE_CLASS, new SwingEventService());
+         EVENT_SERVICES.put(SERVICE_NAME_SWING_EVENT_SERVICE, SWING_EVENT_SERVICE);
       }
       return SWING_EVENT_SERVICE;
    }
 
    /**
     * @param serviceName the service name of the EventService, as registered by #setEventService(String, EventService),
-    * or SERVICE_NAME_EVENT_BUS.
+    * or {@link #SERVICE_NAME_EVENT_BUS} or {@link #SERVICE_NAME_SWING_EVENT_SERVICE} .
     *
     * @return a named event service instance
     */
    public static synchronized EventService getEventService(String serviceName) {
       EventService es = (EventService) EVENT_SERVICES.get(serviceName);
-      if (es == null && SERVICE_NAME_EVENT_BUS.equals(serviceName)) {
-         es = getSwingEventService();
+      if (es == null) {
+         if (SERVICE_NAME_EVENT_BUS.equals(serviceName)) {
+            es = getEventBusService();
+         } else if (SERVICE_NAME_SWING_EVENT_SERVICE.equals(serviceName)) {
+            es = getSwingEventService();
+         }
       }
       return es;
    }
 
    /**
-    * Add a named EventService to the locator.
-    * <p/>
-    * <b>Using this method does not change the EventBus implementation or the getSwingEventService() result.</b>  See
-    * this class' javadoc for information on how to change the EventBus implementation.
-    *
+    * Registers a named EventService to the locator.  Can be used to change the default EventBus implementation.
+    * 
     * @param serviceName a named event service instance
     * @param es the EventService to attach to the service name
     *
-    * @throws EventServiceExistsException if a service by this name already exists or if serviceName is "EventBus"
+    * @throws EventServiceExistsException if a service by this name already exists
     */
-   public static synchronized void setEventService(String serviceName,
-           EventService es) throws EventServiceExistsException {
+   public static synchronized void setEventService(String serviceName, EventService es) throws EventServiceExistsException {
       if (EVENT_SERVICES.get(serviceName) != null && es != null) {
          throw new EventServiceExistsException("An event service by the name " + serviceName + "already exists.  Perhaps multiple threads tried to create a service about the same time?");
-      } else if (SERVICE_NAME_EVENT_BUS.equals(serviceName)) {
-         throw new EventServiceExistsException("You cannot use this method to set the EventBus implementation.  Set the Java property " + SWING_EVENT_SERVICE_CLASS + " to the implementation class instead.");
       } else {
          EVENT_SERVICES.put(serviceName, es);
+         if (SERVICE_NAME_EVENT_BUS.equals(serviceName)) {
+            EVENT_BUS_SERVICE = es;
+         } else if (SERVICE_NAME_SWING_EVENT_SERVICE.equals(serviceName)) {
+            SWING_EVENT_SERVICE = es;
+         }
       }
    }
+
+   private static synchronized EventService getEventService(String eventServiceClassPropertyName, EventService defaultService) {
+      EventService result = null;
+      String eventServiceClassName = System.getProperty(eventServiceClassPropertyName);
+      if (eventServiceClassName != null) {
+         Class sesClass;
+         try {
+            sesClass = Class.forName(eventServiceClassName);
+         } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Could not find class specified in the property " + eventServiceClassPropertyName + ".  Class=" + eventServiceClassName, e);
+         }
+         Object service;
+         try {
+            service = sesClass.newInstance();
+         } catch (InstantiationException e) {
+            throw new RuntimeException("InstantiationException creating instance of class set from Java property" + eventServiceClassPropertyName + ".  Class=" + eventServiceClassName, e);
+         } catch (IllegalAccessException e) {
+            throw new RuntimeException("IllegalAccessException creating instance of class set from Java property" + eventServiceClassPropertyName + ".  Class=" + eventServiceClassName, e);
+         }
+         try {
+            result = (EventService) service;
+         } catch (ClassCastException ex) {
+            throw new RuntimeException("ClassCastException casting to " + EventService.class + " from instance of class set from Java property" + eventServiceClassPropertyName + ".  Class=" + eventServiceClassName, ex);
+         }
+      } else {
+         result = defaultService;
+      }
+      return result;
+   }
+
 }

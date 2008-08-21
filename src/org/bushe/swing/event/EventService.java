@@ -23,19 +23,22 @@ import java.lang.reflect.Type;
  * The core interface.  An EventService provides publish/subscribe services to a single JVM using Class-based and
  * String-based (i.e. "topic") publications and subscriptions.
  * <p/>
- * In the class-based pub/sub, Objects are published on an {@link EventService} and (@link EventSubscriber}s subscribe
- * by providing a class or interface. Full class semantics are used, as expected.  That is, if a subscriber subscribes
- * to a class, the subscriber is notified if an object of that class is publish or if an object of a subclass of that
- * class is published. Likewise if a subscriber subscribes to and interface, it will be notified if any object that
- * implements that interface is published.  Subscribers can subscribe "exactly" using {@link #subscribeExactly(Class,
- *EventSubscriber)} so that they are notified only if an object of the exact class is published (and will not be
- * notified if subclasses are published, since this would not be "exact")
+ * In class-based pub/sub, {@link EventSubscriber}s subscribe to a type on an {@link EventService}, such
+ * as the {@link org.bushe.swing.event.EventBus}, by providing a class, interface or generic type.  The EventService
+ * notifies subscribers when objects are published on the EventService with a matching type.  Full class semantics are
+ * respected.  That is, if a subscriber subscribes to a class, the subscriber is notified if an object of
+ * that class is publish or if an object of a subclass of that class is published. Likewise if a subscriber subscribes
+ * to an interface, it will be notified if any object that implements that interface is published.  Subscribers can
+ * subscribe "exactly" using  {@link #subscribeExactly(Class, EventSubscriber)} so that they are notified only if an
+ * object of the exact class is published (and will not be notified if subclasses are published, since this would not
+ * be "exact")
  * <p/>
- * In topic-based pub/sub, a data Object is published on a topic name (String).  {@link EventTopicSubscriber}s subscribe
+ * In topic-based pub/sub, an object "payload" is published on a topic name (String).  {@link EventTopicSubscriber}s subscribe
  * to either the exact name of the topic or they may subscribe using a Regular Expression that is used to match topic
  * names.
  * <p/>
- * See package documentation for usage details and examples.
+ * See the <a href="../../../../overview-summary.html#overview_description">overview</a> for an general introduction
+ * and <a href="package-summary.html">package documentation</a> for usage details and examples.
  * <p/>
  * A single subscriber cannot subscribe more than once to an event or topic name.  EventService implementations should
  * handle double-subscription requests by returing false on subscribe().  A single EventSubscriber can subscribe to more
@@ -75,67 +78,66 @@ import java.lang.reflect.Type;
  * });
  * eventService.subscribe("Hello", subscriber);
  * eventService.publish("Hello", "World");
- * System.out.println(subscriber + " Since the reference is used after it is subscribed, it doesn't get garbage
- * collected,
- * this is not necessary if you use subscribeStrongly()");
+ * System.out.println(subscriber + " Since the reference is used after it is subscribed, it doesn't get garbage collected, this is not necessary if you use subscribeStrongly()");
  * </pre>
  * <p/>
  * Events and/or topic data can be cached, but are not by default.  To cache events or topic data, call
- * #setDefaultCacheSizePerClassOrTopic(int), #setCacheSizeForEventClass(Class, int), or #setCacheSizeForTopic(String,
- * int), #setCacheSizeForTopic(Pattern, int).  Retrieve cached values with #getLastEvent(Class),
- * #getLastTopicData(String), #getCachedEvents(Class), or #getCachedTopicData(String).  Using caching while subscribing
- * is most likely to make sense only if you subscribe and publish on the same thread (so caching is very useful for
- * Swing applications since both happen on the EDT in a single-threaded manner). In multithreaded applications, you
- * never know if your subscriber has handled an event while it was being subscribed (before the subscribe() method
- * returned) that is newer or older than the retrieved cached value (taked before or after subscribe() respectively).
+ * {@link #setDefaultCacheSizePerClassOrTopic(int)}, {@link #setCacheSizeForEventClass(Class, int)}, or
+ * {@link #setCacheSizeForTopic(String, int)}, {@link #setCacheSizeForTopic(Pattern, int)}.  Retrieve cached values
+ * with {@link #getLastEvent(Class)}, {@link #getLastTopicData(String)}, {@link #getCachedEvents(Class)}, or
+ * {@link #getCachedTopicData(String)}.  Using caching while subscribing is most likely to make sense only if you
+ * subscribe and publish on the same thread (so caching is very useful for Swing applications since both happen on
+ * the EDT in a single-threaded manner). In multithreaded applications, you never know if your subscriber has handled
+ * an event while it was being subscribed (before the subscribe() method returned) that is newer or older than the
+ * retrieved cached value (taken before or after subscribe() respectively).
  * <p/>
  * There is nothing special about the term "Event," this could just as easily be called a "Message" Service, this term
  * is already taken by the JMS, which is similar, but is used across processes and networks.
  *
  * @author Michael Bushe michael@bushe.com
- * @see ThreadSafeEventService for the default implementation
- * @see SwingEventService for the Swing-safe implementation
- * @see EventBus for simple access to the Swing-safe implementation
- * @see @org.bushe.swing.event.annotation.EventSubscriber for subscription annotations
- * @see @org.bushe.swing.event.annotation.EventTopicSubscriber for subscription annotations
+ * @see {@link ThreadSafeEventService} for the default implementation
+ * @see {@link SwingEventService} for the Swing-safe implementation
+ * @see {@link EventBus} for simple access to the Swing-safe implementation
+ * @see {@link org.bushe.swing.event.annotation.EventSubscriber} for subscription annotations
+ * @see {@link org.bushe.swing.event.annotation.EventTopicSubscriber} for subscription annotations
  */
 public interface EventService {
 
    /**
-    * Publishes an Object so that subscribers will be notified if they subscribed to the Object's class, one of its
-    * subclasses, or to one of its implementing interfaces.
+    * Publishes an object so that subscribers will be notified if they subscribed to the object's class, one of its
+    * subclasses, or to one of the interfaces it implements.
     *
-    * @param event The event that occured
+    * @param event the object to publish
     */
    public void publish(Object event);
 
    /**
     * Use this method to publish generified objects to subscribers of Types, i.e. subscribers that use
-    * {@link #subscribe(Type, EventSubscriber)}, and to publish to subscribers to the non-generic type, i.e.,
-    * those that use {@link #subscribe(Class, EventSubscriber)} .
+    * {@link #subscribe(Type, EventSubscriber)}, and to publish to subscribers of the non-generic type.
     * <p>
     * Due to generic type erasure, the type must be supplied by the caller.  You can get a declared object's
     * type by using the {@link org.bushe.swing.event.generics.TypeReference} class.  For Example:
     * <pre>
-    * TypeReference<List<Trade>> subscribingTypeReference = new TypeReference<List<Trade>>(){};
+    * TypeReference&#60;List&#60;Trade&#62;&#62; subscribingTypeReference = new TypeReference&#60;List&#60;Trade&#62;&#62;(){};
     * EventBus.subscribe(subscribingTypeReference.getType(), mySubscriber);
     * EventBus.subscribe(List.class, thisSubscriberWillGetCalledToo);
     * ...
     * //Likely in some other class
-    * TypeReference<List<Trade>> publishingTypeReference = new TypeReference<List<Trade>>(){};
-    * List<Trade> trades = new ArrayList<Trade>();
+    * TypeReference&#60;List&#60;Trade&#62;&#62; publishingTypeReference = new TypeReference&#60;List&#60;Trade&#62;&#62;(){};
+    * List&#60;Trade&#62; trades = new ArrayList&#60;Trade&#62;();
     * EventBus.publish(publishingTypeReference.getType(), trades);
     * trades.add(trade);
     * EventBus.publish(publishingTypeReference.getType(), trades);
     * </pre>
     * <p>
-    * @param genericType the generified type of the event.  Due to generic type erasure, this must be supplied.
+    * @param genericType the generified type of the published object.  
     * @param event The event that occured
     */
    public void publish(Type genericType, Object event);
 
    /**
-    * Publishes an object on a topic name so that all subscribers to that name will be notified about it.
+    * Publishes an object on a topic name so that all subscribers to that name or a Regular Expressoin that matches
+    * the topic name will be notified.
     *
     * @param topic The name of the topic subscribed to
     * @param o the object to publish
@@ -143,8 +145,12 @@ public interface EventService {
    public void publish(String topic, Object o);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of events of an event class and its
-    * subclasses, or to an event's interface.
+    * Subscribes an EventSubscriber to the publication of objects matching a type.  Only a <b>WeakReference</b> to
+    * the subscriber is held by the EventService.
+    * <p/>
+    * Subscribing to a class means the subscriber will be called when objects of that class are published, when
+    * objects of subclasses of the class are published, when objects implementing any of the interfaces of the
+    * class are published, or when generic types are published with the class' raw type.
     * <p/>
     * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
     * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
@@ -154,20 +160,40 @@ public interface EventService {
     * It's allowable to call unsubscribe() with the same EventSubscriber hard reference to stop a subscription
     * immediately.
     * <p/>
-    * The service will create the WeakReference on behalf of the caller. on behalf of the caller.
+    * The service will create the WeakReference on behalf of the caller.
     *
-    * @param eventClass the class of published objects to listen to
-    * @param subscriber The subscriber that will accept the events when published.
+    * @param eventClass the class of published objects to subscriber listen to
+    * @param subscriber The subscriber that will accept the events of the event class when published.
     *
     * @return true if the subscriber was subscribed sucessfully, false otherwise
     */
    public boolean subscribe(Class eventClass, EventSubscriber subscriber);
 
+  /** 
+   * Subscribe an EventSubscriber to publication of generic Types.
+   * Subscribers will only be notified for publications using  {@link #publish(java.lang.reflect.Type, Object)}.
+   * <p>
+   * Due to generic type erasure, the type must be supplied by the publisher.  You can get a declared object's
+   * type by using the {@link org.bushe.swing.event.generics.TypeReference} class.  For Example:
+   * <pre>
+   * TypeReference&#60;List&#60;Trade&#62;&#62; subscribingTypeReference = new TypeReference&#60;List&#60;Trade&#62;&#62;(){};
+   * EventBus.subscribe(subscribingTypeReference.getType(), mySubscriber);
+   * EventBus.subscribe(List.class, thisSubscriberWillGetCalledToo);
+   * ...
+   * //Likely in some other class
+   * TypeReference&#60;List&#60;Trade&#62;&#62; publishingTypeReference = new TypeReference&#60;List&#60;Trade&#62;&#62;(){};
+   * List&#60;Trade&#62; trades = new ArrayList&#60;Trade&#62;();
+   * EventBus.publish(publishingTypeReference.getType(), trades);
+   * trades.add(trade);
+   * EventBus.publish(publishingTypeReference.getType(), trades);
+   * </pre>
+   * <p>
+   */
    public boolean subscribe(Type type, EventSubscriber subscriber);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of events of an event class (not its
-    * subclasses).
+    * Subscribes an EventSubscriber to the publication of objects exactly matching a type.  Only a <b>WeakReference</b>
+    * to the subscriber is held by the EventService.
     * <p/>
     * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
     * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
@@ -187,7 +213,8 @@ public interface EventService {
    public boolean subscribeExactly(Class eventClass, EventSubscriber subscriber);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of a topic name.
+    * Subscribes an EventTopicSubscriber to the publication of a topic name.  Only a <b>WeakReference</b>
+    * to the subscriber is held by the EventService.
     * <p/>
     * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
     * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
@@ -206,8 +233,8 @@ public interface EventService {
    public boolean subscribe(String topic, EventTopicSubscriber subscriber);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an EventSubscriber to the publication of all the topic names that match a
-    * RegEx Pattern.
+    * Subscribes an EventSubscriber to the publication of all the topic names that match a RegEx Pattern.  Only a
+    * <b>WeakReference</b> to the subscriber is held by the EventService.
     * <p/>
     * Subscription is weak by default to avoid having to call unsubscribe(), and to avoid the memory leaks that would
     * occur if unsubscribe was not called.  The service will respect the WeakReference semantics.  In other words, if
@@ -226,7 +253,10 @@ public interface EventService {
    public boolean subscribe(Pattern topicPattern, EventTopicSubscriber subscriber);
 
    /**
-    * Subscribes a subscriber to an event class and its subclasses.
+    * Subscribes an EventSubscriber to the publication of objects matching a type.
+    * <p/>
+    * The semantics are the same as {@link #subscribe(Class, EventSubscriber)}, except that the EventService holds
+    * a regularly reference, not a WeakReference.
     * <p/>
     * The subscriber will remain subscribed until {@link #unsubscribe(Class,EventSubscriber)}  is called.
     *
@@ -238,7 +268,10 @@ public interface EventService {
    public boolean subscribeStrongly(Class eventClass, EventSubscriber subscriber);
 
    /**
-    * Subscribes a subscriber to an event class (and not its subclasses).
+    * Subscribes an EventSubscriber to the publication of objects matching a type exactly.
+    * <p/>
+    * The semantics are the same as {@link #subscribeExactly(Class, EventSubscriber)}, except that the EventService
+    * holds a regularly reference, not a WeakReference.
     * <p/>
     * The subscriber will remain subscribed until {@link #unsubscribe(Class,EventSubscriber)}  is called.
     *
@@ -252,6 +285,9 @@ public interface EventService {
    /**
     * Subscribes a subscriber to an event topic name.
     * <p/>
+    * The semantics are the same as {@link #subscribe(String, EventTopicSubscriber)}, except that the EventService
+    * holds a regularly reference, not a WeakReference.
+    * <p/>
     * The subscriber will remain subscribed until {@link #unsubscribe(String,EventTopicSubscriber)}  is called.
     *
     * @param topic the name of the topic listened to
@@ -264,6 +300,9 @@ public interface EventService {
    /**
     * Subscribes a subscriber to all the event topic names that match a RegEx expression.
     * <p/>
+    * The semantics are the same as {@link #subscribe(java.util.regex.Pattern, EventTopicSubscriber)}, except that the
+    * EventService holds a regularly reference, not a WeakReference.
+    * <p/>
     * The subscriber will remain subscribed until {@link #unsubscribe(String,EventTopicSubscriber)}  is called.
     *
     * @param topicPattern the name of the topic listened to
@@ -274,74 +313,76 @@ public interface EventService {
    public boolean subscribeStrongly(Pattern topicPattern, EventTopicSubscriber subscriber);
 
    /**
-    * Stop the subscription for a subscriber that is subscribed to an event class and its subclasses.
+    * Stop the subscription for a subscriber that is subscribed to a class.
     *
     * @param eventClass the class of published objects to listen to
-    * @param subscriber The subscriber that is subscribed to the event.  The same reference as that was subscribed.
+    * @param subscriber The subscriber that is subscribed to the event.  The same reference as the one subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
     */
    public boolean unsubscribe(Class eventClass, EventSubscriber subscriber);
 
    /**
-    * Stop the subscription for a subscriber that is subscribed to an event class (and not its subclasses).
+    * Stop the subscription for a subscriber that is subscribed to an exact class.
     *
     * @param eventClass the class of published objects to listen to
-    * @param subscriber The subscriber that is subscribed to the event.  The same reference as that was subscribed.
+    * @param subscriber The subscriber that is subscribed to the event.  The same reference as the one subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
     */
    public boolean unsubscribeExactly(Class eventClass, EventSubscriber subscriber);
 
    /**
-    * Stop the subscription for a subscriber that is subscribed to an event topic
+    * Stop the subscription for a subscriber that is subscribed to an event topic.
     *
     * @param topic the topic listened to
-    * @param subscriber The subscriber that is subscribed to the topic. The same reference as that was subscribed.
+    * @param subscriber The subscriber that is subscribed to the topic. The same reference as the one subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
     */
    public boolean unsubscribe(String topic, EventTopicSubscriber subscriber);
 
    /**
-    * Stop the subscription for a subscriber that is subscribed to an event topic
+    * Stop the subscription for a subscriber that is subscribed to event topics via a Pattern.
     *
     * @param topicPattern the regex expression matching topics listened to
-    * @param subscriber The subscriber that is subscribed to the topic. The same reference as that was subscribed.
+    * @param subscriber The subscriber that is subscribed to the topic. The same reference as the one subscribed.
     *
     * @return true if the subscriber was subscribed to the event, false if it wasn't
     */
    public boolean unsubscribe(Pattern topicPattern, EventTopicSubscriber subscriber);
 
    /**
-    * Subscribes a <b>WeakReference</b> to a VetoListener to a event class and its subclasses.
+    * Subscribes a VetoEventListener to publication of event matching a class.  Only a <b>WeakReference</b> to the 
+    * VetoEventListener is held by the EventService.
     * <p/>
     * Use this method to avoid having to call unsubscribe(), though with care since garbage collection semantics is
     * indeterminate.  The service will respect the WeakReference semantics.  In other words, if the vetoListener has not
     * been garbage collected, then the onEvent will be called normally.  If the hard reference has been garbage
     * collected, the service will unsubscribe it's WeakReference.
     * <p/>
-    * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
+    * It's allowable to call unsubscribe() with the same VetoEventListener hard reference to stop a subscription
     * immediately.
     * <p/>
     * The service will create the WeakReference on behalf of the caller.
     *
     * @param eventClass the class of published objects that can be vetoed
-    * @param vetoListener The vetoListener that can determine whether an event is published.
+    * @param vetoListener The VetoEventListener that can determine whether an event is published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the VetoEventListener was subscribed sucessfully, false otherwise
     */
    public boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to a VetoListener to a event class (but not its subclasses).
+    * Subscribes a VetoEventListener to publication of an exact event class.  Only a <b>WeakReference</b> to the 
+    * VetoEventListener is held by the EventService.
     * <p/>
     * Use this method to avoid having to call unsubscribe(), though with care since garbage collection semantics is
     * indeterminate.  The service will respect the WeakReference semantics.  In other words, if the vetoListener has not
     * been garbage collected, then the onEvent will be called normally.  If the hard reference has been garbage
     * collected, the service will unsubscribe it's WeakReference.
     * <p/>
-    * It's allowable to call unsubscribe() with the same VetoListener hard reference to stop a subscription
+    * It's allowable to call unsubscribe() with the same VetoEventListener hard reference to stop a subscription
     * immediately.
     * <p/>
     * The service will create the WeakReference on behalf of the caller.
@@ -354,7 +395,8 @@ public interface EventService {
    public boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to a VetoTopicEventListener to a topic name.
+    * Subscribes a VetoTopicEventListener to a topic name.  Only a <b>WeakReference</b> to the
+    * VetoEventListener is held by the EventService.
     *
     * @param topic the name of the topic listened to
     * @param vetoListener The vetoListener that can determine whether an event is published.
@@ -364,8 +406,8 @@ public interface EventService {
    public boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener);
 
    /**
-    * Subscribes a <b>WeakReference</b> to an VetoTopicEventListener to all the topic names that match the RegEx
-    * Pattern.
+    * Subscribes an VetoTopicEventListener to all the topic names that match the RegEx Pattern.  Only a
+    * <b>WeakReference</b> to the VetoEventListener is held by the EventService.  
     *
     * @param topicPattern the RegEx pattern to match topics with
     * @param vetoListener The vetoListener that can determine whether an event is published.
@@ -375,9 +417,10 @@ public interface EventService {
    public boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
    /**
-    * Subscribes a VetoListener for an event class and its subclasses.
+    * Subscribes a VetoEventListener for an event class and its subclasses.  Only a <b>WeakReference</b> to the
+    * VetoEventListener is held by the EventService.
     * <p/>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Class,VetoEventListener)} is
+    * The VetoEventListener will remain subscribed until {@link #unsubscribeVetoListener(Class,VetoEventListener)} is
     * called.
     *
     * @param eventClass the class of published objects to listen to
@@ -388,9 +431,9 @@ public interface EventService {
    public boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a VetoListener for an event class (but not its subclasses).
+    * Subscribes a VetoEventListener for an event class (but not its subclasses).
     * <p/>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Class,VetoEventListener)} is
+    * The VetoEventListener will remain subscribed until {@link #unsubscribeVetoListener(Class,VetoEventListener)} is
     * called.
     *
     * @param eventClass the class of published objects to listen to
@@ -401,9 +444,9 @@ public interface EventService {
    public boolean subscribeVetoListenerExactlyStrongly(Class eventClass, VetoEventListener vetoListener);
 
    /**
-    * Subscribes a VetoListener to a topic name.
+    * Subscribes a VetoEventListener to a topic name.
     * <p/>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(String,VetoTopicEventListener)} is
+    * The VetoEventListener will remain subscribed until {@link #unsubscribeVetoListener(String,VetoTopicEventListener)} is
     * called.
     *
     * @param topic the name of the topic listened to
@@ -418,7 +461,7 @@ public interface EventService {
    /**
     * Subscribes a VetoTopicEventListener to a set of topics that match a RegEx expression.
     * <p/>
-    * The VetoListener will remain subscribed until {@link #unsubscribeVetoListener(Pattern,VetoTopicEventListener)} is
+    * The VetoEventListener will remain subscribed until {@link #unsubscribeVetoListener(Pattern,VetoTopicEventListener)} is
     * called.
     *
     * @param topicPattern the RegEx pattern that matches the name of the topics listened to
@@ -481,6 +524,7 @@ public interface EventService {
    public List getSubscribers(Class eventClass);
 
    /**
+    * Gets subscribers that subscribed with the given a class, but not those subscribed exactly to the class.
     * @param eventClass the eventClass of interest
     *
     * @return the subscribers that are subscribed to match to a class and its subtypes, but not those subscribed by
@@ -489,12 +533,23 @@ public interface EventService {
    public List getSubscribersToClass(Class eventClass);
 
    /**
+    * Gets subscribers that are subscribed exactly to a class, but not those subscribed non-exactly to a class.
     * @param eventClass the eventClass of interest
     *
     * @return the subscribers that are subscribed by exact class but not those subscribed to match to a class and its
     *         subtypes
     */
    public List getSubscribersToExactClass(Class eventClass);
+
+   /**
+    * Gets the suscribers that subscribed to a generic type.
+    *
+    * @param type the type of interest
+    *
+    * @return the subscribers that will be called when an event of eventClass is published, this includes those
+    *         subscribed that match by exact class and those that match to a class and its subtypes
+    */
+   public List getSubscribers(Type type);
 
    /**
     * Union of getSubscribersByPattern(String) and geSubscribersToTopic(String)
@@ -508,6 +563,7 @@ public interface EventService {
    public List getSubscribers(String topic);
 
    /**
+    * Get the subscribers that subscribed to a topic.
     * @param topic the topic of interest
     *
     * @return the subscribers that subscribed to the exact topic name.
@@ -515,6 +571,7 @@ public interface EventService {
    public List getSubscribersToTopic(String topic);
 
    /**
+    * Gets the subscribers that subscribed to the given topic.
     * @param pattern the RegEx pattern for the topic of interest
     *
     * @return the subscribers that subscribed by a RegEx Pattern that matches the topic name.
@@ -522,6 +579,7 @@ public interface EventService {
    public List getSubscribersByPattern(String pattern);
 
    /**
+    * Gets veto subscribers that subscribed to a given class.
     * @param eventClass the eventClass of interest
     *
     * @return the veto subscribers that will be called when an event of eventClass or its subclasses is published.
@@ -529,6 +587,7 @@ public interface EventService {
    public List getVetoSubscribers(Class eventClass);
 
    /**
+    * Get veto subscribers that subscribed to a given class exactly.
     * @param eventClass the eventClass of interest
     *
     * @return the veto subscribers that will be called when an event of eventClass (but not its subclasses) is
@@ -537,6 +596,7 @@ public interface EventService {
    public List getVetoSubscribersToExactClass(Class eventClass);
 
    /**
+    * Gets the veto subscribers that subscribed to a class.
     * @param eventClass the eventClass of interest
     *
     * @return the veto subscribers that are subscribed to the eventClass and its subclasses
@@ -544,6 +604,7 @@ public interface EventService {
    public List getVetoSubscribersToClass(Class eventClass);
 
    /**
+    * Gets the veto subscribers that subscribed to a topic.
     * @param topic the topic of interest
     *
     * @return the veto subscribers that will be called when an event is published on the topic.
@@ -551,6 +612,7 @@ public interface EventService {
    public List getVetoSubscribers(String topic);
 
    /**
+    * Gets the veto subscribers that subscribed to a regular expression.
     * @param pattern the RegEx pattern for the topic of interest
     *
     * @return the veto subscribers that will be called when an event is published on the topic.
@@ -574,7 +636,10 @@ public interface EventService {
     */
    public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic);
 
-   /** @return the default number of event payloads kept per event class or topic */
+   /**
+    * The default number of events or payloads kept per event class or topic
+    * @return the default number of event payloads kept per event class or topic
+    */
    public int getDefaultCacheSizePerClassOrTopic();
 
    /**
@@ -654,6 +719,7 @@ public interface EventService {
    public int getCacheSizeForTopic(String topic);
 
    /**
+    * When caching, returns the last event publish for the type supplied.
     * @param eventClass an index into the cache
     *
     * @return the last event published for this event class, or null if caching is turned off (the default)
@@ -661,6 +727,7 @@ public interface EventService {
    public Object getLastEvent(Class eventClass);
 
    /**
+    * When caching, returns the last set of event published for the type supplied.
     * @param eventClass an index into the cache
     *
     * @return the last events published for this event class, or null if caching is turned off (the default)
@@ -668,6 +735,7 @@ public interface EventService {
    public List getCachedEvents(Class eventClass);
 
    /**
+    * When caching, returns the last payload published on the topic name supplied.
     * @param topic an index into the cache
     *
     * @return the last data Object published on this topic, or null if caching is turned off (the default)
@@ -675,6 +743,7 @@ public interface EventService {
    public Object getLastTopicData(String topic);
 
    /**
+    * When caching, returns the last set of payload objects published on the topic name supplied.
     * @param topic an index into the cache
     *
     * @return the last data Objects published on this topic, or null if caching is turned off (the default)
@@ -707,8 +776,7 @@ public interface EventService {
    public void clearCache();
 
    /**
-    * When using annotations, an object may be subscribed by proxy.  This unsubscibe method will unsubscribe an object
-    * that is subscribed with a ProxySubscriber.
+    * Stop a subscription for an object that is subscribed with a ProxySubscriber.
     * <p/>
     * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
     * still unsubscribe the object.
@@ -719,8 +787,7 @@ public interface EventService {
    boolean unsubscribe(Class eventClass, Object subcribedByProxy);
 
    /**
-    * When using annotations, an object may be subscribed by proxy.  This unsubscibe method will unsubscribe an object
-    * that is subscribed with a ProxySubscriber.
+    * Stop a subscription for an object that is subscribed exactly with a ProxySubscriber.
     * <p/>
     * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
     * still unsubscribe the object.
@@ -731,8 +798,7 @@ public interface EventService {
    boolean unsubscribeExactly(Class eventClass, Object subcribedByProxy);
 
    /**
-    * When using annotations, an object may be subscribed by proxy.  This unsubscibe method will unsubscribe an object
-    * that is subscribed with a ProxySubscriber.
+    * Stop a subscription for an object that is subscribed to a topic with a ProxySubscriber.
     * <p/>
     * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
     * still unsubscribe the object.

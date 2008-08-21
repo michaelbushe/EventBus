@@ -1,5 +1,15 @@
 package org.bushe.swing.event.annotation;
 
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.EventServiceLocator;
+import org.bushe.swing.event.ThreadSafeEventService;
+
 /**
  * An Annotation for subscribing to EventService Events.
  * <p>
@@ -22,7 +32,7 @@ package org.bushe.swing.event.annotation;
  * public class MyAppController {  //no interface necessary
  *   public MyAppController { //nothing to do in the constructor
  *   }
- *   @EventSubscriber
+ *   &#64;EventSubscriber
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {//Use your own method name with typesafety
  *      //do something
  *   }
@@ -62,11 +72,11 @@ package org.bushe.swing.event.annotation;
  *   public MyAppController {
  *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
- *   @EventSubscriber(eventClass=AppStartingEvent.class)
+ *   &#64;EventSubscriber(eventClass=AppStartingEvent.class)
  *   public void onAppStartingEvent(AppStartingEvent appStartingEvent) {
  *      //do something
  *   }
- *   @EventSubscriber(eventClass=AppAppClosingEvent.class)
+ *   &#64;EventSubscriber(eventClass=AppAppClosingEvent.class)
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {
  *      //do something
  *   }
@@ -74,16 +84,6 @@ package org.bushe.swing.event.annotation;
  * </pre>
  * Brief, clear, and easy.
  */
-
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-
-import org.bushe.swing.event.EventService;
-import org.bushe.swing.event.EventServiceLocator;
-import org.bushe.swing.event.ThreadSafeEventService;
-
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface EventSubscriber {

@@ -4,10 +4,10 @@ package org.bushe.swing.event;
  * @author Michael Bushe
  * @since Nov 19, 2005 11:00:42 PM
  */
-class VetoTopicEventListenerForTest implements VetoTopicEventListener {
+public class VetoTopicEventListenerForTest implements VetoTopicEventListener {
    private boolean throwException;
 
-   VetoTopicEventListenerForTest() {
+   public VetoTopicEventListenerForTest() {
       this(false);
    }
 

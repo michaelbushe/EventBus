@@ -15,14 +15,15 @@
  */
 package org.bushe.swing.event;
 
-import java.awt.EventQueue;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.TypeVariable;
+import java.awt.EventQueue;
+
+import javax.swing.JComponent;
 
 import junit.framework.TestCase;
 
-/** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestEventBus extends TestCase {
 
    private EventSubscriber eventSubscriber = null;
@@ -501,8 +502,7 @@ public class TestEventBus extends TestCase {
          Method esMethod = esMethods[i];
          boolean foundMatch = false;
          nextMethod:
-         for (int j = 0; j < ebMethods.length; j++) {
-            Method ebMethod = ebMethods[j];
+         for (Method ebMethod : ebMethods) {
             if (esMethod.getName().equals(ebMethod.getName())) {
                TypeVariable<Method>[] esTypes = esMethod.getTypeParameters();
                TypeVariable<Method>[] ebTypes = ebMethod.getTypeParameters();
@@ -548,5 +548,17 @@ public class TestEventBus extends TestCase {
          }
          assertTrue(isStatic);
       }
+   }
+
+   //Really a compilation test
+   public void testGeneric() {
+      EventBus.subscribe(String.class, new EventSubscriber<JComponent>() {
+         public void onEvent(JComponent event) {
+         }
+      });
+      EventBus.subscribe("foo", new EventTopicSubscriber<JComponent>() {
+         public void onEvent(String topic, JComponent data) {
+         }
+      });
    }
 }

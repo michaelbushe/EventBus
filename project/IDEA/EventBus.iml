@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module version="4" relativePaths="true" type="JAVA_MODULE">
-  <component name="ModuleRootManager" />
+<module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/classes" />
     <exclude-output />
@@ -9,7 +8,9 @@
       <sourceFolder url="file://$MODULE_DIR$/../../demo/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/../../test/src" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/doc" />
       <excludeFolder url="file://$MODULE_DIR$/../../demo" />
+      <excludeFolder url="file://$MODULE_DIR$/../../www/doc" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
