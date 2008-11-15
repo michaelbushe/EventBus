@@ -33,30 +33,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicPatternSubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicPatternSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/EventBus-src.jar" afterPath="$PROJECT_DIR$/../../www/EventBus-src.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBus.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBus.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/PrioritizedEventTopicSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicSubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventSubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iml" afterPath="$PROJECT_DIR$/EventBus.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/BaseProxySubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/index.html" afterPath="$PROJECT_DIR$/../../www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.ipr" afterPath="$PROJECT_DIR$/EventBus.ipr" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/PrioritizedEventSubscriber.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iws" afterPath="$PROJECT_DIR$/EventBus.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/EventBus-all.jar" afterPath="$PROJECT_DIR$/../../www/EventBus-all.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/EventBus.jar" afterPath="$PROJECT_DIR$/../../www/EventBus.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/EventBus-doc.jar" afterPath="$PROJECT_DIR$/../../www/EventBus-doc.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/Prioritized.java" />
     </list>
   </component>
   <component name="ChangesViewManager" flattened_view="false" show_ignored="false" />
@@ -175,19 +152,19 @@
       <file leaf-file-name="TestPrioritizedSubscribers.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.36734694">
+            <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.3345725">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../www/index.html">
           <provider editor-type-id="HtmlPreview">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.4256757">
+            <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.38414633">
               <folding />
             </state>
           </provider>
@@ -199,7 +176,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.25059667">
+            <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.2248394">
               <folding />
             </state>
           </provider>
@@ -211,7 +188,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5765766">
+            <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5203252">
               <folding />
             </state>
           </provider>
@@ -223,7 +200,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.268018">
+            <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.24186991">
               <folding />
             </state>
           </provider>
@@ -232,7 +209,7 @@
       <file leaf-file-name="EventServiceLocator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.4020408">
+            <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.366171">
               <folding />
             </state>
           </provider>
@@ -241,7 +218,7 @@
       <file leaf-file-name="TestDefaultEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.2632653">
+            <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.23977695">
               <folding />
             </state>
           </provider>
@@ -250,7 +227,7 @@
       <file leaf-file-name="ThreadSafeEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.2580645">
+            <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.23391813">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -261,16 +238,16 @@
       <file leaf-file-name="ProxyTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.19183673">
+            <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.1747212">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractProxySubscriber.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="AbstractProxySubscriber.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="105" column="0" selection-start="3950" selection-end="3950" vertical-scroll-proportion="0.20204082">
+            <state line="103" column="37" selection-start="3869" selection-end="3869" vertical-scroll-proportion="0.52230483">
               <folding />
             </state>
           </provider>
@@ -1664,8 +1641,8 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32915717" order="8" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.05899705" order="1" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30320367" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35812357" order="4" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30320367" order="1" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35812357" order="4" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33295965" order="8" />
@@ -1824,30 +1801,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="105" column="0" selection-start="3950" selection-end="3950" vertical-scroll-proportion="0.20204082">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.19183673">
+        <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.1747212">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.2632653">
+        <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.23977695">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.2580645">
+        <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.23391813">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1856,14 +1826,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.4020408">
+        <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.366171">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.36734694">
+        <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.3345725">
           <folding />
         </state>
       </provider>
@@ -1873,7 +1843,7 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.25059667">
+        <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.2248394">
           <folding />
         </state>
       </provider>
@@ -1883,7 +1853,7 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5765766">
+        <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5203252">
           <folding />
         </state>
       </provider>
@@ -1893,7 +1863,7 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.268018">
+        <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.24186991">
           <folding />
         </state>
       </provider>
@@ -1903,7 +1873,14 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.4256757">
+        <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.38414633">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="37" selection-start="3869" selection-end="3869" vertical-scroll-proportion="0.52230483">
           <folding />
         </state>
       </provider>
