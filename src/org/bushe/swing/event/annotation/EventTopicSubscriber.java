@@ -96,6 +96,9 @@ public @interface EventTopicSubscriber {
    /** The event service to subscribe to, default to the EventServiceLocator.SERVICE_NAME_EVENT_BUS. */
    String eventServiceName() default EventServiceLocator.SERVICE_NAME_EVENT_BUS;
 
+   /** Determines the order in which this subscriber is called, default is FIFO.*/
+   int priority() default 0;
+
    /**
     * Whether or not to autocreate the event service if it doesn't exist on subscription, default is true. If the
     * service needs to be created, it must have a default constructor.

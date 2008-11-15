@@ -54,7 +54,8 @@ public class TestEventBus extends TestCase {
    }
 
    private EventSubscriber createEventSubscriber(boolean throwException) {
-      return new SubscriberForTest(testCounter, throwException);
+      SubscriberForTest test = new SubscriberForTest(testCounter, throwException);
+      return test;
    }
 
    private EventTopicSubscriber createEventTopicSubscriber(boolean throwException) {

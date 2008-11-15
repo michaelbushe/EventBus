@@ -2,20 +2,35 @@ package org.bushe.swing.event.annotation;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
+import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.InvocationTargetException;
 
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.ProxySubscriber;
+import org.bushe.swing.event.Prioritized;
 
-/** Common base class for EventService Proxies */
-public abstract class AbstractProxySubscriber implements ProxySubscriber {
+/**
+ * Common base class for EventService Proxies.
+ * <p>
+ * Implementing Prioritized even when Priority is not used is always OK.  The default
+ * value of 0 retains the FIFO order. 
+ */
+public abstract class AbstractProxySubscriber implements ProxySubscriber, Prioritized {
    private Object proxiedSubscriber;
    private Method subscriptionMethod;
    private ReferenceStrength referenceStrength;
    private EventService eventService;
+   private int priority;
 
    protected AbstractProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod,
            ReferenceStrength referenceStrength, EventService es) {
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es);
+   }
+
+   protected AbstractProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod,
+           ReferenceStrength referenceStrength, int priority, EventService es) {
       this.referenceStrength = referenceStrength;
+      this.priority = priority;
       eventService = es;
       if (proxiedSubscriber == null) {
          throw new IllegalArgumentException("The realSubscriber cannot be null when constructing a proxy subscriber.");
@@ -55,6 +70,13 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber {
    }
 
    /**
+    * @return the priority, no effect if priority is 0 (the default value)
+    */
+   public int getPriority() {
+      return priority;
+   }
+
+   /**
     * Called by EventServices to inform the proxy that it is unsubscribed.  
     * The ProxySubscriber should perform any necessary cleanup.
     * <p>
@@ -71,6 +93,29 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber {
               "Maps, since the underlying values use Weak References that" +
               "may disappear, the calculations may not be the same in" +
               "successive calls as required by hashCode.");
+   }
+
+   protected void retryReflectiveCallUsingAccessibleObject(Object[] args, Method subscriptionMethod, Object obj,
+           IllegalAccessException e, String message) {
+      boolean accessibleTriedAndFailed = false;
+      if (subscriptionMethod != null) {
+         AccessibleObject[] accessibleMethod = {subscriptionMethod};
+         try {
+            AccessibleObject.setAccessible(accessibleMethod, true);
+            subscriptionMethod.invoke(obj, args);
+            return;
+         } catch (SecurityException ex) {
+            accessibleTriedAndFailed = true;
+         } catch (InvocationTargetException e1) {
+            throw new RuntimeException(message, e);
+         } catch (IllegalAccessException e1) {
+            throw new RuntimeException(message, e);
+         }
+      }
+      if (accessibleTriedAndFailed) {
+         message = message + ".  An attempt was made to make the method accessible, but the SecurityManager denied the attempt.";
+      }
+      throw new RuntimeException(message, e);
    }
 
    @Override

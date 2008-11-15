@@ -66,7 +66,6 @@ public class AnnotatedEventSubcriber {
       timesCalled++;
    }
 
-
    @EventTopicSubscriber(topic = "File.Open")
    public void simpleTopicOpenFile(String topic, File file) {
       lastCall = "simpleTopicOpenFile";

@@ -29,6 +29,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import org.bushe.swing.event.Logger.Level;
@@ -135,7 +137,6 @@ import org.bushe.swing.exception.SwingException;
  * 
  * @author Michael Bushe michael@bushe.com
  * @todo (param) a JMS-like selector (can be done in base classes by implements like a commons filter
- * @todo (param) register a Comparator to sort subscriber's calling order - for a class or topic
  * @see EventService for a complete description of the API
  */
 public class ThreadSafeEventService implements EventService {
@@ -168,7 +169,7 @@ public class ThreadSafeEventService implements EventService {
    private Map<String, Integer> cacheSizesForTopic;
    private Map<String, Integer> rawCacheSizesForTopic;
    private boolean rawCacheSizesForTopicChanged;
-   private Map<Pattern, Integer> rawCacheSizesForPattern;
+   private Map<PatternWrapper, Integer> rawCacheSizesForPattern;
    private boolean rawCacheSizesForPatternChanged;
    private Integer cleanupStartThreshhold;
    private Integer cleanupStopThreshold;
@@ -176,6 +177,8 @@ public class ThreadSafeEventService implements EventService {
    private int weakRefPlusProxySubscriberCount;
    private Timer cleanupTimer;
    private TimerTask cleanupTimerTask;
+   private static final Comparator PRIORITIZED_SUBSCRIBER_COMPARATOR = new PrioritizedSubscriberComparator();
+   private boolean hasEverUsedPrioritized;
 
    /** Creates a ThreadSafeEventService that does not monitor timing of handlers. */
    public ThreadSafeEventService() {
@@ -389,7 +392,8 @@ public class ThreadSafeEventService implements EventService {
       if (LOG.isLoggable(Level.DEBUG)) {
          LOG.debug("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
       }
-      return subscribe(pat, subscribersByTopicPattern, new WeakReference<EventTopicSubscriber>(eh));
+      PatternWrapper patternWrapper = new PatternWrapper(pat);
+      return subscribe(patternWrapper, subscribersByTopicPattern, new WeakReference<EventTopicSubscriber>(eh));
    }
 
    /** @see EventService#subscribeStrongly(Class,EventSubscriber) */
@@ -439,7 +443,8 @@ public class ThreadSafeEventService implements EventService {
       if (LOG.isLoggable(Level.DEBUG)) {
          LOG.debug("Subscribing by pattern, pattern:" + pat + ", subscriber:" + eh);
       }
-      return subscribe(pat, subscribersByTopicPattern, eh);
+      PatternWrapper patternWrapper = new PatternWrapper(pat);
+      return subscribe(patternWrapper, subscribersByTopicPattern, eh);
    }
 
 
@@ -511,7 +516,8 @@ public class ThreadSafeEventService implements EventService {
       if (topicPattern == null) {
          throw new IllegalArgumentException("topicPattern cannot be null.");
       }
-      return subscribeVetoListener(topicPattern, vetoListenersByTopicPattern, new WeakReference<VetoTopicEventListener>(vetoListener));
+      PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+      return subscribeVetoListener(patternWrapper, vetoListenersByTopicPattern, new WeakReference<VetoTopicEventListener>(vetoListener));
    }
 
    /** @see EventService#subscribeVetoListenerStrongly(Class,VetoEventListener) */
@@ -555,7 +561,8 @@ public class ThreadSafeEventService implements EventService {
       if (topicPattern == null) {
          throw new IllegalArgumentException("topicPattern cannot be null.");
       }
-      return subscribeVetoListener(topicPattern, vetoListenersByTopicPattern, vetoListener);
+      PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+      return subscribeVetoListener(patternWrapper, vetoListenersByTopicPattern, vetoListener);
    }
 
    /**
@@ -590,7 +597,7 @@ public class ThreadSafeEventService implements EventService {
     * <p/>
     * Overriding this method is only for the adventurous.  This basically gives you just enough rope to hang yourself.
     *
-    * @param topicOrClass the topic String or event Class to subscribe to
+    * @param classTopicOrPatternWrapper the topic String, event Class, or PatternWrapper to subscribe to
     * @param subscriberMap the internal map of subscribers to use (by topic or class)
     * @param subscriber the EventSubscriber or EventTopicSubscriber to subscribe, or a WeakReference to either
     *
@@ -598,46 +605,57 @@ public class ThreadSafeEventService implements EventService {
     *
     * @throws IllegalArgumentException if subscriber or topicOrClass is null
     */
-   protected boolean subscribe(final Object topicOrClass, final Map<Object, Object> subscriberMap, final Object subscriber) {
-      if (topicOrClass == null) {
+   protected boolean subscribe(final Object classTopicOrPatternWrapper, final Map<Object, Object> subscriberMap, final Object subscriber) {
+      if (classTopicOrPatternWrapper == null) {
          throw new IllegalArgumentException("Can't subscribe to null.");
       }
       if (subscriber == null) {
-         throw new IllegalArgumentException("Can't subscribe null subscriber to " + topicOrClass);
+         throw new IllegalArgumentException("Can't subscribe null subscriber to " + classTopicOrPatternWrapper);
       }
       boolean alreadyExists = false;
+
+      //Find the real subscriber underlying weak refs and proxies
+      Object realSubscriber = subscriber;
       boolean isWeakRef = subscriber instanceof WeakReference;
-      boolean isWeakProxySubscriber = (subscriber instanceof ProxySubscriber) 
-              && ((ProxySubscriber)subscriber).getReferenceStrength() == ReferenceStrength.WEAK;
+      if (isWeakRef) {
+         realSubscriber = ((WeakReference) subscriber).get();
+      }
+      if (realSubscriber instanceof Prioritized) {
+         hasEverUsedPrioritized = true;
+      }
+      boolean isWeakProxySubscriber = false;
+      if (subscriber instanceof ProxySubscriber) {
+         ProxySubscriber proxySubscriber = (ProxySubscriber) subscriber;
+         if (proxySubscriber instanceof Prioritized) {
+            hasEverUsedPrioritized = true;
+         }
+         isWeakProxySubscriber = proxySubscriber.getReferenceStrength() == ReferenceStrength.WEAK;
+         if (isWeakProxySubscriber) {
+            realSubscriber = ((ProxySubscriber) subscriber).getProxiedSubscriber();
+         }
+      }
+      if (isWeakRef && isWeakProxySubscriber) {
+         throw new IllegalArgumentException("ProxySubscribers should always be subscribed strongly.");
+      }
+      if (realSubscriber == null) {
+         return false;//already garbage collected?  Weird.
+      }
       synchronized (listenerLock) {
-         List currentSubscribers = (List) subscriberMap.get(topicOrClass);
+         List currentSubscribers = (List) subscriberMap.get(classTopicOrPatternWrapper);
          if (currentSubscribers == null) {
             if (LOG.isLoggable(Level.DEBUG)) {
-               LOG.debug("Creating new subscriber map for:" + topicOrClass);
+               LOG.debug("Creating new subscriber map for:" + classTopicOrPatternWrapper);
             }
             currentSubscribers = new ArrayList();
-            subscriberMap.put(topicOrClass, currentSubscribers);
+            subscriberMap.put(classTopicOrPatternWrapper, currentSubscribers);
          } else {
             //Double subscription check and stale subscriber cleanup
             //Need to compare the underlying referents for WeakReferences and ProxySubscribers
             //to make sure a weak ref and a hard ref aren't both subscribed
-            //to the same topic and object
-            Object realSubscriber = subscriber;
-            if (isWeakRef) {
-               realSubscriber = ((WeakReference) subscriber).get();
-               if (isWeakProxySubscriber) {
-                  throw new IllegalArgumentException("ProxySubscribers should always be subscribed strongly.");
-               }
-            }
+            //to the same topic and object.
             //Use the proxied subscriber for comparison if a ProxySubscribers is used
-            //Subscribing the same object by proxy and subscribing explicitly should 
+            //Subscribing the same object by proxy and subscribing explicitly should
             //not subscribe the same object twice
-            if (isWeakProxySubscriber) { 
-               realSubscriber = ((ProxySubscriber) subscriber).getProxiedSubscriber();
-            }
-            if (realSubscriber == null) {
-               return false;//already garbage collected?  Weird.
-            }
             for (Iterator iterator = currentSubscribers.iterator(); iterator.hasNext();) {
                Object currentSubscriber = iterator.next();
                Object realCurrentSubscriber = getRealSubscriberAndCleanStaleSubscriberIfNecessary(iterator, currentSubscriber);
@@ -650,7 +668,7 @@ public class ThreadSafeEventService implements EventService {
             }
          }
          currentSubscribers.add(subscriber);
-         if (isWeakProxySubscriber || isWeakRef) { 
+         if (isWeakProxySubscriber || isWeakRef) {
             incWeakRefPlusProxySubscriberCount();
          }
          return !alreadyExists;
@@ -674,7 +692,8 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#unsubscribe(String,EventTopicSubscriber) */
    public boolean unsubscribe(Pattern topicPattern, EventTopicSubscriber eh) {
-      return unsubscribe(topicPattern, subscribersByTopicPattern, eh);
+      PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+      return unsubscribe(patternWrapper, subscribersByTopicPattern, eh);
    }
 
    /** @see EventService#unsubscribe(Class,Object) */
@@ -793,7 +812,8 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#unsubscribeVetoListener(Pattern,VetoTopicEventListener) */
    public boolean unsubscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
-      return unsubscribeVetoListener(topicPattern, vetoListenersByTopicPattern, vetoListener);
+      PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+      return unsubscribeVetoListener(patternWrapper, vetoListenersByTopicPattern, vetoListener);
    }
 
    /**
@@ -865,46 +885,11 @@ public class ThreadSafeEventService implements EventService {
       }
 
       //topic or event
-      if (LOG.isLoggable(Level.DEBUG)) {
-         if (event != null) {
-            LOG.debug("Publishing event: class=" + event.getClass() + ", event=" + event);
-         } else if (topic != null) {
-            LOG.debug("Publishing event: topic=" + topic + ", eventObj=" + eventObj);
-         }
-      }
+      logEvent(event, topic, eventObj);
 
       //Check all veto subscribers, if any veto, then don't publish or cache
-      if (vetoSubscribers != null && !vetoSubscribers.isEmpty()) {
-         for (Iterator vlIter = vetoSubscribers.iterator(); vlIter.hasNext();) {
-            Object vetoer = vlIter.next();
-            VetoEventListener vl = null;
-            VetoTopicEventListener vtl = null;
-            if (event == null) {
-               vtl = (VetoTopicEventListener) vetoer;
-            } else {
-               vl = (VetoEventListener) vetoer;
-            }
-            long start = System.currentTimeMillis();
-            try {
-               boolean shouldVeto = false;
-               if (event == null) {
-                  shouldVeto = vtl.shouldVeto(topic, eventObj);
-               } else {
-                  shouldVeto = vl.shouldVeto(event);
-               }
-               if (shouldVeto) {
-                  handleVeto(vl, event, vtl, topic, eventObj);
-                  checkTimeLimit(start, event, null, vl);
-                  if (LOG.isLoggable(Level.DEBUG)) {
-                     LOG.debug("Publication vetoed. Event:" + event + ", Topic:" + topic + ", veto subscriber:" + vl);
-                  }
-                  return;
-               }
-            } catch (Throwable ex) {
-               checkTimeLimit(start, event, null, vl);
-               subscribeVetoException(event, topic, eventObj, ex, callingStack, vl);
-            }
-         }
+      if (checkVetoSubscribers(event, topic, eventObj, vetoSubscribers, callingStack)) {
+         return;
       }
 
       addEventToCache(event, topic, eventObj);
@@ -939,6 +924,98 @@ public class ThreadSafeEventService implements EventService {
             } catch (Throwable e) {
                onEventException(topic, eventObj, e, callingStack, eventTopicSubscriber);
             }
+         }
+      }
+   }
+
+   /**
+    * Handles subscribers that are Prioritized by putting the most negative prioritied subscribers
+    * first, the most positive prioritied subscribers last, and leaving non-Prioritized in their
+    * original FIFO order.
+    * @param subscribers the subscribers to sort
+    * @return the same list if there are no prioritied subscribers in the list, otherwise a new sorted result
+    */
+   private List sortSubscribers(List subscribers) {
+      if (subscribers == null) {
+         return null;
+      }
+      List<Prioritized> prioritizedSubscribers = null;
+      Iterator iterator = subscribers.iterator();
+      while (iterator.hasNext()) {
+         Object subscriber = iterator.next();
+         if (subscriber instanceof Prioritized) {
+            Prioritized prioritized = ((Prioritized)subscriber);
+            if (prioritized.getPriority() != 0) {
+               iterator.remove();
+               if (prioritizedSubscribers == null) {
+                  prioritizedSubscribers = new ArrayList<Prioritized>();
+               }
+               prioritizedSubscribers.add(prioritized);
+            }
+         }
+      }
+      if (prioritizedSubscribers  == null) {
+         return subscribers;
+      } else {
+         List result = new ArrayList(prioritizedSubscribers.size()+subscribers.size());
+         Collections.sort(prioritizedSubscribers, PRIORITIZED_SUBSCRIBER_COMPARATOR);
+         boolean haveAddedFIFOSubscribers = false;
+         for (Prioritized prioritizedSubscriber : prioritizedSubscribers) {
+            if (prioritizedSubscriber.getPriority() > 0 && !haveAddedFIFOSubscribers) {
+               for (Object subscriber : subscribers) {
+                  result.add(subscriber);
+               }
+               haveAddedFIFOSubscribers = true;
+            }
+            result.add(prioritizedSubscriber);
+         }
+         return result;
+      }
+   }
+
+   private boolean checkVetoSubscribers(Object event, String topic, Object eventObj, List vetoSubscribers,
+           StackTraceElement[] callingStack) {
+      if (vetoSubscribers != null && !vetoSubscribers.isEmpty()) {
+         for (Iterator vlIter = vetoSubscribers.iterator(); vlIter.hasNext();) {
+            Object vetoer = vlIter.next();
+            VetoEventListener vl = null;
+            VetoTopicEventListener vtl = null;
+            if (event == null) {
+               vtl = (VetoTopicEventListener) vetoer;
+            } else {
+               vl = (VetoEventListener) vetoer;
+            }
+            long start = System.currentTimeMillis();
+            try {
+               boolean shouldVeto = false;
+               if (event == null) {
+                  shouldVeto = vtl.shouldVeto(topic, eventObj);
+               } else {
+                  shouldVeto = vl.shouldVeto(event);
+               }
+               if (shouldVeto) {
+                  handleVeto(vl, event, vtl, topic, eventObj);
+                  checkTimeLimit(start, event, null, vl);
+                  if (LOG.isLoggable(Level.DEBUG)) {
+                     LOG.debug("Publication vetoed. Event:" + event + ", Topic:" + topic + ", veto subscriber:" + vl);
+                  }
+                  return true;
+               }
+            } catch (Throwable ex) {
+               checkTimeLimit(start, event, null, vl);
+               subscribeVetoException(event, topic, eventObj, ex, callingStack, vl);
+            }
+         }
+      }
+      return false;
+   }
+
+   private void logEvent(Object event, String topic, Object eventObj) {
+      if (LOG.isLoggable(Level.DEBUG)) {
+         if (event != null) {
+            LOG.debug("Publishing event: class=" + event.getClass() + ", event=" + event);
+         } else if (topic != null) {
+            LOG.debug("Publishing event: topic=" + topic + ", eventObj=" + eventObj);
          }
       }
    }
@@ -1000,25 +1077,35 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#getSubscribers(Class) */
    public List getSubscribers(Class eventClass) {
+      List hierarchyMatches;
+      List exactMatches;
       synchronized (listenerLock) {
-         List hierarchyMatches = getSubscribersToClass(eventClass);
-         List exactMatches = getSubscribersToExactClass(eventClass);
-         List result = new ArrayList();
-         if (exactMatches != null) {
-            result.addAll(exactMatches);
-         }
-         if (hierarchyMatches != null) {
-            result.addAll(hierarchyMatches);
-         }
-         return result;
+         hierarchyMatches = getSubscribersToClass(eventClass);
+         exactMatches = getSubscribersToExactClass(eventClass);
       }
+      List result = new ArrayList();
+      if (exactMatches != null) {
+         result.addAll(exactMatches);
+      }
+      if (hierarchyMatches != null) {
+         result.addAll(hierarchyMatches);
+      }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
+
    }
 
    /** @see EventService#getSubscribersToClass(Class) */
    public List getSubscribersToClass(Class eventClass) {
       synchronized (listenerLock) {
          Map classMap = subscribersByEventClass;
-         return getEventOrVetoSubscribersToClass(classMap, eventClass);
+         List result = getEventOrVetoSubscribersToClass(classMap, eventClass);
+         if (hasEverUsedPrioritized) {
+            result = sortSubscribers(result);
+         }
+         return result;
       }
    }
 
@@ -1031,25 +1118,35 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#getSubscribers(Type) */
    public List getSubscribers(Type eventType) {
+      List result;
       synchronized (listenerLock) {
-         return getEventOrVetoSubscribersToType(subscribersByEventType, eventType);
+         result = getEventOrVetoSubscribersToType(subscribersByEventType, eventType);
       }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
    }
 
    /** @see EventService#getSubscribers(String) */
    public List getSubscribers(String topic) {
+      List result = new ArrayList();
+      List exactMatches;
+      List patternMatches;
       synchronized (listenerLock) {
-         List exactMatches = getSubscribersToTopic(topic);
-         List patternMatches = getSubscribersByPattern(topic);
-         List result = new ArrayList();
-         if (exactMatches != null) {
-            result.addAll(exactMatches);
-         }
-         if (patternMatches != null) {
-            result.addAll(patternMatches);
-         }
-         return result;
+         exactMatches = getSubscribersToTopic(topic);
+         patternMatches = getSubscribersByPattern(topic);
       }
+      if (exactMatches != null) {
+         result.addAll(exactMatches);
+      }
+      if (patternMatches != null) {
+         result.addAll(patternMatches);
+      }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
    }
 
    /** @see EventService#getSubscribers(Class) */
@@ -1059,19 +1156,23 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
+   /** @see EventService#getSubscribersByPattern(String)  */
    public List getSubscribersByPattern(String topic) {
+      List result = new ArrayList();
       synchronized (listenerLock) {
-         List result = new ArrayList();
          Set keys = subscribersByTopicPattern.keySet();
          for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-            Pattern patternKey = (Pattern) iterator.next();
-            if (patternKey.matcher(topic).matches()) {
+            PatternWrapper patternKey = (PatternWrapper) iterator.next();
+            if (patternKey.matches(topic)) {
                if (LOG.isLoggable(Level.DEBUG)) {
                   LOG.debug("Pattern " + patternKey + " matched topic name " + topic);
                }
                Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
                result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
             }
+         }
+         if (hasEverUsedPrioritized) {
+            result = sortSubscribers(result);
          }
          return result;
       }
@@ -1080,32 +1181,43 @@ public class ThreadSafeEventService implements EventService {
 
    protected List getSubscribersToPattern(Pattern topicPattern) {
       synchronized (listenerLock) {
-         return getSubscribers(topicPattern, subscribersByTopicPattern);
+         PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+         return getSubscribers(patternWrapper, subscribersByTopicPattern);
       }
    }
 
    /** @see EventService#getVetoSubscribers(Class) */
    public List getVetoSubscribers(Class eventClass) {
+      List result = new ArrayList();
+      List exactMatches;
+      List hierarchyMatches;
       synchronized (listenerLock) {
-         List exactMatches = getVetoSubscribersToClass(eventClass);
-         List hierarchyMatches = getVetoSubscribersToExactClass(eventClass);
-         List result = new ArrayList();
-         if (exactMatches != null) {
-            result.addAll(exactMatches);
-         }
-         if (hierarchyMatches != null) {
-            result.addAll(hierarchyMatches);
-         }
-         return result;
+         exactMatches = getVetoSubscribersToClass(eventClass);
+         hierarchyMatches = getVetoSubscribersToExactClass(eventClass);
       }
+      if (exactMatches != null) {
+         result.addAll(exactMatches);
+      }
+      if (hierarchyMatches != null) {
+         result.addAll(hierarchyMatches);
+      }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
    }
 
    /** @see EventService#getVetoSubscribersToClass(Class) */
    public List getVetoSubscribersToClass(Class eventClass) {
+      List result;
       synchronized (listenerLock) {
          Map classMap = vetoListenersByClass;
-         return getEventOrVetoSubscribersToClass(classMap, eventClass);
+         result = getEventOrVetoSubscribersToClass(classMap, eventClass);
       }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
    }
 
    public List getVetoSubscribersToExactClass(Class eventClass) {
@@ -1122,18 +1234,24 @@ public class ThreadSafeEventService implements EventService {
 
    public List getVetoSubscribers(Pattern topicPattern) {
       synchronized (listenerLock) {
-         return getSubscribers(topicPattern, vetoListenersByTopicPattern);
+         PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+         return getSubscribers(patternWrapper, vetoListenersByTopicPattern);
       }
    }
 
    private List getSubscribers(Object classOrTopic, Map subscriberMap) {
+      List result;
       synchronized (listenerLock) {
          List subscribers = (List) subscriberMap.get(classOrTopic);
          //Make a defensive copy of subscribers and veto listeners so listeners
          //can change the listener list while the listeners are being called
          //Resolve WeakReferences and unsubscribe if necessary.
-         return createCopyOfContentsRemoveWeakRefs(subscribers);
+         result = createCopyOfContentsRemoveWeakRefs(subscribers);
       }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
    }
 
    private List getEventOrVetoSubscribersToClass(Map classMap, Class eventClass) {
@@ -1293,7 +1411,8 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Given a Map (of Lists of subscribers or veto listeners), removes the toRemove element from the List in the map for
-    * the given key.  The entire map is checked for WeakReferences and ProxySubscribers and they are all unsubscribed if stale.
+    * the given key.  The entire map is checked for WeakReferences and ProxySubscribers and they are all unsubscribed
+    * if stale.
     *
     * @param map map of lists
     * @param key key for a List in the map
@@ -1543,7 +1662,8 @@ public class ThreadSafeEventService implements EventService {
          if (rawCacheSizesForPattern == null) {
             rawCacheSizesForPattern = new HashMap();
          }
-         rawCacheSizesForPattern.put(pattern, new Integer(cacheSize));
+         PatternWrapper patternWrapper = new PatternWrapper(pattern);
+         rawCacheSizesForPattern.put(patternWrapper, new Integer(cacheSize));
          rawCacheSizesForPatternChanged = true;
       }
    }
@@ -1581,7 +1701,7 @@ public class ThreadSafeEventService implements EventService {
          }
 
          //Is this an exact match or has it been matched to a pattern yet?
-         Integer size = (Integer) cacheSizesForTopic.get(topic);
+         Integer size = cacheSizesForTopic.get(topic);
          if (size != null) {
             return size.intValue();
          } else {
@@ -1589,9 +1709,9 @@ public class ThreadSafeEventService implements EventService {
             if (rawCacheSizesForPattern != null) {
                Set patterns = rawCacheSizesForPattern.keySet();
                for (Iterator iterator = patterns.iterator(); iterator.hasNext();) {
-                  Pattern pattern = (Pattern) iterator.next();
-                  if (pattern.matcher(topic).matches()) {
-                     size = (Integer) rawCacheSizesForPattern.get(pattern);
+                  PatternWrapper pattern = (PatternWrapper) iterator.next();
+                  if (pattern.matches(topic)) {
+                     size = rawCacheSizesForPattern.get(pattern);
                      cacheSizesForTopic.put(topic, size);
                      return size.intValue();
                   }
@@ -1892,5 +2012,68 @@ public class ThreadSafeEventService implements EventService {
             ThreadSafeEventService.this.publish(new CleanupEvent(CleanupEvent.Status.FINISHED_CLEANING, weakRefPlusProxySubscriberCount, staleCount));
          }         
       }      
+   }
+
+   private static class PrioritizedSubscriberComparator implements Comparator<Prioritized> {
+      public int compare(Prioritized prioritized1, Prioritized prioritized2) {
+         if (prioritized1 == null) {
+            return -1;
+         }
+         if (prioritized2 == null) {
+            return 1;
+         }
+         if (prioritized1.getPriority() < prioritized2.getPriority()) {
+            return -1;
+         } else if (prioritized1.getPriority() > prioritized2.getPriority()) {
+            return 1;
+         } else {
+            return 0;
+         }
+      }
+   }
+
+   /**
+    * Since Pattern doesn't implement equals(), we need one of these
+    */
+   private class PatternWrapper {
+      private Pattern pattern;
+
+      public PatternWrapper(Pattern pat) {
+         pattern = pat;
+      }
+
+      public boolean matches(CharSequence input) {
+         return pattern.matcher(input).matches();
+      }
+
+      public boolean equals(Object o) {
+         if (this == o) {
+            return true;
+         }
+         if (o == null || getClass() != o.getClass()) {
+            return false;
+         }
+
+         PatternWrapper that = (PatternWrapper) o;
+
+         if (pattern != null) {
+            if (!pattern.equals(that.pattern)) {//give the JVM a shot for forward compatibility
+               return pattern.pattern() != null && this.pattern.pattern().equals(this.pattern.pattern());
+            }
+         } else {
+            if (that.pattern != null) {
+               return false;
+            }
+         }
+
+         return true;
+      }
+
+      public int hashCode() {
+         if (this.pattern != null && this.pattern.pattern() != null) {
+            return this.pattern.pattern().hashCode();
+         }
+         return (pattern != null ? pattern.hashCode() : 0);
+      }
    }
 }

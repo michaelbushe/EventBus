@@ -59,13 +59,23 @@ import java.lang.reflect.Type;
  * Unless garbage collected, EventSubscribers will remain subscribed until they are passed to one of the unsubscribe()
  * methods with the event class or topic name to which there are subscribed.
  * <p/>
+ * Subscribers are called in the order in which they are subscribed by default (FIFO), unless subscribers implement
+ * {@link Prioritized}.  Those subscribers that implement Prioritized and return a negative priorty are moved to the
+ * front of the list (the more negative, the more to the front).  Those subscribers that implement Prioritied and return
+ * a positive priority are moved to the end of the list (the more positive, the more to the back).  The FIFO guarantee
+ * is only valid for the same subscribe() call.  That is, the order of two subscribers, one to List.class and the other
+ * to ArrayList.class is not guaranteed to be in the order of subscription when an ArrayList is published.  The same is
+ * true for topic subscribers when using RegEx expressions - when "Foo" is published, the order of subscribers that are
+ * subscribed to "Foo", "Fo*" and "F*" are not guaranteed, though the second "Fo*" subscriber will never be called
+ * before the first "Fo*" subscriber (ditto List and ArrayList). Prioritized subscribers are always guaranteed to be in
+ * the order of priority, no matter the call or the resulting mix of subscribers.  All ordering rules apply to all
+ * types subscribers: class, topic, pattern, veto, etc.  For Swing users, note that FIFO is
+ * the opposite of Swing, where event listeners are called in the reverse order of when they were subscribed (FILO).    
+ * <p/>
  * Publication on a class or topic name can be vetoed by a {@link VetoEventListener}. All VetoEventListeners are checked
  * before any EventSubscribers or EventTopicSubscribers are called. This is unlike the JavaBean's
  * VetoPropertyEventListener which can leave side effects and half-propogated events. VetoEventListeners are subscribed
  * in the same manner as EventSubscribers and EventTopicSubscribers.
- * <p/>
- * Subscribers are called in the order in which they are subscribed by default (FIFO).  This is also unlike Swing, where
- * event listeners are called in the reverse order of when they were subscribed (FILO).
  * <p/>
  * This simple example prints "Hello World"
  * <pre>
@@ -571,12 +581,12 @@ public interface EventService {
    public List getSubscribersToTopic(String topic);
 
    /**
-    * Gets the subscribers that subscribed to the given topic.
-    * @param pattern the RegEx pattern for the topic of interest
+    * Gets the subscribers that subscribed with a Pattern that matches the given topic.
+    * @param topic a topic to match Patterns against
     *
     * @return the subscribers that subscribed by a RegEx Pattern that matches the topic name.
     */
-   public List getSubscribersByPattern(String pattern);
+   public List getSubscribersByPattern(String topic);
 
    /**
     * Gets veto subscribers that subscribed to a given class.

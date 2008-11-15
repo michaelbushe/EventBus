@@ -19,102 +19,145 @@
 <div id="projecthome" class="app">
 
 <div class="axial"><table border="0" cellspacing="0" cellpadding="4" width="100%" id="main">
-  <tr valign="top"> 
-   <div id="bodycol"> 
-        <div id="projecthome" class="app"> 
-          <h1>Event Bus</h1>
-          <h2>EventBus News</h2>
-          <ul>
-          	<li><i>21-Aug-2008</i>EventBus 1.2 Released.
-                                  <p>EventBus 1.2 delivers significant new features:
-                                  	<ul>
-                                  		<li>@EventSubscriber and @EventTopicSubscriber annotations take the boilerplate out EventBus coding.</li>
-                                  		<li>Configurable EventBus implementation for support of non-Swing applications.</li>
-                                  		<li>Generics support - subscribing to List<Trade>, for example, and Subscribers take generic types for typesafe coding.</li>
-                                  		<li>Improved logging which can leverage log4j, java.util.logging, and commons-logging.</li>
-                                  		<li>Even better documentation.</li>
-                                    </ul>	 
-                                  </p>
-						</li>
-          	<li><i>18-Jan-2008</i>EventBus is being used by Wellfleet Software for an implementation of ebXML Registry and Repository 4.0 specifications.
-                                  <p>According to Farrukh Najmi, the lead architect for the project: </p>
-                                  <p>"EventBus has been a tremendous improvement over tradition Swing PropertyChangeListener / firePropertyChangeEvent API. 
-                                  	The biggest benefit of EventBus is that the resulting design is very loosely coupled. We found that EventBus was simple to 
-                                  	use with minimal learning curve, had a small footprint and of a very high quality. We even plan to use it in non-Swing, 
-                                  	server-based GUIs."</p>
-						</li>
-          	<li><i>30-Nov-2007</i> ZD Net has published <a href="http://www.zdnetasia.com/techguide/java/0,39044898,62034699,00.htm">this article</a> on the EventBus.</li>
-          	<li><i>27-Nov-2007</i> EventBus 1.2 beta released. The 1.2 beta release provides flexible logging - give it a whirl in your app and please send feedback.  You don't need anything but EventBus.jar, but if you want to use log4j or any other logger support by Apache Commons Logging, then include the common-logging-* jars and 
-          		the jar of the logger of your choice (such as log4j, conveniently included in the release folder).  Logging is a great way to debug event issues which are often hard to track down due to their decoupled nature.  The EventBus provides lots of DEBUG output so you can see who is subscribed to what.</li>
-          	<li><i>11-Nov-2007</i> EventBus 1.1 released. <b>Important:</b> All users of 1.0 should upgrade to version 1.1, which contains a Swing threading bug fix and production Annotation implementation.  If you are using release 1.0 for JDK 1.4, upgrade to 1.0.1 for JDK 1.4 (below).</li>
-          	<li><i>6-Sept-2007</i> The Event Bus has released 1.1 beta2, adding generics support and fixing an Annotation issues.  This is a solid beta, though some of the generics APIs are not yet complete (vetos, unsubscribes).</li>
-          	<li><i>29-Apr-2007</i> The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable EventBus implementation.</li>
-          	<li><i>18-Mar-2007</i> Will the EventBus find life in outer space?  (Now there's a "Watch the News at 10" headline!)  
-          	  <a href="http://kepler.nasa.gov/">NASA's Kepler Mission</a> is using the EventBus in software
-          	  that analyses hundreds of thousands of stars for planets that may support life.</li>
-          	<li><i>27-Dec-2006</i> The Event Bus has released an alpha 1.1 alpha version with Annotations!</li>
-          	<li><i>26-Nov-2006</i> The Event Bus has reached version 1.0!  With the recently added caching feature (thanks to Hans Muller for the inspiration), 
-          		  and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature complete 
-          		  for the 1.0 release.  The 1.0 release will be the last release for JDK 1.4.   Work will now begin on Annotations and Generics, 
-          		  which of course will require 1.5.  Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.</li>
-                <li><i>22-Nov-2006</i> Martin Fowler has published <a href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls EventCollaboration</a> .</li>
-        	<li><i>20-July-2006</i> Evan Summers has published an <a href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus implementation with some nice annotations.</li>
-          </ul>
-          <h2>About the EventBus</h2>
-          <p> The Event Bus is a single-process publish/subscribe event routing library, with Swing extensions. 
-            The EventBus is fully-functional, with very good API documentation and test coverage (80+%). It has been deployed 
-            in many production environments, including financial, engineering and scientific applications. 
-          <p>The Event Bus is easy to use and yet very powerful. It requires no 
-            setup and the API is small and clear. The EventBus solves many problems, 
-            and promotes loose coupling, particularly with Swing applications.
-          <p>The <a href="HopOnTheEventBus-Web.ppt">slides from the EventBus presentation at JavaOne 2006</a> 
-          	demonstrate many ways to use the EventBus.</a>
-          <p>Though not Swing-specific, the EventBus has Swing support and the 
-            Event Bus hopes to make Swing applications more componentized, modular 
-            and testable. The EventBus has its conceptual roots in the <a href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old 
-            InfoBus from JDK 1.1 days</a>, but it is much simpler and smaller.
-            The idea is similar to a computer system bus - components plug into 
-            a single bus and each can listen for information passed on it. The EventBus is different from 
-            the tightly-coupled Swing listener paradigm where listeners attach to and listen on 
-            specific components. Another difference is that the EventBus is not limited to Swing events.  
-            Any object can be published on the EventBus.   In typicaly usage, you create events for your own applications,
-            or publish objects that you already have in your application domain.  
-          <p>Components can subscribe to events passed on the Event Bus by Class or by String (called a topic name). 
-            Subscriptions use weak references by default, avoiding memory leaks common in swing application when 
-            listeners are not removed.   
-          <p>The Event Bus is related to messaging systems 
-            like JMS whereby many processes publish messages on a topic and other systems 
-            can listen on the topic. JMS implementations take care of efficiently 
-            routing the messages. The major advantage to JMS and the EventBus 
-            is that it introduces a decoupling layer. Components only have to 
-            know about the bus, not each subscriber and publisher that they may 
-            be interested in.  The EventBus differs from JMS since it meant to be used by a single JVM. 
-          <h2>Download Release Snapshots</h2>
-          The links below should take you to the proper folder.  If they don't work, use the Documents & Files link on the sidebar.
+<tr valign="top">
+<div class="app">
+<h1>Event Bus</h1>
 
-          <h3>Production Release</h3>
-          <p>The stable release is 1.2.  This release works with JDK 1.5 and later.  
-          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=9787&expandFolder=9787&folderID=9787">1.2 Stable Release Folder</a>
-          
-<!--
-          <h3>Beta Release</h3>
-          <p>The latest beta release is 1.2.  This release works with JDK 1.5 and later.  
-          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8423&expandFolder=8423&folderID=8423">1.2 Beta Release Folder</a>
-          <p>The logging jars are provided for convenience and are the versions used to test against.
-           
-          <h3>Production Release for JDK 1.4</h3>
-          <p>If you are using JDK 1.4, you must use release 1.0.1.  These jars are compiled with JDK 1.4.
-          <p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=8425&expandFolder=8425&folderID=8425">1.0.1 for JDK 1.4 Stable Release Folder</a>
--->
-          <h2>JavaDoc</h2>
-          <p>EventBus doucmentation is quite good and is available as download as well as <a href="doc/api/index.html">online</a>.  Please
-          	 see the library and package descriptions for a list of features and examples in addition to those supplied here.</p>
-          <h2>Examples</h2>
-          <p> A typical use case for the EventBus is a status bar.  Applications can avoid coupling
-              components to status bars (and vice versa) by publishing status events on the EventBus
-              and having the status bar subscribe to status events.  (A key advantage of the EventBus is that the 
-              contracts between components are defined by the events that are published between them.) :
-          <p>StatusEvent.java
+<h2>EventBus News</h2>
+<ul>
+   <li>
+   <i>14-Nov-2008</i>&nbsp;EventBus 1.3b Released. EventBus 1.3b adds:
+      <ul>
+         <li>The ability to control the order in which subscribers are called with the Priority interface
+            and priority annotation parameters.
+         </li>
+         <li>Support for annotated inner classes and other non-public members.</li>
+      </ul>
+   <li><i>21-Aug-2008</i>&nbsp;EventBus 1.2 Released. EventBus 1.2 delivers significant new features:
+      <ul>
+         <li>@EventSubscriber and @EventTopicSubscriber annotations take the boilerplate out EventBus
+            coding.
+         </li>
+         <li>Configurable EventBus implementation for support of non-Swing applications.</li>
+         <li>Generics support - subscribing to List&lt;Trade&gt;, for example, and Subscribers take generic
+            types for typesafe coding.
+         </li>
+         <li>Improved logging which can leverage log4j, java.util.logging, and commons-logging.</li>
+         <li>Even better documentation.</li>
+      </ul>
+   </li>
+   <li><i>18-Jan-2008</i>&nbsp;EventBus is being used by Wellfleet Software for an implementation of ebXML
+   Registry and Repository 4.0 specifications.
+   <p>According to Farrukh Najmi, the lead architect for the project: </p>
+
+   <p>"EventBus has been a tremendous improvement over tradition Swing PropertyChangeListener /
+      firePropertyChangeEvent API.
+      The biggest benefit of EventBus is that the resulting design is very loosely coupled. We found that
+      EventBus was simple to
+      use with minimal learning curve, had a small footprint and of a very high quality. We even plan to
+      use it in non-Swing,
+      server-based GUIs."</p>
+   <li><i>30-Nov-2007</i>&nbsp;ZD Net has published <a
+        href="http://www.zdnetasia.com/techguide/java/0,39044898,62034699,00.htm">this article</a> on the
+   EventBus.
+   <li><i>27-Nov-2007</i>&nbsp;EventBus 1.2 beta released. The 1.2 beta release provides flexible logging - give it a
+      whirl in your app and please send feedback. You don't need anything but EventBus.jar, but if you want to use log4j
+      or any other logger support by Apache Commons Logging, then include the common-logging-* jars and
+      the jar of the logger of your choice (such as log4j, conveniently included in the release folder). Logging is a
+      great way to debug event issues which are often hard to track down due to their decoupled nature. The EventBus
+      provides lots of DEBUG output so you can see who is subscribed to what.
+   </li>
+   <li><i>11-Nov-2007</i>&nbsp;EventBus 1.1 released. <b>Important:</b> All users of 1.0 should upgrade to version 1.1,
+      which contains a Swing threading bug fix and production Annotation implementation. If you are using release 1.0
+      for JDK 1.4, upgrade to 1.0.1 for JDK 1.4 (below).
+   </li>
+   <li><i>6-Sept-2007</i>&nbsp;The Event Bus has released 1.1 beta2, adding generics support and fixing an Annotation
+      issues. This is a solid beta, though some of the generics APIs are not yet complete (vetos, unsubscribes).
+   </li>
+   <li><i>29-Apr-2007</i>&nbsp;The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable
+      EventBus implementation.
+   </li>
+   <li><i>18-Mar-2007</i>&nbsp;Will the EventBus find life in outer space? (Now there's a "Watch the News at 10"
+      headline!)
+      <a href="http://kepler.nasa.gov/">NASA's Kepler Mission</a> is using the EventBus in software
+      that analyses hundreds of thousands of stars for planets that may support life.
+   </li>
+   <li><i>27-Dec-2006</i>&nbsp;The Event Bus has released an alpha 1.1 alpha version with Annotations!</li>
+   <li><i>26-Nov-2006</i>&nbsp;The Event Bus has reached version 1.0! With the recently added caching feature (thanks to
+      Hans Muller for the inspiration),
+      and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature
+      complete
+      for the 1.0 release. The 1.0 release will be the last release for JDK 1.4. Work will now begin on Annotations and
+      Generics,
+      which of course will require 1.5. Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.
+   </li>
+   <li><i>22-Nov-2006</i>&nbsp;Martin Fowler has published <a
+           href="http://martinfowler.com/eaaDev/EventCollaboration.html">an EventBus-like pattern he calls
+      EventCollaboration</a> .
+   </li>
+   <li><i>20-July-2006</i>&nbsp;Evan Summers has published an <a
+           href="https://aptframework.dev.java.net/article/edtMessageBus.html">article</a> showing a similar EventBus
+      implementation with some nice annotations.
+   </li>
+</ul>
+<h2>About the EventBus</h2>
+
+<p> The Event Bus is a single-process publish/subscribe event routing library, with Swing extensions.
+The EventBus is fully-functional, with very good API documentation and test coverage (80+%). It has been deployed
+in many production environments, including financial, engineering and scientific applications.
+<p>The Event Bus is easy to use and yet very powerful. It requires no
+setup and the API is small and clear. The EventBus solves many problems,
+and promotes loose coupling, particularly with Swing applications.
+<p>The <a href="HopOnTheEventBus-Web.ppt">slides from the EventBus presentation at JavaOne 2006</a>
+   demonstrate many ways to use the EventBus.
+
+<p>Though not Swing-specific, the EventBus has Swing support and the
+EventBus hopes to make Swing applications more componentized, modular
+and testable. The EventBus has its conceptual roots in the <a
+        href="http://java.sun.com/products/archive/javabeans/infobus/downloads.html">old
+   InfoBus from JDK 1.1 days</a>, but it is much simpler and smaller.
+The idea is similar to a computer system bus - components plug into
+a single bus and each can listen for information passed on it. The EventBus is different from
+the tightly-coupled Swing listener paradigm where listeners attach to and listen on
+specific components. Another difference is that the EventBus is not limited to Swing events.
+Any object can be published on the EventBus. In typicaly usage, you create events for your own applications,
+or publish objects that you already have in your application domain.
+<p>Components can subscribe to events passed on the Event Bus by Class or by String (called a topic name).
+Subscriptions use weak references by default, avoiding memory leaks common in swing application when
+listeners are not removed.
+<p>The Event Bus is related to messaging systems
+like JMS whereby many processes publish messages on a topic and other systems
+can listen on the topic. JMS implementations take care of efficiently
+routing the messages. The major advantage to JMS and the EventBus
+is that it introduces a decoupling layer. Components only have to
+know about the bus, not each subscriber and publisher that they may
+be interested in. The EventBus differs from JMS since it meant to be used by a single JVM.
+<h2>Download Release Snapshots</h2>
+The links below should take you to the proper folder. If they don't work, use the Documents & Files link on the sidebar.
+
+<h3>Production Release</h3>
+
+<p>The stable release is 1.2. This release works with JDK 1.5 and later.
+<p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=9787&expandFolder=9787&folderID=9787">1.2
+   Stable Release Folder</a>
+
+<h3>Beta Release</h3>
+<p>The latest beta release is 1.3beta.  This release works with JDK 1.5 and later.  
+<p><a href="https://eventbus.dev.java.net/servlets/ProjectDocumentList?folderID=10206&expandFolder=10206&folderID=10206">1.3 Beta Release Folder</a>
+<p>The logging jars are provided for convenience and are the versions used to test against.
+
+<h2>JavaDoc</h2>
+
+<p>EventBus doucmentation is quite good and is available as download as well as <a href="doc/api/index.html">online</a>.
+   Please see the library and package descriptions for a list of features and examples in addition to those supplied here.</p>
+
+<h2>Examples</h2>
+
+<p> A typical use case for the EventBus is a status bar. Applications can avoid coupling
+components to status bars (and vice versa) by publishing status events on the EventBus
+and having the status bar subscribe to status events. (A key advantage of the EventBus is that the
+contracts between components are defined by the events that are published between them.) :
+<p>StatusEvent.java
           <pre>public StatusEvent { 
    Sting statusText;
    
@@ -125,10 +168,10 @@
       return statusText;
    }
 }</pre>
-          <p>AnySwingController.java </p>
+<p>AnySwingController.java </p>
           <pre>...   
 EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
-          <p>StatusBar.java
+<p>StatusBar.java
           <pre>public StatusBar extends JLabel implements EventSubscriber {
    public StatusBar() {
       EventBus.subscribe(StatusEvent.class, this);
@@ -142,8 +185,8 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
 }
 </pre>
 <p>
-	With Annotations, it's a bit simpler (StatusEvent.java and AnySwingController.java stay the same):
-   <p>StatusBar.java
+With Annotations, it's a bit simpler (StatusEvent.java and AnySwingController.java stay the same):
+<p>StatusBar.java
       <pre>public StatusBar extends JLabel {
               public StatusBar() {
                  AnnotationProcessor.process(this);
@@ -155,81 +198,72 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
            }
       </pre>
 <p>
-          <h2>Future</h2>
-          <p>the EventBus is a complete usage package as it stands today, however, the idea will be pushed in new directions.  Future goals include: </div>
-            <ul>
-              <li>More generic methods
-              <li>@VetoSubscriber annotation 
-              <li>@Publish annotation for Swing fields to autoconvert addXXXlisteners boilerplate to EventBus events.
-              <li>A set of Swing components or adapters for components for common usages like progress bars.
-              <li>Moving information from non-Swing threads to Swing components via events.
-              <li>MVC through events examples.
-              <li>Examples for validation through events.
-              <li>Integrating JMS, WebServices and SOA with the EventBus.
-            </ul>
-      </div>
-      <div> 
-        <div class="app"> 
-          <p> 
-          <table border="0" cellpadding="0" cellspacing="0">
-            <tr> 
-              <td width="16"><img src="buttonbar_left.gif" alt="" width="16" height="26" /></td>
-              <td background="buttonbar_bg.gif"> <table border="0" cellpadding="0" cellspacing="0"  style="margin-top: 6px">
-                  <tr> 
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="http://www.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">java.net</a></td>
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="http://java-net.dev.java.net" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">project 
-                      home</a></td>
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="https://java-net.dev.java.net/servlets/ProjectForumView;jsessionid=8C48D5421D8F0AA721533B152039C509" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">forum</a></td>
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="http://weblogs.java.net/" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">blog</a></td>
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="http://wiki.java.net/bin/view/Main/WebHome" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">wiki</a></td>
-                    <!-- link -->
-                    <td><img src="bullet.gif" alt="*" border="0" hspace="4" /></td>
-                    <td><a href="#faq" style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">faq</a></td>
+<div>
+   <div class="app">
+      <p>
+      <table border="0" cellpadding="0" cellspacing="0">
+         <tr>
+            <td width="16"><img src="buttonbar_left.gif" alt="" width="16" height="26"/></td>
+            <td background="buttonbar_bg.gif">
+               <table border="0" cellpadding="0" cellspacing="0" style="margin-top: 6px">
+                  <tr>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td><a href="http://www.java.net"
+                            style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">java.net</a>
+                     </td>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td><a href="http://java-net.dev.java.net"
+                            style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">project
+                        home</a></td>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td>
+                        <a href="https://java-net.dev.java.net/servlets/ProjectForumView;jsessionid=8C48D5421D8F0AA721533B152039C509"
+                           style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">forum</a>
+                     </td>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td><a href="http://weblogs.java.net/"
+                            style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">blog</a>
+                     </td>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td><a href="http://wiki.java.net/bin/view/Main/WebHome"
+                            style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">wiki</a>
+                     </td>
+                     <!-- link -->
+                     <td><img src="bullet.gif" alt="*" border="0" hspace="4"/></td>
+                     <td><a href="#faq"
+                            style="color: white; text-decoration:none; font-family:Arial,sans-serif; font-size:11px; font-weight:bold; white-space:nowrap">faq</a>
+                     </td>
                   </tr>
-                </table></td>
-              <td width="22"><img src="buttonbar_right.gif" alt="" width="22" height="26" /></td>
-            </tr>
-            <tr> 
-              <td valign="top"><img src="buttonsh_left.gif" alt="" width="16" height="8" /></td>
-              <td background="buttonsh_bg.gif"><img src="buttonsh_bg.gif" alt="" width="16" height="8" /></td>
-              <td valign="top"><img src="buttonsh_right.gif" alt="" width="22" height="8" /></td>
-            </tr>
-          </table>
-          <p></p>
-          <p> 
-          <h2>Feedback</h2>
-          <p> Though there is not a lot of traffic, this is an active project.  Feedback is welcome and is turned around very quickly.  
-            The EventBus is tiny, so changes are easy to make and we are always looking for feedback and improvement.  So please,
-            send an email to tell us how you are using it, or become a contributor.  We are actively looking for improvements in
-            the core in Annotations and Generics, and we are also looking to add supplemental libraries that encapsulate usages
-            of the EventBus (like an EventBus-aware StatusBar, for example).
-          <div id="bodycol"> 
-            <div id="projecthome" class="app"> 
-              <h2>Thanks</h2>
-              <p>Special thanks to Jeff Kurtz at <a href="www.circleinfo.com">The 
-                Circle Group</a> for his help, especially with multithreaded Swing 
-                issues.</p>
-            </div>
-          </div>
-          <ul>
-          </ul>
-          <p>&nbsp;</div>
-      </div></td>
-  </tr>
-  <tr valign="top">
-    <td id="leftcol">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+               </table>
+            </td>
+            <td width="22"><img src="buttonbar_right.gif" alt="" width="22" height="26"/></td>
+         </tr>
+         <tr>
+            <td valign="top"><img src="buttonsh_left.gif" alt="" width="16" height="8"/></td>
+            <td background="buttonsh_bg.gif"><img src="buttonsh_bg.gif" alt="" width="16" height="8"/></td>
+            <td valign="top"><img src="buttonsh_right.gif" alt="" width="22" height="8"/></td>
+         </tr>
+      </table>
+      <p></p>
+
+      <p>
+
+      <h2>Feedback</h2>
+
+      <p> Though there is not a lot of traffic, this is an active project. Feedback is welcome and is turned around very
+      quickly. The EventBus is fairly small, so changes are easy to make and we are always looking for feedback and improvement. So
+      please, send an email to tell us how you are using it, or become a contributor. 
+      <p>&nbsp;</div>
+</div>
+
+<td id="leftcol">&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
 </table>
  
  
@@ -248,8 +282,8 @@ EventBus.publish(new StatusEvent(&quot;Looking up data...&quot;));</pre>
 
 <p><small>Copyright &#169; 2004 CollabNet, Inc. All rights reserved.</small></p>
 </td>
-<td><a href="http://www.sun.com" target="sun"><img src="/branding/images/logo_sun_small.gif" id="" width="61" height="29" border="0" /></a>
-<a href="http://www.oreilly.com" target="oreilly"><img src="/branding/images/montague_logo_oreilly.gif" id="" width="74" height="19" border="0" /></a></td>
+<td><a href="http://www.sun.com" target="sun"><img src="/branding/images/logo_sun_small.gif" width="61" height="29" border="0" /></a>
+<a href="http://www.oreilly.com" target="oreilly"><img src="/branding/images/montague_logo_oreilly.gif" width="74" height="19" border="0" /></a></td>
 </tr></table></div> 
  
 </body>

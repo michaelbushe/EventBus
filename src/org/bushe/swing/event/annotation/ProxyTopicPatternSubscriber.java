@@ -25,7 +25,24 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
    public ProxyTopicPatternSubscriber(Object proxiedSubscriber, Method subscriptionMethod,
            ReferenceStrength referenceStrength,
            EventService es, String patternString, Pattern pattern) {
-      super(proxiedSubscriber, subscriptionMethod, referenceStrength, es, patternString);
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, patternString, pattern);
+   }
+
+   /**
+    * Creates a proxy.  This does not subscribe it.
+    *
+    * @param proxiedSubscriber the subscriber that the proxy will call when an event is published
+    * @param subscriptionMethod the method the proxy will call, must have an Object as it's first and only parameter
+    * @param referenceStrength if the subscription is weak, the reference from the proxy to the real subscriber should
+    * be too
+    * @param es the EventService we will be subscribed to, since we may need to unsubscribe when weak refs no longer
+    * exist
+    * @param patternString the Regular Expression for topics to subscribe to, used for unsubscription only
+    */
+   public ProxyTopicPatternSubscriber(Object proxiedSubscriber, Method subscriptionMethod,
+           ReferenceStrength referenceStrength, int priority,
+           EventService es, String patternString, Pattern pattern) {
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es, patternString);
       this.pattern = pattern;
    }
 

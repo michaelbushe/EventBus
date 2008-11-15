@@ -29,4 +29,7 @@ public @interface EventTopicPatternSubscriber {
     * service needs to be created, it must have a default constructor.
     */
    Class<? extends EventService> autoCreateEventServiceClass() default ThreadSafeEventService.class;
+
+   /** Determines the order in which this subscriber is called, default is FIFO.*/
+   int priority() default 0;
 }

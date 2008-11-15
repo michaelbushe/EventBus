@@ -1,6 +1,7 @@
 package org.bushe.swing.event.annotation;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.AccessibleObject;
 import java.util.regex.Pattern;
 
 import org.bushe.swing.event.EventService;
@@ -48,11 +49,11 @@ public class AnnotationProcessor {
          if (classAnnotation != null) {
             process(classAnnotation, obj, method);
          }
-         EventTopicSubscriber topicAnnotation = (EventTopicSubscriber) method.getAnnotation(EventTopicSubscriber.class);
+         EventTopicSubscriber topicAnnotation = method.getAnnotation(EventTopicSubscriber.class);
          if (topicAnnotation != null) {
             process(topicAnnotation, obj, method);
          }
-         EventTopicPatternSubscriber topicPatternAnnotation = (EventTopicPatternSubscriber) method.getAnnotation(EventTopicPatternSubscriber.class);
+         EventTopicPatternSubscriber topicPatternAnnotation = method.getAnnotation(EventTopicPatternSubscriber.class);
          if (topicPatternAnnotation != null) {
             process(topicPatternAnnotation, obj, method);
          }
@@ -106,11 +107,12 @@ public class AnnotationProcessor {
       Class<? extends EventService> eventServiceClass = topicPatternAnnotation.autoCreateEventServiceClass();
       String eventServiceName = topicPatternAnnotation.eventServiceName();
       EventService eventService = getEventServiceFromAnnotation(eventServiceName, eventServiceClass);
+      int priority = topicPatternAnnotation.priority();
 
       //Create proxy and subscribe
       Pattern pattern = Pattern.compile(topicPattern);
       ProxyTopicPatternSubscriber subscriber = new ProxyTopicPatternSubscriber(obj, method, topicPatternAnnotation.referenceStrength(),
-              eventService, topicPattern, pattern);
+              priority, eventService, topicPattern, pattern);
 
       //See Issue #18
       //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
@@ -130,8 +132,10 @@ public class AnnotationProcessor {
       String eventServiceName = topicAnnotation.eventServiceName();
       EventService eventService = getEventServiceFromAnnotation(eventServiceName, eventServiceClass);
 
+      int priority = topicAnnotation.priority();
+
       //Create proxy and subscribe
-      ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), eventService, topic);
+      ProxyTopicSubscriber subscriber = new ProxyTopicSubscriber(obj, method, topicAnnotation.referenceStrength(), priority, eventService, topic);
 
       //See Issue #18
       //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
@@ -158,9 +162,12 @@ public class AnnotationProcessor {
       String eventServiceName = annotation.eventServiceName();
       EventService eventService = getEventServiceFromAnnotation(eventServiceName, eventServiceClass);
 
+      int priority = annotation.priority();
+
       //Create proxy and subscribe
       //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), eventService, eventClass);
+      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), 
+              priority, eventService, eventClass);
       if (annotation.exact()) {
          //See Issue #18
          //Also note that this post is wrong: https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834

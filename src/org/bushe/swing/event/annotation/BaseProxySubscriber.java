@@ -2,8 +2,10 @@ package org.bushe.swing.event.annotation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.AccessibleObject;
 
 import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.Prioritized;
 
 /** A class is subscribed to an EventService on behalf of another object. */
 public class BaseProxySubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventSubscriber {
@@ -22,7 +24,23 @@ public class BaseProxySubscriber extends AbstractProxySubscriber implements org.
     */
    public BaseProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
            EventService es, Class subscription) {
-      super(proxiedSubscriber, subscriptionMethod, referenceStrength, es);
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, subscription);
+   }
+
+   /**
+    * Creates a proxy with a priority.  This does not subscribe it.
+    *
+    * @param proxiedSubscriber the subscriber that the proxy will call when an event is publixhed
+    * @param subscriptionMethod the method the proxy will call, must have an Object as it's first and only parameter
+    * @param referenceStrength if the subscription is weak, the reference from the proxy to the real subscriber should
+    * be too
+    * @param es the EventService we will be subscribed to, since we may need to unsubscribe when weak refs no longer
+    * exist
+    * @param subscription the class to subscribe to, used for unsubscription only
+    */
+   public BaseProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
+           int priority, EventService es, Class subscription) {
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es);
       this.subscriptionClass = subscription;
       Class[] params = subscriptionMethod.getParameterTypes();
       if (params == null || params.length != 1 || params[0].isPrimitive()) {
@@ -37,15 +55,19 @@ public class BaseProxySubscriber extends AbstractProxySubscriber implements org.
     */
    public void onEvent(Object event) {
       Object[] args = new Object[]{event};
+      Method subscriptionMethod = null;
+      Object obj = null;
       try {
-         Object obj = getProxiedSubscriber();
+         obj = getProxiedSubscriber();
          if (obj == null) {
             //has been garbage collected
             return;
          }
-         getSubscriptionMethod().invoke(obj, args);
+         subscriptionMethod = getSubscriptionMethod();
+         subscriptionMethod.invoke(obj, args);
       } catch (IllegalAccessException e) {
-         throw new RuntimeException("IllegalAccessException when invoking annotated method from EventService publication.  Event class:" + event.getClass() + ", Event:" + event + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod(), e);
+         String message = "Exception when invoking annotated method from EventService publication.  Event class:" + event.getClass() + ", Event:" + event + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod();
+         retryReflectiveCallUsingAccessibleObject(args, subscriptionMethod, obj, e, message);
       } catch (InvocationTargetException e) {
          throw new RuntimeException("InvocationTargetException when invoking annotated method from EventService publication.  Event class:" + event.getClass() + ", Event:" + event + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod(), e);
       }

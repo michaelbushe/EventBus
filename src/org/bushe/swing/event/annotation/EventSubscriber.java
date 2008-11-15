@@ -90,6 +90,9 @@ public @interface EventSubscriber {
    /** The class to subscribe to, if not specified, a subscription is created for the type of the method parameter. */
    Class eventClass() default UseTheClassOfTheAnnotatedMethodsParameter.class;
 
+   /** Determines the order in which this subscriber is called, default is FIFO.*/
+   int priority() default 0;
+
    /** Whether or not to subcribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
    boolean exact() default false;
 
