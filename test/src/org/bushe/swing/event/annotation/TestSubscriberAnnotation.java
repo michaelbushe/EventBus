@@ -17,16 +17,22 @@ import junit.framework.TestCase;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceLocator;
+import org.bushe.swing.event.EventServiceLocatorTestCase;
 
 public class TestSubscriberAnnotation extends TestCase {
 
    @Override
    public void setUp() {
+      EventServiceLocatorTestCase.clearEventServiceLocator();
       EventBus.getGlobalEventService();
       EventBus.clearAllSubscribers();
       AnnotatedEventSubcriber.setTimesCalled(0);
       AnnotatedEventSubcriber.setLastCall(null);
       System.gc();
+   }
+
+   protected void tearDown() throws Exception {
+      EventServiceLocatorTestCase.clearEventServiceLocator();      
    }
 
    public void testSimple() throws InvocationTargetException, InterruptedException {
@@ -48,6 +54,7 @@ public class TestSubscriberAnnotation extends TestCase {
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
       assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
+      System.out.println("avoid garbage collection:"+subscriber);
    }
 
    public void testWeakReference() {
@@ -60,6 +67,7 @@ public class TestSubscriberAnnotation extends TestCase {
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
       assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
+      System.out.println("avoid garbage collection:"+subscriber);
       subscriber = null;
       System.gc();
       EventBus.publish(Color.BLUE);
@@ -74,6 +82,7 @@ public class TestSubscriberAnnotation extends TestCase {
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
       assertEquals("doList", AnnotatedEventSubcriber.getLastCall());
+      System.out.println("avoid garbage collection:"+subscriber);
       AnnotatedEventSubcriber.setLastCall(null);
       //it was subscribed to a list, though the method param is Collection, it shouldn't get called
       EventBus.publish(new HashSet());
@@ -86,6 +95,7 @@ public class TestSubscriberAnnotation extends TestCase {
       AnnotationProcessor.process(subscriber);
       EventBus.publish(new JToggleButton());
       EDTUtil.waitForEDT();
+      System.out.println("avoid garbage collection:"+subscriber);
       assertEquals("doJToggleButtonExactly", AnnotatedEventSubcriber.getLastCall());
       assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
       EventBus.publish(new JButton());

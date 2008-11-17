@@ -47,10 +47,12 @@ public class TestDefaultEventService extends TestCase {
 
    protected void setUp() throws Exception {
       eventService = new ThreadSafeEventService(null, false);
+      EventServiceLocatorTestCase.clearEventServiceLocator();
    }
 
    protected void tearDown() throws Exception {
       eventService = null;
+      EventServiceLocatorTestCase.clearEventServiceLocator();
    }
 
    private EventServiceEvent createEvent() {
@@ -593,6 +595,7 @@ public class TestDefaultEventService extends TestCase {
    }
 
    public void testEventLocator() {
+      EventServiceLocatorTestCase.clearEventServiceLocator();
       EventService es = EventServiceLocator.getSwingEventService();
       assertTrue(es instanceof SwingEventService);
       es = new ThreadSafeEventService(null, false);

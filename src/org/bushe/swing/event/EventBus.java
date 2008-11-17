@@ -39,16 +39,14 @@ import java.lang.reflect.Type;
  */
 public class EventBus {
 
-   private static EventService globalEventService = EventServiceLocator.getEventBusService();
-
-   /**
+  /**
     * The EventBus uses a global static EventService.  This method is not necessary in usual usage, use the other static
     * methods instead.  It is used to expose any other functionality and for framework classes (EventBusAction)
     *
     * @return the global static EventService
     */
    public static EventService getGlobalEventService() {
-      return globalEventService;
+      return EventServiceLocator.getEventBusService();
    }
 
    /** @see EventService#publish(Object) */
@@ -56,7 +54,7 @@ public class EventBus {
       if (event == null) {
          throw new IllegalArgumentException("Can't publish null.");
       }
-      globalEventService.publish(event);
+      EventServiceLocator.getEventBusService().publish(event);
    }
 
    /** @see EventService#publish(String,Object) */
@@ -64,7 +62,7 @@ public class EventBus {
       if (topic == null) {
          throw new IllegalArgumentException("Can't publish to null topic.");
       }
-      globalEventService.publish(topic, o);
+      EventServiceLocator.getEventBusService().publish(topic, o);
    }
 
    /** @see EventService#publish(java.lang.reflect.Type, Object)  */
@@ -72,73 +70,73 @@ public class EventBus {
       if (genericType == null) {
          throw new IllegalArgumentException("Can't publish to null type.");
       }
-      globalEventService.publish(genericType, o);
+      EventServiceLocator.getEventBusService().publish(genericType, o);
    }
 
 
    /** @see EventService#subscribe(Class,EventSubscriber) */
    public static boolean subscribe(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.subscribe(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().subscribe(eventClass, subscriber);
    }
 
    /** @see EventService#subscribe(java.lang.reflect.Type, EventSubscriber)  */
    public static boolean subscribe(Type genericType, EventSubscriber subscriber) {
-      return globalEventService.subscribe(genericType, subscriber);
+      return EventServiceLocator.getEventBusService().subscribe(genericType, subscriber);
    }
 
    /** @see EventService#subscribeExactly(Class,EventSubscriber) */
    public static boolean subscribeExactly(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.subscribeExactly(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().subscribeExactly(eventClass, subscriber);
    }
 
    /** @see EventService#subscribe(String,EventTopicSubscriber) */
    public static boolean subscribe(String topic, EventTopicSubscriber subscriber) {
-      return globalEventService.subscribe(topic, subscriber);
+      return EventServiceLocator.getEventBusService().subscribe(topic, subscriber);
    }
 
    /** @see EventService#subscribe(Pattern,EventTopicSubscriber) */
    public static boolean subscribe(Pattern topicPattern, EventTopicSubscriber subscriber) {
-      return globalEventService.subscribe(topicPattern, subscriber);
+      return EventServiceLocator.getEventBusService().subscribe(topicPattern, subscriber);
    }
 
    /** @see EventService#subscribeStrongly(Class,EventSubscriber) */
    public static boolean subscribeStrongly(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.subscribeStrongly(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().subscribeStrongly(eventClass, subscriber);
    }
 
    /** @see EventService#subscribeExactlyStrongly(Class,EventSubscriber) */
    public static boolean subscribeExactlyStrongly(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.subscribeExactlyStrongly(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().subscribeExactlyStrongly(eventClass, subscriber);
    }
 
    /** @see EventService#subscribeStrongly(String,EventTopicSubscriber) */
    public static boolean subscribeStrongly(String topic, EventTopicSubscriber subscriber) {
-      return globalEventService.subscribeStrongly(topic, subscriber);
+      return EventServiceLocator.getEventBusService().subscribeStrongly(topic, subscriber);
    }
 
    /** @see EventService#subscribeStrongly(Pattern,EventTopicSubscriber) */
    public static boolean subscribeStrongly(Pattern topicPattern, EventTopicSubscriber subscriber) {
-      return globalEventService.subscribeStrongly(topicPattern, subscriber);
+      return EventServiceLocator.getEventBusService().subscribeStrongly(topicPattern, subscriber);
    }
 
    /** @see EventService#unsubscribe(Class,EventSubscriber) */
    public static boolean unsubscribe(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.unsubscribe(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribe(eventClass, subscriber);
    }
 
    /** @see EventService#unsubscribeExactly(Class,EventSubscriber) */
    public static boolean unsubscribeExactly(Class eventClass, EventSubscriber subscriber) {
-      return globalEventService.unsubscribeExactly(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribeExactly(eventClass, subscriber);
    }
 
    /** @see EventService#unsubscribe(String,EventTopicSubscriber) */
    public static boolean unsubscribe(String topic, EventTopicSubscriber subscriber) {
-      return globalEventService.unsubscribe(topic, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribe(topic, subscriber);
    }
 
    /** @see EventService#unsubscribe(Pattern,EventTopicSubscriber) */
    public static boolean unsubscribe(Pattern topicPattern, EventTopicSubscriber subscriber) {
-      return globalEventService.unsubscribe(topicPattern, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribe(topicPattern, subscriber);
    }
 
    /**
@@ -147,7 +145,7 @@ public class EventBus {
     * @see EventService#unsubscribe(Class,Object)
     */
    public static boolean unsubscribe(Class eventClass, Object object) {
-      return globalEventService.unsubscribe(eventClass, object);
+      return EventServiceLocator.getEventBusService().unsubscribe(eventClass, object);
    }
 
    /**
@@ -156,7 +154,7 @@ public class EventBus {
     * @see EventService#unsubscribeExactly(Class,Object)
     */
    public static boolean unsubscribeExactly(Class eventClass, Object subscriber) {
-      return globalEventService.unsubscribeExactly(eventClass, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribeExactly(eventClass, subscriber);
    }
 
    /**
@@ -165,7 +163,7 @@ public class EventBus {
     * @see EventService#unsubscribe(String,Object)
     */
    public static boolean unsubscribe(String topic, Object subscriber) {
-      return globalEventService.unsubscribe(topic, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribe(topic, subscriber);
    }
 
    /**
@@ -174,208 +172,207 @@ public class EventBus {
     * @see EventService#unsubscribe(Pattern,Object)
     */
    public static boolean unsubscribe(Pattern topicPattern, Object subscriber) {
-      return globalEventService.unsubscribe(topicPattern, subscriber);
+      return EventServiceLocator.getEventBusService().unsubscribe(topicPattern, subscriber);
    }
 
    /** @see EventService#subscribeVetoListener(Class,VetoEventListener) */
    public static boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListener(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListener(eventClass, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListener(Class,VetoEventListener) */
    public static boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerExactly(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListenerExactly(eventClass, vetoListener);
    }
 
 
    /** @see EventService#subscribeVetoListener(String,VetoTopicEventListener) */
    public static boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
-      return globalEventService.subscribeVetoListener(topic, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListener(topic, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListener(Pattern,VetoTopicEventListener) */
    public static boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
-      return globalEventService.subscribeVetoListener(topicPattern, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListener(topicPattern, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListenerStrongly(Class,VetoEventListener) */
    public static boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerStrongly(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListenerStrongly(eventClass, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListenerExactlyStrongly(Class,VetoEventListener) */
    public static boolean subscribeVetoListenerExactlyStrongly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerExactlyStrongly(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListenerExactlyStrongly(eventClass, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListenerStrongly(String,VetoTopicEventListener) */
    public static boolean subscribeVetoListenerStrongly(String topic, VetoTopicEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerStrongly(topic, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListenerStrongly(topic, vetoListener);
    }
 
    /** @see EventService#subscribeVetoListener(String,VetoTopicEventListener) */
    public static boolean subscribeVetoListenerStrongly(Pattern topicPattern, VetoTopicEventListener vetoListener) {
-      return globalEventService.subscribeVetoListenerStrongly(topicPattern, vetoListener);
+      return EventServiceLocator.getEventBusService().subscribeVetoListenerStrongly(topicPattern, vetoListener);
    }
 
    /** @see EventService#unsubscribeVetoListener(Class,VetoEventListener) */
    public static boolean unsubscribeVetoListener(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.unsubscribeVetoListener(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().unsubscribeVetoListener(eventClass, vetoListener);
    }
 
    /** @see EventService#unsubscribeVetoListenerExactly(Class,VetoEventListener) */
    public static boolean unsubscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener) {
-      return globalEventService.unsubscribeVetoListenerExactly(eventClass, vetoListener);
+      return EventServiceLocator.getEventBusService().unsubscribeVetoListenerExactly(eventClass, vetoListener);
    }
 
    /** @see EventService#unsubscribeVetoListener(String,VetoTopicEventListener) */
    public static boolean unsubscribeVetoListener(String topic, VetoTopicEventListener vetoListener) {
-      return globalEventService.unsubscribeVetoListener(topic, vetoListener);
+      return EventServiceLocator.getEventBusService().unsubscribeVetoListener(topic, vetoListener);
    }
 
    /** @see EventService#unsubscribeVetoListener(Pattern,VetoTopicEventListener) */
    public static boolean unsubscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener) {
-      return globalEventService.unsubscribeVetoListener(topicPattern, vetoListener);
+      return EventServiceLocator.getEventBusService().unsubscribeVetoListener(topicPattern, vetoListener);
    }
 
    /** @see EventService#getSubscribers(Class) */
    public static List getSubscribers(Class eventClass) {
-      return globalEventService.getSubscribers(eventClass);
+      return EventServiceLocator.getEventBusService().getSubscribers(eventClass);
    }
 
    /** @see EventService#getSubscribersToClass(Class) */
    public static List getSubscribersToClass(Class eventClass) {
-      return globalEventService.getSubscribersToClass(eventClass);
+      return EventServiceLocator.getEventBusService().getSubscribersToClass(eventClass);
    }
 
    /** @see EventService#getSubscribersToExactClass(Class) */
    public static List getSubscribersToExactClass(Class eventClass) {
-      return globalEventService.getSubscribersToExactClass(eventClass);
+      return EventServiceLocator.getEventBusService().getSubscribersToExactClass(eventClass);
    }
 
    /** @see EventService#getSubscribers(Type) */
    public static List getSubscribers(Type type) {
-      return globalEventService.getSubscribers(type);
+      return EventServiceLocator.getEventBusService().getSubscribers(type);
    }
 
    /** @see EventService#getSubscribers(String) */
    public static List getSubscribers(String topic) {
-      return globalEventService.getSubscribers(topic);
+      return EventServiceLocator.getEventBusService().getSubscribers(topic);
    }
 
    /** @see EventService#getSubscribersToTopic(String) */
    public static List getSubscribersToTopic(String topic) {
-      return globalEventService.getSubscribersToTopic(topic);
+      return EventServiceLocator.getEventBusService().getSubscribersToTopic(topic);
    }
 
    /** @see EventService#getSubscribers(Class) */
    public static List getSubscribersByPattern(String topic) {
-      return globalEventService.getSubscribersByPattern(topic);
+      return EventServiceLocator.getEventBusService().getSubscribersByPattern(topic);
    }
 
    /** @see EventService#getSubscribers(Class) */
    public static List getVetoSubscribers(Class eventClass) {
-      return globalEventService.getVetoSubscribers(eventClass);
+      return EventServiceLocator.getEventBusService().getVetoSubscribers(eventClass);
    }
 
    /** @see EventService#getVetoSubscribersToExactClass(Class) */
    public static List getVetoSubscribersToExactClass(Class eventClass) {
-      return globalEventService.getVetoSubscribersToExactClass(eventClass);
+      return EventServiceLocator.getEventBusService().getVetoSubscribersToExactClass(eventClass);
    }
 
    /** @see EventService#getVetoSubscribers(Class) */
    public static List getVetoSubscribers(String topic) {
-      return globalEventService.getVetoSubscribers(topic);
+      return EventServiceLocator.getEventBusService().getVetoSubscribers(topic);
    }
 
    /** @see EventService#getVetoSubscribersToClass(Class) */
    public static List getVetoSubscribersToClass(Class eventClass) {
-      return globalEventService.getVetoSubscribersToClass(eventClass);
+      return EventServiceLocator.getEventBusService().getVetoSubscribersToClass(eventClass);
    }
 
    /** @see EventService#getVetoSubscribers(Pattern) */
    public static List getVetoSubscribers(Pattern pattern) {
-      return globalEventService.getVetoSubscribers(pattern);
+      return EventServiceLocator.getEventBusService().getVetoSubscribers(pattern);
    }
 
    /** @see EventService#clearAllSubscribers() */
    public static void clearAllSubscribers() {
-      globalEventService.clearAllSubscribers();
+      EventServiceLocator.getEventBusService().clearAllSubscribers();
    }
 
    /** @see EventService#setDefaultCacheSizePerClassOrTopic(int) */
    public static void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic) {
-      globalEventService.setDefaultCacheSizePerClassOrTopic(defaultCacheSizePerClassOrTopic);
+      EventServiceLocator.getEventBusService().setDefaultCacheSizePerClassOrTopic(defaultCacheSizePerClassOrTopic);
    }
 
    /** @see org.bushe.swing.event.EventService#getDefaultCacheSizePerClassOrTopic() */
    public static int getDefaultCacheSizePerClassOrTopic() {
-      return globalEventService.getDefaultCacheSizePerClassOrTopic();
+      return EventServiceLocator.getEventBusService().getDefaultCacheSizePerClassOrTopic();
    }
 
    /** @see EventService#setCacheSizeForEventClass(Class,int) */
    public static void setCacheSizeForEventClass(Class eventClass, int cacheSize) {
-      globalEventService.setCacheSizeForEventClass(eventClass, cacheSize);
+      EventServiceLocator.getEventBusService().setCacheSizeForEventClass(eventClass, cacheSize);
    }
 
    /** @see EventService#getCacheSizeForEventClass(Class) */
    public static int getCacheSizeForEventClass(Class eventClass) {
-      return globalEventService.getCacheSizeForEventClass(eventClass);
+      return EventServiceLocator.getEventBusService().getCacheSizeForEventClass(eventClass);
    }
 
    /** @see EventService#setCacheSizeForTopic(String,int) */
    public static void setCacheSizeForTopic(String topicName, int cacheSize) {
-      globalEventService.setCacheSizeForTopic(topicName, cacheSize);
+      EventServiceLocator.getEventBusService().setCacheSizeForTopic(topicName, cacheSize);
    }
 
    /** @see EventService#setCacheSizeForTopic(java.util.regex.Pattern,int) */
    public static void setCacheSizeForTopic(Pattern pattern, int cacheSize) {
-      globalEventService.setCacheSizeForTopic(pattern, cacheSize);
+      EventServiceLocator.getEventBusService().setCacheSizeForTopic(pattern, cacheSize);
    }
 
    /** @see EventService#getCacheSizeForTopic(String) */
    public static int getCacheSizeForTopic(String topic) {
-      return globalEventService.getCacheSizeForTopic(topic);
+      return EventServiceLocator.getEventBusService().getCacheSizeForTopic(topic);
    }
 
    /** @see EventService#getLastEvent(Class) */
    public static Object getLastEvent(Class eventClass) {
-      return globalEventService.getLastEvent(eventClass);
+      return EventServiceLocator.getEventBusService().getLastEvent(eventClass);
    }
 
    /** @see EventService#getCachedEvents(Class) */
    public static List getCachedEvents(Class eventClass) {
-      return globalEventService.getCachedEvents(eventClass);
+      return EventServiceLocator.getEventBusService().getCachedEvents(eventClass);
    }
 
    /** @see EventService#getLastTopicData(String) */
    public static Object getLastTopicData(String topic) {
-      return globalEventService.getLastTopicData(topic);
+      return EventServiceLocator.getEventBusService().getLastTopicData(topic);
    }
 
    /** @see EventService#getCachedTopicData(String) */
    public static List getCachedTopicData(String topic) {
-      return globalEventService.getCachedTopicData(topic);
+      return EventServiceLocator.getEventBusService().getCachedTopicData(topic);
    }
 
    /** @see EventService#clearCache(Class) */
    public static void clearCache(Class eventClass) {
-      globalEventService.clearCache(eventClass);
+      EventServiceLocator.getEventBusService().clearCache(eventClass);
    }
 
    /** @see EventService#clearCache(String) */
    public static void clearCache(String topic) {
-      globalEventService.clearCache(topic);
+      EventServiceLocator.getEventBusService().clearCache(topic);
    }
 
    /** @see EventService#clearCache(java.util.regex.Pattern) */
    public static void clearCache(Pattern pattern) {
-      globalEventService.clearCache(pattern);
+      EventServiceLocator.getEventBusService().clearCache(pattern);
    }
 
    /** @see org.bushe.swing.event.EventService#clearCache() */
    public static void clearCache() {
-      globalEventService.clearCache();
+      EventServiceLocator.getEventBusService().clearCache();
    }
-
 }

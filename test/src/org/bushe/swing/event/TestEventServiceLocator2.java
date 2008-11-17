@@ -18,7 +18,12 @@ package org.bushe.swing.event;
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
-public class TestEventServiceLocator2 extends TestCase {
+public class TestEventServiceLocator2 extends EventServiceLocatorTestCase {
+   
+   public TestEventServiceLocator2(String name) {
+      super(name);
+   }
+
    public void testSetEventBusService() {
       EventService ebs = new ThreadSafeEventService();
       try {

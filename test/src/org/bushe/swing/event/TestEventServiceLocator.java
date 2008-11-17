@@ -17,7 +17,12 @@ package org.bushe.swing.event;
 
 import junit.framework.TestCase;
 
-public class TestEventServiceLocator extends TestCase {
+public class TestEventServiceLocator extends EventServiceLocatorTestCase {
+   
+   public TestEventServiceLocator(String name) {
+      super(name);
+   }
+
    public void testDefaultEventBusService() {
       EventService ebs = EventServiceLocator.getEventBusService();
       assertTrue(ebs instanceof SwingEventService);

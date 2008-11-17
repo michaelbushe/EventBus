@@ -18,7 +18,7 @@ package org.bushe.swing.event;
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
-public class TestEventBusTiming extends TestCase {
+public class TestEventBusTiming extends EventServiceLocatorTestCase {
 
    private EventSubscriber eventSubscriber = null;
    private EventTopicSubscriber eventTopicSubscriber;
@@ -27,13 +27,6 @@ public class TestEventBusTiming extends TestCase {
 
    public TestEventBusTiming(String name) {
       super(name);
-   }
-
-   protected void setUp() throws Exception {
-      EventBus.getGlobalEventService().clearAllSubscribers();
-   }
-
-   protected void tearDown() throws Exception {
    }
 
    private EventServiceEvent createEvent() {
@@ -78,11 +71,7 @@ public class TestEventBusTiming extends TestCase {
       return eventTopicSubscriber;
    }
 
-   public void testNothing() {
-
-   }
-
-   public void broker_timeHandling() {
+   public void thisOnlyWorksSometimesNow_testTimeHandling() {
       EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled = new Boolean[1];
       EventBus.subscribe(SubscriberTimingEvent.class, new EventSubscriber() {
@@ -91,10 +80,7 @@ public class TestEventBusTiming extends TestCase {
          }
       });
       EventBus.publish(createEvent());
-      try {
-         Thread.sleep(500);
-      } catch (Throwable e) {
-      }
+      EDTUtil.waitForEDT();
       assertTrue(wasCalled[0] == null);
       EventBus.subscribe(getEventClass(), createEventSubscriber(new Long(200L)));
       final Boolean[] wasCalled2 = new Boolean[1];
@@ -105,10 +91,7 @@ public class TestEventBusTiming extends TestCase {
          }
       });
       EventBus.publish(createEvent());
-      try {
-         Thread.sleep(3000);
-      } catch (Throwable e) {
-      }
+      EDTUtil.waitForEDT();
       assertTrue(wasCalled2[0] == Boolean.TRUE);
       assertNotNull(timing.getSource());
       assertNotNull(timing.getEnd());

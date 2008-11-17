@@ -21,8 +21,8 @@ import java.util.Map;
 /**
  * A central registry of EventServices.  Used by the {@link EventBus}.
  * <p/>
- * By default, holds one SwingEventEervice, which is mapped to {@link #SERVICE_NAME_SWING_EVENT_SERVICE} and returned
- * by {@link #getSwingEventService()}.  Also by default this same instance is returned by {@link #getEventBusService()},
+ * By default will lazily hold a SwingEventEervice, which is mapped to {@link #SERVICE_NAME_SWING_EVENT_SERVICE} and
+ * returned by {@link #getSwingEventService()}.  Also by default this same instance is returned by {@link #getEventBusService()},
  * is mapped to {@link #SERVICE_NAME_EVENT_BUS} and wrapped by the EventBus.
  * <p/>
  * Since the default EventService implementation is thread safe, and since it's not good to have lots of events on the
@@ -116,7 +116,7 @@ public class EventServiceLocator {
     * @param serviceName a named event service instance
     * @param es the EventService to attach to the service name
     *
-    * @throws EventServiceExistsException if a service by this name already exists
+    * @throws EventServiceExistsException if a service by this name already exists and the new service is non-null
     */
    public static synchronized void setEventService(String serviceName, EventService es) throws EventServiceExistsException {
       if (EVENT_SERVICES.get(serviceName) != null && es != null) {
@@ -129,6 +129,17 @@ public class EventServiceLocator {
             SWING_EVENT_SERVICE = es;
          }
       }
+   }
+
+   /**
+    * Use this carefully.  Clears all the event services, including the SwingEventSevice (used by EventBus).
+    * <p>
+    * Callers may want to resubscribe existing subscribers.
+    */
+   static synchronized void clearAll() {
+         EVENT_SERVICES.clear();
+         EVENT_BUS_SERVICE = null;
+         SWING_EVENT_SERVICE = null;
    }
 
    private static synchronized EventService getEventService(String eventServiceClassPropertyName, EventService defaultService) {

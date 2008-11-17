@@ -33,7 +33,28 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/EventServiceLocatorTestCase.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator6.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator6.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration3.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration3.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator.java" />
+      <change type="DELETED" beforePath="C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\exception\ExceptionDialog.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator4.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator4.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBusTiming.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBusTiming.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator7.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator7.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration2.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/exception/package.html" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/exception/package.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iws" afterPath="$PROJECT_DIR$/EventBus.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator3.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator3.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator2.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator2.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator5.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator5.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EventBus.iml" afterPath="$PROJECT_DIR$/EventBus.iml" />
+      <change type="DELETED" beforePath="C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\exception\AWTExceptionHandler.java" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration4.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration4.java" />
     </list>
   </component>
   <component name="ChangesViewManager" flattened_view="false" show_ignored="false" />
@@ -50,21 +71,6 @@
     <disable_hints />
   </component>
   <component name="DebuggerManager">
-    <line_breakpoints>
-      <breakpoint url="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" line="650" class="org.bushe.swing.event.TestDefaultEventService" package="org.bushe.swing.event">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="false" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-    </line_breakpoints>
     <breakpoint_any>
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -112,8 +118,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="exception_breakpoints_groupByClasses" value="true" />
+      <property name="field_breakpoints_viewId" value="TABLE" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -149,58 +155,82 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="TestPrioritizedSubscribers.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
+      <file leaf-file-name="TestEventServiceLocator4.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator4.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.3345725">
+            <state line="20" column="3" selection-start="784" selection-end="784" vertical-scroll-proportion="0.24056605">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../www/index.html">
-          <provider editor-type-id="HtmlPreview">
-            <state />
-          </provider>
+      <file leaf-file-name="TestEventServiceLocator3.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator3.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.38414633">
+            <state line="19" column="75" selection-start="780" selection-end="780" vertical-scroll-proportion="0.2004717">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package-info.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/package-info.html">
-          <provider editor-type-id="HtmlPreview">
-            <state />
-          </provider>
+      <file leaf-file-name="TestEventServiceLocator5.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator5.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.2248394">
+            <state line="19" column="75" selection-start="780" selection-end="780" vertical-scroll-proportion="0.2004717">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="overview.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/overview.html">
-          <provider editor-type-id="HtmlPreview">
-            <state />
-          </provider>
+      <file leaf-file-name="TestEventServiceLocatorConfiguration.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5203252">
+            <state line="20" column="0" selection-start="502" selection-end="502" vertical-scroll-proportion="0.7744875">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="package.html" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/package.html">
-          <provider editor-type-id="HtmlPreview">
-            <state />
-          </provider>
+      <file leaf-file-name="TestEventServiceLocator6.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator6.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.24186991">
+            <state line="41" column="0" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.759434">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEventServiceLocator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="3" selection-start="783" selection-end="783" vertical-scroll-proportion="0.24056605">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEventServiceLocator7.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator7.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="20" column="3" selection-start="784" selection-end="784" vertical-scroll-proportion="0.24056605">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEventServiceLocatorConfiguration3.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration3.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="75" selection-start="219" selection-end="219" vertical-scroll-proportion="0.19362187">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEventServiceLocatorConfiguration4.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration4.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="0" selection-start="803" selection-end="803" vertical-scroll-proportion="0.8451025">
               <folding />
             </state>
           </provider>
@@ -209,16 +239,45 @@
       <file leaf-file-name="EventServiceLocator.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.366171">
+            <state line="77" column="43" selection-start="4019" selection-end="4019" vertical-scroll-proportion="0.33254716">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventServiceLocatorTestCase.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/EventServiceLocatorTestCase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestDefaultEventService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
+      <file leaf-file-name="TestSubscriberAnnotation.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.23977695">
+            <state line="188" column="0" selection-start="7874" selection-end="7874" vertical-scroll-proportion="0.33254716">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnnotatedEventSubcriber.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="13" selection-start="347" selection-end="347" vertical-scroll-proportion="0.19362187">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AnnotationProcessor.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="51" column="0" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.33254716">
               <folding />
             </state>
           </provider>
@@ -227,7 +286,25 @@
       <file leaf-file-name="ThreadSafeEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.23391813">
+            <state line="406" column="0" selection-start="21729" selection-end="21729" vertical-scroll-proportion="0.33254716">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestEventServiceLocatorConfiguration2.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration2.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="19" column="0" selection-start="456" selection-end="456" vertical-scroll-proportion="0.5353075">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestDefaultEventService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="569" column="21" selection-start="22287" selection-end="22287" vertical-scroll-proportion="0.5037594">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -235,19 +312,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProxyTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
+      <file leaf-file-name="TestEventBusTiming.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBusTiming.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.1747212">
+            <state line="73" column="41" selection-start="2391" selection-end="2391" vertical-scroll-proportion="0.13895217">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AbstractProxySubscriber.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
+      <file leaf-file-name="SubscriberForTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/SubscriberForTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="37" selection-start="3869" selection-end="3869" vertical-scroll-proportion="0.52230483">
+            <state line="41" column="33" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.76765376">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventBus.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="377" column="0" selection-start="17095" selection-end="17095" vertical-scroll-proportion="0.7995283">
               <folding />
             </state>
           </provider>
@@ -334,14 +420,6 @@
           <option name="myItemId" value="EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
       </PATH>
       <PATH>
         <PATH_ELEMENT>
@@ -353,15 +431,7 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -375,23 +445,11 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java\util" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -405,27 +463,31 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java\util" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java\util\regex" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -439,31 +501,35 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java\util" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java\util\regex" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:Pattern" />
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocatorConfiguration4" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -477,96 +543,6 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="&lt; 1.5 &gt;" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.NamedLibraryElementNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\jdks\jdk1.5\jre\lib\rt.jar!\java" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Libraries" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.LibraryGroupNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\www" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
@@ -593,6 +569,10 @@
         <PATH_ELEMENT>
           <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocatorConfiguration3" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -633,7 +613,175 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:TestPrioritizedSubscribers" />
+          <option name="myItemId" value="PsiClass:TestEventServiceLocatorConfiguration2" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocatorConfiguration" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator7" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator6" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator5" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -717,7 +865,259 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
         <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator3" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator2" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventServiceLocator" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:TestEventBusTiming" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
           <option name="myItemId" value="PsiClass:TestDefaultEventService" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:SubscriberForTest" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\test\src\org\bushe\swing\event" />
+          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="PsiClass:EventServiceLocatorTestCase" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
         </PATH_ELEMENT>
       </PATH>
@@ -885,504 +1285,6 @@
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:ThreadSafeEventService" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:EventServiceLocator" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:ProxyTopicSubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:ProxyTopicPatternSubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:EventTopicSubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:EventSubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:BaseProxySubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:AnnotationProcessor" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe\swing\event\annotation" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiClass:AbstractProxySubscriber" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ClassTreeNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="PsiDirectory:C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\src\org\bushe" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
     </subPane>
   </component>
   <component name="ProjectReloadState">
@@ -1396,7 +1298,7 @@
       <showLibraryContents />
       <hideEmptyPackages PackagesPane="false" ProjectPane="false" />
       <abbreviatePackageNames />
-      <showStructure Favorites="false" Scope="false" PackagesPane="false" ProjectPane="false" />
+      <showStructure PackagesPane="false" Scope="false" Favorites="false" ProjectPane="false" />
       <autoscrollToSource />
       <autoscrollFromSource ProjectPane="true" />
       <sortByType />
@@ -1405,8 +1307,8 @@
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="RunManagerConfig.compileBeforeRunning" value="true" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
+    <property name="RunManagerConfig.compileBeforeRunning" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="last_opened_file_path" value="C:\BE\Gigs\Convexity\Dev\sfee\sfsoap\src\ccm\sf\apps\soap" />
     <property name="MemberChooser.showClasses" value="true" />
@@ -1422,12 +1324,12 @@
       <recent name="org.bushe.swing.event.annotation" />
       <recent name="org.bushe.swing.action.editor" />
     </key>
-    <key name="MoveMembersDialog.RECENTS_KEY">
-      <recent name="org.bushe.swing.action.editor.ActionEditorInternalFrame" />
-    </key>
     <key name="IntroduceConstantDialog.RECENTS_KEY">
       <recent name="" />
       <recent name="org.bushe.swing.action.editor.NewInternalFrameAction" />
+    </key>
+    <key name="MoveMembersDialog.RECENTS_KEY">
+      <recent name="org.bushe.swing.action.editor.ActionEditorInternalFrame" />
     </key>
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.bushe.swing.event" />
@@ -1440,14 +1342,14 @@
       <recent name="org.bushe.swing.action.demo" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.TestPrioritizedSubscribers">
-    <tempConfiguration default="false" name="TestPrioritizedSubscribers" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+  <component name="RunManager" selected="JUnit.TestEventBusTiming">
+    <tempConfiguration default="false" name="TestEventBusTiming" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
       <pattern value="org.bushe.swing.event.*" />
       <module name="EventBus" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
       <option name="PACKAGE_NAME" value="org.bushe.swing.event" />
-      <option name="MAIN_CLASS_NAME" value="org.bushe.swing.event.TestPrioritizedSubscribers" />
+      <option name="MAIN_CLASS_NAME" value="org.bushe.swing.event.TestEventBusTiming" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" />
@@ -1461,7 +1363,7 @@
       </option>
       <envs />
       <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="4575" />
+        <option name="DEBUG_PORT" value="1588" />
         <option name="TRANSPORT" value="0" />
         <option name="LOCAL" value="true" />
       </RunnerSettings>
@@ -1470,60 +1372,6 @@
         <option name="Make" value="true" />
       </method>
     </tempConfiguration>
-    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="ADDITIONAL_CLASS_PATH" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="wholeProject" />
-      </option>
-      <envs />
-      <method>
-        <option name="Make" value="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1553,8 +1401,91 @@
         <option name="Make" value="true" />
       </method>
     </configuration>
-    <list size="1">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.TestPrioritizedSubscribers" />
+    <configuration default="true" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="wholeProject" />
+      </option>
+      <envs />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application" enabled="false" merge="false">
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="false" name="All in EventBus" type="JUnit" factoryName="JUnit" enabled="false" merge="false">
+      <module name="EventBus" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="package" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="ADDITIONAL_CLASS_PATH" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="4550" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method>
+        <option name="Make" value="true" />
+      </method>
+    </configuration>
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.All in EventBus" />
+      <item index="1" class="java.lang.String" itemvalue="JUnit.TestEventBusTiming" />
     </list>
   </component>
   <component name="ScopeViewComponent">
@@ -1642,7 +1573,7 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.05899705" order="1" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30320367" order="1" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35812357" order="4" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.47826087" order="4" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33295965" order="8" />
@@ -1652,7 +1583,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" order="0" />
       <window_info id="Maven projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
       <window_info id="Module Dependencies" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="3" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24020694" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2158167" order="0" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="8" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" order="2" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" order="6" />
@@ -1759,128 +1690,118 @@
     <option name="myLastEditedConfigurable" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/BaseProxySubscriber.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator7.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="0" selection-start="3478" selection-end="3478" vertical-scroll-proportion="0.64599484">
+        <state line="20" column="3" selection-start="784" selection-end="784" vertical-scroll-proportion="0.24056605">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicPatternSubscriber.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration3.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="500" selection-end="500" vertical-scroll-proportion="0.5920398">
+        <state line="5" column="75" selection-start="219" selection-end="219" vertical-scroll-proportion="0.19362187">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="0" selection-start="2204" selection-end="2204" vertical-scroll-proportion="1.4179105">
+        <state line="20" column="0" selection-start="502" selection-end="502" vertical-scroll-proportion="0.7744875">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="29" selection-start="5778" selection-end="5778" vertical-scroll-proportion="0.67639256">
+        <state line="19" column="0" selection-start="456" selection-end="456" vertical-scroll-proportion="0.5353075">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocator6.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="31" selection-start="7005" selection-end="7005" vertical-scroll-proportion="0.6442308">
+        <state line="41" column="0" selection-start="1620" selection-end="1620" vertical-scroll-proportion="0.759434">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../../../../../../../../../jdks/jdk1.5/src.zip!/java/util/regex/Pattern.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/EventServiceLocatorTestCase.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1270" column="39" selection-start="55609" selection-end="55609" vertical-scroll-proportion="0.8034826">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/ProxyTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="0" selection-start="4220" selection-end="4220" vertical-scroll-proportion="0.1747212">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="650" column="0" selection-start="25884" selection-end="25884" vertical-scroll-proportion="0.23977695">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="956" column="0" selection-start="46040" selection-end="46040" vertical-scroll-proportion="0.23391813">
+        <state line="406" column="0" selection-start="21729" selection-end="21729" vertical-scroll-proportion="0.33254716">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="0" selection-start="1938" selection-end="1938" vertical-scroll-proportion="0.33254716">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AnnotatedEventSubcriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="347" selection-end="347" vertical-scroll-proportion="0.19362187">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="377" column="0" selection-start="17095" selection-end="17095" vertical-scroll-proportion="0.7995283">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="43" selection-start="4019" selection-end="4019" vertical-scroll-proportion="0.33254716">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestSubscriberAnnotation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="124" column="35" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.366171">
+        <state line="188" column="0" selection-start="7874" selection-end="7874" vertical-scroll-proportion="0.33254716">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventServiceLocatorConfiguration4.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="18" selection-start="1638" selection-end="1638" vertical-scroll-proportion="0.3345725">
+        <state line="26" column="0" selection-start="803" selection-end="803" vertical-scroll-proportion="0.8451025">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/package-info.html">
-      <provider editor-type-id="HtmlPreview">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="243" column="60" selection-start="13140" selection-end="13145" vertical-scroll-proportion="0.2248394">
+        <state line="569" column="21" selection-start="22287" selection-end="22287" vertical-scroll-proportion="0.5037594">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/SubscriberForTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="41" column="33" selection-start="1204" selection-end="1204" vertical-scroll-proportion="0.76765376">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/overview.html">
-      <provider editor-type-id="HtmlPreview">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestEventBusTiming.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="117" column="0" selection-start="9618" selection-end="9618" vertical-scroll-proportion="0.5203252">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/package.html">
-      <provider editor-type-id="HtmlPreview">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="42" selection-start="145" selection-end="145" vertical-scroll-proportion="0.24186991">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../www/index.html">
-      <provider editor-type-id="HtmlPreview">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="119" selection-start="8097" selection-end="8097" vertical-scroll-proportion="0.38414633">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AbstractProxySubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="37" selection-start="3869" selection-end="3869" vertical-scroll-proportion="0.52230483">
+        <state line="73" column="41" selection-start="2391" selection-end="2391" vertical-scroll-proportion="0.13895217">
           <folding />
         </state>
       </provider>

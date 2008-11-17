@@ -3,7 +3,7 @@ package org.bushe.swing.event;
 import junit.framework.TestCase;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
-public class TestEventServiceLocatorConfiguration extends TestCase {
+public class TestEventServiceLocatorConfiguration extends EventServiceLocatorTestCase {
 
    public static class ES1 extends ThreadSafeEventService {
 
@@ -15,11 +15,6 @@ public class TestEventServiceLocatorConfiguration extends TestCase {
 
    public TestEventServiceLocatorConfiguration(String name) {
       super(name);
-   }
-
-   protected void setUp() throws Exception {
-      System.clearProperty(EventServiceLocator.SWING_EVENT_SERVICE_CLASS);
-      System.clearProperty(EventServiceLocator.EVENT_BUS_CLASS);
    }
 
    public void testConfigurableEventService() {
