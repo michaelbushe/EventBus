@@ -30,7 +30,8 @@ import org.bushe.swing.event.ThreadSafeEventService;
  * You can do this:
  * <pre>
  * public class MyAppController {  //no interface necessary
- *   public MyAppController { //nothing to do in the constructor
+ *   public MyAppController {
+ *       AnnotationProcessor.process(this);//if not using AOP
  *   }
  *   &#64;EventSubscriber
  *   public void onAppClosingEvent(AppClosingEvent appClosingEvent) {//Use your own method name with typesafety

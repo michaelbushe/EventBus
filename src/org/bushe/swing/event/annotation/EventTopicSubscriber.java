@@ -30,7 +30,8 @@ import org.bushe.swing.event.ThreadSafeEventService;
  * You can do this:
  * <pre>
  * public class MyAppController {  //no interface necessary
- *   public MyAppController { //nothing to do in the constructor
+ *   public MyAppController {
+ *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
  *   &#64;EventTopicSubscriber{topic="AppClosingEvent"}
  *   public void onAppClosing(String topic, Object data) {
@@ -70,7 +71,7 @@ import org.bushe.swing.event.ThreadSafeEventService;
  * <pre>
  * public class MyAppController {
  *   public MyAppController {
- *       EventServiceAnnotationTool.enhance(this);//this line can be avoided with a compile-time tool or an Aspect
+ *       AnnotationProcessor.process(this);//this line can be avoided with a compile-time tool or an Aspect
  *   }
  *   &#64;EventTopicSubscriber{topic="AppStartingEvent"}
  *   public void onAppStartingEvent(Object data) {

@@ -97,6 +97,29 @@ public class TestDefaultEventService extends TestCase {
       return eventTopicSubscriber;
    }
 
+   public void testTyping() {
+      EventSubscriber subscriber = createEventSubscriber(false);
+
+      Double doub = 3.14;
+      Number numb = doub;
+      eventService.subscribe(Number.class, subscriber);
+
+      testCounter.eventsHandledCount = 0;
+      testCounter.subscribeExceptionCount = 0;
+      eventService.publish(doub);
+      assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
+      eventService.publish(numb);
+      assertEquals("testPublish(total)", 2, testCounter.eventsHandledCount);
+      eventService.unsubscribe(Number.class, subscriber);
+      eventService.subscribe(Double.class, subscriber);
+      testCounter.eventsHandledCount = 0;
+      testCounter.subscribeExceptionCount = 0;
+      eventService.publish(doub);
+      assertEquals("testPublish(total)", 1, testCounter.eventsHandledCount);
+      eventService.publish(numb);
+      assertEquals("testPublish(total)", 2, testCounter.eventsHandledCount);
+   }
+
    public void testSubscribe() {
       boolean actualReturn;
       EventSubscriber subscriber = createEventSubscriber(false);
