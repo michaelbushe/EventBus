@@ -969,6 +969,12 @@ public class ThreadSafeEventService implements EventService {
             }
             result.add(prioritizedSubscriber);
          }
+         //Issue 26 - of all priorties are negative, then add the FIFO after processing all of them
+         if (!haveAddedFIFOSubscribers) {
+             for (Object subscriber : subscribers) {
+                result.add(subscriber);
+             }
+         }
          return result;
       }
    }
