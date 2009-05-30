@@ -1,113 +1,108 @@
 <project>
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.bushe.eventbus</groupId>
-	<artifactId>eventbus</artifactId>
-	<name>EventBus</name>
-	<packaging>jar</packaging>
-	<description>A publish-subscribe API local to a JVM that is based on class semantics and/or string (topic) matching.</description>
-	<version>1.3</version>
-  <scm>
-    <url>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:eventbus</url>
-  </scm>
-	<url>http://eventbus.dev.java.net</url>
-	<licenses>
-		<license>
-			<name>Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-			<comments>A business-friendly OSS license</comments>
-		</license>
-	</licenses>
-	<organization>
-		<name>Bushe Enterprises, Inc.</name>
-		<url>http://www.bushe.com/eventbus</url>
-	</organization>
-	<developers>
-		<developer>
-			<id>MichaelBushe</id>
-			<name>Michael Bushe</name>
-			<email>Michael@Bushe.com</email>
-			<url>http://www.bushe.com</url>
-			<organization>Bushe Enterprises, Inc.</organization>
-			<organizationUrl>http://www.bushe.com</organizationUrl>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>-5</timezone>
-		</developer>
-	</developers>
-	<build>
-		<sourceDirectory>src</sourceDirectory>
-		<testSourceDirectory>test/src</testSourceDirectory>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
-				</configuration>
-			</plugin>
-			<!-- run the maven source plugin to create a sources jar during the verify phase-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<!-- run the maven javadoc plugin to create a javadocs jar during the verify phase-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.bushe.eventbus</groupId>
+    <artifactId>eventbus</artifactId>
+    <name>EventBus</name>
+    <packaging>jar</packaging>
+    <description>A publish-subscribe API local to a JVM that is based on class semantics and/or string (topic)
+        matching.
+    </description>
+    <version>1.3</version>
+    <scm>
+        <url>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:eventbus</url>
+    </scm>
+    <url>http://eventbus.dev.java.net</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+    <organization>
+        <name>Bushe Enterprises, Inc.</name>
+        <url>http://www.bushe.com/eventbus</url>
+    </organization>
+    <developers>
+        <developer>
+            <id>MichaelBushe</id>
+            <name>Michael Bushe</name>
+            <email>Michael@Bushe.com</email>
+            <url>http://www.bushe.com</url>
+            <organization>Bushe Enterprises, Inc.</organization>
+            <organizationUrl>http://www.bushe.com</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>-5</timezone>
+        </developer>
+    </developers>
+    <build>
+        <sourceDirectory>src</sourceDirectory>
+        <testSourceDirectory>test/src</testSourceDirectory>
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+            <!-- run the maven source plugin to create a sources jar during the verify phase-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- run the maven javadoc plugin to create a javadocs jar during the verify phase-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
                 <configuration>
                     <overview>${basedir}/src/org/bushe/swing/event/overview.html</overview>
-                    <author>Michael Bushe, my-first-name@my-last-name.com</author>  
+                    <author>Michael Bushe, my-first-name@my-last-name.com</author>
                 </configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<phase>verify</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-		<!-- 
-			Added this as per instructions on https://maven2-repository.dev.java.net/
-			However, the project is in CVS not subversion so this may be incorrect
-		<extensions>
-			<extension>
-				<groupId>org.jvnet.wagon-svn</groupId>
-				<artifactId>wagon-svn</artifactId>
-				<version>RELEASE</version>
-			</extension>
-		</extensions>
-		-->
-	</build>
-	<dependencies>
-		<!-- Works with, but does not require: log4j, commons logging, commons-logging-adapters-1.1.jar, commons-logging-api-1.1.jar, jdic.jar
-		     TODO: Maven has a special setting for this, like "recommended not required"-->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>3.8.1</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-  <!-- This repo is synchronized with the Central Maven Repository.-->
-  <distributionManagement>
-    <repository>
-      <id>bushe.com.repo</id>
-      <name>Bushe Enterprises, Inc. Repository</name>
-      <url>Host to Company Repository</url>
-    </repository>
-  </distributionManagement>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <!--
+              Added this as per instructions on https://maven2-repository.dev.java.net/
+              However, the project is in CVS not subversion so this may be incorrect
+          <extensions>
+              <extension>
+                  <groupId>org.jvnet.wagon-svn</groupId>
+                  <artifactId>wagon-svn</artifactId>
+                  <version>RELEASE</version>
+              </extension>
+          </extensions>
+          -->
+    </build>
+    <dependencies>
+        <!-- Works with, but does not require: log4j, commons logging, commons-logging-adapters-1.1.jar, commons-logging-api-1.1.jar, jdic.jar
+               TODO: Maven has a special setting for this, like "recommended not required"-->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!-- This repo is synchronized with the Central Maven Repository.-->
 </project>
