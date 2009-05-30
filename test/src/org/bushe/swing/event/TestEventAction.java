@@ -44,6 +44,8 @@ public class TestEventAction extends TestCase {
 
    protected void setUp() throws Exception {
       subscribedEvents = new ArrayList();
+       System.clearProperty(EventServiceLocator.EVENT_BUS_CLASS);
+       System.clearProperty(EventServiceLocator.SWING_EVENT_SERVICE_CLASS);
    }
 
    public void testEventBusTopicAction() {

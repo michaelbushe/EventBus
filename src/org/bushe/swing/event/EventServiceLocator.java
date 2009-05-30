@@ -143,7 +143,7 @@ public class EventServiceLocator {
    }
 
    private static synchronized EventService getEventService(String eventServiceClassPropertyName, EventService defaultService) {
-      EventService result = null;
+      EventService result;
       String eventServiceClassName = System.getProperty(eventServiceClassPropertyName);
       if (eventServiceClassName != null) {
          Class sesClass;

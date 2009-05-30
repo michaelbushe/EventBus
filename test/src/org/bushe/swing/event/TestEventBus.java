@@ -242,9 +242,10 @@ public class TestEventBus extends TestCase {
       EventSubscriber subscriber = createEventSubscriber(false);
 
       actualReturn = EventBus.subscribe(getEventClass(), subscriber);
-
+      assertTrue(actualReturn);
       VetoEventListener vetoListener = new VetoEventListenerForTest(true);
       actualReturn = EventBus.subscribeVetoListenerStrongly(getEventClass(), vetoListener);
+      assertTrue(actualReturn);
 
       testCounter.eventsHandledCount = 0;
       testCounter.subscribeExceptionCount = 0;
@@ -261,7 +262,7 @@ public class TestEventBus extends TestCase {
       //The test passes if 1 subscribers completed and 0 subscribers threw exception.
       assertEquals("testVeto(total)", 2, testCounter.eventsHandledCount);
       assertEquals("testVeto(exceptions)", 0, testCounter.subscribeExceptionCount);
-
+      System.out.println("Prevent garbage collection of subscriber by sys'outing it at the end:"+subscriber);
    }
 
    public void testVetoTopic() {
