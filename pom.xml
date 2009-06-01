@@ -1,6 +1,6 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.bushe.eventbus</groupId>
+    <groupId>org.bushe</groupId>
     <artifactId>eventbus</artifactId>
     <name>EventBus</name>
     <packaging>jar</packaging>
@@ -82,17 +82,6 @@
                 </executions>
             </plugin>
         </plugins>
-        <!--
-              Added this as per instructions on https://maven2-repository.dev.java.net/
-              However, the project is in CVS not subversion so this may be incorrect
-          <extensions>
-              <extension>
-                  <groupId>org.jvnet.wagon-svn</groupId>
-                  <artifactId>wagon-svn</artifactId>
-                  <version>RELEASE</version>
-              </extension>
-          </extensions>
-          -->
     </build>
     <dependencies>
         <!-- Works with, but does not require: log4j, commons logging, commons-logging-adapters-1.1.jar, commons-logging-api-1.1.jar, jdic.jar
