@@ -16,6 +16,7 @@
 package org.bushe.swing.event;
 
 import java.util.ArrayList;
+import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,6 +60,10 @@ public class TestContainerEventService extends TestCase {
       esBar.publish("FooTopic", "Foo");
       EDTUtil.waitForEDT();
       assertEquals(1, subscribedEvents.size());
+      Point location = frame.getLocation();
+      frame.setLocation(33, 33);
+      EDTUtil.waitForEDT();
+      assertTrue(subscribedEvents.size() > 1);
    }
 
    public void testContainerEventServiceSupplier() {
@@ -109,7 +114,7 @@ public class TestContainerEventService extends TestCase {
       panel.add(subPanel);
       panel.add(subPanel2);
       EventService es2 = reg.getContainerEventService();
-      //teh registrar kept up with the move
+      //the registrar kept up with the move
       assertTrue(es2 != es);
       EventBus.publish("RegEvent", "WrongBus");
       assertEquals(getLastEventObject(), null);

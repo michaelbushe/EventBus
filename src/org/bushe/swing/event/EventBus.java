@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 import java.lang.reflect.Type;
 
 /**
- * The EventBus provides Swing event publication and subscription services.  It is a simple static wrapper around a
+ * The EventBus provides event publication and subscription services.  It is a simple static wrapper around a
  * global instance of an {@link EventService}, specifically a {@link SwingEventService} by default.
  * <p/>
  * For Swing Applications the EventBus is nearly all you need, besides some of your own Event classes (if so desired).

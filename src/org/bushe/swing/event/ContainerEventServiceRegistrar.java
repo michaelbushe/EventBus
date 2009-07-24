@@ -140,7 +140,7 @@ public class ContainerEventServiceRegistrar {
          }
 
          public void ancestorMoved(AncestorEvent event) {
-            updateContainerEventService();
+             //ignore - not ncessary to keep track of movement
          }
 
          public void ancestorRemoved(AncestorEvent event) {
