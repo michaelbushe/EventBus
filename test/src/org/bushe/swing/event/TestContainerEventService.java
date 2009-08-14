@@ -60,10 +60,11 @@ public class TestContainerEventService extends TestCase {
       esBar.publish("FooTopic", "Foo");
       EDTUtil.waitForEDT();
       assertEquals(1, subscribedEvents.size());
+      subscribedEvents.clear();
       Point location = frame.getLocation();
       frame.setLocation(33, 33);
       EDTUtil.waitForEDT();
-      assertTrue(subscribedEvents.size() > 1);
+      assertTrue(subscribedEvents.size() == 0);
    }
 
    public void testContainerEventServiceSupplier() {

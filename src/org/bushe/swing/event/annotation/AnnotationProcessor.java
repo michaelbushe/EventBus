@@ -1,12 +1,15 @@
 package org.bushe.swing.event.annotation;
 
+import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.AccessibleObject;
 import java.util.regex.Pattern;
+import java.util.Arrays;
 
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceExistsException;
 import org.bushe.swing.event.EventServiceLocator;
+import org.bushe.swing.event.Logger;
 
 /**
  * Enhances classes that use EventService Annotations.
@@ -37,64 +40,57 @@ import org.bushe.swing.event.EventServiceLocator;
  * are not yet implemented.
  */
 public class AnnotationProcessor {
+
+   protected static final Logger LOG = Logger.getLogger(EventService.class.getName());
+
    public static void process(Object obj) {
       if (obj == null) {
          return;
       }
       Class cl = obj.getClass();
       Method[] methods = cl.getMethods();
-      for (int i = 0; i < methods.length; i++) {
-         Method method = methods[i];
+      if (LOG.isLoggable(Logger.Level.DEBUG)) {
+        LOG.debug("Looking for EventBus annotations for class " + cl + ", methods:" + Arrays.toString(methods));
+      }
+      for (Method method : methods) {
          EventSubscriber classAnnotation = method.getAnnotation(EventSubscriber.class);
          if (classAnnotation != null) {
+            if (LOG.isLoggable(Logger.Level.DEBUG)) {
+               LOG.debug("Found EventSubscriber:"+classAnnotation +" on method:" + method);
+            }
             process(classAnnotation, obj, method);
          }
          EventTopicSubscriber topicAnnotation = method.getAnnotation(EventTopicSubscriber.class);
          if (topicAnnotation != null) {
+            if (LOG.isLoggable(Logger.Level.DEBUG)) {
+               LOG.debug("Found EventTopicSubscriber: "+topicAnnotation +"  on method:" + method);
+            }
             process(topicAnnotation, obj, method);
          }
          EventTopicPatternSubscriber topicPatternAnnotation = method.getAnnotation(EventTopicPatternSubscriber.class);
          if (topicPatternAnnotation != null) {
+            if (LOG.isLoggable(Logger.Level.DEBUG)) {
+               LOG.debug("Found EventTopicPatternSubscriber: "+topicPatternAnnotation+" on method:" + method);
+            }
             process(topicPatternAnnotation, obj, method);
          }
-//         Publisher publisherAnnotation = (Publisher) method.getAnnotation(Publisher.class);
-//         if (publisherAnnotation != null) {
-//            process(publisherAnnotation, obj);
-//         }
+         RuntimeTopicEventSubscriber runtimeTopicAnnotation = method.getAnnotation(RuntimeTopicEventSubscriber.class);
+         if (runtimeTopicAnnotation != null) {
+            if (LOG.isLoggable(Logger.Level.DEBUG)) {
+               LOG.debug("Found RuntimeTopicEventSubscriber: "+runtimeTopicAnnotation+" on method:" + method);
+            }
+            process(runtimeTopicAnnotation, obj, method);
+         }
+         RuntimeTopicPatternEventSubscriber annotation = method.getAnnotation(RuntimeTopicPatternEventSubscriber.class);
+         if (annotation != null) {
+            if (LOG.isLoggable(Logger.Level.DEBUG)) {
+               LOG.debug("Found RuntimeTopicPatternEventSubscriber:"+annotation+" on method:" + method);
+            }
+            process(annotation, obj, method);
+         }
       }
    }
 
-//   private static void process(Publisher publisherAnnotation, Object obj) {
-//      Class cl = obj.getClass();
-//      if (JComboBox.class.equals(cl)) {
-//         JComboBox combo = (JComboBox)obj;
-//         combo.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//               EventBus.publish(e);
-//            }
-//         });
-//      }
-   //JCheckBoxMeuItem
-   //addMenuDragMouseListener, addMenuKeyListener
-   //JButton, JCheckBox
-   //addActionListener, addChangeListener, addItemListener,
-   //JComponent
-   //addAncestorListener, addVetoableChangeListener
-   //Container
-   //addContainerListener, addPropertyChangeListener, addPropertyChangeListener,
-   //Component
-   //addComponentListener, addFocusListener, addHierarchyBoundsListener, addHierarchyListener,
-   //addInputMethodListener, addKeyListener,
-   //addMouseListener, addMouseMotionListener,
-   //addMouseWheelListener
-
-   // HierarchyBounds + Hierarchy both use Hierarchy event
-   // addMouseListener, addMouseMotionListener both use MouseEvent
-   // addPropertyChangeListener, addVetoableChangeListener addChangeListener all use PropertyChangeEvent
-
-   //JEditorPane
-   //addHyperlinkListener
-//   }
 
    private static void process(EventTopicPatternSubscriber topicPatternAnnotation, Object obj, Method method) {
       //Check args
@@ -166,7 +162,7 @@ public class AnnotationProcessor {
 
       //Create proxy and subscribe
       //See https://eventbus.dev.java.net/servlets/ProjectForumMessageView?messageID=19499&forumID=1834
-      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(), 
+      BaseProxySubscriber subscriber = new BaseProxySubscriber(obj, method, annotation.referenceStrength(),
               priority, eventService, eventClass);
       if (annotation.exact()) {
          //See Issue #18
@@ -180,6 +176,103 @@ public class AnnotationProcessor {
          eventService.subscribeStrongly(eventClass, subscriber);
       }
    }
+
+
+
+   private static void process(final RuntimeTopicEventSubscriber annotation, final Object subscriber, final Method method) {
+       EventTopicSubscriber eventTopicSubscriber = new EventTopicSubscriber() {
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public Class<? extends EventService> autoCreateEventServiceClass() {
+               return annotation.autoCreateEventServiceClass();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public String eventServiceName() {
+               return annotation.eventServiceName();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public ReferenceStrength referenceStrength() {
+               return annotation.referenceStrength();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+			public int priority() {
+				return annotation.priority();
+			}
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public String topic() {
+               return getTopic(annotation.methodName(), subscriber, method);
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public Class<? extends Annotation> annotationType() {
+               return annotation.annotationType();
+           }
+       };
+       process(eventTopicSubscriber, subscriber, method);
+   }
+
+   private static void process(final RuntimeTopicPatternEventSubscriber annotation, final Object subscriber, final Method method) {
+       EventTopicPatternSubscriber eventTopicPatternSubscriber = new EventTopicPatternSubscriber() {
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public Class<? extends EventService> autoCreateEventServiceClass() {
+               return annotation.autoCreateEventServiceClass();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public String eventServiceName() {
+               return annotation.eventServiceName();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public ReferenceStrength referenceStrength() {
+               return annotation.referenceStrength();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+			public int priority() {
+				return annotation.priority();
+			}
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public boolean exact() {
+               return annotation.exact();
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public String topicPattern() {
+               return getTopic(annotation.methodName(), subscriber, method);
+           }
+
+           //TODO uncomment when language level is set to 1.6 (2.0) @Override
+           public Class<? extends Annotation> annotationType() {
+               return annotation.annotationType();
+           }
+       };
+       process(eventTopicPatternSubscriber, subscriber, method);
+   }
+
+   private static String getTopic(String methodName, Object subscriber, Method method) {
+       try {
+           Method runtimeEvalMethod = subscriber.getClass().getMethod(methodName, new Class[0]);
+           //necessary in case the method does not have public access or if the class it belongs
+           //to isn't public
+           runtimeEvalMethod.setAccessible(true);
+           return runtimeEvalMethod.invoke(subscriber, new Object[0]).toString();
+       } catch (SecurityException e) {
+           throw new RuntimeException("Could not retrieve method for subscription. Method: " + methodName, e);
+       } catch (NoSuchMethodException e) {
+           throw new RuntimeException("Could not retrieve method for subscription. Method: " + methodName, e);
+       } catch (InvocationTargetException e) {
+           e.getTargetException().printStackTrace();
+           throw new RuntimeException("Could not invoke method for subscription. Method: " + methodName, e);
+       } catch (IllegalAccessException e) {
+           throw new RuntimeException("Could not invoke method for subscription. Method: " + methodName, e);
+       }
+   }
+
 
    private static EventService getEventServiceFromAnnotation(String eventServiceName,
            Class<? extends EventService> eventServiceClass) {

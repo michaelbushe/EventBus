@@ -107,6 +107,7 @@ public class ContainerEventServiceRegistrar {
     * @param jComp the component whose container to monitor
     * @param eventSubscriber the subscriber to register to the Container EventServer
     * @param eventClasses the classes of event to register for
+    * @param eventTopicSubscriber the topic subscriber to keep registered to the topic(s)
     * @param topics the event topic names to register for
     */
    public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses,

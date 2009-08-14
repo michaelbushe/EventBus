@@ -1,5 +1,12 @@
 Release Notes for the Event Bus
 
+Version 1.4
+Issue 27 : ContainerEventServiceRegistrar call updateContainerEventService too often
+
+Version 1.3
+Issue 23: Added Prioritiezed Subscribers
+Release now available in Maven
+
 Version 1.2
 Issue 7: Added further configuration of EventServiceLocator and EventBus services through setEventService(String, EventService)
 Issue 11: Added Subscription Annotations @EventSubscriber & @EventTopicSubscriber

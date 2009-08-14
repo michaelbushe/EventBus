@@ -19,6 +19,9 @@ import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventServiceLocatorTestCase;
 
+import org.bushe.swing.event.annotation.runtime.Factory;
+import org.bushe.swing.event.annotation.runtime.SubscriberForTesting;
+
 public class TestSubscriberAnnotation extends TestCase {
 
    @Override
@@ -218,4 +221,18 @@ public class TestSubscriberAnnotation extends TestCase {
 //      } catch (Exception ex) {
 //      }
 //   }      
+
+   public void testRuntimeTopicSubscriber() {
+	   SubscriberForTesting runtimeTopicSubcriber = Factory.newRuntimeTopicSubcriber("foo");
+	   EventBus.publish("foo", new ArrayList<String>());
+	   EDTUtil.waitForEDT();
+	   assertEquals(1, runtimeTopicSubcriber.getTimesCalled());
+   }
+
+   public void testRuntimeTopicPatternSubscriber() {
+	   SubscriberForTesting runtimeTopicSubcriber = Factory.newRuntimeTopicPatternSubscriber("hope.*");
+	   EventBus.publish("hope_and_change", new ArrayList<String>());
+	   EDTUtil.waitForEDT();
+	   assertEquals(1, runtimeTopicSubcriber.getTimesCalled());
+   }
 }

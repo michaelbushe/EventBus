@@ -16,6 +16,7 @@
 package org.bushe.swing.event;
 
 import java.util.List;
+import java.util.Arrays;
 import javax.swing.SwingUtilities;
 
 /**
@@ -35,7 +36,7 @@ public class SwingEventService extends ThreadSafeEventService {
     * event to launch a modal dialog, the timings will be as long as the dialog is up - this is the way Swing works.
     */
    public SwingEventService() {
-      super(new Long(200), false, null, null, null);
+      super((long) 200, false, null, null, null);
    }
 
    public SwingEventService(Long timeThresholdForEventTimingEventPublication) {
@@ -82,7 +83,7 @@ public class SwingEventService extends ThreadSafeEventService {
             public void run() {
                if (LOG.isLoggable(Logger.Level.DEBUG)) {
                   LOG.debug("publish(" + event + "," + topic + "," + eventObj
-                          + "), called from non-EDT Thread:" + callingStack);
+                          + "), called from non-EDT Thread:" + Arrays.toString(callingStack));
                }
                SwingEventService.super.publish(event, topic, eventObj, subscribers, vetoSubscribers, callingStack);
             }
