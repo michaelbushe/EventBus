@@ -29,10 +29,11 @@ public class ObjectEvent extends AbstractEventServiceEvent {
     * Constructor
     *
     * @param sourceObject the source of the event
+    * @param payload the payload or eventObject of the event
     */
-   public ObjectEvent(Object sourceObject, Object eventObject) {
+   public ObjectEvent(Object sourceObject, Object payload) {
       super(sourceObject);
-      this.eventObject = eventObject;
+      this.eventObject = payload;
    }
 
    public Object getEventObject() {

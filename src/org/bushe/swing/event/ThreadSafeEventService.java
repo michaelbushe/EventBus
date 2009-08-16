@@ -139,6 +139,7 @@ import org.bushe.swing.exception.SwingException;
  * @todo (param) a JMS-like selector (can be done in base classes by implements like a commons filter
  * @see EventService for a complete description of the API
  */
+@SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach", "ForLoopReplaceableByForEach"})
 public class ThreadSafeEventService implements EventService {
    public static final Integer CLEANUP_START_THRESHOLD_DEFAULT = 250;
    public static final Integer CLEANUP_STOP_THRESHOLD_DEFAULT = 100;
@@ -663,7 +664,7 @@ public class ThreadSafeEventService implements EventService {
                   //Already subscribed.  
                   //Remove temporarily, to add to the end of the calling list
                   iterator.remove();
-                  alreadyExists = true;
+                  alreadyExists = true;                            
                }
             }
          }
@@ -874,7 +875,7 @@ public class ThreadSafeEventService implements EventService {
     * @param eventObj if publishing on a topic, the eventObj to publish, else null
     * @param subscribers the subscribers to publish to - must be a snapshot copy
     * @param vetoSubscribers the veto subscribers to publish to - must be a snapshot copy.
-    *
+    * @param callingStack the stack that called this publication, helpful for reporting errors on other threads
     * @throws IllegalArgumentException if eh or o is null
     */
    protected void publish(final Object event, final String topic, final Object eventObj,
@@ -884,12 +885,16 @@ public class ThreadSafeEventService implements EventService {
          throw new IllegalArgumentException("Can't publish to null topic/event.");
       }
 
+      setStatus(PublicationStatus.Initiated, event, topic, eventObj);
       //topic or event
       logEvent(event, topic, eventObj);
 
       //Check all veto subscribers, if any veto, then don't publish or cache
       if (checkVetoSubscribers(event, topic, eventObj, vetoSubscribers, callingStack)) {
+         setStatus(PublicationStatus.Vetoed, event, topic, eventObj);
          return;
+      } else {
+         setStatus(PublicationStatus.Queued, event, topic, eventObj);
       }
 
       addEventToCache(event, topic, eventObj);
@@ -898,33 +903,52 @@ public class ThreadSafeEventService implements EventService {
          if (LOG.isLoggable(Level.DEBUG)) {
             LOG.debug("No subscribers for event or topic. Event:" + event + ", Topic:" + topic);
          }
-         return;
-      }
-
-      if (LOG.isLoggable(Level.DEBUG)) {
-         LOG.debug("Publishing to subscribers:" + subscribers);
-      }
-
-      for (int i = 0; i < subscribers.size(); i++) {
-         Object eh = subscribers.get(i);
-         if (event != null) {
-            EventSubscriber eventSubscriber = (EventSubscriber) eh;
-            long start = System.currentTimeMillis();
-            try {
-               eventSubscriber.onEvent(event);
-               checkTimeLimit(start, event, eventSubscriber, null);
-            } catch (Throwable e) {
-               checkTimeLimit(start, event, eventSubscriber, null);
-               handleException(event, e, callingStack, eventSubscriber);
-            }
-         } else {
-            EventTopicSubscriber eventTopicSubscriber = (EventTopicSubscriber) eh;
-            try {
-               eventTopicSubscriber.onEvent(topic, eventObj);
-            } catch (Throwable e) {
-               onEventException(topic, eventObj, e, callingStack, eventTopicSubscriber);
+      } else {
+         if (LOG.isLoggable(Level.DEBUG)) {
+            LOG.debug("Publishing to subscribers:" + subscribers);
+         }
+         setStatus(PublicationStatus.Publishing, event, topic, eventObj);
+         for (int i = 0; i < subscribers.size(); i++) {
+            Object eh = subscribers.get(i);
+            if (event != null) {
+               EventSubscriber eventSubscriber = (EventSubscriber) eh;
+               long start = System.currentTimeMillis();
+               try {
+                  eventSubscriber.onEvent(event);
+                  checkTimeLimit(start, event, eventSubscriber, null);
+               } catch (Throwable e) {
+                  checkTimeLimit(start, event, eventSubscriber, null);
+                  handleException(event, e, callingStack, eventSubscriber);
+               }
+            } else {
+               EventTopicSubscriber eventTopicSubscriber = (EventTopicSubscriber) eh;
+               try {
+                  eventTopicSubscriber.onEvent(topic, eventObj);
+               } catch (Throwable e) {
+                  onEventException(topic, eventObj, e, callingStack, eventTopicSubscriber);
+               }
             }
          }
+      }
+      setStatus(PublicationStatus.Completed, event, topic, eventObj);      
+   }
+
+   /**
+    * Called during publication to set the status on an event.  Can be used by subsclasses
+    * to be notified when an event transitions from one state to another.  Implementers
+    * are required to call setPublicationStatus
+    * @param status the status to set on the object
+    * @param event the event being published, will be null if topic is not null
+    * @param topic the topic eventObj is being published on, will be null if event is not null
+    * @param eventObj the payload being published on the topic , will be null if event is not null
+    */
+   @SuppressWarnings({"UnusedDeclaration"})
+   protected void setStatus(PublicationStatus status, Object event, String topic, Object eventObj) {
+      if (event instanceof PublicationStatusTracker) {
+         ((PublicationStatusTracker)event).setPublicationStatus(status);
+      }
+      if (eventObj instanceof PublicationStatusTracker) {
+         ((PublicationStatusTracker)eventObj).setPublicationStatus(status);
       }
    }
 

@@ -77,6 +77,10 @@ import java.lang.reflect.Type;
  * VetoPropertyEventListener which can leave side effects and half-propogated events. VetoEventListeners are subscribed
  * in the same manner as EventSubscribers and EventTopicSubscribers.
  * <p/>
+ * The state of a published event can be tracked if an event or a topic's payload object implements the
+ * {@link org.bushe.swing.event.PublicationStatus} interface.  EventServices are required to set such objects'
+ * {@link org.bushe.swing.event.PublicationStatus} at the appropriate times during publication.
+ * <p/>
  * This simple example prints "Hello World"
  * <pre>
  * EventService eventService = new ThreadSafeEventService();
