@@ -1,0 +1,13 @@
+<project name="EventBus">
+  <bannerLeft>
+    <name>EventBus</name>
+    <src>images/FunkyBus.png</src>
+    <href>http://www.eventbus.org</href>
+  </bannerLeft>
+  <body>
+    <menu name="EventBus">
+      <item name="Overview" href="index.html"/>      
+    </menu>
+    <menu ref="reports"/>
+  </body>
+</project>
