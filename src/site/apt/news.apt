@@ -1,0 +1,49 @@
+News
+	
+	  * <<15-Sept-2009>> The EventBus has a new domain - eventbus.org.  The acquisition of this domain provides a new home for EventBus website and sets up work on EventBus 2.0. EventBus 2.0 will move the codebade to the new package name and will go beyond Swing, so Swing will no longer be the default.  Work on EventBus 2.0 will commence after EventBus 1.4 is released.
+	  
+    * <<31-May-2009>> EventBus 1.3 Released. EventBus 1.3 adds:
+  
+          * A Priority interface and priority annotation parameters to control the order in which subscribers are called.
+
+          * Support for annotated inner classes and other non-public members.
+
+          * Migrated to Maven2 POM from Ant. A request has been to to synchronize EventBus releases to the Maven Central Repository. It should be there very soon. If you just can't wait, it's also available here
+
+    * <<21-Aug-2008>> EventBus 1.2 Released. EventBus 1.2 delivers significant new features:
+  
+          * @EventSubscriber and @EventTopicSubscriber annotations take the boilerplate out EventBus coding.
+
+          * Configurable EventBus implementation for support of non-Swing applications.
+
+          * Generics support - subscribing to List<Trade>, for example, and Subscribers take generic types for typesafe coding.
+
+          * Improved logging which can leverage log4j, java.util.logging, and commons-logging.
+
+          * Even better documentation.
+
+    * <<18-Jan-2008>> EventBus is being used by Wellfleet Software for an implementation of ebXML Registry and Repository 4.0 specifications.
+
+      According to Farrukh Najmi, the lead architect for the project:
+
+      "EventBus has been a tremendous improvement over tradition Swing PropertyChangeListener / firePropertyChangeEvent API. The biggest benefit of EventBus is that the resulting design is very loosely coupled. We found that EventBus was simple to use with minimal learning curve, had a small footprint and of a very high quality. We even plan to use it in non-Swing, server-based GUIs."
+  
+    * <<30-Nov-2007>> ZD Net has published {{{http://www.zdnetasia.com/techguide/java/0,39044898,62034699,00.htm}this article}} on the EventBus.
+    
+    * <<27-Nov-2007>> EventBus 1.2 beta released. The 1.2 beta release provides flexible logging - give it a whirl in your app and please send feedback. You don't need anything but EventBus.jar, but if you want to use log4j or any other logger support by Apache Commons Logging, then include the common-logging-* jars and the jar of the logger of your choice (such as log4j, conveniently included in the release folder). Logging is a great way to debug event issues which are often hard to track down due to their decoupled nature. The EventBus provides lots of DEBUG output so you can see who is subscribed to what.
+    
+    * <<11-Nov-2007>> EventBus 1.1 released. Important: All users of 1.0 should upgrade to version 1.1, which contains a Swing threading bug fix and production Annotation implementation. If you are using release 1.0 for JDK 1.4, upgrade to 1.0.1 for JDK 1.4.
+    
+    * <<6-Sept-2007>> The Event Bus has released 1.1 beta2, adding generics support and fixing an Annotation issues. This is a solid beta, though some of the generics APIs are not yet complete (vetos, unsubscribes).
+    
+    * <<29-Apr-2007>> The Event Bus has released 1.1 beta featuring subscription Annotations and a customizable EventBus implementation.
+    
+    * <<18-Mar-2007>> Will the EventBus find life in outer space? (Now there's a "Watch the News at 10" headline!) {{{http://kepler.nasa.gov/} NASA's Kepler Mission}} is using the EventBus in software that analyses hundreds of thousands of stars for planets that may support life.
+    
+    * <<27-Dec-2006>> The Event Bus has released an alpha 1.1 alpha version with Annotations.
+    
+    * <<26-Nov-2006>> The Event Bus has reached version 1.0. With the recently added caching feature (thanks to Hans Muller for the inspiration), and the removal of the EventServiceEvent dependency (any object can be published now), the EventBus is now feature complete for the 1.0 release. The 1.0 release will be the last release for JDK 1.4. Work will now begin on Annotations and Generics, which of course will require 1.5. Further 1.4 work, such as bug fixes will be done on the JDK_14 branch.
+    
+    * <<22-Nov-2006>> Martin Fowler has published an EventBus-like pattern he calls {{{http://martinfowler.com/eaaDev/EventCollaboration.html}EventCollaboration}}.
+    
+    * <<20-July-2006>> Evan Summers has published an {{{https://aptframework.dev.java.net/article/edtMessageBus.html}article}} showing a similar EventBus implementation with some nice annotations.

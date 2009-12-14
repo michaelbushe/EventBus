@@ -9,10 +9,11 @@ Why use the EventBus?
   The publish/subscribe pattern is commonly used to decouple components, make testing easier, and program by contract.  It replaces 
   the tight coupling introduced by explicit listeners with a flexible loosely coupled design. The EventBus is production ready and 
   used in many applications, including financial UIs, scientific simulations, and the most popular Java desktop application, Limewire.
+  The EventBus is well tested and has very good documentation.
   
 Project Status
 
-  EventBus 1.x is stable and uses the org.bushe.event package. It us best used in general purpose applications and Swing UIs.  
+  EventBus 1.x is stable and suitable for general purpose Java applications and Swing UIs.  
   
   EventBus 2.x is a work in progress. It will use the newly acquired org.eventbus package and will be extended to other UI toolkits 
   and RIAs such as Ajax and Apache Pivot.  

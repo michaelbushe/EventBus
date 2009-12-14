@@ -26,6 +26,15 @@
 <h2>EventBus News</h2>
 <ul>
    <li>
+   <i>05-Dec-2009</i>&nbsp;The EventBus has a new home:<a href="www.eventbus.org">EventBus.org</a>.  EventBus 2.0 will be repackaged from org.bushe.eventbus
+   to org.eventbus.  EventBus 2.0 will push the EventBus' utility into new environments, such as AJAX.
+   <i>05-Dec-2009</i>&nbsp;EventBus 1.4 Released. EventBus 1.4 adds:
+      <ul>
+         <li>Runtime Subscriber annotation for dynamic subscriptions, thanks to Mario Aquino from Limewire for the help.  A good use case for a dynamic description is 
+             a chat client.  The chat window will not know who's messages to subscribe to until runtime.</li>
+         <li>PublicationStatus added so that code can tell if an event was vetoed, published, is being processed, etc.</li>
+         <li>ContainerEventServiceRegistrar called updateContainerEventService too often.</a></li>
+      </ul>
    <i>31-May-2009</i>&nbsp;EventBus 1.3 Released. EventBus 1.3 adds:
       <ul>
          <li>The ability to control the order in which subscribers are called with the Priority interface
@@ -123,7 +132,7 @@ The idea is similar to a computer system bus - components plug into
 a single bus and each can listen for information passed on it. The EventBus is different from
 the tightly-coupled Swing listener paradigm where listeners attach to and listen on
 specific components. Another difference is that the EventBus is not limited to Swing events.
-Any object can be published on the EventBus. In typicaly usage, you create events for your own applications,
+Any object can be published on the EventBus. In typically usage, you create events for your own applications,
 or publish objects that you already have in your application domain.
 <p>Components can subscribe to events passed on the Event Bus by Class or by String (called a topic name).
 Subscriptions use weak references by default, avoiding memory leaks common in swing application when
@@ -145,7 +154,7 @@ The links below should take you to the proper folder. If they don't work, use th
 
 <h2>JavaDoc</h2>
 
-<p>EventBus doucmentation is quite good and is available as download as well as <a href="doc/api/overview-summary.html">online</a>.
+<p>EventBus documentation is quite good and is available as download as well as <a href="doc/api/overview-summary.html">online</a>.
    Please see the library and package descriptions for a list of features and examples in addition to those supplied here.</p>
 
 <h2>Examples</h2>

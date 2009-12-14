@@ -1,13 +1,21 @@
 <project name="EventBus">
+  <skin>
+    <groupId>org.apache.maven.skins</groupId>
+    <artifactId>maven-classic-skin</artifactId>
+    <version>1.0</version>
+  </skin>
   <bannerLeft>
     <name>EventBus</name>
-    <src>images/FunkyBus.png</src>
+    <src>images/EventBusBanner.png</src>
     <href>http://www.eventbus.org</href>
   </bannerLeft>
   <body>
     <menu name="EventBus">
       <item name="Overview" href="index.html"/>      
+      <item name="News" href="news.html"/>
+      <item name="Wiki (Usage)" href="/confluence/display/EventBus/Home"/>
+      <item name="FAQ" href="faq.html"/>
     </menu>
-    <menu ref="reports"/>
+    <menu ref="reports" collapse="false"/>
   </body>
 </project>
