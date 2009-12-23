@@ -68,7 +68,7 @@ public class TestPerformance extends TestCase {
         int numPubs = count * payloads.length;
         System.out.println("Time for "+ numPubs +" topic publications with topic subscribers to "+ strings.length
             +" different strings subscribed to was "+ duration +" s. Average:"+((double)duration/(double)numPubs));
-        Assert.assertTrue("Things are slowing down, "+numPubs+" string publications used to take 1.3 seconds, it now takes "+duration, duration < 3);
+        Assert.assertTrue("Things are slowing down, "+numPubs+" string publications used to take 1.3 seconds, it now takes "+duration, duration < 4);
     }
 
 }
