@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 /** Test class for class-based subscriptions */
-public class WeakClassAnnotatedEventSubcriber {
+public class StrongClassAnnotatedEventSubscriber {
    static int timesColorChanged = 0;
    static String lastCall = null;
    static int timesCalled = 0;
@@ -17,7 +17,7 @@ public class WeakClassAnnotatedEventSubcriber {
       timesCalled = times;
    }
 
-   @EventSubscriber(eventClass = List.class, referenceStrength = ReferenceStrength.WEAK)
+   @EventSubscriber(eventClass = List.class, referenceStrength = ReferenceStrength.STRONG)
    public void doList(Collection collection) {
       timesCalled++;
    }

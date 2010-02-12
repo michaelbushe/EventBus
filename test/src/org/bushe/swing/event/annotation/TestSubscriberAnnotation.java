@@ -1,10 +1,9 @@
 package org.bushe.swing.event.annotation;
 
-import org.bushe.swing.event.EDTUtil;
-
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.awt.Color;
@@ -14,11 +13,11 @@ import javax.swing.SwingUtilities;
 
 import junit.framework.TestCase;
 
+import org.bushe.swing.event.EDTUtil;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventServiceLocator;
 import org.bushe.swing.event.EventServiceLocatorTestCase;
-
 import org.bushe.swing.event.annotation.runtime.Factory;
 import org.bushe.swing.event.annotation.runtime.SubscriberForTesting;
 
@@ -29,8 +28,8 @@ public class TestSubscriberAnnotation extends TestCase {
       EventServiceLocatorTestCase.clearEventServiceLocator();
       EventBus.getGlobalEventService();
       EventBus.clearAllSubscribers();
-      AnnotatedEventSubcriber.setTimesCalled(0);
-      AnnotatedEventSubcriber.setLastCall(null);
+      AnnotatedEventSubscriber.setTimesCalled(0);
+      AnnotatedEventSubscriber.setLastCall(null);
       System.gc();
    }
 
@@ -39,13 +38,13 @@ public class TestSubscriberAnnotation extends TestCase {
    }
 
    public void testSimple() throws InvocationTargetException, InterruptedException {
-      AnnotatedEventSubcriber.setTimesColorChanged(0);
-      final AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber.setTimesColorChanged(0);
+      final AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
       EventBus.publish(Color.BLUE);
       Collection subs = EventBus.getSubscribers(Color.class);
       assertEquals(0, subs.size());
       EDTUtil.waitForEDT();
-      assertEquals(0, AnnotatedEventSubcriber.getTimesColorChanged());
+      assertEquals(0, AnnotatedEventSubscriber.getTimesColorChanged());
       SwingUtilities.invokeAndWait(new Runnable() {
          public void run() {
             AnnotationProcessor.process(subscriber);
@@ -56,69 +55,159 @@ public class TestSubscriberAnnotation extends TestCase {
       assertEquals(1, subs.size());
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
-      assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
-      System.out.println("avoid garbage collection:"+subscriber);
+      assertEquals(1, AnnotatedEventSubscriber.getTimesColorChanged());
+      
+      //Add veto
+      subs = EventBus.getVetoSubscribers(Color.class);
+      assertEquals(0, subs.size());
+      final AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
+      SwingUtilities.invokeAndWait(new Runnable() {
+         public void run() {
+            AnnotationProcessor.process(vetoSubscriber);
+         }
+      });
+
+      subs = EventBus.getSubscribers(Color.class);
+      assertEquals(1, subs.size());
+      subs = EventBus.getVetoSubscribers(Color.class);
+      assertEquals(1, subs.size());
+      EventBus.publish(Color.RED);
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubscriber.getTimesColorChanged());
+
+      SwingUtilities.invokeAndWait(new Runnable() {
+         public void run() {
+            AnnotationProcessor.unprocess(vetoSubscriber);
+         }
+      });
+      EventBus.publish(Color.RED);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesColorChanged());
+      SwingUtilities.invokeAndWait(new Runnable() {
+         public void run() {
+            AnnotationProcessor.unprocess(subscriber);
+         }
+      });
+      EventBus.publish(Color.BLUE);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesColorChanged());
+      System.out.println("avoid garbage collection:"+subscriber + vetoSubscriber);
    }
 
    public void testWeakReference() {
-      AnnotatedEventSubcriber.setTimesColorChanged(0);
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber.setTimesColorChanged(0);
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
-      assertEquals(0, AnnotatedEventSubcriber.getTimesColorChanged());
+      assertEquals(0, AnnotatedEventSubscriber.getTimesColorChanged());
       AnnotationProcessor.process(subscriber);
+      AnnotationProcessor.process(vetoSubscriber);
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
-      assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
-      System.out.println("avoid garbage collection:"+subscriber);
+      assertEquals(1, AnnotatedEventSubscriber.getTimesColorChanged());
+      EventBus.publish(Color.RED);
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubscriber.getTimesColorChanged());
+
+      System.out.println("avoid garbage collection:"+subscriber+vetoSubscriber);
       subscriber = null;
       System.gc();
       EventBus.publish(Color.BLUE);
       EDTUtil.waitForEDT();
-      assertEquals(1, AnnotatedEventSubcriber.getTimesColorChanged());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesColorChanged());
       System.gc();
    }
 
    public void testEventClass() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       AnnotationProcessor.process(subscriber);
+      AnnotationProcessor.process(vetoSubscriber);
+
+      //Veto subscriber stops the empty list
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals("doList", AnnotatedEventSubcriber.getLastCall());
+      assertEquals(null, AnnotatedEventSubscriber.getLastCall());
+
+      EventBus.publish(Arrays.asList("foo"));
+      EDTUtil.waitForEDT();
+      assertEquals("doList", AnnotatedEventSubscriber.getLastCall());
+
+      AnnotatedEventSubscriber.setLastCall(null);
+      EventBus.publish(Arrays.asList());
+      EDTUtil.waitForEDT();
+      assertEquals(null, AnnotatedEventSubscriber.getLastCall());
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      EventBus.publish(Arrays.asList());
+      EDTUtil.waitForEDT();
+      assertEquals("doList", AnnotatedEventSubscriber.getLastCall());
+
       System.out.println("avoid garbage collection:"+subscriber);
-      AnnotatedEventSubcriber.setLastCall(null);
+      AnnotatedEventSubscriber.setLastCall(null);
       //it was subscribed to a list, though the method param is Collection, it shouldn't get called
       EventBus.publish(new HashSet());
       EDTUtil.waitForEDT();
-      assertEquals(null, AnnotatedEventSubcriber.getLastCall());
    }
 
    public void testExactly() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       AnnotationProcessor.process(subscriber);
-      EventBus.publish(new JToggleButton());
+      AnnotationProcessor.process(vetoSubscriber);
+
+      JToggleButton jToggleButton = new JToggleButton();
+      EventBus.publish(jToggleButton);
       EDTUtil.waitForEDT();
       System.out.println("avoid garbage collection:"+subscriber);
-      assertEquals("doJToggleButtonExactly", AnnotatedEventSubcriber.getLastCall());
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
+      assertEquals("doJToggleButtonExactly", AnnotatedEventSubscriber.getLastCall());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+
       EventBus.publish(new JButton());
       EDTUtil.waitForEDT();
-      assertEquals("doJToggleButtonExactly", AnnotatedEventSubcriber.getLastCall());
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
+      assertEquals("doJToggleButtonExactly", AnnotatedEventSubscriber.getLastCall());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+
+      jToggleButton.setForeground(Color.RED);
+      EventBus.publish(jToggleButton);
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      EventBus.publish(jToggleButton);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
+
+      AnnotationProcessor.unprocess(subscriber);
+      EventBus.publish(jToggleButton);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
    }
 
    public void testAutoCreateEventServiceClass() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
+      AnnotationProcessor.process(vetoSubscriber);
       AnnotationProcessor.process(subscriber);
       EventService es = EventServiceLocator.getEventService("IteratorService");
-      es.publish(new ArrayList().iterator());
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
-      assertEquals("autoCreateEventServiceClass", AnnotatedEventSubcriber.getLastCall());
+      es.publish(Arrays.asList("foo").iterator());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      assertEquals("autoCreateEventServiceClass", AnnotatedEventSubscriber.getLastCall());
+      es.publish(Arrays.asList().iterator());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      es.publish(Arrays.asList().iterator());
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(subscriber);
+      es.publish(Arrays.asList().iterator());
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
    }
 
    public void testStrongRef() {
       StrongAnnotatedEventSubscriber subscriber = new StrongAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
+      AnnotationProcessor.process(vetoSubscriber);
       EventBus.publish(new File("foo"));
       EDTUtil.waitForEDT();
       assertEquals("doStrong", StrongAnnotatedEventSubscriber.getLastCall());
@@ -131,42 +220,81 @@ public class TestSubscriberAnnotation extends TestCase {
    }
 
    public void testTopic() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       AnnotationProcessor.process(subscriber);
+      AnnotationProcessor.process(vetoSubscriber);
       EventBus.publish("File.Open", new File("foo"));
       EDTUtil.waitForEDT();
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
       EventBus.publish("File.Fooooooo", new File("foo"));
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      EventBus.publish("File.Open", null);
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      EventBus.publish("File.Open", null);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(subscriber);
+      EventBus.publish("File.Open", null);
+      EDTUtil.waitForEDT();
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
    }
 
    public void testAutoCreateEventServiceTopic() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       AnnotationProcessor.process(subscriber);
+      AnnotationProcessor.process(vetoSubscriber);
       EventService es = EventServiceLocator.getEventService("IteratorService");
       es.publish("Iterator", new ArrayList().iterator());
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
-      assertEquals("autoCreateEventServiceClass", AnnotatedEventSubcriber.getLastCall());
+      assertEquals(0, AnnotatedEventSubscriber.getTimesCalled());
+      es.publish("Iterator", Arrays.asList("foo").iterator());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      assertEquals("autoCreateEventServiceClass", AnnotatedEventSubscriber.getLastCall());
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      es.publish("Iterator", new ArrayList().iterator());
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(subscriber);
+      es.publish("Iterator", Arrays.asList("foo").iterator());
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
    }
 
    public void testTopicPattern() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
+      AnnotationProcessor.process(vetoSubscriber);
       AnnotationProcessor.process(subscriber);
       EventService es = EventServiceLocator.getEventService("IceCreamService");
       es.publish("IceCream.Chocolate", "DoubleDip");
-      assertEquals(1, AnnotatedEventSubcriber.getTimesCalled());
-      assertEquals("doIceCream", AnnotatedEventSubcriber.getLastCall());
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      assertEquals("doIceCream", AnnotatedEventSubscriber.getLastCall());
+      es.publish("IceCream.Cherry", "DoubleDip");
+      assertEquals(1, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(vetoSubscriber);
+      es.publish("IceCream.Chocolate", "DoubleDip");
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());
+      AnnotationProcessor.unprocess(subscriber);
+      es.publish("IceCream.Chocolate", "DoubleDip");
+      assertEquals(2, AnnotatedEventSubscriber.getTimesCalled());      
       System.out.println(subscriber);
    }
 
    public void testIssue15MultipleAnnotatedSubscribers() {
-      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
+      AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
+      AnnotationProcessor.process(vetoSubscriber);
       AnnotationProcessor.process(subscriber);
-      AnotherAnnotatedEventSubcriber anotherAubscriber = new AnotherAnnotatedEventSubcriber();
+      AnotherAnnotatedEventSubscriber anotherAubscriber = new AnotherAnnotatedEventSubscriber();
       AnnotationProcessor.process(anotherAubscriber);
+      EventBus.publish(Arrays.asList("foo"));
+      EDTUtil.waitForEDT();
+      assertEquals(1, AnotherAnnotatedEventSubscriber.getTimesCalled());
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, AnotherAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, AnotherAnnotatedEventSubscriber.getTimesCalled());
       EDTUtil.waitForEDT();
       System.out.println(subscriber);
       System.out.println(anotherAubscriber);
@@ -186,23 +314,23 @@ public class TestSubscriberAnnotation extends TestCase {
       System.out.println(i15s2);
    }
 
-   //This one works with the DoubleAnnotatedEventSubcriber and AnotherDoubleAnnotatedEventSubcriber (and Single),
-   //but fails with AnnotatedEventSubcriber and AnotherAnnotatedEventSubcriber
+   //This one works with the DoubleAnnotatedEventSubscriber and AnotherDoubleAnnotatedEventSubscriber (and Single),
+   //but fails with AnnotatedEventSubscriber and AnotherAnnotatedEventSubscriber
    public void testYetAnotherIssue15MultipleAnnotatedSubscribers() {
       EventBus.clearAllSubscribers();
       System.gc();
-      DoubleAnnotatedEventSubcriber subscriber = new DoubleAnnotatedEventSubcriber();
+      DoubleAnnotatedEventSubscriber subscriber = new DoubleAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
-      DoubleAnnotatedEventSubcriber secondSubscriber = new DoubleAnnotatedEventSubcriber();
+      DoubleAnnotatedEventSubscriber secondSubscriber = new DoubleAnnotatedEventSubscriber();
       AnnotationProcessor.process(secondSubscriber);
-      AnotherDoubleAnnotatedEventSubcriber anotherSubscriber = new AnotherDoubleAnnotatedEventSubcriber();
+      AnotherDoubleAnnotatedEventSubscriber anotherSubscriber = new AnotherDoubleAnnotatedEventSubscriber();
       AnnotationProcessor.process(anotherSubscriber);
-      AnotherDoubleAnnotatedEventSubcriber secondAnotherSubscriber = new AnotherDoubleAnnotatedEventSubcriber();
+      AnotherDoubleAnnotatedEventSubscriber secondAnotherSubscriber = new AnotherDoubleAnnotatedEventSubscriber();
       AnnotationProcessor.process(secondAnotherSubscriber);
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(2, AnotherDoubleAnnotatedEventSubcriber.getTimesCalled());
-      assertEquals(2, DoubleAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(2, AnotherDoubleAnnotatedEventSubscriber.getTimesCalled());
+      assertEquals(2, DoubleAnnotatedEventSubscriber.getTimesCalled());
       //Ensure the garbage collector can't clean up the refs
       System.out.println("finished with:"+subscriber);
       System.out.println("finished with:"+secondSubscriber);
@@ -212,7 +340,7 @@ public class TestSubscriberAnnotation extends TestCase {
 //Would like to test this, but an exception isn't thrown, since you want all the subscribers to be called
 //even if calling any one throws an exception
 //   public void testTopicWrongType() {
-//      AnnotatedEventSubcriber subscriber = new AnnotatedEventSubcriber();
+//      AnnotatedEventSubscriber subscriber = new AnnotatedEventSubscriber();
 //      AnnotationProcessor.process(subscriber);
 //      EventService es = EventServiceLocator.getEventService("IteratorService");
 //      try {
@@ -223,16 +351,16 @@ public class TestSubscriberAnnotation extends TestCase {
 //   }      
 
    public void testRuntimeTopicSubscriber() {
-	   SubscriberForTesting runtimeTopicSubcriber = Factory.newRuntimeTopicSubcriber("foo");
+	   SubscriberForTesting runtimeTopicSubscriber = Factory.newRuntimeTopicSubscriber("foo");
 	   EventBus.publish("foo", new ArrayList<String>());
 	   EDTUtil.waitForEDT();
-	   assertEquals(1, runtimeTopicSubcriber.getTimesCalled());
+	   assertEquals(1, runtimeTopicSubscriber.getTimesCalled());
    }
 
    public void testRuntimeTopicPatternSubscriber() {
-	   SubscriberForTesting runtimeTopicSubcriber = Factory.newRuntimeTopicPatternSubscriber("hope.*");
+	   SubscriberForTesting runtimeTopicSubscriber = Factory.newRuntimeTopicPatternSubscriber("hope.*");
 	   EventBus.publish("hope_and_change", new ArrayList<String>());
 	   EDTUtil.waitForEDT();
-	   assertEquals(1, runtimeTopicSubcriber.getTimesCalled());
+	   assertEquals(1, runtimeTopicSubscriber.getTimesCalled());
    }
 }

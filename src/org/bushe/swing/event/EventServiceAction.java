@@ -35,7 +35,7 @@ import javax.swing.ImageIcon;
  * publish an object other than the ActionEvent.
  * <p/>
  * Instead of publishing on a topic, the ActionEvent can be published using class-based publication, use {@link
- * #setPublishesOnTopic(boolean)} to set this behvior.  When using class-based publication, the ActionEvent is published
+ * #setPublishesOnTopic(boolean)} to set this behavior.  When using class-based publication, the ActionEvent is published
  * by default.  Override {@link #getEventServiceEvent(ActionEvent)} to publish an object other than the ActionEvent.
  *
  * @author Michael Bushe michael@bushe.com
@@ -95,7 +95,7 @@ public abstract class EventServiceAction extends AbstractAction {
    }
 
    /**
-    * The topic name is the first non-null value out of: <ol> <li>A topic name explictly set via {@link
+    * The topic name is the first non-null value out of: <ol> <li>A topic name explicitly set via {@link
     * #setTopicName(String)} <li>the action's getValue("event-service-topic")  {@link #EVENT_SERVICE_TOPIC_NAME} <li>the
     * action's getValue("ID") (for compatibility with the SAM ActionManager's ID) <li>the action's {@link
     * javax.swing.Action#ACTION_COMMAND_KEY} <li>the action event's {@link javax.swing.Action#ACTION_COMMAND_KEY}

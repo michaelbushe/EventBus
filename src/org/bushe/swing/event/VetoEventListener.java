@@ -20,7 +20,7 @@ package org.bushe.swing.event;
  *
  * @author Michael Bushe michael@bushe.com
  */
-public interface VetoEventListener {
+public interface VetoEventListener<T> {
 
    /**
     * Determine whether an event should be vetoed or published.
@@ -34,5 +34,5 @@ public interface VetoEventListener {
     *
     * @return true if the event should be vetoed and not published, false if the event should be published.
     */
-   public boolean shouldVeto(Object event);
+   public boolean shouldVeto(T event);
 }

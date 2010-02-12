@@ -6,10 +6,47 @@
     <packaging>jar</packaging>
     <description>A simple but powerful publish-subscribe API that is based on class semantics and/or string (topic) matching.</description>
     <version>1.4</version>
+    <url>http://www.eventbus.org</url>
     <scm>
-        <url>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:eventbus</url>
+        <url>https://eventbus.dev.java.net/source/browse/eventbus/</url>
+        <connection>scm:cvs:pserver:guest:@cvs.dev.java.net:/cvs:eventbus</connection>
+        <tag>HEAD</tag>
     </scm>
-    <url>http://eventbus.dev.java.net</url>
+    <ciManagement>
+        <system>Hudson</system>
+        <url>http://www.eventbus.org/hudson</url>
+    </ciManagement>
+    <issueManagement>
+      <system>Bugzilla</system>
+      <url>https://eventbus.dev.java.net/servlets/ProjectIssues</url>
+    </issueManagement>
+	  <mailingLists>
+	    <mailingList>
+	      <name>User List</name>
+	      <post>users@eventbus.dev.java.net</post>
+	      <archive>https://eventbus.dev.java.net/servlets/SummarizeList?listName=users</archive>
+	    </mailingList>
+	    <mailingList>
+	      <name>Issues List</name>
+	      <post>issues@eventbus.dev.java.net</post>
+	      <archive>https://eventbus.dev.java.net/servlets/SummarizeList?listName=issues</archive>
+	    </mailingList>
+	    <mailingList>
+	      <name>Announce List</name>
+	      <post>announce@eventbus.dev.java.net</post>
+	      <archive>https://eventbus.dev.java.net/servlets/SummarizeList?listName=announce</archive>
+	    </mailingList>
+	    <mailingList>
+	      <name>Developer List</name>
+	      <post>dev@eventbus.dev.java.net</post>
+	      <archive>https://eventbus.dev.java.net/servlets/SummarizeList?listName=dev</archive>
+	    </mailingList>
+	    <mailingList>
+	      <name>CVS List</name>
+	      <post>cvs@eventbus.dev.java.net</post>
+	      <archive>https://eventbus.dev.java.net/servlets/SummarizeList?listName=cvs</archive>
+	    </mailingList>
+	  </mailingLists>
     <licenses>
         <license>
             <name>Apache License, Version 2.0</name>

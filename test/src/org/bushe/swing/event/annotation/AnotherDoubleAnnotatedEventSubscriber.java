@@ -2,16 +2,9 @@ package org.bushe.swing.event.annotation;
 
 import java.util.List;
 import java.util.Collection;
-import java.util.Iterator;
-import java.io.File;
-import java.awt.Color;
-import javax.swing.JToggleButton;
-import javax.swing.JComponent;
-
-import org.bushe.swing.event.ThreadSafeEventService;
 
 /** Test class for class-based subscriptions */
-public class DoubleAnnotatedEventSubcriber {
+public class AnotherDoubleAnnotatedEventSubscriber {
 
    static int timesCalled = 0;
 
@@ -25,11 +18,6 @@ public class DoubleAnnotatedEventSubcriber {
 
    @EventSubscriber(eventClass = List.class)
    public void doList(Collection collection) {
-      timesCalled++;
-   }
-
-   @EventTopicSubscriber(topic="foo")
-   public void foo(String topic, Object o) {
       timesCalled++;
    }
 }

@@ -23,9 +23,9 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
     * @param patternString the Regular Expression for topics to subscribe to, used for unsubscription only
     */
    public ProxyTopicPatternSubscriber(Object proxiedSubscriber, Method subscriptionMethod,
-           ReferenceStrength referenceStrength,
-           EventService es, String patternString, Pattern pattern) {
-      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, patternString, pattern);
+           ReferenceStrength referenceStrength, EventService es, String patternString,
+           Pattern pattern, boolean veto) {
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, patternString, pattern, veto);
    }
 
    /**
@@ -41,13 +41,17 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
     */
    public ProxyTopicPatternSubscriber(Object proxiedSubscriber, Method subscriptionMethod,
            ReferenceStrength referenceStrength, int priority,
-           EventService es, String patternString, Pattern pattern) {
-      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es, patternString);
+           EventService es, String patternString, Pattern pattern, boolean veto) {
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es, patternString, veto);
       this.pattern = pattern;
    }
 
    protected void unsubscribe(String topic) {
-      getEventService().unsubscribe(pattern, this);
+      if (veto) {
+         getEventService().unsubscribeVetoListener(pattern, this);
+      } else {
+         getEventService().unsubscribe(pattern, this);
+      }
       pattern = null;
    }
 
@@ -74,6 +78,7 @@ public class ProxyTopicPatternSubscriber extends ProxyTopicSubscriber {
    public String toString() {
       return "ProxyTopicPatternSubscriber{" +
               "pattern=" + pattern +
+              "veto=" + veto +
               "realSubscriber=" + getProxiedSubscriber() +
               ", subscriptionMethod=" + getSubscriptionMethod() +
               ", referenceStrength=" + getReferenceStrength() +

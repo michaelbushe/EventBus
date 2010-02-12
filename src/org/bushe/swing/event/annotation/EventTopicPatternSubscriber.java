@@ -15,7 +15,7 @@ public @interface EventTopicPatternSubscriber {
    /** The Regular Expression to subscribe to. */
    String topicPattern();
 
-   /** Whether or not to subcribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
+   /** Whether or not to subscribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
    boolean exact() default false;
 
    /** Whether to subscribe weakly or strongly. */

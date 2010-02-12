@@ -12,7 +12,7 @@ import org.bushe.swing.event.ThreadSafeEventService;
 /**
  * An Annotation for subscribing to EventService Events.
  * <p>
- * This annotation simplifies much of the reptitive boilerplate used for subscribing to EventService Events.
+ * This annotation simplifies much of the repetitive boilerplate used for subscribing to EventService Events.
  * <p>
  * Instead of this:
  * <pre>
@@ -39,7 +39,7 @@ import org.bushe.swing.event.ThreadSafeEventService;
  * }
  * </pre>
  * <p>
- * That's pretty good, but when the constroller does more, annotations are even nicer.
+ * That's pretty good, but when the controller does more, annotations are even nicer.
  * <pre>
  * public class MyAppController implements EventSubscriber {
  *   public MyAppController {
@@ -48,7 +48,7 @@ import org.bushe.swing.event.ThreadSafeEventService;
  *   }
  *   public void onEvent(EventServiceEvent event) {
  *      //wicked bad pattern, but we have to this
- *      //...or create mutliple subscriber classes and hold instances of them fields, which is even more verbose...
+ *      //...or create multiple subscriber classes and hold instances of them fields, which is even more verbose...
  *      if (event instanceof AppStartingEvent) {
  *         onAppStartingEvent((AppStartingEvent)event);
  *      } else (event instanceof AppClosingEvent) {
@@ -93,7 +93,7 @@ public @interface EventSubscriber {
    /** Determines the order in which this subscriber is called, default is FIFO.*/
    int priority() default 0;
 
-   /** Whether or not to subcribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
+   /** Whether or not to subscribe to the exact class or a class hierarchy, defaults to class hierarchy (false). */
    boolean exact() default false;
 
    /** Whether to subscribe weakly or strongly. */

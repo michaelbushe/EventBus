@@ -1129,10 +1129,10 @@ public class TestDefaultEventService extends TestCase {
       //Test that a default setting does not cache
       EventService es = new ThreadSafeEventService(null);
       es.publish(new EventA());
-      List events = es.getCachedEvents(EventA.class);
-      assertNull(events);
-      Object lastEvent = es.getLastEvent(EventA.class);
-      assertNull(lastEvent);
+      List<EventA> aEvents = es.getCachedEvents(EventA.class);
+      assertNull(aEvents);
+      EventA lastAEvent = es.getLastEvent(EventA.class);
+      assertNull(lastAEvent);
       assertEquals(0, es.getCacheSizeForEventClass(EventA.class));
       assertEquals(0, es.getDefaultCacheSizePerClassOrTopic());
       //Test that changing the default to 1 caches 1
@@ -1140,11 +1140,11 @@ public class TestDefaultEventService extends TestCase {
       assertEquals(1, es.getDefaultCacheSizePerClassOrTopic());
       EventA publishedEvent = new EventA();
       es.publish(publishedEvent);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(1, events.size());
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(1, aEvents.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent);
       assertEquals(1, es.getCacheSizeForEventClass(EventA.class));
       //subscribe and see if it still works and that the new event is cached
       EventSubscriber sub = new EventSubscriber() {
@@ -1155,11 +1155,11 @@ public class TestDefaultEventService extends TestCase {
       es.subscribe(EventA.class, sub);
       publishedEvent = new EventA();
       es.publish(publishedEvent);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(1, events.size());
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(1, aEvents.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent);
       assertEquals(1, es.getCacheSizeForEventClass(EventA.class));
 
       //Test that changing the default to 5 caches 5
@@ -1173,17 +1173,17 @@ public class TestDefaultEventService extends TestCase {
       es.publish(publishedEvent3);
       es.publish(publishedEvent4);
       es.publish(publishedEvent5);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(5, events.size());
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent5);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(5, aEvents.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent5);
       assertEquals(5, es.getCacheSizeForEventClass(EventA.class));
       EventA publishedEvent6 = new EventA();
       es.publish(publishedEvent6);
-      assertEquals(5, events.size());
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent6);
+      assertEquals(5, aEvents.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent6);
       assertEquals(5, es.getCacheSizeForEventClass(EventA.class));
 
       //Test that overriding a single event class with 10 caches 10 for that event, but the default for the others
@@ -1206,54 +1206,54 @@ public class TestDefaultEventService extends TestCase {
       es.publish(publishedEvent6);
       EventA publishedEvent10 = new EventA();
       es.publish(publishedEvent10);
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent10);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(10, events.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent10);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(10, aEvents.size());
       assertEquals(10, es.getCacheSizeForEventClass(EventA.class));
-      assertTrue(publishedEvent10 == events.get(0));
-      assertTrue(publishedEvent6 == events.get(1));
-      assertTrue(publishedEvent6 == events.get(2));
-      assertTrue(publishedEvent6 == events.get(3));
-      assertTrue(publishedEvent6 == events.get(4));
-      assertTrue(publishedEvent6 == events.get(5));
-      assertTrue(publishedEvent5 == events.get(6));
-      assertTrue(publishedEvent4 == events.get(7));
-      assertTrue(publishedEvent3 == events.get(8));
-      assertTrue(publishedEvent2 == events.get(9));
-      lastEvent = es.getLastEvent(EventB.class);
-      assertTrue(lastEvent == publishedEventB6);
-      events = es.getCachedEvents(EventB.class);
-      assertNotNull(events);
-      assertEquals(5, events.size());
+      assertTrue(publishedEvent10 == aEvents.get(0));
+      assertTrue(publishedEvent6 == aEvents.get(1));
+      assertTrue(publishedEvent6 == aEvents.get(2));
+      assertTrue(publishedEvent6 == aEvents.get(3));
+      assertTrue(publishedEvent6 == aEvents.get(4));
+      assertTrue(publishedEvent6 == aEvents.get(5));
+      assertTrue(publishedEvent5 == aEvents.get(6));
+      assertTrue(publishedEvent4 == aEvents.get(7));
+      assertTrue(publishedEvent3 == aEvents.get(8));
+      assertTrue(publishedEvent2 == aEvents.get(9));
+      EventB lastBEvent = es.getLastEvent(EventB.class);
+      assertTrue(lastBEvent == publishedEventB6);
+      List<EventB> bEvents = es.getCachedEvents(EventB.class);
+      assertNotNull(bEvents);
+      assertEquals(5, bEvents.size());
       assertEquals(5, es.getCacheSizeForEventClass(EventB.class));
-      assertTrue(publishedEventB6 == events.get(0));
-      assertTrue(publishedEventB5 == events.get(1));
-      assertTrue(publishedEventB4 == events.get(2));
-      assertTrue(publishedEventB3 == events.get(3));
-      assertTrue(publishedEventB2 == events.get(4));
+      assertTrue(publishedEventB6 == bEvents.get(0));
+      assertTrue(publishedEventB5 == bEvents.get(1));
+      assertTrue(publishedEventB4 == bEvents.get(2));
+      assertTrue(publishedEventB3 == bEvents.get(3));
+      assertTrue(publishedEventB2 == bEvents.get(4));
       //this makes the cache resize smaller
       es.setCacheSizeForEventClass(EventA.class, 1);
       es.publish(publishedEvent4);
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent4);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(1, events.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent4);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(1, aEvents.size());
       assertEquals(1, es.getCacheSizeForEventClass(EventA.class));
       es.publish(publishedEventB4);
-      lastEvent = es.getLastEvent(EventB.class);
-      assertTrue(lastEvent == publishedEventB4);
-      events = es.getCachedEvents(EventB.class);
-      assertNotNull(events);
-      assertEquals(5, events.size());
+      lastBEvent = es.getLastEvent(EventB.class);
+      assertTrue(lastBEvent == publishedEventB4);
+      bEvents = es.getCachedEvents(EventB.class);
+      assertNotNull(bEvents);
+      assertEquals(5, bEvents.size());
       assertEquals(5, es.getCacheSizeForEventClass(EventB.class));
-      assertTrue(publishedEventB4 == events.get(0));
-      assertTrue(publishedEventB6 == events.get(1));
-      assertTrue(publishedEventB5 == events.get(2));
-      assertTrue(publishedEventB4 == events.get(3));
-      assertTrue(publishedEventB3 == events.get(4));
+      assertTrue(publishedEventB4 == bEvents.get(0));
+      assertTrue(publishedEventB6 == bEvents.get(1));
+      assertTrue(publishedEventB5 == bEvents.get(2));
+      assertTrue(publishedEventB4 == bEvents.get(3));
+      assertTrue(publishedEventB3 == bEvents.get(4));
 
       //Test that overridding a sublcass event class with 2 changes and a derived class with 5 ...
       //caches 5 for the derived class
@@ -1286,71 +1286,71 @@ public class TestDefaultEventService extends TestCase {
       es.publish(publishedEventX6);
       es.publish(publishedEventC4);
 
-      lastEvent = es.getLastEvent(EventA.class);
-      assertTrue(lastEvent == publishedEvent4);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(2, events.size());
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertTrue(lastAEvent == publishedEvent4);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(2, aEvents.size());
       assertEquals(2, es.getCacheSizeForEventClass(EventA.class));
-      lastEvent = es.getLastEvent(EventX.class);
-      assertTrue(lastEvent == publishedEventX6);
-      events = es.getCachedEvents(EventX.class);
-      assertNotNull(events);
-      assertEquals(5, events.size());
+      lastAEvent = es.getLastEvent(EventX.class);
+      assertTrue(lastAEvent == publishedEventX6);
+      List<EventX> xEvents = es.getCachedEvents(EventX.class);
+      assertNotNull(xEvents);
+      assertEquals(5, xEvents.size());
       assertEquals(5, es.getCacheSizeForEventClass(EventX.class));
-      assertTrue(publishedEventX6 == events.get(0));
-      assertTrue(publishedEventX5 == events.get(1));
-      assertTrue(publishedEventX4 == events.get(2));
-      assertTrue(publishedEventX3 == events.get(3));
-      assertTrue(publishedEventX2 == events.get(4));
+      assertTrue(publishedEventX6 == xEvents.get(0));
+      assertTrue(publishedEventX5 == xEvents.get(1));
+      assertTrue(publishedEventX4 == xEvents.get(2));
+      assertTrue(publishedEventX3 == xEvents.get(3));
+      assertTrue(publishedEventX2 == xEvents.get(4));
       try {
-         lastEvent = es.getLastEvent(Serializable.class);
+         Serializable serializableEvent = es.getLastEvent(Serializable.class);
          fail("Shouldn't be able to pass an interface.");
       } catch (IllegalArgumentException ex) {
       }
-      lastEvent = es.getLastEvent(EventC.class);
-      assertTrue(lastEvent == publishedEventC4);
+      EventC lastCEvent = es.getLastEvent(EventC.class);
+      assertTrue(lastCEvent == publishedEventC4);
       try {
-         events = es.getCachedEvents(Serializable.class);
+         List<Serializable> serializableEvents = es.getCachedEvents(Serializable.class);
          fail("Shouldn't be able to pass an interface.");
       } catch (IllegalArgumentException ex) {
       }
-      events = es.getCachedEvents(EventC.class);
-      assertNotNull(events);
-      assertEquals(3, events.size());
+      List<EventC> cEvents = es.getCachedEvents(EventC.class);
+      assertNotNull(cEvents);
+      assertEquals(3, cEvents.size());
       assertEquals(3, es.getCacheSizeForEventClass(EventC.class));
 
       es.clearCache(EventB.class);
-      events = es.getCachedEvents(EventB.class);
-      assertNull(events);
-      lastEvent = es.getLastEvent(EventA.class);
-      assertNotNull(lastEvent);
-      events = es.getCachedEvents(EventA.class);
-      assertNotNull(events);
-      assertEquals(2, events.size());
-      lastEvent = es.getLastEvent(EventX.class);
-      assertNotNull(lastEvent);
-      events = es.getCachedEvents(EventX.class);
-      assertNotNull(events);
-      assertEquals(5, events.size());
+      bEvents = es.getCachedEvents(EventB.class);
+      assertNull(bEvents);
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertNotNull(lastAEvent);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNotNull(aEvents);
+      assertEquals(2, aEvents.size());
+      EventX lastXEvent = es.getLastEvent(EventX.class);
+      assertNotNull(lastXEvent);
+      xEvents = es.getCachedEvents(EventX.class);
+      assertNotNull(xEvents);
+      assertEquals(5, xEvents.size());
       es.clearCache(EventA.class);
-      events = es.getCachedEvents(EventA.class);
-      assertNull(events);
-      lastEvent = es.getLastEvent(EventX.class);
-      events = es.getCachedEvents(EventX.class);
-      assertNull(lastEvent);
-      assertNull(events);
+      aEvents = es.getCachedEvents(EventA.class);
+      assertNull(aEvents);
+      lastXEvent = es.getLastEvent(EventX.class);
+      xEvents = es.getCachedEvents(EventX.class);
+      assertNull(lastXEvent);
+      assertNull(xEvents);
 
       es.publish(publishedEventX6);
       es.publish(publishedEventB4);
       es.publish(publishedEvent10);
       es.clearCache();
-      lastEvent = es.getLastEvent(EventA.class);
-      assertNull(lastEvent);
-      lastEvent = es.getLastEvent(EventB.class);
-      assertNull(lastEvent);
-      lastEvent = es.getLastEvent(EventX.class);
-      assertNull(lastEvent);
+      lastAEvent = es.getLastEvent(EventA.class);
+      assertNull(lastAEvent);
+      lastBEvent = es.getLastEvent(EventB.class);
+      assertNull(lastBEvent);
+      lastAEvent = es.getLastEvent(EventX.class);
+      assertNull(lastAEvent);
    }
 
 

@@ -4,13 +4,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.bushe.swing.event.EventService;
+import org.bushe.swing.event.VetoTopicEventListener;
 
 /** A class that subscribes to an EventService on behalf of another object.
  * This class is not used directly (though you could), but rather through the use of the
  * {@link @org.bushe.swing.event.annotation.EventTopicSubscriber}.  Advanced EventBus
  * users could use this class in Aspect-Oriented code.  Consider using the
  * {@link AnnotationProcessor} instead, it may suit your needs and be easier.*/
-public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org.bushe.swing.event.EventTopicSubscriber {
+public class ProxyTopicSubscriber extends AbstractProxySubscriber
+        implements org.bushe.swing.event.EventTopicSubscriber, VetoTopicEventListener {
    private String topic;
 
    /**
@@ -23,10 +25,11 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
     * @param es the EventService we will be subscribed to, since we may need to unsubscribe when weak refs no longer
     * exist
     * @param topic the topic to subscribe to, used for unsubscription only
+    * @param veto if this proxy is for a veto subscriber
     */
    public ProxyTopicSubscriber(Object proxiedSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
-           EventService es, String topic) {
-      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, topic);
+           EventService es, String topic, boolean veto) {
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, topic, veto);
    }
 
    /**
@@ -39,11 +42,15 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
     * @param es the EventService we will be subscribed to, since we may need to unsubscribe when weak refs no longer
     * exist
     * @param topic the topic to subscribe to, used for unsubscription only
+    * @param veto if this proxy is for a veto subscriber
     */
    public ProxyTopicSubscriber(Object proxiedSubscriber, Method subscriptionMethod, ReferenceStrength referenceStrength,
-           int priority, EventService es, String topic) {
-      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es);
+           int priority, EventService es, String topic, boolean veto) {
+      super(proxiedSubscriber, subscriptionMethod, referenceStrength, priority, es, veto);
       this.topic = topic;
+      if (topic == null) {
+         throw new IllegalArgumentException("Proxies for topic subscribers require a non-null topic.");
+      }
       Class[] params = subscriptionMethod.getParameterTypes();
       if (params == null || params.length != 2 || !String.class.equals(params[0]) || params[1].isPrimitive()) {
          throw new IllegalArgumentException("The subscriptionMethod must have the two parameters, the first one must be a String and the second a non-primitive (Object or derivative).");
@@ -75,8 +82,32 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
       }
    }
 
+
+   public boolean shouldVeto(String topic, Object data) {
+      Object[] args = new Object[]{topic, data};
+      Object obj = null;
+      Method subscriptionMethod = null;
+      try {
+         obj = getProxiedSubscriber();
+         if (obj == null) {
+            return false;
+         }
+         subscriptionMethod = getSubscriptionMethod();
+         return Boolean.valueOf(subscriptionMethod.invoke(obj, args)+"");
+      } catch (IllegalAccessException e) {
+         String message = "IllegalAccessException when invoking annotated veto method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod();
+         return retryReflectiveCallUsingAccessibleObject(args, subscriptionMethod, obj, e, message);
+      } catch (InvocationTargetException e) {
+         throw new RuntimeException("InvocationTargetException when invoking annotated veto method from EventService publication.  Topic:" + topic + ", data:" + data + ", subscriber:" + getProxiedSubscriber() + ", subscription Method=" + getSubscriptionMethod(), e);
+      }
+   }
+
    protected void unsubscribe(String topic) {
-      getEventService().unsubscribe(topic, this);
+      if (veto) {
+         getEventService().unsubscribeVetoListener(topic, this);
+      } else {
+         getEventService().unsubscribe(topic, this);
+      }
    }
 
    @Override
@@ -86,7 +117,7 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
             return false;
          }
          ProxyTopicSubscriber proxyTopicSubscriber = (ProxyTopicSubscriber) obj;
-         if (topic != proxyTopicSubscriber.topic) {
+         if (topic.equals(proxyTopicSubscriber.topic)) {
             if (topic == null) {
                return false;
             } else {
@@ -106,6 +137,7 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber implements org
    public String toString() {
       return "ProxyTopicSubscriber{" +
               "topic='" + topic + '\'' +
+              "veto='" + veto + '\'' +
               "realSubscriber=" + getProxiedSubscriber() +
               ", subscriptionMethod=" + getSubscriptionMethod() +
               ", referenceStrength=" + getReferenceStrength() +

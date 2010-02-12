@@ -43,7 +43,7 @@ public class ContainerEventServiceFinder {
    public static final String CLIENT_PROPERTY_KEY_TOP_LEVEL_EVENT_SERVICE = "ContainerEventServiceFinder.createdService";
 
    /**
-    * Walks the component's parents until it find an ContainerEventServiceSupplier and returns the suppier's
+    * Walks the component's parents until it find an ContainerEventServiceSupplier and returns the supplier's
     * EventService.  If the component in the tree is a JPopupMenu, then the menu's invoker is walked.
     *
     * @param component any component

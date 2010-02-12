@@ -2,7 +2,7 @@ package org.bushe.swing.event.annotation.runtime;
 
 public class Factory {
 
-	public static SubscriberForTesting newRuntimeTopicSubcriber(String topic) {
+	public static SubscriberForTesting newRuntimeTopicSubscriber(String topic) {
 		return new RuntimeTopicSubscriber(topic);
 	}
 

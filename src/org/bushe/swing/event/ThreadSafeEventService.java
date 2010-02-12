@@ -139,7 +139,7 @@ import org.bushe.swing.exception.SwingException;
  * @todo (param) a JMS-like selector (can be done in base classes by implements like a commons filter
  * @see EventService for a complete description of the API
  */
-@SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach", "ForLoopReplaceableByForEach"})
+@SuppressWarnings({"unchecked", "ForLoopReplaceableByForEach"})
 public class ThreadSafeEventService implements EventService {
    public static final Integer CLEANUP_START_THRESHOLD_DEFAULT = 250;
    public static final Integer CLEANUP_STOP_THRESHOLD_DEFAULT = 100;
@@ -240,7 +240,6 @@ public class ThreadSafeEventService implements EventService {
     *
     * @throws IllegalArgumentException if timeThresholdForEventTimingEventPublication is null and
     * subscribeTimingEventsInternally is true.
-    * @todo (nonSwing-only?) start a timer call and when it calls back, report the time if exceeded.
     */
    public ThreadSafeEventService(Long timeThresholdForEventTimingEventPublication,
            boolean subscribeTimingEventsInternally, Integer  cleanupStartThreshold, 
@@ -698,8 +697,8 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#unsubscribe(Class,Object) */
-   public boolean unsubscribe(Class eventClass, Object subcribedByProxy) {
-      EventSubscriber subscriber = (EventSubscriber) getProxySubscriber(eventClass, subcribedByProxy);
+   public boolean unsubscribe(Class eventClass, Object subscribedByProxy) {
+      EventSubscriber subscriber = (EventSubscriber) getProxySubscriber(eventClass, subscribedByProxy);
       if (subscriber == null) {
          return false;
       } else {
@@ -708,8 +707,8 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#unsubscribeExactly(Class,Object) */
-   public boolean unsubscribeExactly(Class eventClass, Object subcribedByProxy) {
-      Object subscriber = getProxySubscriber(eventClass, subcribedByProxy);
+   public boolean unsubscribeExactly(Class eventClass, Object subscribedByProxy) {
+      EventSubscriber subscriber = (EventSubscriber) getProxySubscriber(eventClass, subscribedByProxy);
       if (subscriber == null) {
          return false;
       } else {
@@ -718,8 +717,8 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#unsubscribe(String,Object) */
-   public boolean unsubscribe(String topic, Object subcribedByProxy) {
-      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(topic, subcribedByProxy);
+   public boolean unsubscribe(String topic, Object subscribedByProxy) {
+      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(topic, subscribedByProxy);
       if (subscriber == null) {
          return false;
       } else {
@@ -728,8 +727,8 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#unsubscribe(java.util.regex.Pattern,Object) */
-   public boolean unsubscribe(Pattern pattern, Object subcribedByProxy) {
-      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(pattern, subcribedByProxy);
+   public boolean unsubscribe(Pattern pattern, Object subscribedByProxy) {
+      EventTopicSubscriber subscriber = (EventTopicSubscriber) getProxySubscriber(pattern, subscribedByProxy);
       if (subscriber == null) {
          return false;
       } else {
@@ -763,37 +762,44 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   private ProxySubscriber getProxySubscriber(Class eventClass, Object subcribedByProxy) {
-      List subscribers = getSubscribers(eventClass);
-      return getProxySubscriber(subscribers, subcribedByProxy);
-   }
-
-   private ProxySubscriber getProxySubscriber(String topic, Object subcribedByProxy) {
-      List subscribers = getSubscribers(topic);
-      return getProxySubscriber(subscribers, subcribedByProxy);
-   }
-
-   private ProxySubscriber getProxySubscriber(Pattern pattern, Object subcribedByProxy) {
-      List subscribers = getSubscribersToPattern(pattern);
-      return getProxySubscriber(subscribers, subcribedByProxy);
-   }
-
-   private ProxySubscriber getProxySubscriber(List subscribers, Object subcribedByProxy) {
-      for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
-         Object subscriber = iter.next();
-         if (subscriber instanceof WeakReference) {
-            WeakReference wr = (WeakReference) subscriber;
-            subscriber = wr.get();
-         }
-         if (subscriber instanceof ProxySubscriber) {
-            ProxySubscriber proxy = (ProxySubscriber) subscriber;
-            subscriber = proxy.getProxiedSubscriber();
-            if (subscriber == subcribedByProxy) {
-               return proxy;
-            }
-         }
+   /** @see EventService#unsubscribeVeto(Class,Object) */
+   public boolean unsubscribeVeto(Class eventClass, Object subscribedByProxy) {
+      VetoEventListener subscriber = (VetoEventListener) getVetoProxySubscriber(eventClass, subscribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribeVetoListener(eventClass, subscriber);
       }
-      return null;
+   }
+
+   /** @see EventService#unsubscribeVetoExactly(Class,Object) */
+   public boolean unsubscribeVetoExactly(Class eventClass, Object subscribedByProxy) {
+      VetoEventListener subscriber = (VetoEventListener) getVetoProxySubscriber(eventClass, subscribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribeVetoListenerExactly(eventClass, subscriber);
+      }
+   }
+
+   /** @see EventService#unsubscribeVeto(String,Object) */
+   public boolean unsubscribeVeto(String topic, Object subscribedByProxy) {
+      VetoTopicEventListener subscriber = (VetoTopicEventListener) getVetoProxySubscriber(topic, subscribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribeVetoListener(topic, subscriber);
+      }
+   }
+
+   /** @see EventService#unsubscribeVeto(java.util.regex.Pattern,Object) */
+   public boolean unsubscribeVeto(Pattern pattern, Object subscribedByProxy) {
+      VetoTopicEventListener subscriber = (VetoTopicEventListener) getVetoProxySubscriber(pattern, subscribedByProxy);
+      if (subscriber == null) {
+         return false;
+      } else {
+         return unsubscribeVetoListener(pattern, subscriber);
+      }
    }
 
    /** @see EventService#unsubscribeVetoListener(Class,VetoEventListener) */
@@ -840,6 +846,54 @@ public class ThreadSafeEventService implements EventService {
       synchronized (listenerLock) {
          return removeFromSetResolveWeakReferences(vetoListenerMap, o, vl);
       }
+   }
+
+   private ProxySubscriber getProxySubscriber(Class eventClass, Object subscribedByProxy) {
+      List subscribers = getSubscribers(eventClass);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(String topic, Object subscribedByProxy) {
+      List subscribers = getSubscribers(topic);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(Pattern pattern, Object subscribedByProxy) {
+      List subscribers = getSubscribersToPattern(pattern);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getVetoProxySubscriber(Class eventClass, Object subscribedByProxy) {
+      List subscribers = getVetoSubscribers(eventClass);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getVetoProxySubscriber(String topic, Object subscribedByProxy) {
+      List subscribers = getVetoSubscribers(topic);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getVetoProxySubscriber(Pattern pattern, Object subscribedByProxy) {
+      List subscribers = getVetoSubscribers(pattern);
+      return getProxySubscriber(subscribers, subscribedByProxy);
+   }
+
+   private ProxySubscriber getProxySubscriber(List subscribers, Object subscribedByProxy) {
+      for (Iterator iter = subscribers.iterator(); iter.hasNext();) {
+         Object subscriber = iter.next();
+         if (subscriber instanceof WeakReference) {
+            WeakReference wr = (WeakReference) subscriber;
+            subscriber = wr.get();
+         }
+         if (subscriber instanceof ProxySubscriber) {
+            ProxySubscriber proxy = (ProxySubscriber) subscriber;
+            subscriber = proxy.getProxiedSubscriber();
+            if (subscriber == subscribedByProxy) {
+               return proxy;
+            }
+         }
+      }
+      return null;
    }
 
    /** @see EventService#publish(Object) */
@@ -1179,41 +1233,23 @@ public class ThreadSafeEventService implements EventService {
       return result;
    }
 
-   /** @see EventService#getSubscribers(Class) */
+   /** @see EventService#getSubscribersToTopic(String)  */
    public List getSubscribersToTopic(String topic) {
       synchronized (listenerLock) {
          return getSubscribers(topic, subscribersByTopic);
       }
    }
 
-   /** @see EventService#getSubscribersByPattern(String)  */
-   public List getSubscribersByPattern(String topic) {
-      List result = new ArrayList();
+   /** @see EventService#getSubscribers(Pattern)  */
+   public List getSubscribers(Pattern pattern) {
       synchronized (listenerLock) {
-         Set keys = subscribersByTopicPattern.keySet();
-         for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
-            PatternWrapper patternKey = (PatternWrapper) iterator.next();
-            if (patternKey.matches(topic)) {
-               if (LOG.isLoggable(Level.DEBUG)) {
-                  LOG.debug("Pattern " + patternKey + " matched topic name " + topic);
-               }
-               Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
-               result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
-            }
-         }
-         if (hasEverUsedPrioritized) {
-            result = sortSubscribers(result);
-         }
-         return result;
+         return getSubscribers(pattern, subscribersByTopicPattern);
       }
    }
 
-
-   protected List getSubscribersToPattern(Pattern topicPattern) {
-      synchronized (listenerLock) {
-         PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
-         return getSubscribers(patternWrapper, subscribersByTopicPattern);
-      }
+   /** @see EventService#getSubscribersByPattern(String)  */
+   public List getSubscribersByPattern(String topic) {
+      return getSubscribersByPattern(topic, subscribersByTopicPattern);
    }
 
    /** @see EventService#getVetoSubscribers(Class) */
@@ -1250,22 +1286,94 @@ public class ThreadSafeEventService implements EventService {
       return result;
    }
 
+   /** @see EventService#getVetoSubscribersToExactClass(Class) */
    public List getVetoSubscribersToExactClass(Class eventClass) {
       synchronized (listenerLock) {
          return getSubscribers(eventClass, vetoListenersByExactClass);
       }
    }
 
-   public List getVetoSubscribers(String topic) {
+   /** @see EventService#getVetoEventListeners(String)  */
+   public List getVetoEventListeners(String topicOrPattern) {
+      List result = new ArrayList();
+      List exactMatches;
+      List patternMatches;
+      synchronized (listenerLock) {
+         exactMatches = getVetoSubscribersToTopic(topicOrPattern);
+         patternMatches = getVetoSubscribersByPattern(topicOrPattern);
+      }
+      if (exactMatches != null) {
+         result.addAll(exactMatches);
+      }
+      if (patternMatches != null) {
+         result.addAll(patternMatches);
+      }
+      if (hasEverUsedPrioritized) {
+         result = sortSubscribers(result);
+      }
+      return result;
+   }
+
+   /** @see EventService#getVetoSubscribersToTopic(String) */
+   public List getVetoSubscribersToTopic(String topic) {
       synchronized (listenerLock) {
          return getSubscribers(topic, vetoListenersByTopic);
       }
    }
 
+   /**
+    * Note: this is inconsistent with getSubscribers(String)
+    * @see EventService#getVetoSubscribersToTopic(String)
+    * @deprecated use getVetoSubscribersToTopic instead for direct replacement,
+    *             or use getVetoEventListeners to get topic and pattern matchers.
+    *             In EventBus 2.0 this name will replace getVetoEventListeners()
+    *             and have it's union functionality
+    */
+   public List getVetoSubscribers(String topic) {
+      synchronized (listenerLock) {
+         return getVetoSubscribersToTopic(topic);
+      }
+   }
+
+   /** @see EventService#getVetoSubscribers(Pattern) */
    public List getVetoSubscribers(Pattern topicPattern) {
       synchronized (listenerLock) {
          PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
          return getSubscribers(patternWrapper, vetoListenersByTopicPattern);
+      }
+   }
+
+   /** @see EventService#getVetoSubscribersByPattern(String)   */
+   public List getVetoSubscribersByPattern(String pattern) {
+      return getSubscribersByPattern(pattern, vetoListenersByTopicPattern);
+   }
+
+   /** Used for subscribers and veto subscribers */
+   private List getSubscribersByPattern(String topic, Map subscribersByTopicPattern) {
+      List result = new ArrayList();
+      synchronized (listenerLock) {
+         Set keys = subscribersByTopicPattern.keySet();
+         for (Iterator iterator = keys.iterator(); iterator.hasNext();) {
+            PatternWrapper patternKey = (PatternWrapper) iterator.next();
+            if (patternKey.matches(topic)) {
+               if (LOG.isLoggable(Level.DEBUG)) {
+                  LOG.debug("Pattern " + patternKey + " matched topic name " + topic);
+               }
+               Collection subscribers = (Collection) subscribersByTopicPattern.get(patternKey);
+               result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
+            }
+         }
+         if (hasEverUsedPrioritized) {
+            result = sortSubscribers(result);
+         }
+         return result;
+      }
+   }
+
+   protected List getSubscribersToPattern(Pattern topicPattern) {
+      synchronized (listenerLock) {
+         PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
+         return getSubscribers(patternWrapper, subscribersByTopicPattern);
       }
    }
 
@@ -1429,7 +1537,6 @@ public class ThreadSafeEventService implements EventService {
     */
    protected void handleVeto(VetoEventListener vl, Object event,
            VetoTopicEventListener vtl, String topic, Object eventObj) {
-      //@todo register object that want to know about the veto and notify them of the veto
       if (LOG.isLoggable(Level.DEBUG)) {
          if (event != null) {
             LOG.debug("Vetoing event: class=" + event.getClass() + ", event=" + event + ", vetoer:" + vl);

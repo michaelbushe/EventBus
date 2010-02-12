@@ -20,6 +20,11 @@ class RuntimeTopicPatternSubscriber implements SubscriberForTesting {
 		timesCalled++;
 	}
 
+   @RuntimeTopicPatternEventSubscriber
+   public boolean shouldVeto(String topic, List<String> e) {
+      return e == null;
+   }
+
 	public String getTopicPatternName() {
 		return topicPattern;
 	}

@@ -41,7 +41,7 @@ import java.lang.reflect.Type;
  * and <a href="package-summary.html">package documentation</a> for usage details and examples.
  * <p/>
  * A single subscriber cannot subscribe more than once to an event or topic name.  EventService implementations should
- * handle double-subscription requests by returing false on subscribe().  A single EventSubscriber can subscribe to more
+ * handle double-subscription requests by returning false on subscribe().  A single EventSubscriber can subscribe to more
  * than one event class, and a single EventTopicSubscriber can subscribe to more than one topic name or pattern. A
  * single object may implement both EventSubscriber and EventTopicSubscriber interfaces.  Subscribers are guaranteed to
  * only be called for the classes and/or topic names they subscribe to.  If a subscriber subscribes to a topic and to a
@@ -52,7 +52,7 @@ import java.lang.reflect.Type;
  * type.
  * <p/>
  * By default the EventService only holds WeakReferences to subscribers.  If a subscriber has no references to it, then
- * it can be garbage collected.  This avoids memory leaks in exchange for the risk of accidently adding a listener and
+ * it can be garbage collected.  This avoids memory leaks in exchange for the risk of accidentally adding a listener and
  * have it disappear unexpectedly.  If you want to subscribe a subscriber that will have no other reference to it, then
  * use one of the subscribeStrongly() methods, which will prevent garbage collection.
  * <p/>
@@ -60,8 +60,8 @@ import java.lang.reflect.Type;
  * methods with the event class or topic name to which there are subscribed.
  * <p/>
  * Subscribers are called in the order in which they are subscribed by default (FIFO), unless subscribers implement
- * {@link Prioritized}.  Those subscribers that implement Prioritized and return a negative priorty are moved to the
- * front of the list (the more negative, the more to the front).  Those subscribers that implement Prioritied and return
+ * {@link Prioritized}.  Those subscribers that implement Prioritized and return a negative priority are moved to the
+ * front of the list (the more negative, the more to the front).  Those subscribers that implement Prioritized and return
  * a positive priority are moved to the end of the list (the more positive, the more to the back).  The FIFO guarantee
  * is only valid for the same subscribe() call.  That is, the order of two subscribers, one to List.class and the other
  * to ArrayList.class is not guaranteed to be in the order of subscription when an ArrayList is published.  The same is
@@ -145,12 +145,12 @@ public interface EventService {
     * </pre>
     * <p>
     * @param genericType the generified type of the published object.  
-    * @param event The event that occured
+    * @param event The event that occurred
     */
    public void publish(Type genericType, Object event);
 
    /**
-    * Publishes an object on a topic name so that all subscribers to that name or a Regular Expressoin that matches
+    * Publishes an object on a topic name so that all subscribers to that name or a Regular Expression that matches
     * the topic name will be notified.
     *
     * @param topic The name of the topic subscribed to
@@ -179,7 +179,7 @@ public interface EventService {
     * @param eventClass the class of published objects to subscriber listen to
     * @param subscriber The subscriber that will accept the events of the event class when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribe(Class eventClass, EventSubscriber subscriber);
 
@@ -202,6 +202,9 @@ public interface EventService {
    * EventBus.publish(publishingTypeReference.getType(), trades);
    * </pre>
    * <p>
+   * @param type the generic type to subscribe to
+   * @param subscriber the subscriber to the type
+   * @return true if a new subscription is made, false if it already existed
    */
    public boolean subscribe(Type type, EventSubscriber subscriber);
 
@@ -222,7 +225,7 @@ public interface EventService {
     * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribeExactly(Class eventClass, EventSubscriber subscriber);
 
@@ -242,7 +245,7 @@ public interface EventService {
     * @param topic the name of the topic listened to
     * @param subscriber The topic subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribe(String topic, EventTopicSubscriber subscriber);
 
@@ -262,7 +265,7 @@ public interface EventService {
     * @param topicPattern pattern that matches to the name of the topic published to
     * @param subscriber The topic subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribe(Pattern topicPattern, EventTopicSubscriber subscriber);
 
@@ -277,7 +280,7 @@ public interface EventService {
     * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribeStrongly(Class eventClass, EventSubscriber subscriber);
 
@@ -292,7 +295,7 @@ public interface EventService {
     * @param eventClass the class of published objects to listen to
     * @param subscriber The subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribeExactlyStrongly(Class eventClass, EventSubscriber subscriber);
 
@@ -307,7 +310,7 @@ public interface EventService {
     * @param topic the name of the topic listened to
     * @param subscriber The topic subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribeStrongly(String topic, EventTopicSubscriber subscriber);
 
@@ -322,7 +325,7 @@ public interface EventService {
     * @param topicPattern the name of the topic listened to
     * @param subscriber The topic subscriber that will accept the events when published.
     *
-    * @return true if the subscriber was subscribed sucessfully, false otherwise
+    * @return true if the subscriber was subscribed successfully, false otherwise
     */
    public boolean subscribeStrongly(Pattern topicPattern, EventTopicSubscriber subscriber);
 
@@ -383,7 +386,7 @@ public interface EventService {
     * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The VetoEventListener that can determine whether an event is published.
     *
-    * @return true if the VetoEventListener was subscribed sucessfully, false otherwise
+    * @return true if the VetoEventListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListener(Class eventClass, VetoEventListener vetoListener);
 
@@ -404,7 +407,7 @@ public interface EventService {
     * @param eventClass the class of published objects that can be vetoed
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListenerExactly(Class eventClass, VetoEventListener vetoListener);
 
@@ -415,7 +418,7 @@ public interface EventService {
     * @param topic the name of the topic listened to
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListener(String topic, VetoTopicEventListener vetoListener);
 
@@ -426,7 +429,7 @@ public interface EventService {
     * @param topicPattern the RegEx pattern to match topics with
     * @param vetoListener The vetoListener that can determine whether an event is published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListener(Pattern topicPattern, VetoTopicEventListener vetoListener);
 
@@ -440,7 +443,7 @@ public interface EventService {
     * @param eventClass the class of published objects to listen to
     * @param vetoListener The vetoListener that will accept the events when published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListenerStrongly(Class eventClass, VetoEventListener vetoListener);
 
@@ -453,7 +456,7 @@ public interface EventService {
     * @param eventClass the class of published objects to listen to
     * @param vetoListener The vetoListener that will accept the events when published.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     */
    public boolean subscribeVetoListenerExactlyStrongly(Class eventClass, VetoEventListener vetoListener);
 
@@ -466,7 +469,7 @@ public interface EventService {
     * @param topic the name of the topic listened to
     * @param vetoListener The topic vetoListener that will accept or reject publication.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     *
     * @see #subscribeVetoListenerStrongly(Class,VetoEventListener)
     */
@@ -481,7 +484,7 @@ public interface EventService {
     * @param topicPattern the RegEx pattern that matches the name of the topics listened to
     * @param vetoListener The topic vetoListener that will accept or reject publication.
     *
-    * @return true if the vetoListener was subscribed sucessfully, false otherwise
+    * @return true if the vetoListener was subscribed successfully, false otherwise
     *
     * @see #subscribeVetoListenerStrongly(Pattern,VetoTopicEventListener)
     */
@@ -535,7 +538,7 @@ public interface EventService {
     * @return the subscribers that will be called when an event of eventClass is published, this includes those
     *         subscribed that match by exact class and those that match to a class and its subtypes
     */
-   public List getSubscribers(Class eventClass);
+   public <T> List<T> getSubscribers(Class<T> eventClass);
 
    /**
     * Gets subscribers that subscribed with the given a class, but not those subscribed exactly to the class.
@@ -544,7 +547,7 @@ public interface EventService {
     * @return the subscribers that are subscribed to match to a class and its subtypes, but not those subscribed by
     *         exact class
     */
-   public List getSubscribersToClass(Class eventClass);
+   public <T> List<T> getSubscribersToClass(Class<T> eventClass);
 
    /**
     * Gets subscribers that are subscribed exactly to a class, but not those subscribed non-exactly to a class.
@@ -553,17 +556,17 @@ public interface EventService {
     * @return the subscribers that are subscribed by exact class but not those subscribed to match to a class and its
     *         subtypes
     */
-   public List getSubscribersToExactClass(Class eventClass);
+   public <T> List<T> getSubscribersToExactClass(Class<T> eventClass);
 
    /**
-    * Gets the suscribers that subscribed to a generic type.
+    * Gets the subscribers that subscribed to a generic type.
     *
     * @param type the type of interest
     *
     * @return the subscribers that will be called when an event of eventClass is published, this includes those
     *         subscribed that match by exact class and those that match to a class and its subtypes
     */
-   public List getSubscribers(Type type);
+   public <T> List<T> getSubscribers(Type type);
 
    /**
     * Union of getSubscribersByPattern(String) and geSubscribersToTopic(String)
@@ -571,10 +574,10 @@ public interface EventService {
     * @param topic the topic of interest
     *
     * @return the subscribers that will be called when an event is published on the topic.  This includes subscribers
-    *         subsribed to match the exact topic name and those subscribed by a RegEx Pattern that matches the topic
+    *         subscribed to match the exact topic name and those subscribed by a RegEx Pattern that matches the topic
     *         name.
     */
-   public List getSubscribers(String topic);
+   public <T> List<T> getSubscribers(String topic);
 
    /**
     * Get the subscribers that subscribed to a topic.
@@ -582,7 +585,15 @@ public interface EventService {
     *
     * @return the subscribers that subscribed to the exact topic name.
     */
-   public List getSubscribersToTopic(String topic);
+   public <T> List<T>  getSubscribersToTopic(String topic);
+
+   /**
+    * Gets the subscribers that subscribed to a regular expression.
+    * @param pattern the RegEx pattern that was subscribed to
+    *
+    * @return the subscribers that were subscribed to this pattern.
+    */
+   public <T> List<T> getSubscribers(Pattern pattern);
 
    /**
     * Gets the subscribers that subscribed with a Pattern that matches the given topic.
@@ -590,7 +601,7 @@ public interface EventService {
     *
     * @return the subscribers that subscribed by a RegEx Pattern that matches the topic name.
     */
-   public List getSubscribersByPattern(String topic);
+   public <T> List<T> getSubscribersByPattern(String topic);
 
    /**
     * Gets veto subscribers that subscribed to a given class.
@@ -598,7 +609,7 @@ public interface EventService {
     *
     * @return the veto subscribers that will be called when an event of eventClass or its subclasses is published.
     */
-   public List getVetoSubscribers(Class eventClass);
+   public <T> List<T>  getVetoSubscribers(Class eventClass);
 
    /**
     * Get veto subscribers that subscribed to a given class exactly.
@@ -607,7 +618,7 @@ public interface EventService {
     * @return the veto subscribers that will be called when an event of eventClass (but not its subclasses) is
     *         published.
     */
-   public List getVetoSubscribersToExactClass(Class eventClass);
+   public <T> List<T> getVetoSubscribersToExactClass(Class eventClass);
 
    /**
     * Gets the veto subscribers that subscribed to a class.
@@ -615,7 +626,17 @@ public interface EventService {
     *
     * @return the veto subscribers that are subscribed to the eventClass and its subclasses
     */
-   public List getVetoSubscribersToClass(Class eventClass);
+   public <T> List<T> getVetoSubscribersToClass(Class eventClass);
+
+   /**
+    * Union of {@link #getVetoSubscribersToTopic(String)} and {@link #getVetoSubscribersByPattern(String)}
+    * Misnamed method, should be called {@link #getVetoSubscribers(String)}. Will be deprecatd in 1.5.
+    *
+    * @param topicOrPattern the topic or pattern of interest
+    *
+    * @return the veto subscribers that will be called when an event is published on the topic.
+    */
+   public <T> List<T> getVetoEventListeners(String topicOrPattern);
 
    /**
     * Gets the veto subscribers that subscribed to a topic.
@@ -623,16 +644,38 @@ public interface EventService {
     *
     * @return the veto subscribers that will be called when an event is published on the topic.
     */
-   public List getVetoSubscribers(String topic);
+   public <T> List<T> getVetoSubscribersToTopic(String topic);
 
    /**
     * Gets the veto subscribers that subscribed to a regular expression.
     * @param pattern the RegEx pattern for the topic of interest
     *
-    * @return the veto subscribers that will be called when an event is published on the topic.
+    * @return the veto subscribers that were subscribed to this pattern.
     */
-   public List getVetoSubscribers(Pattern pattern);
+   public <T> List<T> getVetoSubscribers(Pattern pattern);
 
+   /**
+    * Gets the veto subscribers that are subscribed by pattern that match the topic.
+    * @param topic the topic to match the pattern string subscribed to
+    *
+    * @return the veto subscribers that subscribed by pattern that will be called when an event is published on the topic.
+    */
+   public <T> List<T> getVetoSubscribersByPattern(String topic);
+
+   /**
+    * Misnamed method for backwards compatibility.
+    * Duplicate of {@link #getVetoSubscribersToTopic(String)}.
+    * Out of sync with {@link #getSubscribers(String)}.
+    * @param topic the topic exactly subscribed to
+    *
+    * @return the veto subscribers that are subscribed to the topic.
+    * @deprecated use getVetoSubscribersToTopic instead for direct replacement,
+    *             or use getVetoEventListeners to get topic and pattern matchers.
+    *             In EventBus 2.0 this name will replace getVetoEventListeners()
+    *             and have it's union functionality
+    */
+   public <T> List<T> getVetoSubscribers(String topic);
+      
    /** Clears all current subscribers and veto subscribers */
    public void clearAllSubscribers();
 
@@ -646,7 +689,7 @@ public interface EventService {
     * <p/>
     * The default can be overridden on a by-event-class or by-topic basis.
     *
-    * @param defaultCacheSizePerClassOrTopic
+    * @param defaultCacheSizePerClassOrTopic the cache size per event
     */
    public void setDefaultCacheSizePerClassOrTopic(int defaultCacheSizePerClassOrTopic);
 
@@ -663,7 +706,7 @@ public interface EventService {
     * <p/>
     * Class hierarchy semantics are respected.  That is, if there are three events, A, X and Y, and X and Y are both
     * derived from A, then setting the cache size for A applies the cache size for all three.  Setting the cache size
-    * for X applies to X and leaves the settings for A and Y in tact.  Intefaces can be passed to this method, but they
+    * for X applies to X and leaves the settings for A and Y in tact.  Interfaces can be passed to this method, but they
     * only take effect if the cache size of a class or it's superclasses has been set. Just like Class.getInterfaces(),
     * if multiple cache sizes are set, the interface names declared earliest in the implements clause of the eventClass
     * takes effect.
@@ -699,7 +742,7 @@ public interface EventService {
     * The cache for a topic is not adjusted until the next publication on that topic.
     *
     * @param topicName the topic name
-    * @param cacheSize the number of published data Objects to cache for this topci
+    * @param cacheSize the number of published data Objects to cache for this topic
     */
    public void setCacheSizeForTopic(String topicName, int cacheSize);
 
@@ -713,7 +756,7 @@ public interface EventService {
     * The cache for a topic is not adjusted until the next publication on that topic.
     *
     * @param pattern the pattern matching topic names
-    * @param cacheSize the number of data Objects to cache for this topci
+    * @param cacheSize the number of data Objects to cache for this topic
     */
    public void setCacheSizeForTopic(Pattern pattern, int cacheSize);
 
@@ -738,7 +781,7 @@ public interface EventService {
     *
     * @return the last event published for this event class, or null if caching is turned off (the default)
     */
-   public Object getLastEvent(Class eventClass);
+   public <T> T getLastEvent(Class<T> eventClass);
 
    /**
     * When caching, returns the last set of event published for the type supplied.
@@ -746,7 +789,7 @@ public interface EventService {
     *
     * @return the last events published for this event class, or null if caching is turned off (the default)
     */
-   public List getCachedEvents(Class eventClass);
+   public <T> List<T> getCachedEvents(Class<T> eventClass);
 
    /**
     * When caching, returns the last payload published on the topic name supplied.
@@ -796,9 +839,10 @@ public interface EventService {
     * still unsubscribe the object.
     *
     * @param eventClass class this object is subscribed to by proxy
-    * @param subcribedByProxy object subscribed by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
     */
-   boolean unsubscribe(Class eventClass, Object subcribedByProxy);
+   boolean unsubscribe(Class eventClass, Object subscribedByProxy);
 
    /**
     * Stop a subscription for an object that is subscribed exactly with a ProxySubscriber.
@@ -807,9 +851,10 @@ public interface EventService {
     * still unsubscribe the object.
     *
     * @param eventClass class this object is subscribed to by proxy
-    * @param subcribedByProxy object subscribed by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
     */
-   boolean unsubscribeExactly(Class eventClass, Object subcribedByProxy);
+   boolean unsubscribeExactly(Class eventClass, Object subscribedByProxy);
 
    /**
     * Stop a subscription for an object that is subscribed to a topic with a ProxySubscriber.
@@ -818,19 +863,70 @@ public interface EventService {
     * still unsubscribe the object.
     *
     * @param topic the topic this object is subscribed to by proxy
-    * @param subcribedByProxy object subscribed by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
     */
-   boolean unsubscribe(String topic, Object subcribedByProxy);
+   boolean unsubscribe(String topic, Object subscribedByProxy);
 
    /**
-    * When using annotations, an object may be subscribed by proxy.  This unsubscibe method will unsubscribe an object
+    * When using annotations, an object may be subscribed by proxy.  This unsubscribe method will unsubscribe an object
     * that is subscribed with a ProxySubscriber.
     * <p/>
     * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
     * still unsubscribe the object.
     *
     * @param pattern the RegEx expression this object is subscribed to by proxy
-    * @param subcribedByProxy object subscribed by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
     */
-   boolean unsubscribe(Pattern pattern, Object subcribedByProxy);
+   boolean unsubscribe(Pattern pattern, Object subscribedByProxy);
+
+   /**
+    * Stop a veto subscription for an object that is subscribed with a ProxySubscriber.
+    * <p/>
+    * If an object is subscribed by proxy and it implements VetoSubscriber, then the normal unsubscribe methods will
+    * still unsubscribe the object.
+    *
+    * @param eventClass class this object is subscribed to by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
+    */
+   boolean unsubscribeVeto(Class eventClass, Object subscribedByProxy);
+
+   /**
+    * Stop a veto subscription for an object that is subscribed exactly with a ProxySubscriber.
+    * <p/>
+    * If an object is subscribed by proxy and it implements VetoSubscriber, then the normal unsubscribe methods will
+    * still unsubscribe the object.
+    *
+    * @param eventClass class this object is subscribed to by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
+    */
+   boolean unsubscribeVetoExactly(Class eventClass, Object subscribedByProxy);
+
+   /**
+    * Stop a veto subscription for an object that is subscribed to a topic with a ProxySubscriber.
+    * <p/>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
+    * still unsubscribe the object.
+    *
+    * @param topic the topic this object is subscribed to by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
+    */
+   boolean unsubscribeVeto(String topic, Object subscribedByProxy);
+
+   /**
+    * When using annotations, an object may be subscribed by proxy.  This unsubscribe method will unsubscribe an object
+    * that is subscribed with a ProxySubscriber.
+    * <p/>
+    * If an object is subscribed by proxy and it implements EventSubscriber, then the normal unsubscribe methods will
+    * still unsubscribe the object.
+    *
+    * @param pattern the RegEx expression this object is subscribed to by proxy
+    * @param subscribedByProxy object subscribed by proxy
+    * @return true if the subscription was cancelled, false if it never existed
+    */
+   boolean unsubscribeVeto(Pattern pattern, Object subscribedByProxy);
 }

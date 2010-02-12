@@ -20,7 +20,7 @@ import org.bushe.swing.event.annotation.ReferenceStrength;
 /**
  * An interface that can be implemented when proxies are used for subscription, not needed in normal usage.  When an
  * unsubscribe method is called on an EventService, the EventService is required to check if any of subscribed objects
- * are ProxySubscribers and if the object to be unsubscribed is the ProxySubscriber's proxiedSubcriber. If so, the
+ * are ProxySubscribers and if the object to be unsubscribed is the ProxySubscriber's proxiedSubscriber. If so, the
  * EventService proxy is unsubscribed and the ProxySubscriber's proxyUnsubscribed() method is called to allow the proxy
  * to perform any cleanup if necessary.  ProxySubscribers should set their references to their proxied objects to null
  * for strong subscriptions to allow garbage collection.

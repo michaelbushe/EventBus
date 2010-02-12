@@ -496,6 +496,9 @@ public class TestEventBus extends TestCase {
       assertEquals("testPublish(exceptions)", 0, testCounter.subscribeExceptionCount);
    }
 
+   /**
+    * This tests whether the EventBus has a static method for each EventService method
+    */
    public void testNumOfMethods() {
       Method[] esMethods = EventService.class.getMethods();
       Method[] ebMethods = EventBus.class.getMethods();
@@ -504,7 +507,8 @@ public class TestEventBus extends TestCase {
          Method esMethod = esMethods[i];
          boolean foundMatch = false;
          nextMethod:
-         for (Method ebMethod : ebMethods) {
+         for (int j = 0; j < ebMethods.length; j++) {
+            Method ebMethod = ebMethods[j];
             if (esMethod.getName().equals(ebMethod.getName())) {
                TypeVariable<Method>[] esTypes = esMethod.getTypeParameters();
                TypeVariable<Method>[] ebTypes = ebMethod.getTypeParameters();
@@ -514,7 +518,7 @@ public class TestEventBus extends TestCase {
                for (int typeCount = 0; typeCount < ebTypes.length; typeCount++) {
                   TypeVariable<Method> esType = esTypes[typeCount];
                   TypeVariable<Method> ebType = ebTypes[typeCount];
-                  if (!ebType.equals(esType)) {
+                  if (!(ebType+"").equals((""+esType))) {
                      continue nextMethod;
                   }
                }

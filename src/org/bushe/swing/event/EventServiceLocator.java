@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * A central registry of EventServices.  Used by the {@link EventBus}.
  * <p/>
- * By default will lazily hold a SwingEventEervice, which is mapped to {@link #SERVICE_NAME_SWING_EVENT_SERVICE} and
+ * By default will lazily hold a SwingEventService, which is mapped to {@link #SERVICE_NAME_SWING_EVENT_SERVICE} and
  * returned by {@link #getSwingEventService()}.  Also by default this same instance is returned by {@link #getEventBusService()},
  * is mapped to {@link #SERVICE_NAME_EVENT_BUS} and wrapped by the EventBus.
  * <p/>
@@ -132,7 +132,7 @@ public class EventServiceLocator {
    }
 
    /**
-    * Use this carefully.  Clears all the event services, including the SwingEventSevice (used by EventBus).
+    * Use this carefully.  Clears all the event services, including the SwingEventService (used by EventBus).
     * <p>
     * Callers may want to resubscribe existing subscribers.
     */

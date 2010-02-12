@@ -5,7 +5,7 @@ package org.bushe.swing.event;
  *
  * @author Michael Bushe michael@bushe.com
  */
-public interface VetoTopicEventListener {
+public interface VetoTopicEventListener<T> {
 
    /**
     * Determine whether a topic publication should be vetoed or allowed.
@@ -21,5 +21,5 @@ public interface VetoTopicEventListener {
     * @return true if the publication on the topic should be vetoed and not published, false if the data should be
     *         published on the topic.
     */
-   public boolean shouldVeto(String topic, Object data);
+   public boolean shouldVeto(String topic, T data);
 }

@@ -11,7 +11,7 @@ import javax.swing.JComponent;
 import org.bushe.swing.event.ThreadSafeEventService;
 
 /** Test class for class-based subscriptions */
-public class AnotherAnnotatedEventSubcriber {
+public class AnotherAnnotatedEventSubscriber {
    static int timesColorChanged = 0;
    static String lastCall = null;
    static int timesCalled = 0;

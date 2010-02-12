@@ -21,22 +21,28 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
    private ReferenceStrength referenceStrength;
    private EventService eventService;
    private int priority;
+   protected boolean veto;
 
    protected AbstractProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod,
-           ReferenceStrength referenceStrength, EventService es) {
-      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es);
+           ReferenceStrength referenceStrength, EventService es, boolean veto) {
+      this(proxiedSubscriber, subscriptionMethod, referenceStrength, 0, es, veto);
    }
 
    protected AbstractProxySubscriber(Object proxiedSubscriber, Method subscriptionMethod,
-           ReferenceStrength referenceStrength, int priority, EventService es) {
+           ReferenceStrength referenceStrength, int priority, EventService es, boolean veto) {
       this.referenceStrength = referenceStrength;
       this.priority = priority;
       eventService = es;
+      this.veto = veto;
       if (proxiedSubscriber == null) {
          throw new IllegalArgumentException("The realSubscriber cannot be null when constructing a proxy subscriber.");
       }
       if (subscriptionMethod == null) {
          throw new IllegalArgumentException("The subscriptionMethod cannot be null when constructing a proxy subscriber.");
+      }
+      Class<?> returnType = subscriptionMethod.getReturnType();
+      if (veto && returnType != Boolean.TYPE) {
+         throw new IllegalArgumentException("The subscriptionMethod must have the two parameters, the first one must be a String and the second a non-primitive (Object or derivative).");
       }
       if (ReferenceStrength.WEAK.equals(referenceStrength)) {
          this.proxiedSubscriber = new WeakReference(proxiedSubscriber);
@@ -64,7 +70,7 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
       return eventService;
    }
 
-   /** @return the ReferenceStregth passed in the constructor */
+   /** @return the ReferenceStrength passed in the constructor */
    public ReferenceStrength getReferenceStrength() {
       return referenceStrength;
    }
@@ -80,7 +86,7 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
     * Called by EventServices to inform the proxy that it is unsubscribed.  
     * The ProxySubscriber should perform any necessary cleanup.
     * <p>
-    * <b>Overridding classes must call super.proxyUnsubscribed() or risk
+    * <b>Overriding classes must call super.proxyUnsubscribed() or risk
     * things not being cleanup up properly.</b>
     */
    public void proxyUnsubscribed() {
@@ -95,15 +101,15 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
               "successive calls as required by hashCode.");
    }
 
-   protected void retryReflectiveCallUsingAccessibleObject(Object[] args, Method subscriptionMethod, Object obj,
+   protected boolean retryReflectiveCallUsingAccessibleObject(Object[] args, Method subscriptionMethod, Object obj,
            IllegalAccessException e, String message) {
       boolean accessibleTriedAndFailed = false;
       if (subscriptionMethod != null) {
          AccessibleObject[] accessibleMethod = {subscriptionMethod};
          try {
             AccessibleObject.setAccessible(accessibleMethod, true);
-            subscriptionMethod.invoke(obj, args);
-            return;
+            Object returnValue = subscriptionMethod.invoke(obj, args);
+            return Boolean.valueOf(returnValue+"");
          } catch (SecurityException ex) {
             accessibleTriedAndFailed = true;
          } catch (InvocationTargetException e1) {
@@ -137,6 +143,9 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
                return false;
             }
          }
+         if (veto != bps.veto) {
+            return false;
+         }
          if (eventService != bps.eventService) {
             return false;
          }
@@ -152,6 +161,7 @@ public abstract class AbstractProxySubscriber implements ProxySubscriber, Priori
               "realSubscriber=" + (proxiedSubscriber instanceof WeakReference?
                        ((WeakReference)proxiedSubscriber).get():proxiedSubscriber) +
               ", subscriptionMethod=" + subscriptionMethod +
+              ", veto=" + veto +
               ", referenceStrength=" + referenceStrength +
               ", eventService=" + eventService +
               '}';

@@ -20,6 +20,11 @@ class RuntimeTopicSubscriber implements SubscriberForTesting {
 		timesCalled++;
 	}
 
+   @RuntimeTopicEventSubscriber
+   public boolean shouldVeto(String topic, List<String> e) {
+      return e == null;
+   }
+
 	public String getTopicName() {
 		return topic;
 	}

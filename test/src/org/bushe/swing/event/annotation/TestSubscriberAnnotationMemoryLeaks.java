@@ -1,17 +1,16 @@
 package org.bushe.swing.event.annotation;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.bushe.swing.event.EDTUtil;
-import org.bushe.swing.event.CleanupEvent;
-import java.util.ArrayList;
-import java.util.EventObject;
-import java.util.List;
-
-import java.util.Random;
 import javax.swing.JComponent;
+
 import junit.framework.TestCase;
 
+import org.bushe.swing.event.CleanupEvent;
+import org.bushe.swing.event.EDTUtil;
 import org.bushe.swing.event.EventBus;
 import org.bushe.swing.event.EventService;
 import org.bushe.swing.event.EventSubscriber;
@@ -26,56 +25,56 @@ public class TestSubscriberAnnotationMemoryLeaks extends TestCase {
       System.gc();
    }
 
-   public void testStrongClassAnnotatedEventSubcriber() {
-      StrongClassAnnotatedEventSubcriber subscriber = new StrongClassAnnotatedEventSubcriber();
+   public void testStrongClassAnnotatedEventSubscriber() {
+      StrongClassAnnotatedEventSubscriber subscriber = new StrongClassAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
-      StrongClassAnnotatedEventSubcriber.setTimesCalled(0);
-      assertEquals(0, StrongClassAnnotatedEventSubcriber.getTimesCalled());
+      StrongClassAnnotatedEventSubscriber.setTimesCalled(0);
+      assertEquals(0, StrongClassAnnotatedEventSubscriber.getTimesCalled());
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, StrongClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, StrongClassAnnotatedEventSubscriber.getTimesCalled());
       subscriber = null;
       System.gc();
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(2, StrongClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(2, StrongClassAnnotatedEventSubscriber.getTimesCalled());
       List subscribers = EventBus.getSubscribers(List.class);
       assertEquals(1, subscribers.size());
-      //I can unsubscribe without ever explicity subscribing
+      //I can unsubscribe without ever explicitly subscribing
       EventBus.unsubscribe(List.class, (org.bushe.swing.event.EventSubscriber) subscribers.get(0));
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(2, StrongClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(2, StrongClassAnnotatedEventSubscriber.getTimesCalled());
       subscribers = EventBus.getSubscribers(List.class);
       assertEquals(0, subscribers.size());
    }
 
-   public void testWeakClassAnnotatedEventSubcriber() {
-      WeakClassAnnotatedEventSubcriber subscriber = new WeakClassAnnotatedEventSubcriber();
+   public void testWeakClassAnnotatedEventSubscriber() {
+      WeakClassAnnotatedEventSubscriber subscriber = new WeakClassAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
-      WeakClassAnnotatedEventSubcriber.setTimesCalled(0);
-      assertEquals(0, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      WeakClassAnnotatedEventSubscriber.setTimesCalled(0);
+      assertEquals(0, WeakClassAnnotatedEventSubscriber.getTimesCalled());
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, WeakClassAnnotatedEventSubscriber.getTimesCalled());
 
       subscriber = null;
       System.gc();
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, WeakClassAnnotatedEventSubscriber.getTimesCalled());
       List subscribers = EventBus.getSubscribers(List.class);
       assertEquals(0, subscribers.size());
    }
 
-   public void testWeakClassAnnotatedEventSubcriberUnsubscription() {
-      WeakClassAnnotatedEventSubcriber subscriber = new WeakClassAnnotatedEventSubcriber();
+   public void testWeakClassAnnotatedEventSubscriberUnsubscription() {
+      WeakClassAnnotatedEventSubscriber subscriber = new WeakClassAnnotatedEventSubscriber();
       AnnotationProcessor.process(subscriber);
-      WeakClassAnnotatedEventSubcriber.setTimesCalled(0);
-      assertEquals(0, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      WeakClassAnnotatedEventSubscriber.setTimesCalled(0);
+      assertEquals(0, WeakClassAnnotatedEventSubscriber.getTimesCalled());
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, WeakClassAnnotatedEventSubscriber.getTimesCalled());
 
       EventBus.unsubscribe(List.class, subscriber);
 
@@ -83,7 +82,7 @@ public class TestSubscriberAnnotationMemoryLeaks extends TestCase {
       System.gc();
       EventBus.publish(new ArrayList());
       EDTUtil.waitForEDT();
-      assertEquals(1, WeakClassAnnotatedEventSubcriber.getTimesCalled());
+      assertEquals(1, WeakClassAnnotatedEventSubscriber.getTimesCalled());
       List subscribers = EventBus.getSubscribers(List.class);
       assertEquals(0, subscribers.size());
    }

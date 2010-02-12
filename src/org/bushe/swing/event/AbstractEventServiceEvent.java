@@ -29,7 +29,7 @@ public abstract class AbstractEventServiceEvent implements EventServiceEvent, Pu
    private PublicationStatus publicationStatus = PublicationStatus.Unpublished;
 
    /**
-    * Default contructor
+    * Default constructor
     *
     * @param source the source of the event
     */
