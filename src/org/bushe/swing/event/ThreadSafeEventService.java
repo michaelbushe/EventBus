@@ -917,7 +917,7 @@ public class ThreadSafeEventService implements EventService {
 
    /** @see EventService#publish(String,Object) */
    public void publish(String topicName, Object eventObj) {
-      publish(null, topicName, eventObj, getSubscribers(topicName), getVetoSubscribers(topicName), null);
+      publish(null, topicName, eventObj, getSubscribers(topicName), getVetoEventListeners(topicName), null);
    }
 
    /**
@@ -1160,7 +1160,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getSubscribers(Class) */
-   public List getSubscribers(Class eventClass) {
+   public <T> List<T> getSubscribers(Class<T> eventClass) {
       List hierarchyMatches;
       List exactMatches;
       synchronized (listenerLock) {
@@ -1182,7 +1182,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getSubscribersToClass(Class) */
-   public List getSubscribersToClass(Class eventClass) {
+   public <T> List<T> getSubscribersToClass(Class<T> eventClass) {
       synchronized (listenerLock) {
          Map classMap = subscribersByEventClass;
          List result = getEventOrVetoSubscribersToClass(classMap, eventClass);
@@ -1194,14 +1194,14 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getSubscribersToExactClass(Class) */
-   public List getSubscribersToExactClass(Class eventClass) {
+   public <T> List<T> getSubscribersToExactClass(Class<T> eventClass) {
       synchronized (listenerLock) {
          return getSubscribers(eventClass, subscribersByExactEventClass);
       }
    }
 
    /** @see EventService#getSubscribers(Type) */
-   public List getSubscribers(Type eventType) {
+   public <T> List<T> getSubscribers(Type eventType) {
       List result;
       synchronized (listenerLock) {
          result = getEventOrVetoSubscribersToType(subscribersByEventType, eventType);
@@ -1213,7 +1213,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getSubscribers(String) */
-   public List getSubscribers(String topic) {
+   public <T> List<T> getSubscribers(String topic) {
       List result = new ArrayList();
       List exactMatches;
       List patternMatches;
@@ -1234,26 +1234,26 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getSubscribersToTopic(String)  */
-   public List getSubscribersToTopic(String topic) {
+   public <T> List<T> getSubscribersToTopic(String topic) {
       synchronized (listenerLock) {
          return getSubscribers(topic, subscribersByTopic);
       }
    }
 
    /** @see EventService#getSubscribers(Pattern)  */
-   public List getSubscribers(Pattern pattern) {
+   public <T> List<T> getSubscribers(Pattern pattern) {
       synchronized (listenerLock) {
          return getSubscribers(pattern, subscribersByTopicPattern);
       }
    }
 
    /** @see EventService#getSubscribersByPattern(String)  */
-   public List getSubscribersByPattern(String topic) {
+   public <T> List<T> getSubscribersByPattern(String topic) {
       return getSubscribersByPattern(topic, subscribersByTopicPattern);
    }
 
    /** @see EventService#getVetoSubscribers(Class) */
-   public List getVetoSubscribers(Class eventClass) {
+   public <T> List<T> getVetoSubscribers(Class<T> eventClass) {
       List result = new ArrayList();
       List exactMatches;
       List hierarchyMatches;
@@ -1274,7 +1274,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getVetoSubscribersToClass(Class) */
-   public List getVetoSubscribersToClass(Class eventClass) {
+   public <T> List<T> getVetoSubscribersToClass(Class<T> eventClass) {
       List result;
       synchronized (listenerLock) {
          Map classMap = vetoListenersByClass;
@@ -1287,14 +1287,14 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getVetoSubscribersToExactClass(Class) */
-   public List getVetoSubscribersToExactClass(Class eventClass) {
+   public <T> List<T> getVetoSubscribersToExactClass(Class<T> eventClass) {
       synchronized (listenerLock) {
          return getSubscribers(eventClass, vetoListenersByExactClass);
       }
    }
 
    /** @see EventService#getVetoEventListeners(String)  */
-   public List getVetoEventListeners(String topicOrPattern) {
+   public <T> List<T> getVetoEventListeners(String topicOrPattern) {
       List result = new ArrayList();
       List exactMatches;
       List patternMatches;
@@ -1315,7 +1315,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getVetoSubscribersToTopic(String) */
-   public List getVetoSubscribersToTopic(String topic) {
+   public <T> List<T> getVetoSubscribersToTopic(String topic) {
       synchronized (listenerLock) {
          return getSubscribers(topic, vetoListenersByTopic);
       }
@@ -1329,14 +1329,14 @@ public class ThreadSafeEventService implements EventService {
     *             In EventBus 2.0 this name will replace getVetoEventListeners()
     *             and have it's union functionality
     */
-   public List getVetoSubscribers(String topic) {
+   public <T> List<T> getVetoSubscribers(String topic) {
       synchronized (listenerLock) {
          return getVetoSubscribersToTopic(topic);
       }
    }
 
    /** @see EventService#getVetoSubscribers(Pattern) */
-   public List getVetoSubscribers(Pattern topicPattern) {
+   public <T> List<T> getVetoSubscribers(Pattern topicPattern) {
       synchronized (listenerLock) {
          PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
          return getSubscribers(patternWrapper, vetoListenersByTopicPattern);
@@ -1344,12 +1344,12 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /** @see EventService#getVetoSubscribersByPattern(String)   */
-   public List getVetoSubscribersByPattern(String pattern) {
+   public <T> List<T> getVetoSubscribersByPattern(String pattern) {
       return getSubscribersByPattern(pattern, vetoListenersByTopicPattern);
    }
 
    /** Used for subscribers and veto subscribers */
-   private List getSubscribersByPattern(String topic, Map subscribersByTopicPattern) {
+   private <T> List<T> getSubscribersByPattern(String topic, Map subscribersByTopicPattern) {
       List result = new ArrayList();
       synchronized (listenerLock) {
          Set keys = subscribersByTopicPattern.keySet();
@@ -1370,7 +1370,7 @@ public class ThreadSafeEventService implements EventService {
       }
    }
 
-   protected List getSubscribersToPattern(Pattern topicPattern) {
+   protected <T> List<T> getSubscribersToPattern(Pattern topicPattern) {
       synchronized (listenerLock) {
          PatternWrapper patternWrapper = new PatternWrapper(topicPattern);
          return getSubscribers(patternWrapper, subscribersByTopicPattern);
@@ -1842,7 +1842,7 @@ public class ThreadSafeEventService implements EventService {
          if (size != null) {
             return size.intValue();
          } else {
-            //try mattching patterns
+            //try matching patterns
             if (rawCacheSizesForPattern != null) {
                Set patterns = rawCacheSizesForPattern.keySet();
                for (Iterator iterator = patterns.iterator(); iterator.hasNext();) {
@@ -1860,7 +1860,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /**
-    * @param eventClass an index into the cache, cannot be an inteface
+    * @param eventClass an index into the cache, cannot be an interface
     *
     * @return the last event published for this event class, or null if caching is turned off (the default)
     */
@@ -1878,7 +1878,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /**
-    * @param eventClass an index into the cache, cannot be an inteface
+    * @param eventClass an index into the cache, cannot be an interface
     *
     * @return the last events published for this event class, or null if caching is turned off (the default)
     */

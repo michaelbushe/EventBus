@@ -609,7 +609,7 @@ public interface EventService {
     *
     * @return the veto subscribers that will be called when an event of eventClass or its subclasses is published.
     */
-   public <T> List<T>  getVetoSubscribers(Class eventClass);
+   public <T> List<T>  getVetoSubscribers(Class<T> eventClass);
 
    /**
     * Get veto subscribers that subscribed to a given class exactly.
@@ -618,7 +618,7 @@ public interface EventService {
     * @return the veto subscribers that will be called when an event of eventClass (but not its subclasses) is
     *         published.
     */
-   public <T> List<T> getVetoSubscribersToExactClass(Class eventClass);
+   public <T> List<T> getVetoSubscribersToExactClass(Class<T> eventClass);
 
    /**
     * Gets the veto subscribers that subscribed to a class.
@@ -626,7 +626,7 @@ public interface EventService {
     *
     * @return the veto subscribers that are subscribed to the eventClass and its subclasses
     */
-   public <T> List<T> getVetoSubscribersToClass(Class eventClass);
+   public <T> List<T> getVetoSubscribersToClass(Class<T> eventClass);
 
    /**
     * Union of {@link #getVetoSubscribersToTopic(String)} and {@link #getVetoSubscribersByPattern(String)}

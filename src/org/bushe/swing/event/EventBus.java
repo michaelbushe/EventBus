@@ -281,6 +281,11 @@ public class EventBus {
       return EventServiceLocator.getEventBusService().getVetoSubscribers(eventClass);
    }
 
+   /** @see EventService#getVetoSubscribersToClass(Class) */
+   public static <T> List<T> getVetoSubscribersToClass(Class<T> eventClass) {
+      return EventServiceLocator.getEventBusService().getVetoSubscribersToClass(eventClass);
+   }
+
    /** @see EventService#getVetoSubscribersToExactClass(Class) */
    public static <T> List<T> getVetoSubscribersToExactClass(Class<T> eventClass) {
       return EventServiceLocator.getEventBusService().getVetoSubscribersToExactClass(eventClass);
