@@ -13,7 +13,7 @@ Why use the EventBus?
   
 Project Status
 
-  EventBus 1.x is stable and suitable for general purpose Java applications and Swing UIs.  
+  EventBus 1.x is stable, well tested, well documented and suitable for general purpose Java applications and Swing UIs.  
   
   EventBus 2.x is a work in progress. It will use the newly acquired org.eventbus package and will be extended to other UI toolkits 
   and RIAs such as Ajax and Apache Pivot.  

@@ -1,6 +1,21 @@
 News
 	
-	  * <<15-Sept-2009>> The EventBus has a new domain - eventbus.org.  The acquisition of this domain provides a new home for EventBus website and sets up work on EventBus 2.0. EventBus 2.0 will move the codebade to the new package name and will go beyond Swing, so Swing will no longer be the default.  Work on EventBus 2.0 will commence after EventBus 1.4 is released.
+	* <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
+  
+          * Runtime Subscriber annotation for dynamic subscriptions, thanks to Mario Aquino from <a href="www.limewire.com">Limewire</a> for the patch.  A good use case for a dynamic description is 
+             a chat client.  The chat window will not know who's messages to subscribe to until runtime.
+             
+          * PublicationStatus added so that code can tell if an event was vetoed, published, is being processed, etc.
+          
+          * @VetoSubscriber annotations
+          
+          * Added AnnotationProcessor.unprocess(this) to auto-unsubscribe annotated subscribers.
+          
+          * ContainerEventServiceRegistrar called updateContainerEventService too often.
+          
+          * Thorough spelling check with help from tournament Scrabble player Callum Bushe using IntelliJ IDEA 9 code spellchecker, courtesy of IntelliJ's license for Open Source projects.
+
+	* <<15-Sept-2009>> The EventBus has a new domain - eventbus.org.  The acquisition of this domain provides a new home for EventBus website and sets up work on EventBus 2.0. EventBus 2.0 will move the codebade to the new package name and will go beyond Swing, so Swing will no longer be the default.  Work on EventBus 2.0 will commence after EventBus 1.4 is released.
 	  
     * <<31-May-2009>> EventBus 1.3 Released. EventBus 1.3 adds:
   

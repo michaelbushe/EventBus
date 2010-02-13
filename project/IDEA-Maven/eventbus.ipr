@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project relativePaths="true" version="4">
+<project version="4">
+  <component name="AlphaTab">
+    <option name="truncate" value="false" />
+    <option name="highlight" value="true" />
+    <option name="numChars" value="15" />
+    <option name="caseSensitive" value="false" />
+  </component>
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
   </component>
@@ -74,11 +80,9 @@
         </ADDITIONAL_INDENT_OPTIONS>
       </value>
     </option>
-    <option name="USE_PER_PROJECT_SETTINGS" value="false" />
   </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
-    <option name="DEPLOY_AFTER_MAKE" value="0" />
     <resourceExtensions>
       <entry name=".+\.(properties|xml|html|dtd|tld)" />
       <entry name=".+\.(gif|png|jpeg|jpg)" />
@@ -95,6 +99,7 @@
       <entry name="?*.tld" />
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
+    <annotationProcessing enabled="false" useClasspath="true" />
   </component>
   <component name="CopyrightManager" default="">
     <module2copyright />
@@ -103,32 +108,16 @@
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
   <component name="EclipseCompilerSettings">
-    <option name="DEBUGGING_INFO" value="true" />
     <option name="GENERATE_NO_WARNINGS" value="true" />
     <option name="DEPRECATION" value="false" />
-    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
-    <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
-  <component name="IdProvider" IDEtalkID="1A0C2ED82AE63AEBD20D3F0B1A9F2BC9" />
-  <component name="InspectionProjectProfileManager">
-    <option name="PROJECT_PROFILE" value="Project Default" />
-    <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
-    <scopes />
-    <profiles>
-      <profile version="1.0" is_locked="false">
-        <option name="myName" value="Project Default" />
-        <option name="myLocal" value="false" />
-      </profile>
-    </profiles>
-    <list size="0" />
+  <component name="EntryPointsManager">
+    <entry_points version="2.0" />
   </component>
+  <component name="IdProvider" IDEtalkID="1A0C2ED82AE63AEBD20D3F0B1A9F2BC9" />
   <component name="JavacSettings">
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="false" />
-    <option name="DEPRECATION" value="true" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="-target 1.5" />
-    <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -146,14 +135,6 @@
     <option name="HEAP_SIZE" />
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
-  </component>
-  <component name="JikesSettings">
-    <option name="JIKES_PATH" value="" />
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="DEPRECATION" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="false" />
-    <option name="IS_EMACS_ERRORS_MODE" value="true" />
-    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -286,7 +267,46 @@
   <component name="ProjectDetails">
     <option name="projectName" value="eventbus" />
   </component>
-  <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectDictionaryState">
+    <dictionary name="mbushe" />
+    <dictionary name="Cal">
+      <words>
+        <w>barrrr</w>
+        <w>bugzilla</w>
+        <w>bushe</w>
+        <w>doc'ed</w>
+        <w>doub</w>
+        <w>eventbus</w>
+        <w>fooo</w>
+        <w>gafter's</w>
+        <w>iter</w>
+        <w>javadocs</w>
+        <w>licensable</w>
+        <w>licensor</w>
+        <w>loggable</w>
+        <w>matchers</w>
+        <w>multithreading</w>
+        <w>overridable</w>
+        <w>overriders</w>
+        <w>param</w>
+        <w>parameterized</w>
+        <w>repo</w>
+        <w>requestor</w>
+        <w>resize</w>
+        <w>sout</w>
+        <w>stringified</w>
+        <w>sublicense</w>
+        <w>superclass</w>
+        <w>sys'outing</w>
+        <w>threshhold</w>
+        <w>throwable</w>
+        <w>unsubscriptions</w>
+        <w>vetoer</w>
+        <w>vetolisteners</w>
+        <w>wildcards</w>
+      </words>
+    </dictionary>
+  </component>
   <component name="ProjectKey">
     <option name="state" value="project://C:\BE\Gigs\bushe.org\Dev\Projects\EventBus\EventBus\project\IDEA-Maven\eventbus.ipr" />
   </component>
@@ -304,13 +324,6 @@
         <list size="0" />
       </value>
     </option>
-  </component>
-  <component name="RmicSettings">
-    <option name="IS_EANABLED" value="false" />
-    <option name="DEBUGGING_INFO" value="true" />
-    <option name="GENERATE_NO_WARNINGS" value="false" />
-    <option name="GENERATE_IIOP_STUBS" value="false" />
-    <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
   <component name="SvnBranchConfigurationManager">
     <option name="myVersion" value="124" />
@@ -333,8 +346,5 @@
       </SOURCES>
     </library>
   </component>
-  <UsedPathMacros>
-    <macro name="MAVEN_REPOSITORY" description="Maven Local Repostiry" />
-  </UsedPathMacros>
 </project>
 
