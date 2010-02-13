@@ -630,7 +630,7 @@ public interface EventService {
 
    /**
     * Union of {@link #getVetoSubscribersToTopic(String)} and {@link #getVetoSubscribersByPattern(String)}
-    * Misnamed method, should be called {@link #getVetoSubscribers(String)}. Will be deprecatd in 1.5.
+    * Misnamed method, should be called {@link #getVetoSubscribers(String)}. Will be deprecated in 1.5.
     *
     * @param topicOrPattern the topic or pattern of interest
     *

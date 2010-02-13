@@ -18,11 +18,11 @@ public class GenericReflection {
   	    out.println();
 	}
     }
-    public static void printInterfaces (Type[] impls) {
-	if (impls != null && impls.length > 0) {
+    public static void printInterfaces (Type[] implementations) {
+	if (implementations != null && implementations.length > 0) {
 	    out.print("implements ");
 	    int i = 0;
-	    for (Type impl : impls) {
+	    for (Type impl : implementations) {
 		if (i++ > 0) out.print(",");
 		printType(impl);
 	    }

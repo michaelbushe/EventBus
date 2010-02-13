@@ -79,7 +79,7 @@ public class SwingException extends Exception {
 
    /**
     * Swing exceptions often have two stacks - one thread causes the posting of an action on another thread - usually
-    * the Swing EDT thread.  The other is the stack of the actual thread the exception occured on, the exception occurs
+    * the Swing EDT thread.  The other is the stack of the actual thread the exception occurred on, the exception occurs
     * after the post.
     *
     * @param swingCallingStack the stack trace that the client used to cause the exception to occur.
@@ -90,7 +90,7 @@ public class SwingException extends Exception {
 
    /**
     * Client exceptions often have two stacks - one thread causes the posting of an action on another thread - usually
-    * the Swing EDT thread.  The other is the stack of the actual thread the exception occured on.
+    * the Swing EDT thread.  The other is the stack of the actual thread the exception occurred on.
     *
     * @return the stack trace that the client used to cause the exception to occur.
     */

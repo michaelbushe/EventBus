@@ -532,7 +532,7 @@ public class TestDefaultEventService extends TestCase {
    }
 
    /**
-    * Test that the publish method works and that execptions thrown in event subscribers don't halt publishing. In the
+    * Test that the publish method works and that exceptions thrown in event subscribers don't halt publishing. In the
     * test 2 subscribers are good and 2 subscribers throw exceptions.
     */
    public void testPublish() {
@@ -648,8 +648,8 @@ public class TestDefaultEventService extends TestCase {
    }
 
    /**
-    * Test for ISSUE #1: If a class implements both subscriber interfaces I've seen a topci 'event' be published from a
-    * publish methog with the correct (topic) signature, yet be subscribed at the wrong subscriber method (the one with
+    * Test for ISSUE #1: If a class implements both subscriber interfaces I've seen a topic 'event' be published from a
+    * publish method with the correct (topic) signature, yet be subscribed at the wrong subscriber method (the one with
     * the signature for real event classes, not topics
     */
    public void testSimultaneousTopicAndClass() {
@@ -958,7 +958,7 @@ public class TestDefaultEventService extends TestCase {
       assertTrue(lastEventObj == publishedEventObj6);
       assertEquals(5, es.getCacheSizeForTopic("IceCream.Vanilla"));
 
-      //Test that setting a topci cache with 10 caches 10 for that topic, but the default for the others
+      //Test that setting a topic cache with 10 caches 10 for that topic, but the default for the others
       es.setCacheSizeForTopic("IceCream.Vanilla", 10);
       Object publishedEventObjB1 = new Object();
       Object publishedEventObjB2 = new Object();
@@ -1255,11 +1255,11 @@ public class TestDefaultEventService extends TestCase {
       assertTrue(publishedEventB4 == bEvents.get(3));
       assertTrue(publishedEventB3 == bEvents.get(4));
 
-      //Test that overridding a sublcass event class with 2 changes and a derived class with 5 ...
+      //Test that overriding a subclass event class with 2 changes and a derived class with 5 ...
       //caches 5 for the derived class
-      //cahces 2 for the subclass
-      //chaches 2 for another derived class
-      // and that intefaces only take effect if the cache size of a class or it's superclasses has been set.
+      //caches 2 for the subclass
+      //caches 2 for another derived class
+      // and that interfaces only take effect if the cache size of a class or it's superclasses has been set.
       es.setCacheSizeForEventClass(EventA.class, 2);
       es.setCacheSizeForEventClass(EventX.class, 5);
       es.setCacheSizeForEventClass(Serializable.class, 3);

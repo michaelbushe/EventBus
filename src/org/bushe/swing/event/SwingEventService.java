@@ -15,9 +15,9 @@
  */
 package org.bushe.swing.event;
 
-import java.util.List;
+import javax.swing.*;
 import java.util.Arrays;
-import javax.swing.SwingUtilities;
+import java.util.List;
 
 /**
  * An {@link EventService} implementation for Swing.
@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 public class SwingEventService extends ThreadSafeEventService {
 
    /**
-    * By default, the SwingEventService is contructed such that any listener that takes over 200 ms causes an
+    * By default, the SwingEventService is constructed such that any listener that takes over 200 ms causes an
     * SubscriberTimingEvent to be published.  You will need to add a subscriber to this event.  Note that if you use
     * event to launch a modal dialog, the timings will be as long as the dialog is up - this is the way Swing works.
     */
@@ -53,7 +53,7 @@ public class SwingEventService extends ThreadSafeEventService {
     * way Swing works.
     *
     * @param timeThresholdForEventTimingEventPublication the longest time a subscriber should spend handling an event,
-    * The service will pulish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
+    * The service will publish an SubscriberTimingEvent after listener processing if the time was exceeded.  If null, no
     * SubscriberTimingEvent will be issued.
     * @param subscribeTimingEventsInternally add a subscriber to the EventSubscriberTimingEvent internally and call the
     * protected {@link #subscribeTiming(SubscriberTimingEvent)} method when they occur.  This logs a warning to the

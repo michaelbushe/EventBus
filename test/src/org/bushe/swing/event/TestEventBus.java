@@ -442,7 +442,7 @@ public class TestEventBus extends TestCase {
    }
 
    /**
-    * Test that the publish method works and that execptions thrown in event subscribers don't halt publishing. In the
+    * Test that the publish method works and that exceptions thrown in event subscribers don't halt publishing. In the
     * test 2 subscribers are good and 2 subscribers throw exceptions.
     */
    public void testPublish() {

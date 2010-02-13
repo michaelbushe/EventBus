@@ -11,7 +11,7 @@ public interface VetoTopicEventListener<T> {
     * Determine whether a topic publication should be vetoed or allowed.
     * <p/>
     * The EventService calls this method <b>before</b> publication of on a topic name.  If any of the
-    * VetoTopicEventListeners return true, then none of the subscribers to that topic are called. <p>Prequisite:
+    * VetoTopicEventListeners return true, then none of the subscribers to that topic are called. <p>Prerequisite:
     * VetoTopicEventListener has to be subscribed with the EventService for the topic name.</p> <p>Guaranteed to be
     * called in the SwingEventThread when using the SwingEventService (EventBus). See {@link EventService}</p>
     *

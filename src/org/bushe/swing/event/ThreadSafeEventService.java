@@ -50,7 +50,7 @@ import org.bushe.swing.exception.SwingException;
  * then it is unsubscribed, end of story.  If the publisher gets the lock first, then a snapshot copy of the current
  * subscribers is made during the publication, the lock is released and the subscribers are called.  Between the time
  * the lock is released and the time that the listener is called, the unsubscribing thread can unsubscribe, resulting
- * in an unsubscribed object receiving notifiction of the event after it was unsubscribed (but just once).
+ * in an unsubscribed object receiving notification of the event after it was unsubscribed (but just once).
  * <p/>
  * On event publication, subscribers are called in the order in which they subscribed.
  * <p/>
@@ -62,7 +62,7 @@ import org.bushe.swing.exception.SwingException;
  * is most likely to make sense only if you subscribe and publish on the same thread (so caching is very useful for
  * Swing applications since both happen on the EDT in a single-threaded manner). In multithreaded applications, you
  * never know if your subscriber has handled an event while it was being subscribed (before the subscribe() method
- * returned) that is newer or older than the retrieved cached value (taked before or after subscribe() respectively).
+ * returned) that is newer or older than the retrieved cached value (taken before or after subscribe() respectively).
  * <p/>
  * To deal with subscribers that take too long (a concern in Swing applications), the EventService can be made to issue
  * {@link SubscriberTimingEvent}s when subscribers exceed a certain time.  This does not interrupt subscriber processing
@@ -90,7 +90,7 @@ import org.bushe.swing.exception.SwingException;
  * <li>On every publish, subscribe and unsubscribe, every subscriber and veto subscriber to a class or topic is checked to see 
  * if it is a stale WeakReference or a stale ProxySubscriber (one whose getProxySubscriber() returns null).  If the subscriber 
  * is stale, it is unsubscribed from the EventService  immediately.  If it is a ProxySubscriber, it's  proxyUnsubscribed() 
- * method is called after it is unsubscribed.  (This isn't as expecive as it sounds, since checks to avoid double subscription is
+ * method is called after it is unsubscribed.  (This isn't as expensive as it sounds, since checks to avoid double subscription is
  * necessary anyway).
  * <li>Another cleanup thread may get started to clean up remaining stale subscribers.  This cleanup thread only comes into
  * play for subscribers to topic or classes that haven't been used (published/subscribed/unsibscribed to).  A detailed description
@@ -107,7 +107,7 @@ import org.bushe.swing.exception.SwingException;
  * if someone is implementing their own custom ProxySubscriber and/or AnnotationProcessor.)
  * <p/>
  * Cleanup is pretty rare in general.  Not only are stale subscribers cleaned up with regular usage, stale 
- * subscribers on abandonded topics and classes do not take up a lot of memory, hence, they are allowed to build up to a certain degree. 
+ * subscribers on abandoned topics and classes do not take up a lot of memory, hence, they are allowed to build up to a certain degree.
  * Cleanup does not occur until the number of WeakReferences and SubscriptionsProxy's with WeakReference strength
  * subscribed to an EventService for all the EventService's subscriptions in total exceed the <tt>cleanupStartThreshhold</tt>, 
  * which is set to <tt>CLEANUP_START_THRESHOLD_DEFAULT</tt> (500) by default.  The default is overridable in the constructor 
@@ -569,7 +569,7 @@ public class ThreadSafeEventService implements EventService {
     * All veto subscriptions methods call this method.  Extending classes only have to override this method to subscribe
     * all veto subscriptions.
     *
-    * @param subscription the topic, Pattern, or event class to subsribe to
+    * @param subscription the topic, Pattern, or event class to subscribe to
     * @param vetoListenerMap the internal map of veto listeners to use (by topic of class)
     * @param vetoListener the veto listener to subscribe, may be a VetoEventListener or a WeakReference to one
     *
@@ -740,7 +740,7 @@ public class ThreadSafeEventService implements EventService {
     * All event subscriber unsubscriptions call this method.  Extending classes only have to override this method to
     * subscribe all subscriber unsubscriptions.
     *
-    * @param o the topic or event class to unsubsribe from
+    * @param o the topic or event class to unsubscribe from
     * @param subscriberMap the map of subscribers to use (by topic of class)
     * @param subscriber the subscriber to unsubscribe, either an EventSubscriber or an EventTopicSubscriber, or a WeakReference
     * to either
@@ -827,7 +827,7 @@ public class ThreadSafeEventService implements EventService {
     * All veto unsubscriptions methods call this method.  Extending classes only have to override this method to
     * subscribe all veto unsubscriptions.
     *
-    * @param o the topic or event class to unsubsribe from
+    * @param o the topic or event class to unsubscribe from
     * @param vetoListenerMap the map of veto listeners to use (by topic or class)
     * @param vl the veto listener to unsubscribe, or a WeakReference to one
     *
@@ -988,7 +988,7 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /**
-    * Called during publication to set the status on an event.  Can be used by subsclasses
+    * Called during publication to set the status on an event.  Can be used by subclasses
     * to be notified when an event transitions from one state to another.  Implementers
     * are required to call setPublicationStatus
     * @param status the status to set on the object
@@ -1007,11 +1007,11 @@ public class ThreadSafeEventService implements EventService {
    }
 
    /**
-    * Handles subscribers that are Prioritized by putting the most negative prioritied subscribers
-    * first, the most positive prioritied subscribers last, and leaving non-Prioritized in their
+    * Handles subscribers that are Prioritized by putting the most negative prioritized subscribers
+    * first, the most positive prioritized subscribers last, and leaving non-Prioritized in their
     * original FIFO order.
     * @param subscribers the subscribers to sort
-    * @return the same list if there are no prioritied subscribers in the list, otherwise a new sorted result
+    * @return the same list if there are no prioritized subscribers in the list, otherwise a new sorted result
     */
    private List sortSubscribers(List subscribers) {
       if (subscribers == null) {
@@ -1047,7 +1047,7 @@ public class ThreadSafeEventService implements EventService {
             }
             result.add(prioritizedSubscriber);
          }
-         //Issue 26 - of all priorties are negative, then add the FIFO after processing all of them
+         //Issue 26 - of all priorities are negative, then add the FIFO after processing all of them
          if (!haveAddedFIFOSubscribers) {
              for (Object subscriber : subscribers) {
                 result.add(subscriber);
@@ -1399,7 +1399,7 @@ public class ThreadSafeEventService implements EventService {
          Class cl = (Class) iterator.next();
          if (cl.isAssignableFrom(eventClass)) {
             if (LOG.isLoggable(Level.DEBUG)) {
-               LOG.debug("Hierachical match " + cl + " matched event of class " + eventClass);
+               LOG.debug("Hierarchical match " + cl + " matched event of class " + eventClass);
             }
             Collection subscribers = (Collection) classMap.get(cl);
             result.addAll(createCopyOfContentsRemoveWeakRefs(subscribers));
@@ -1555,7 +1555,7 @@ public class ThreadSafeEventService implements EventService {
     * @param key key for a List in the map
     * @param toRemove the object to remove form the list with the key of the map
     *
-    * @return true if toRemove was unsibscribed
+    * @return true if toRemove was unsubscribed
     */
    private boolean removeFromSetResolveWeakReferences(Map map, Object key, Object toRemove) {
       List subscribers = (List) map.get(key);
@@ -1611,7 +1611,7 @@ public class ThreadSafeEventService implements EventService {
 
    /**
     * Given a set (or subscribers or veto listeners), makes a copy of the set, resolving WeakReferences to hard
-    * references, and removing garbage collected referenences from the original set.
+    * references, and removing garbage collected references from the original set.
     *
     * @param subscribersOrVetoListeners
     *
@@ -1680,7 +1680,7 @@ public class ThreadSafeEventService implements EventService {
     * <p/>
     * Class hierarchy semantics are respected.  That is, if there are three events, A, X and Y, and X and Y are both
     * derived from A, then setting the cache size for A applies the cache size for all three.  Setting the cache size
-    * for X applies to X and leaves the settings for A and Y in tact.  Intefaces can be passed to this method, but they
+    * for X applies to X and leaves the settings for A and Y in tact.  Interfaces can be passed to this method, but they
     * only take effect if the cache size of a class or it's superclasses has been set. Just like Class.getInterfaces(),
     * if multiple cache sizes are set, the interface names declared earliest in the implements clause of the eventClass
     * takes effect.
@@ -1769,7 +1769,7 @@ public class ThreadSafeEventService implements EventService {
     * The cache for a topic is not adjusted until the next publication on that topic.
     *
     * @param topicName the topic name
-    * @param cacheSize the number of published data Objects to cache for this topci
+    * @param cacheSize the number of published data Objects to cache for this topic
     */
    public void setCacheSizeForTopic(String topicName, int cacheSize) {
       synchronized (cacheLock) {
@@ -1792,7 +1792,7 @@ public class ThreadSafeEventService implements EventService {
     * The cache for a topic is not adjusted until the next publication on that topic.
     *
     * @param pattern the pattern matching topic names
-    * @param cacheSize the number of data Objects to cache for this topci
+    * @param cacheSize the number of data Objects to cache for this topic
     */
    public void setCacheSizeForTopic(Pattern pattern, int cacheSize) {
       synchronized (cacheLock) {
@@ -2032,7 +2032,7 @@ public class ThreadSafeEventService implements EventService {
     * rules may change (changes will be doc'ed), override at your own risk.
     * <p/>
     * Overriders MUST call iterator.remove() to unsubscribe the proxy if the subscriber is
-    * a ProxySubscriper and is stale and should be cleaned up.  If the ProxySubscriber 
+    * a ProxySubscriber and is stale and should be cleaned up.  If the ProxySubscriber
     * is unsubscribed, then implementers MUST also call proxyUnsubscribed() on the subscriber.
     * Overriders MUST also remove the proxy from the weakProxySubscriber list by calling
     * removeStaleProxyFromList.  Method assumes caller is holding the listenerList 

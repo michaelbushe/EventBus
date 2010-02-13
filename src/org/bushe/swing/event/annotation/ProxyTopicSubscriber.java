@@ -58,7 +58,7 @@ public class ProxyTopicSubscriber extends AbstractProxySubscriber
    }
 
    /**
-    * Handles the event publication by pushing it to the real subscriber's subcription Method.
+    * Handles the event publication by pushing it to the real subscriber's subscription Method.
     *
     * @param topic the topic on which the object is being published
     * @param data The Object that is being published on the topic.

@@ -1,7 +1,7 @@
 package org.bushe.swing.event;
 
 /**
- * An optional inteface that can be implemented by Events objects or topic Payloads
+ * An optional interface that can be implemented by Events objects or topic Payloads
  * to enable the events' status to be stamped on the event by an event service.
  * <p>
  * EventService implementations must call setEventStatus(status) on event objects and

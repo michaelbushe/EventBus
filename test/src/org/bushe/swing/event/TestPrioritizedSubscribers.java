@@ -356,16 +356,16 @@ public class TestPrioritizedSubscribers extends TestCase {
      * with Priority of 0.
      */
     public void testIssue26OneNegOthersNormal() {
-        final List<Integer> calledorder = new ArrayList<Integer>();
+        final List<Integer> calledOrder = new ArrayList<Integer>();
         //non-Prioritized FIFO subscribers
         EventSubscriber sub1 = new EventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(1);
+                calledOrder.add(1);
             }
         };
         EventSubscriber sub0 = new PrioritizedEventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(-1);
+                calledOrder.add(-1);
             }
             public int getPriority() {
                 return -1;
@@ -373,7 +373,7 @@ public class TestPrioritizedSubscribers extends TestCase {
         };
         EventSubscriber sub2 = new EventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(2);
+                calledOrder.add(2);
             }
         };
 
@@ -381,9 +381,9 @@ public class TestPrioritizedSubscribers extends TestCase {
         eventService.subscribe(Color.class, sub0);
         eventService.subscribe(Color.class, sub2);
         eventService.publish(Color.BLUE);
-        assertEquals(calledorder.get(0).intValue(), -1);
-        assertEquals(calledorder.get(1).intValue(), 1);
-        assertEquals(calledorder.get(2).intValue(), 2);
+        assertEquals(calledOrder.get(0).intValue(), -1);
+        assertEquals(calledOrder.get(1).intValue(), 1);
+        assertEquals(calledOrder.get(2).intValue(), 2);
         System.out.println("to avoid garbage collection:"+sub1+sub2+sub0);
     }
 
@@ -396,16 +396,16 @@ public class TestPrioritizedSubscribers extends TestCase {
      * with Priority of 0.
      */
     public void testOnePosOthersNormal() {
-        final List<Integer> calledorder = new ArrayList<Integer>();
+        final List<Integer> calledOrder = new ArrayList<Integer>();
         //non-Prioritized FIFO subscribers
         EventSubscriber sub1 = new EventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(1);
+                calledOrder.add(1);
             }
         };
         EventSubscriber sub0 = new PrioritizedEventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(11);
+                calledOrder.add(11);
             }
             public int getPriority() {
                 return 11;
@@ -413,7 +413,7 @@ public class TestPrioritizedSubscribers extends TestCase {
         };
         EventSubscriber sub2 = new EventSubscriber() {
             public void onEvent(Object event) {
-                calledorder.add(2);
+                calledOrder.add(2);
             }
         };
 
@@ -421,9 +421,9 @@ public class TestPrioritizedSubscribers extends TestCase {
         eventService.subscribe(Color.class, sub0);
         eventService.subscribe(Color.class, sub2);
         eventService.publish(Color.BLUE);
-        assertEquals(1, calledorder.get(0).intValue());
-        assertEquals(2, calledorder.get(1).intValue());
-        assertEquals(11, calledorder.get(2).intValue());
+        assertEquals(1, calledOrder.get(0).intValue());
+        assertEquals(2, calledOrder.get(1).intValue());
+        assertEquals(11, calledOrder.get(2).intValue());
         System.out.println("to avoid garbage collection:"+sub1+sub2+sub0);
     }
 

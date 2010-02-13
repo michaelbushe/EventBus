@@ -12,15 +12,16 @@ import java.util.*;
  * For proving performance.
  */
 public class TestPerformance extends TestCase {
-    private EventSubscriber doNothingSubsciber = new EventSubscriber() {
+    private EventSubscriber doNothingSubscriber = new EventSubscriber() {
         public void onEvent(Object event) {
         }
     };
 
-    private EventTopicSubscriber doNothingTopicSubsciber = new EventTopicSubscriber() {
+    private EventTopicSubscriber doNothingTopicSubscriber = new EventTopicSubscriber() {
         public void onEvent(String topic, Object payload) {
         }
     };
+
     public void testClassPerformance() {
         ThreadSafeEventService eventService = new ThreadSafeEventService();
         Class[] classes = {Color.class, String.class, JTextField.class, List.class, JButton.class,
@@ -28,7 +29,7 @@ public class TestPerformance extends TestCase {
         Object[] payloads = {Color.BLUE, "foo", new JTextField(), new ArrayList(), new JButton(),
             Boolean.TRUE, 35, 36L, new HashSet(), new Date()};
         for (Class aClass : classes) {
-            eventService.subscribe(aClass, doNothingSubsciber);
+            eventService.subscribe(aClass, doNothingSubscriber);
         }
 
         long start = System.currentTimeMillis();
@@ -53,7 +54,7 @@ public class TestPerformance extends TestCase {
         Object[] payloads = {Color.BLUE, "foo", new JTextField(), new ArrayList(), new JButton(),
             Boolean.TRUE, 35, 36L, new HashSet(), new Date()};
         for (String aString : strings) {
-            eventService.subscribe(aString, doNothingTopicSubsciber);
+            eventService.subscribe(aString, doNothingTopicSubscriber);
         }
 
         long start = System.currentTimeMillis();

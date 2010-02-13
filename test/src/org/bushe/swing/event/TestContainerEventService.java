@@ -104,7 +104,7 @@ public class TestContainerEventService extends TestCase {
       EventService es = reg.getContainerEventService();
       assertTrue(es != null);
 
-      //Publishing onthe global event bus should not have an effect
+      //Publishing on the global event bus should not have an effect
       EventBus.publish("RegEvent", "WrongBus");
       assertEquals(getLastEventObject(), null);
 

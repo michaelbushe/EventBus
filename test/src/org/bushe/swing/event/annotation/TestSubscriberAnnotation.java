@@ -287,8 +287,8 @@ public class TestSubscriberAnnotation extends TestCase {
       AnnotatedVetoSubscriber vetoSubscriber = new AnnotatedVetoSubscriber();
       AnnotationProcessor.process(vetoSubscriber);
       AnnotationProcessor.process(subscriber);
-      AnotherAnnotatedEventSubscriber anotherAubscriber = new AnotherAnnotatedEventSubscriber();
-      AnnotationProcessor.process(anotherAubscriber);
+      AnotherAnnotatedEventSubscriber anotherSubscriber = new AnotherAnnotatedEventSubscriber();
+      AnnotationProcessor.process(anotherSubscriber);
       EventBus.publish(Arrays.asList("foo"));
       EDTUtil.waitForEDT();
       assertEquals(1, AnotherAnnotatedEventSubscriber.getTimesCalled());
@@ -297,7 +297,7 @@ public class TestSubscriberAnnotation extends TestCase {
       assertEquals(1, AnotherAnnotatedEventSubscriber.getTimesCalled());
       EDTUtil.waitForEDT();
       System.out.println(subscriber);
-      System.out.println(anotherAubscriber);
+      System.out.println(anotherSubscriber);
    }
 
    public void testAnotherIssue15MultipleAnnotatedSubscribers() {
