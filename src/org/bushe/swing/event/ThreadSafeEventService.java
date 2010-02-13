@@ -1840,7 +1840,7 @@ public class ThreadSafeEventService implements EventService {
          //Is this an exact match or has it been matched to a pattern yet?
          Integer size = cacheSizesForTopic.get(topic);
          if (size != null) {
-            return size.intValue();
+            return size;
          } else {
             //try matching patterns
             if (rawCacheSizesForPattern != null) {
@@ -1850,7 +1850,7 @@ public class ThreadSafeEventService implements EventService {
                   if (pattern.matches(topic)) {
                      size = rawCacheSizesForPattern.get(pattern);
                      cacheSizesForTopic.put(topic, size);
-                     return size.intValue();
+                     return size;
                   }
                }
             }
@@ -1869,7 +1869,7 @@ public class ThreadSafeEventService implements EventService {
          throw new IllegalArgumentException("Interfaces are not accepted in get last event, use a specific event class.");
       }
       synchronized (cacheLock) {
-         List eventCache = (List) cacheByEvent.get(eventClass);
+         List eventCache = cacheByEvent.get(eventClass);
          if (eventCache == null || eventCache.size() == 0) {
             return null;
          }
@@ -1887,7 +1887,7 @@ public class ThreadSafeEventService implements EventService {
          throw new IllegalArgumentException("Interfaces are not accepted in get last event, use a specific event class.");
       }
       synchronized (cacheLock) {
-         List eventCache = (List) cacheByEvent.get(eventClass);
+         List eventCache = cacheByEvent.get(eventClass);
          if (eventCache == null || eventCache.size() == 0) {
             return null;
          }
@@ -1902,7 +1902,7 @@ public class ThreadSafeEventService implements EventService {
     */
    public Object getLastTopicData(String topic) {
       synchronized (cacheLock) {
-         List topicCache = (List) cacheByTopic.get(topic);
+         List topicCache = cacheByTopic.get(topic);
          if (topicCache == null || topicCache.size() == 0) {
             return null;
          }
@@ -1917,7 +1917,7 @@ public class ThreadSafeEventService implements EventService {
     */
    public List getCachedTopicData(String topic) {
       synchronized (cacheLock) {
-         List topicCache = (List) cacheByTopic.get(topic);
+         List topicCache = cacheByTopic.get(topic);
          if (topicCache == null || topicCache.size() == 0) {
             return null;
          }
