@@ -1,147 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/ReferenceStrength.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ThreadSafeEventService.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/overview-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/EventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/Logger.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ContainerEventServiceSupplier.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/RuntimeTopicEventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/SubscriberTimingEvent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/CleanupEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/EventTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ObjectEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/PublicationStatusTracker.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ContainerEventServiceAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/package-list" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/Logger.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/VetoSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceFinder.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java" />
+    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="Site updates for 1.4 release - release notes, site pages, added  javadocs for java.net site fpr 1.4.">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../pom.xml" afterPath="$PROJECT_DIR$/../../pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eventbus.iml" afterPath="$PROJECT_DIR$/eventbus.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/PublicationStatus.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eventbus.iws" afterPath="$PROJECT_DIR$/eventbus.iws" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/VetoSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/constant-values.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/ProxyTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/VetoEventListener.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/allclasses-noframe.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/ProxyTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/UseTheClassOfTheAnnotatedMethodsParameter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/EventTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventBusAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventServiceExistsException.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/class-use/SwingException.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventServiceAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ObjectEvent.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../www/index.html" afterPath="$PROJECT_DIR$/../../www/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/VetoTopicEventListener.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/allclasses-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/VetoRuntimeTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/VetoTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/AbstractEventServiceEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventBus.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/VetoRuntimeTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/AbstractProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/index-all.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/RuntimeTopicEventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceSupplier.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/Logger.Level.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/package-use.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ContainerEventServiceRegistrar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/deprecated-list.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventService.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/Logger.Level.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/PublicationStatus.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/VetoTopicEventListener.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventServiceLocator.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventServiceAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/Logger.LoggerType.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/ProxyTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/VetoEventListener.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/serialized-form.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/class-use/TypeReference.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/help-doc.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/ProxyTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/package-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/CleanupEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/package-tree.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../RELEASE_NOTES.txt" afterPath="$PROJECT_DIR$/../../RELEASE_NOTES.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventServiceEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/VetoRuntimeTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/Logger.LoggerType.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/CleanupEvent.Status.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/VetoRuntimeTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventServiceExistsException.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/package-use.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventService.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventServiceLocator.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventBusAction.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventServiceEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/VetoTopicPatternSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/BaseProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ThreadSafeEventService.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/overview-summary.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/ProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/RuntimeTopicPatternEventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/VetoTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/package-tree.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/AnnotationProcessor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/SwingEventService.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/VetoTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/ReferenceStrength.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/EventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/SwingException.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/AbstractEventServiceEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/BaseProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/AbstractProxySubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/overview-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/Prioritized.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/PrioritizedEventTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/EventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ContainerEventServiceFinder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/CleanupEvent.Status.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/package-use.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/EventTopicSubscriber.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eventbus.ipr" afterPath="$PROJECT_DIR$/eventbus.ipr" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/stylesheet.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/ContainerEventServiceRegistrar.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/AnnotationProcessor.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/PrioritizedEventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/Prioritized.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/package-frame.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventBus.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/resources/inherit.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/exception/package-use.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/PublicationStatusTracker.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/RuntimeTopicPatternEventSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/annotation/class-use/UseTheClassOfTheAnnotatedMethodsParameter.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/generics/TypeReference.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/PrioritizedEventTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/PrioritizedEventSubscriber.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/org/bushe/swing/event/PublicationStatusTracker.java" afterPath="$PROJECT_DIR$/../../src/org/bushe/swing/event/PublicationStatusTracker.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/index.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/index.apt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/news.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/news.apt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/SubscriberTimingEvent.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/class-use/EventTopicSubscriber.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../www/doc/api/org/bushe/swing/event/SwingEventService.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" />
     </list>
     <ignored path="eventbus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -236,8 +103,21 @@
       <file leaf-file-name="ContainerEventServiceRegistrar.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="25" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="147" column="33" selection-start="7311" selection-end="7311" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestContainerEventService.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="178" column="50" selection-start="7202" selection-end="7202" vertical-scroll-proportion="0.5">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -245,8 +125,10 @@
       <file leaf-file-name="EventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="80" column="71" selection-start="6111" selection-end="6111" vertical-scroll-proportion="0.0">
-              <folding />
+            <state line="917" column="11" selection-start="45873" selection-end="45873" vertical-scroll-proportion="-15.576923">
+              <folding>
+                <marker date="1266033475000" expanded="true" signature="29981:30300" placeholder="/**...*/" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -281,7 +163,7 @@
       <file leaf-file-name="PublicationStatusTracker.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/PublicationStatusTracker.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="357" selection-end="381" vertical-scroll-proportion="0.0">
+            <state line="10" column="17" selection-start="357" selection-end="381" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -308,7 +190,7 @@
       <file leaf-file-name="RuntimeTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicSubscriber.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="7" column="6" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0">
+            <state line="35" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -335,7 +217,7 @@
       <file leaf-file-name="ThreadSafeEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="649" column="87" selection-start="33010" selection-end="33010" vertical-scroll-proportion="0.0">
+            <state line="502" column="0" selection-start="25820" selection-end="25820" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -344,7 +226,52 @@
       <file leaf-file-name="TestDefaultEventService.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="575" column="25" selection-start="22452" selection-end="22452" vertical-scroll-proportion="0.0">
+            <state line="698" column="35" selection-start="28011" selection-end="28031" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestPrioritizedSubscribers.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="230" column="47" selection-start="8726" selection-end="8726" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EventBus.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="240" column="54" selection-start="11399" selection-end="11399" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GenericReflection.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/generics/GenericReflection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="25" selection-start="196" selection-end="196" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/generics/package.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TypeReference.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/generics/TypeReference.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="24" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -395,10 +322,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maven-theme.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="maven-theme.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="25" selection-start="836" selection-end="836" vertical-scroll-proportion="0.5207878">
+            <state line="22" column="25" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -425,6 +352,10 @@
       <list>
         <option value="$PROJECT_DIR$/../../RELEASE_NOTES.txt" />
         <option value="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
+        <option value="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java" />
+        <option value="$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java" />
+        <option value="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java" />
+        <option value="$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java" />
       </list>
     </option>
   </component>
@@ -718,8 +649,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Favorites" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -738,19 +667,139 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="swing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="swing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="swing" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="event" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="generics" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
+      <pane id="Favorites" />
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="OverrideImplement.combined" value="true" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="RunManagerConfig.showSettingsBeforeRunnig" value="false" />
+    <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
-    <property name="options.lastSelected" value="com.intellij.spellchecker.settings.SpellCheckerSettingsManager" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Imports" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="GoToClass.includeJavaFiles" value="false" />
     <property name="MemberChooser.copyJavadoc" value="false" />
@@ -775,146 +824,39 @@
       <recent name="org.bushe.swing.event.annotation.runtime" />
     </key>
   </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="2/13/10 12:48 AM" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-            <PATH vcs="CVS" revision="1.1">$PROJECT_DIR$/../dictionary/Eventbus.dic</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/eventbus.ipr</PATH>
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/eventbus.iml</PATH>
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/eventbus.iws</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/../../.DS_Store</PATH>
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/../../src/org/bushe/swing/event/.ThreadSafeEventService.java.rej.swp</PATH>
-          <PATH vcs="CVS" revision="">$PROJECT_DIR$/../../eventbus.patch</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Unknown" />
-          <option name="myStatusName" value="Unknown" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN_TYPE" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally modified removed from server" />
-          <option name="myStatusName" value="Locally modified removed from server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MOD_REMOVED_FROM_SERVER" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed modified on server" />
-          <option name="myStatusName" value="Locally removed modified on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED_MODIFIED_ON_SERVER" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Created by second party" />
-          <option name="myStatusName" value="Created by second party" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CREATED_BY_SECOND_PARTY" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Binary file has to be merged" />
-          <option name="myStatusName" value="Binary file has to be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="BINARY_MERGED" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
-  </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.TestContainerEventService.testContainerEventServiceRegistrar">
+    <configuration default="false" name="TestContainerEventService.testContainerEventServiceRegistrar" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" runner="emma">
+        <pattern>
+          <option name="PATTERN" value="org.bushe.swing.event.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <extension name="snapshooter" />
+      <module name="eventbus" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="org.bushe.swing.event" />
+      <option name="MAIN_CLASS_NAME" value="org.bushe.swing.event.TestContainerEventService" />
+      <option name="METHOD_NAME" value="testContainerEventServiceRegistrar" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="moduleWithDependencies" />
+      </option>
+      <envs />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="51422" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="true" />
+      </RunnerSettings>
+      <ConfigurationWrapper RunnerId="Debug" />
+      <method />
+    </configuration>
     <configuration default="true" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" break_at_first_line="false" browser="DEFAULT" class_file="" class="" config_file="" directory="" file="" is_config_by_xml="false" is_groups_set="false" method_class="" method_file="" method="" open_page_automatically="false" scope="Class" stop_session_after_first_page="true" web_path="">
       <option name="excludedGroups">
         <set />
@@ -945,7 +887,7 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit">
+    <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" class_name="" html_or_swf_file_path="" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" port="0" run_mode="HtmlOrSwfFile" scope="Class" socket_policy_port="0" url_to_launch="http://">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
@@ -1052,7 +994,9 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <list size="0" />
+    <list size="1">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.TestContainerEventService.testContainerEventServiceRegistrar" />
+    </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
       <Port>5050</Port>
@@ -1105,20 +1049,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="22" width="1395" height="878" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3462857" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.44228572" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24406332" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.47097626" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23218997" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22065379" sideWeight="0.6609499" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16121842" sideWeight="0.5197889" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1143,7 +1087,7 @@
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removing old javadocs on java.net site to prep for update to 1.4." />
+    <option name="LAST_COMMIT_MESSAGE" value="Site updates for 1.4 release - release notes, site pages, added  javadocs for java.net site fpr 1.4." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1161,6 +1105,7 @@
     <MESSAGE value="Issue 30: Added PublicationStatus so that users can tell if an event was vetoed, published, being processed, etc." />
     <MESSAGE value="Many spelling fixes thanks to patch from competitive Scrabble player, Callum Bushe." />
     <MESSAGE value="Removing old javadocs on java.net site to prep for update to 1.4." />
+    <MESSAGE value="Site updates for 1.4 release - release notes, site pages, added  javadocs for java.net site fpr 1.4." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1174,44 +1119,19 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="54" selection-start="1839" selection-end="1839" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/MyData.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="0" selection-start="201" selection-end="201" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceLocator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="82" column="0" selection-start="4248" selection-end="4248" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/AbstractSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/ConcreteSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="59" selection-start="238" selection-end="238" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/TestAnnotationInAbstractClass.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="12" selection-start="518" selection-end="518" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/Logger.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="23" column="54" selection-start="1041" selection-end="1041" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/RuntimeTopicEventSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="45" selection-start="500" selection-end="527" vertical-scroll-proportion="0.14594595" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/AbstractEventServiceEvent.java">
@@ -1221,21 +1141,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/AnnotationProcessor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="258" column="78" selection-start="12132" selection-end="12132" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="25" selection-start="2292" selection-end="2292" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="80" column="71" selection-start="6111" selection-end="6111" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="258" column="78" selection-start="12132" selection-end="12132" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventServiceEvent.java">
@@ -1255,7 +1161,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/PublicationStatusTracker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="357" selection-end="381" vertical-scroll-proportion="0.0" />
+        <state line="10" column="17" selection-start="357" selection-end="381" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ObjectEvent.java">
@@ -1268,11 +1174,6 @@
         <state line="13" column="18" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="6" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/SwingEventService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="75" column="0" selection-start="3887" selection-end="3887" vertical-scroll-proportion="0.0" />
@@ -1283,16 +1184,19 @@
         <state line="73" column="19" selection-start="2610" selection-end="2610" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/generics/GenericReflection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="649" column="87" selection-start="33010" selection-end="33010" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="10" column="25" selection-start="196" selection-end="196" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/generics/package.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="575" column="25" selection-start="22452" selection-end="22452" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/generics/TypeReference.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="24" selection-start="313" selection-end="313" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/SubscriberForTest.java">
@@ -1310,38 +1214,85 @@
         <state line="7" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/RuntimeTopicEventSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="45" selection-start="500" selection-end="527" vertical-scroll-proportion="0.14594595">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/VetoEventListener.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="16" selection-start="824" selection-end="824" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="21" column="16" selection-start="824" selection-end="824" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../RELEASE_NOTES.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="46" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="24" column="46" selection-start="1187" selection-end="1187" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="25" selection-start="836" selection-end="836" vertical-scroll-proportion="0.5207878">
+        <state line="22" column="25" selection-start="836" selection-end="836" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventBus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="54" selection-start="11399" selection-end="11399" vertical-scroll-proportion="0.0">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestPrioritizedSubscribers.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="230" column="47" selection-start="8726" selection-end="8726" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestDefaultEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="698" column="35" selection-start="28011" selection-end="28031" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicSubscriber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/EventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="917" column="11" selection-start="45873" selection-end="45873" vertical-scroll-proportion="-15.576923">
+          <folding>
+            <marker date="1266033475000" expanded="true" signature="29981:30300" placeholder="/**...*/" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ThreadSafeEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="502" column="0" selection-start="25820" selection-end="25820" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/ContainerEventServiceRegistrar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="33" selection-start="7311" selection-end="7311" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/TestContainerEventService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="178" column="50" selection-start="7202" selection-end="7202" vertical-scroll-proportion="0.5">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

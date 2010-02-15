@@ -15,13 +15,14 @@
  */
 package org.bushe.swing.event;
 
+import javax.swing.JComponent;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
 import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
-import javax.swing.JComponent;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
+
 
 /**
  * Registers a component with it's Container's EventService while keeping track of the component's container.
@@ -37,8 +38,10 @@ import javax.swing.event.AncestorListener;
 public class ContainerEventServiceRegistrar {
    private JComponent jComp;
    private EventSubscriber eventSubscriber;
+   private VetoEventListener vetoSubscriber;
    private Class[] eventClasses;
    private EventTopicSubscriber eventTopicSubscriber;
+   private VetoTopicEventListener vetoTopicSubscriber;
    private String[] topics;
    private EventService containerEventService;
 
@@ -49,7 +52,7 @@ public class ContainerEventServiceRegistrar {
     * @param jComp the component whose container to monitor
     */
    public ContainerEventServiceRegistrar(JComponent jComp) {
-      this(jComp, null, (Class[]) null, null, null);
+      this(jComp, null, null, null, null, null, null);
    }
 
    /**
@@ -58,10 +61,10 @@ public class ContainerEventServiceRegistrar {
     *
     * @param jComp the component whose container to monitor
     * @param eventSubscriber the subscriber to register to the Container EventServer
-    * @param eventClass the class of event to register for
+    * @param eventClasses the class(es) to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class eventClass) {
-      this(jComp, eventSubscriber, new Class[]{eventClass}, null, null);
+   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class... eventClasses) {
+      this(jComp, eventSubscriber, null, eventClasses, null, null, null);
    }
 
    /**
@@ -70,35 +73,50 @@ public class ContainerEventServiceRegistrar {
     *
     * @param jComp the component whose container to monitor
     * @param eventTopicSubscriber the topic subscriber to register to the Container EventServer
-    * @param topic the event topic name to register for
+    * @param topics the event topic name to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicSubscriber eventTopicSubscriber, String topic) {
-      this(jComp, null, null, eventTopicSubscriber, new String[]{topic});
+   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicSubscriber eventTopicSubscriber, String... topics) {
+      this(jComp, null, null, null, eventTopicSubscriber, null, topics);
    }
 
-   /**
-    * Create a registrar that will keep track of the container event service, and subscribe the subscriber to the event
-    * classes when the ContainerEventService is available and when it changes.
-    *
-    * @param jComp the component whose container to monitor
-    * @param eventSubscriber the subscriber to register to the Container EventServer
-    * @param eventClasses the classes of event to register for
-    */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses) {
-      this(jComp, eventSubscriber, eventClasses, null, null);
-   }
+    /**
+     * Create a registrar that will keep track of the container event service, and subscribeStrongly the veto subscriber
+     * to the topics when the ContainerEventService is available and when it changes.
+     *
+     * @param jComp the component whose container to monitor
+     * @param vetoSubscriber the veto subscriber to register to the Container EventServer
+     * @param eventClasses the classes of event to register for
+     */
+    public ContainerEventServiceRegistrar(JComponent jComp, VetoEventListener vetoSubscriber, Class... eventClasses) {
+       this(jComp, null, vetoSubscriber, eventClasses, null, null, null);
+    }
 
-   /**
-    * Create a registrar that will keep track of the container event service, and subscribeStrongly the subscriber to
-    * the topics when the ContainerEventService is available and when it changes.
-    *
-    * @param jComp the component whose container to monitor
-    * @param eventTopicSubscriber the topic subscriber to register to the Container EventServer
-    * @param topics the event topic names to register for
-    */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventTopicSubscriber eventTopicSubscriber, String[] topics) {
-      this(jComp, null, null, eventTopicSubscriber, topics);
-   }
+    /**
+     * Create a registrar that will keep track of the container event service, and subscribeStrongly the veto subscriber
+     * to the topics when the ContainerEventService is available and when it changes.
+     *
+     * @param jComp the component whose container to monitor
+     * @param vetoTopicSubscriber the veto subscriber to register to the Container EventServer
+     * @param topics the event topic(s) to register for
+     */
+    public ContainerEventServiceRegistrar(JComponent jComp, VetoTopicEventListener vetoTopicSubscriber, String... topics) {
+       this(jComp, null, null, null, null, vetoTopicSubscriber, topics);
+    }
+
+    /**
+     * Create a registrar that will keep track of the container event service, and subscribe the subscriber to the topics
+     * and the event classes when the ContainerEventService is available and when it changes.
+     *
+     * @param jComp the component whose container to monitor
+     * @param eventSubscriber the subscriber to register to the Container EventServer
+     * @param eventClasses the classes of event to register for
+     * @param eventTopicSubscriber the topic subscriber to keep registered to the topic(s)
+     * @param topics the event topic names to register for
+     */
+    public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses,
+            EventTopicSubscriber eventTopicSubscriber, String[] topics) {
+        this(jComp, eventSubscriber, null, eventClasses, eventTopicSubscriber, null, topics);
+    }
 
    /**
     * Create a registrar that will keep track of the container event service, and subscribe the subscriber to the topics
@@ -106,17 +124,23 @@ public class ContainerEventServiceRegistrar {
     *
     * @param jComp the component whose container to monitor
     * @param eventSubscriber the subscriber to register to the Container EventServer
+    * @param vetoSubscriber a veto subscriber for the eventClasses
     * @param eventClasses the classes of event to register for
     * @param eventTopicSubscriber the topic subscriber to keep registered to the topic(s)
+    * @param vetoTopicSubscriber a veto subscriber for the topics
     * @param topics the event topic names to register for
     */
-   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, Class[] eventClasses,
-           EventTopicSubscriber eventTopicSubscriber, String[] topics) {
+   public ContainerEventServiceRegistrar(JComponent jComp, EventSubscriber eventSubscriber, VetoEventListener vetoSubscriber,
+           Class[] eventClasses, EventTopicSubscriber eventTopicSubscriber, VetoTopicEventListener vetoTopicSubscriber,
+           String[] topics) {
       this.jComp = jComp;
       this.eventSubscriber = eventSubscriber;
+      this.vetoSubscriber = vetoSubscriber;
       this.eventClasses = eventClasses;
       this.eventTopicSubscriber = eventTopicSubscriber;
+      this.vetoTopicSubscriber = vetoTopicSubscriber;
       this.topics = topics;
+
       if (jComp == null) {
          throw new NullPointerException("JComponent is null");
       }
@@ -161,13 +185,23 @@ public class ContainerEventServiceRegistrar {
          if (eventClasses != null) {
             for (int i = 0; i < eventClasses.length; i++) {
                Class eventClass = eventClasses[i];
-               containerEventService.unsubscribe(eventClass, eventSubscriber);
+               if (eventSubscriber != null) {
+                  containerEventService.unsubscribe(eventClass, eventSubscriber);
+               }
+               if (vetoSubscriber != null) {
+                  containerEventService.unsubscribeVeto(eventClass, vetoSubscriber);
+               }
             }
          }
          if (topics != null) {
             for (int i = 0; i < topics.length; i++) {
                String topic = topics[i];
-               containerEventService.unsubscribe(topic, eventTopicSubscriber);
+               if (eventTopicSubscriber != null) {
+                  containerEventService.unsubscribe(topic, eventTopicSubscriber);
+               }
+               if (vetoTopicSubscriber != null) {
+                  containerEventService.unsubscribeVeto(topic, vetoTopicSubscriber);
+               }
             }
          }
       }
@@ -177,13 +211,23 @@ public class ContainerEventServiceRegistrar {
          if (eventClasses != null) {
             for (int i = 0; i < eventClasses.length; i++) {
                Class eventClass = eventClasses[i];
-               containerEventService.subscribe(eventClass, eventSubscriber);
+                if (eventSubscriber != null) {
+                    containerEventService.subscribe(eventClass, eventSubscriber);
+                }
+                if (vetoSubscriber != null) {
+                    containerEventService.subscribeVetoListener(eventClass, vetoSubscriber);
+                }
             }
          }
          if (topics != null) {
             for (int i = 0; i < topics.length; i++) {
                String topic = topics[i];
-               containerEventService.subscribe(topic, eventTopicSubscriber);
+                if (eventTopicSubscriber != null) {
+                    containerEventService.subscribe(topic, eventTopicSubscriber);
+                }
+                if (vetoTopicSubscriber != null) {
+                    containerEventService.subscribeVetoListener(topic, vetoTopicSubscriber);
+                }
             }
          }
       }

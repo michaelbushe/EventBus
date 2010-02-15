@@ -15,13 +15,11 @@
  */
 package org.bushe.swing.event;
 
-import java.util.ArrayList;
-import java.awt.*;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import junit.framework.TestCase;
+
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 /** The DefaultEventService is NOT Swing-safe!  But it's easier to test... */
 public class TestContainerEventService extends TestCase {
@@ -99,10 +97,46 @@ public class TestContainerEventService extends TestCase {
             setLastEventObject(data);
          }
       };
+      //Set the lastEventObject whenever the event fires on the right Container Event Service
+      VetoTopicEventListener buttonContainerVetoTopicSubscriber = new VetoTopicEventListener() {
+          public boolean shouldVeto(String topic, Object data) {
+              return "VetoMe".equals(data);
+          }
+      };
+      //Set the lastEventObject whenever the event fires on the right Container Event Service
+      EventSubscriber buttonContainerSubscriber = new EventSubscriber() {
+          public void onEvent(Object data) {
+             System.out.println("class=" + data);
+             setLastEventObject(data);
+          }
+      };
+      //Set the lastEventObject whenever the event fires on the right Container Event Service
+      VetoEventListener buttonContainerVetoSubscriber = new VetoEventListener() {
+           public boolean shouldVeto(Object data) {
+               return "VetoMe".equals(data.toString());
+           }
+      };
       JButton button = new JButton("Foo");
-      ContainerEventServiceRegistrar reg = new ContainerEventServiceRegistrar(button, buttonContainerTopicSubscriber, "RegEvent");
+
+      ContainerEventServiceRegistrar reg = new ContainerEventServiceRegistrar(button, buttonContainerTopicSubscriber,
+              "RegEvent");
       EventService es = reg.getContainerEventService();
       assertTrue(es != null);
+
+      ContainerEventServiceRegistrar reg2 = new ContainerEventServiceRegistrar(button, buttonContainerVetoTopicSubscriber,
+              "RegEvent");
+      EventService es4reg2 = reg2.getContainerEventService();
+      assertTrue(es4reg2 != null);
+
+      ContainerEventServiceRegistrar reg3 = new ContainerEventServiceRegistrar(button, buttonContainerSubscriber,
+              String.class);
+      EventService es4reg3 = reg3.getContainerEventService();
+      assertTrue(es4reg3 != null);
+
+      ContainerEventServiceRegistrar reg4 = new ContainerEventServiceRegistrar(button, buttonContainerVetoSubscriber,
+              String.class);
+      EventService es4reg4 = reg4.getContainerEventService();
+      assertTrue(es4reg4 != null);
 
       //Publishing on the global event bus should not have an effect
       EventBus.publish("RegEvent", "WrongBus");
@@ -117,25 +151,50 @@ public class TestContainerEventService extends TestCase {
       EventService es2 = reg.getContainerEventService();
       //the registrar kept up with the move
       assertTrue(es2 != es);
+
       EventBus.publish("RegEvent", "WrongBus");
       assertEquals(getLastEventObject(), null);
+      EventBus.publish("StringClassEvent");
+      assertEquals(getLastEventObject(), null);
+
       EventService topPanelES = ContainerEventServiceFinder.getEventService(panel);
+
       topPanelES.publish("RegEvent", "TopLevelBus");
       EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
+
+      topPanelES.publish("Don'tVetoMe");
+      EDTUtil.waitForEDT();
+      assertEquals("Don'tVetoMe", getLastEventObject());
+
+      topPanelES.publish("VetoMe");
+      EDTUtil.waitForEDT();
+      assertEquals("Don'tVetoMe", getLastEventObject());//veto worked
+
+      topPanelES.publish("RegEvent", "TopLevelBus");
+      EDTUtil.waitForEDT();
+      assertEquals("TopLevelBus", getLastEventObject());
+
       EventService subPanel2ES = subPanel2.getContainerEventService();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
       EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());//still
+
       subPanel2.add(button);
       EDTUtil.waitForEDT();
       subPanel2ES.publish("RegEvent", "SuppliedBus");
       EDTUtil.waitForEDT();
       assertEquals("SuppliedBus", getLastEventObject());//detected move
+
+      subPanel2ES.publish("RegEvent", "VetoMe");
+      EDTUtil.waitForEDT();
+      assertEquals("SuppliedBus", getLastEventObject());//veto moved
+
       subPanel.add(button);
       topPanelES.publish("RegEvent", "TopLevelBus");
       EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
+
       subPanel2ES.publish("RegEvent", "SuppliedBus");
       EDTUtil.waitForEDT();
       assertEquals("TopLevelBus", getLastEventObject());
