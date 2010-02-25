@@ -3,8 +3,8 @@ package org.bushe.swing.event;
 /**
  * The status of an event as it makes its way from publication through processing by subscribers.
  * <p>
- * EventServices are required to stamp any event object or payload that implements the EventStatusTracker
- * with the corresponding EventStatus as the event object is processed.  The EventService is not
+ * EventServices are required to stamp any event object or payload that implements the PublicationStatusTracker
+ * with the corresponding PublicationStatus as the event object is processed.  The EventService is not
  * required to set the Unpublished state.
  */
 public enum PublicationStatus {

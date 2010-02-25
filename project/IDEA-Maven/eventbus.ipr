@@ -274,7 +274,11 @@
     <option name="projectName" value="eventbus" />
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="mbushe" />
+    <dictionary name="mbushe">
+      <words>
+        <w>supertypes</w>
+      </words>
+    </dictionary>
     <dictionary name="Cal">
       <words>
         <w>barrrr</w>

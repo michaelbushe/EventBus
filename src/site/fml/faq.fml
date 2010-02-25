@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faqs title="Frequently Asked Questions">
+  <part id="General">
+    <faq id="Configuration">
+      <question>How do I configure the EventBus?</question>
+      <answer>
+        <p>
+          That depends on why you are using the EventBus.  If you are using the EventBus for a Swing application, then no configuration is necessary.
+          Just start using the static methods in <code>org.bushe.swing.event.EventBus</code> to subscribe to classes and publish instances.  If you are using the
+          EventBus for general purpose Java (non-Swing), then you need to first associate a name with an <code>EventService</code> implementation in the 
+          <code>EventServiceLocator</code>.  The <code>ThreadSafeEventService</code> is an EventService implementation appropriate for general usage.
+          See <a href="http://www.eventbus.org/confluence/display/EventBus/Getting+Started">Getting Started</a> for details and examples.
+        </p>
+      </answer>
+    </faq>
+    <faq id="weakReferences">
+      <question>It's not working!  What's the problem?</question>
+      <answer>
+        <p>
+          If you are publishing and subscribing on the EventBus and your subscribers are not being notified it's almost assuredly that your
+          subscriber has been garbage collected since subscriptions are made weakly by default.  To test the theory, replace 
+          <code>EventBus.subscribe(theClass, theSubscriber);</code> with <code>EventBus.subscribeStrongly(theClass, theSubscriber);</code>.
+        </p>
+        <p>
+        	Enabling logging if you are still having problems.  The EventBus will use Apache log4j if its present, otherwise it uses java.util.logging.
+        	To see the logging, turn DEBUG level logging on (or TRACE for a lot of detail) by using the class of the EventService implemention(s) in use, 
+        	which by default is <code>org.bushe.swing.event.SwingEventService</code>.
+        </p>
+      </answer>
+    </faq>
+  </part>
+</faqs>

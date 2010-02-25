@@ -1,15 +1,15 @@
 EventBus 
 
-   The EventBus is a simple but powerful publish-subscribe API that is based on class semantics 
-   and/or string (topic) matching.  The EventBus works well in general purpose usage and has extensions 
-   for UI development.
+   The EventBus is a simple but powerful publish-subscribe API with annotations.  EventBus subscriptions are
+   based on class semantics and/or string (topic) matching.  The EventBus works well in general purpose usage 
+   and has extensions for UI development.
 
 Why use the EventBus?
 
   The publish/subscribe pattern is commonly used to decouple components, make testing easier, and program by contract.  It replaces 
   the tight coupling introduced by explicit listeners with a flexible loosely coupled design. The EventBus is production ready and 
   used in many applications, including financial UIs, scientific simulations, and the most popular Java desktop application, Limewire.
-  The EventBus is well tested and has very good documentation.
+  The EventBus is well tested, has very good documentation, and gets lots of {{{http://stackoverflow.com/questions/1953380/lightweight-message-bus-library}K}} {{{http://stackoverflow.com/questions/178700/generic-annotation-driven-event-notification-frameworks}U}} {{{http://squirvoid.rainpattern.com/node/76}D}} {{{http://stackoverflow.com/questions/458817/java-swing-libraries-tools-layout-managers}O}} {{{http://stackoverflow.com/questions/580867/best-way-of-writing-design-doc}S}}.
   
 Project Status
 
@@ -18,4 +18,29 @@ Project Status
   EventBus 2.x is a work in progress. It will use the newly acquired org.eventbus package and will be extended to other UI toolkits 
   and RIAs such as Ajax and Apache Pivot.  
 
-    	
+Latest News
+
+	* <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
+  
+          * Runtime Subscriber annotation for dynamic subscriptions, thanks to Mario Aquino from 
+            {{{http://www.limewire.com}Limewire}} for the patch.  A good use case for a dynamic subscription is 
+             a chat client.  The chat window will not know whose messages to subscribe to until runtime.
+             Instead of subscribing to a String known at compile time, an Annotation (or API) can define 
+             the method that will determine a subscription string at runtime.
+             
+          * PublicationStatus enum so that an event Object implementing PublicationStatusTracker can report
+            whether the event was vetoed, published, is being processed, etc.
+          
+          * @VetoSubscriber annotation to take the boilerplate out of coding veto subscribers.
+          
+          * Added AnnotationProcessor.unprocess(this) to auto-unsubscribe all the subscriptions than 
+            the annotationed object created.
+          
+          * The ContainerEventServiceRegistrar called updateContainerEventService too often when tracking changes to 
+            the parent of a component subscribed to it's container's EventService.
+          
+          * Thorough spelling check from tournament Scrabble player Callum Bushe.  Thanks to Cal for correcting the dozen of 
+            variations of "subscribe" in the code base, and much more.  Cal used IntelliJ IDEA 9 code spellchecker, courtesy of IntelliJ's 
+            license for Open Source projects, thanks to JetBrains as well.  
+            
+     {{{news.html}More News}}

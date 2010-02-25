@@ -1,9 +1,9 @@
 package org.bushe.swing.event.annotation.runtime;
 
-import java.util.List;
-
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.RuntimeTopicEventSubscriber;
+
+import java.util.List;
 
 class RuntimeTopicSubscriber implements SubscriberForTesting {
 	private long timesCalled;
@@ -11,7 +11,6 @@ class RuntimeTopicSubscriber implements SubscriberForTesting {
 
 	public RuntimeTopicSubscriber(String topic) {
 		this.topic = topic;
-
 		AnnotationProcessor.process(this);
 	}
 	

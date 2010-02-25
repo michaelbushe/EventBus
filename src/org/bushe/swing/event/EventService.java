@@ -536,7 +536,7 @@ public interface EventService {
     * @param eventClass the eventClass of interest
     *
     * @return the subscribers that will be called when an event of eventClass is published, this includes those
-    *         subscribed that match by exact class and those that match to a class and its subtypes
+    *         subscribed that match by exact class and those that match to a class and its supertypes
     */
    public <T> List<T> getSubscribers(Class<T> eventClass);
 
@@ -544,7 +544,7 @@ public interface EventService {
     * Gets subscribers that subscribed with the given a class, but not those subscribed exactly to the class.
     * @param eventClass the eventClass of interest
     *
-    * @return the subscribers that are subscribed to match to a class and its subtypes, but not those subscribed by
+    * @return the subscribers that are subscribed to match to a class and its supertypes, but not those subscribed by
     *         exact class
     */
    public <T> List<T> getSubscribersToClass(Class<T> eventClass);
@@ -554,7 +554,7 @@ public interface EventService {
     * @param eventClass the eventClass of interest
     *
     * @return the subscribers that are subscribed by exact class but not those subscribed to match to a class and its
-    *         subtypes
+    *         supertypes
     */
    public <T> List<T> getSubscribersToExactClass(Class<T> eventClass);
 
@@ -564,7 +564,7 @@ public interface EventService {
     * @param type the type of interest
     *
     * @return the subscribers that will be called when an event of eventClass is published, this includes those
-    *         subscribed that match by exact class and those that match to a class and its subtypes
+    *         subscribed that match by exact class and those that match to a class and its supertypes
     */
    public <T> List<T> getSubscribers(Type type);
 

@@ -13,9 +13,10 @@
     <menu name="EventBus">
       <item name="Overview" href="index.html"/>      
       <item name="News" href="news.html"/>
-      <item name="Wiki (Usage)" href="/confluence/display/EventBus/Home"/>
+      <item name="Download" href="download.html"/>
+      <item name="Wiki (Usage)" href="/confluence/display/EventBus/EventBus+Wiki"/>
       <item name="FAQ" href="faq.html"/>
     </menu>
-    <menu ref="reports" collapse="false"/>
+    <menu ref="reports"/>
   </body>
 </project>

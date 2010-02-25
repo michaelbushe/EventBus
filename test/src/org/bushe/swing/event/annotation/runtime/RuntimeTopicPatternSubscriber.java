@@ -1,11 +1,12 @@
 package org.bushe.swing.event.annotation.runtime;
 
-import java.util.List;
-
 import org.bushe.swing.event.annotation.AnnotationProcessor;
 import org.bushe.swing.event.annotation.RuntimeTopicPatternEventSubscriber;
 
+import java.util.List;
+
 class RuntimeTopicPatternSubscriber implements SubscriberForTesting {
+   
 	private final String topicPattern;
 	private long timesCalled;
 
