@@ -9,14 +9,14 @@ Why use the EventBus?
   The publish/subscribe pattern is commonly used to decouple components, make testing easier, and program by contract.  It replaces 
   the tight coupling introduced by explicit listeners with a flexible loosely coupled design. The EventBus is production ready and 
   used in many applications, including financial UIs, scientific simulations, and the most popular Java desktop application, Limewire.
-  The EventBus is well tested, has very good documentation, and gets lots of {{{http://stackoverflow.com/questions/1953380/lightweight-message-bus-library}K}} {{{http://stackoverflow.com/questions/178700/generic-annotation-driven-event-notification-frameworks}U}} {{{http://squirvoid.rainpattern.com/node/76}D}} {{{http://stackoverflow.com/questions/458817/java-swing-libraries-tools-layout-managers}O}} {{{http://stackoverflow.com/questions/580867/best-way-of-writing-design-doc}S}}.
+  The EventBus is well tested, has very good documentation, and gets lots of {{{http://stackoverflow.com/questions/1953380/lightweight-message-bus-library}K}} {{{http://stackoverflow.com/questions/178700/generic-annotation-driven-event-notification-frameworks}U}} {{{http://squirvoid.rainpattern.com/node/76}D}} {{{https://eventbus.dev.java.net/servlets/ProjectForumMessageView?forumID=1834&messageID=30812}O}} {{{http://stackoverflow.com/questions/580867/best-way-of-writing-design-doc}S}}.
   
 Project Status
 
-  EventBus 1.x is stable, well tested, well documented and suitable for general purpose Java applications and Swing UIs.  
+  EventBus 1.x is stable, well tested, well documented and suitable for general purpose Java applications and UIs, including Swing, SWT, and Apache Pivot.
   
   EventBus 2.x is a work in progress. It will use the newly acquired org.eventbus package and will be extended to other UI toolkits 
-  and RIAs such as Ajax and Apache Pivot.  
+  and RIAs such as Ajax, GWT, and Flex.  
 
 Latest News
 

@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="Site changes - faq, index, custom velocity template, google analytics, social bookmarking.  Couple of minor comment changes in the code.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/delicious.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/delicious.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../src/site/resources/css/sociable.css" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/twitter.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/css/social.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicPatternSubscriber.java" afterPath="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicPatternSubscriber.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/slashdot.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/slashdot.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../src/site/resources/script/sociable.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/stumbleupon.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/stumbleupon.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/facebook.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/facebook.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../../src/site/resources/site.vm" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/reddit.png" />
+    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.psd" afterPath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.psd" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/maven-feather.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/build-by-maven-black.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/site.xml" afterPath="$PROJECT_DIR$/../../src/site/site.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/linkedin.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/linkedin.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/index.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/index.apt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/build-by-maven-white.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eventbus.iws" afterPath="$PROJECT_DIR$/eventbus.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/email.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/email.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/script/socialable-confluence.vm" afterPath="$PROJECT_DIR$/../../src/site/resources/script/socialable-confluence.vm" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/digg.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/site.vm" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/script/social.js" afterPath="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/site.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/site.css" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/css/maven-base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/site.vm" afterPath="$PROJECT_DIR$/../../src/site/site.vm" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
     </list>
     <ignored path="eventbus.iws" />
@@ -95,28 +88,28 @@
   <component name="FileColors" enabled="true" enabledForTabs="true" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="RuntimeTopicSubscriber.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicSubscriber.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="14" selection-start="667" selection-end="667" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Prioritized.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/Prioritized.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="3" selection-start="684" selection-end="702" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="site.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/site.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="16" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0">
+            <state line="11" column="2" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dependencies.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../site-good/dependencies.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="19" selection-start="339" selection-end="339" vertical-scroll-proportion="-8.473684">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dependencies.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../target-old/site/dependencies.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="19" selection-start="339" selection-end="339" vertical-scroll-proportion="-8.473684">
               <folding />
             </state>
           </provider>
@@ -131,10 +124,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.apt" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="index.apt" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="29" column="316" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.6126761">
               <folding />
             </state>
           </provider>
@@ -152,7 +145,7 @@
       <file leaf-file-name="site.vm" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="386" column="0" selection-start="12896" selection-end="15620" vertical-scroll-proportion="-14.911111">
+            <state line="353" column="3" selection-start="12285" selection-end="12285" vertical-scroll-proportion="-9.088889">
               <folding />
             </state>
           </provider>
@@ -161,7 +154,7 @@
       <file leaf-file-name="social.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="1" selection-start="3402" selection-end="3402" vertical-scroll-proportion="-9.066667">
+            <state line="22" column="49" selection-start="634" selection-end="634" vertical-scroll-proportion="-3.7555556">
               <folding />
             </state>
           </provider>
@@ -180,15 +173,6 @@
         <entry file="file://$PROJECT_DIR$/../../pom.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state line="3" column="16" selection-start="98" selection-end="99" vertical-scroll-proportion="-1.3846154">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EventTopicPatternSubscriber.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="22" selection-start="0" selection-end="1418" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -331,10 +315,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="maven-theme.css" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="maven-theme.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="20" selection-start="819" selection-end="819" vertical-scroll-proportion="0.27731094">
+            <state line="348" column="19" selection-start="6736" selection-end="6736" vertical-scroll-proportion="-6.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="maven-base.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-base.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="50.615383">
               <folding />
             </state>
           </provider>
@@ -343,7 +336,16 @@
       <file leaf-file-name="site.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="10" column="1" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="social.css" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="26" column="14" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -384,12 +386,14 @@
         <option value="$PROJECT_DIR$/../../src/site/resources/css/sociable.css" />
         <option value="$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicPatternSubscriber.java" />
         <option value="$PROJECT_DIR$/../../src/site/resources/script/sociable.js" />
-        <option value="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
         <option value="$PROJECT_DIR$/../../src/site/resources/script/socialable-confluence.vm" />
         <option value="$PROJECT_DIR$/../../src/site/resources/site.vm" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
         <option value="$PROJECT_DIR$/../../src/site/site.xml" />
         <option value="$PROJECT_DIR$/../../src/site/site.vm" />
-        <option value="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/css/site.css" />
+        <option value="$PROJECT_DIR$/../../src/site/apt/index.apt" />
       </list>
     </option>
   </component>
@@ -792,6 +796,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="images" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eventbus" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="site" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -1167,7 +1197,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2176781" sideWeight="0.0" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26781002" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3298153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23218997" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1175,7 +1205,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14784546" sideWeight="0.74670184" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19465081" sideWeight="0.6609499" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23476969" sideWeight="0.7730871" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1200,7 +1230,7 @@
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Site changes - faq, index, custom velocity template, google analytics, social bookmarking.  Couple of minor comment changes in the code." />
+    <option name="LAST_COMMIT_MESSAGE" value="eventbus.org looking good, site ready for publication." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1221,6 +1251,8 @@
     <MESSAGE value="Site updates for 1.4 release - release notes, site pages, added  javadocs for java.net site fpr 1.4." />
     <MESSAGE value="Added support for VetoSubscribers in ContainerEventService" />
     <MESSAGE value="Site changes - faq, index, custom velocity template, google analytics, social bookmarking.  Couple of minor comment changes in the code." />
+    <MESSAGE value="Another spot checkin for site, still needs work." />
+    <MESSAGE value="eventbus.org looking good, site ready for publication." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1234,21 +1266,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/RuntimeTopicPatternEventSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="18" selection-start="434" selection-end="434" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../test/src/org/bushe/swing/event/annotation/runtime/RuntimeTopicSubscriber.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="14" selection-start="667" selection-end="667" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/Prioritized.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="3" selection-start="684" selection-end="702" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/org/bushe/swing/event/annotation/EventTopicPatternSubscriber.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="15" column="22" selection-start="0" selection-end="1418" vertical-scroll-proportion="0.0" />
@@ -1338,13 +1355,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="1" selection-start="3402" selection-end="3402" vertical-scroll-proportion="-9.066667">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/socialable-confluence.vm">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="0" selection-start="539" selection-end="2983" vertical-scroll-proportion="-20.842106">
@@ -1352,19 +1362,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="14" selection-start="538" selection-end="538" vertical-scroll-proportion="0.41324502">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/apt/news.apt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
@@ -1381,28 +1379,72 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
+    <entry file="file://$PROJECT_DIR$/../../site-good/dependencies.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="386" column="0" selection-start="12896" selection-end="15620" vertical-scroll-proportion="-14.911111">
+        <state line="17" column="19" selection-start="339" selection-end="339" vertical-scroll-proportion="-8.473684">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/site.xml">
+    <entry file="file://$PROJECT_DIR$/../../target-old/site/dependencies.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="16" selection-start="661" selection-end="661" vertical-scroll-proportion="0.0">
+        <state line="17" column="19" selection-start="339" selection-end="339" vertical-scroll-proportion="-8.473684">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="14" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="49" selection-start="634" selection-end="634" vertical-scroll-proportion="-3.7555556">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="50.615383">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="20" selection-start="819" selection-end="819" vertical-scroll-proportion="0.27731094">
+        <state line="348" column="19" selection-start="6736" selection-end="6736" vertical-scroll-proportion="-6.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/site.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="2" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="353" column="3" selection-start="12285" selection-end="12285" vertical-scroll-proportion="-9.088889">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="1" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="316" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.6126761">
           <folding />
         </state>
       </provider>

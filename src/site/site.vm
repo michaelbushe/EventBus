@@ -316,6 +316,7 @@
       @import url("$relativePath/css/social.css");
     </style>
     <link rel="stylesheet" href="$relativePath/css/print.css" type="text/css" media="print" />
+    <script type="text/javascript" language="JavaScript" src="$relativePath/script/social.js"
     #foreach( $author in $authors )
       <meta name="author" content="$author" />
     #end
@@ -336,68 +337,83 @@
     #end
   </head>
   <body class="composite">
-  <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-13190250-1']);
-      _gaq.push(['_trackPageview']);
+  <div id="topContainer">
+      <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-13190250-1']);
+          _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
-      })();
-    </script>
-    <div id="banner">
-      #banner( $decoration.bannerLeft "bannerLeft" )
-      #banner( $decoration.bannerRight "bannerRight" )
-      <div class="clear">
-        <hr/>
-      </div>
-    </div>
-    <div id="breadcrumbs">
-      #publishDate( "left" $decoration.publishDate $decoration.version )
-      <div class="xright">#links( $decoration.body.links )#publishDate( "right" $decoration.publishDate $decoration.version )</div>
-      <div class="clear">
-        <hr/>
-      </div>
-    </div>
-    <div id="leftColumn">
-      <div id="navcolumn" style=" border-bottom: 1px solid #aaa;">
-       #publishDate( "navigation-top" $decoration.publishDate $decoration.version )
-       #mainMenu( $decoration.body.menus )
-       #poweredByLogo( $decoration.poweredBy )
-       #publishDate( "navigation-bottom" $decoration.publishDate $decoration.version )
-      </div>
-      <div class="sociable" style="margin-left:0px; margin-bottom: 0px; margin-top:0px; padding: 0px; background-color: #FFF; border: 0px;">
-            <div class="sociable_tagline" style="margin-left:5px; ">
-                <strong>Share This:</strong>
-            </div>
-            <ul>
-                <li style="margin-left:5px;"><a rel="nofollow"  target="_blank" href="http://delicious.com/post?url=$url%2F&amp;title=$title&amp;" title="del.icio.us"><img src="http://www.eventbus.org/images/delicious.png" title="del.icio.us" alt="del.icio.us" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://www.digg.com/submit?url=$url%2F&amp;title=$title" title="Digg"><img src="http://www.eventbus.org/images/digg.png" title="Digg" alt="Digg" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://www.dzone.com/links/add.html?url=$url&amp;title=$title" title="DZone"><img src="http://www.eventbus.org/images/dzone.png" title="DZone" alt="DZone" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://slashdot.org/bookmark.pl?title=$title&amp;url=$url%2F" title="Slashdot"><img src="http://www.eventbus.org/images/slashdot.png" title="Slashdot" alt="Slashdot" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://www.facebook.com/share.php?u=$url&amp;t=$title" title="Facebook"><img src="http://www.eventbus.org/images/facebook.png" title="Facebook" alt="Facebook" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://www.linkedin.com/shareArticle?mini=true&amp;url=$url%2F&amp;title=$title&amp;" title="LinkedIn"><img src="http://www.eventbus.org/images/linkedin.png" title="LinkedIn" alt="LinkedIn" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-                <li><a rel="nofollow"  target="_blank" href="http://twitter.com/home?status=$title%20-%20$url%2F" title="Twitter"><img src="http://www.eventbus.org/images/twitter.gif" title="Twitter" alt="Twitter" style="width: 16px; height: 16px; " class="sociable-hovers" /></a></li>
-                <li class="sociablelast"><a rel="nofollow"  target="_blank" href="mailto:?subject=$title&amp;body=$url%2F" title="email"><img src="http://www.eventbus.org/images/email_link.png" title="email" alt="email" style="width: 16px; height: 16px;" class="sociable-hovers" /></a></li>
-            </li>
-            </ul>
-      </div>
-    </div>
-    <div id="bodyColumn">
-      <div id="contentBox">
-        $bodyContent
-      </div>
-    </div>
-    <div class="clear">
-      <hr/>
-    </div>
-    <div id="footer">
-      <div class="xright">&#169;#copyright()#publishDate( "bottom" $decoration.publishDate $decoration.version )</div>
-      <div class="clear">
-        <hr/>
-      </div>
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+          })();
+        </script>
+        <div id="banner">
+          #banner( $decoration.bannerLeft "bannerLeft" )
+          #banner( $decoration.bannerRight "bannerRight" )
+          <div class="clear">
+            <hr/>
+          </div>
+        </div>
+        <div id="breadcrumbs">
+          #publishDate( "left" $decoration.publishDate $decoration.version )
+          <div class="xright">#links( $decoration.body.links )#publishDate( "right" $decoration.publishDate $decoration.version )</div>
+          <div class="clear">
+            <hr/>
+          </div>
+        </div>
+        <div id="leftColumn">
+          <div id="navcolumn" style=" border-bottom: 1px solid #aaa;">
+           #publishDate( "navigation-top" $decoration.publishDate $decoration.version )
+           #mainMenu( $decoration.body.menus )
+           ###poweredByLogo( $decoration.poweredBy )
+           #publishDate( "navigation-bottom" $decoration.publishDate $decoration.version )
+          </div>
+          <div id="social" class="sociable" style="margin-left:5px; margin-bottom: 0px; margin-top:0px; padding: 0px; background-color: #FFF; border: 0px;">
+          </div>
+        </div>
+        <div id="bodyColumn">
+          <div id="contentBox">
+            $bodyContent
+          </div>
+        </div>
+        <div class="clear">
+          <hr/>
+        </div>
+        <div id="footer">
+            <div class="xright">
+              <table>
+               <tr>
+                <td>
+                  <a href="http://www.jetbrains.com/idea/" style="position: relative;display:block; width:88px; height:31px; border:0; margin:0;padding:0;text-decoration:none;text-indent:0;"><span style="margin: 0;padding: 0;position: absolute;top: -1px;left: 4px;font-size: 10px;cursor:pointer;  background-image:none;border:0;color: #0d3a9e; font-family: trebuchet ms,arial,sans-serif;font-weight: normal;text-align:left;">Developed with</span><img src="http://www.jetbrains.com/idea/opensource/img/all/banners/idea88x31_white.gif" alt="The best Java IDE" border="0"/></a>
+                </td>
+                <td>
+                 <a href="http://maven.apache.org/" title="Built by Maven" class="poweredBy">
+                            <img class="poweredBy"
+                                 alt="Built by Maven"
+                                 src="./images/logos/maven-feather.png"
+                                 width="90"
+                                 height="30"
+                                 border="1" />
+
+                </a>
+                </td>
+                <td nowrap="true">
+                &#169;#copyright()#publishDate( "bottom" $decoration.publishDate $decoration.version )</div>
+                </td>
+               </tr>
+              </table>
+            <div class="clear">
+            <hr/>
+          </div>
+        </div>
+        <script type="text/javascript" language="JavaScript">
+              var socialDiv = document.getElementById("social");
+              if (socialDiv) {
+                  socialDiv.innerHTML = getSocialList();
+              }
+        </script>
     </div>
   </body>
 </html>
