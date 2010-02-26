@@ -24,7 +24,7 @@ span.sociable_tagline:hover span {
 	display: inline !important;
 	list-style-type: none;
 	margin: 0;
-	padding: 1px;
+	padding: 0px;
 }
 .sociable ul li:before { content: ""; }
 .sociable img {
@@ -37,9 +37,9 @@ span.sociable_tagline:hover span {
 }
 
 .sociable-hovers {
-	opacity: .4;
-	-moz-opacity: .4;
-	filter: alpha(opacity=40);
+	opacity: .75;
+	-moz-opacity: .75;
+	filter: alpha(opacity=75);
 }
 .sociable-hovers:hover {
 	opacity: 1;
