@@ -1,7 +1,7 @@
 div.sociable { margin: 16px 0; }
 
-span.sociable_tagline { position: relative; }
-span.sociable_tagline span { display: none; width: 14em; }
+span.sociable_tagline { position: relative; margin-bottom: 4px; }
+span.sociable_tagline span { display: none; width: 14em;  margin-bottom: 4px; }
 span.sociable_tagline:hover span {
 	position: absolute;
 	display: block;

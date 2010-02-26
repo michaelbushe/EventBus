@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager" verified="true">
-    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.psd" afterPath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.psd" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/maven-feather.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/build-by-maven-black.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/site.xml" afterPath="$PROJECT_DIR$/../../src/site/site.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/index.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/index.apt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/images/logos/build-by-maven-white.png" />
+    <list default="true" readonly="true" id="bcce1513-e8b5-4447-883f-52df06b09385" name="Default" comment="Minor site tweaks, added Google Reader/Buzz ot sharing icons.  Some improved text">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/social.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/social.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/digg.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/digg.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/eventbus.iws" afterPath="$PROJECT_DIR$/eventbus.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/script/social.js" afterPath="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/EventBusBanner.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/images/slashdot.png" afterPath="$PROJECT_DIR$/../../src/site/resources/images/slashdot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/news.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/news.apt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/site.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/site.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../../src/site/resources/css/maven-base.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/apt/index.apt" afterPath="$PROJECT_DIR$/../../src/site/apt/index.apt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/site.vm" afterPath="$PROJECT_DIR$/../../src/site/site.vm" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" afterPath="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
     </list>
     <ignored path="eventbus.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -124,10 +120,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.apt" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="index.apt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="29" column="316" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.6126761">
+            <state line="30" column="39" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -136,7 +132,7 @@
       <file leaf-file-name="news.apt" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/apt/news.apt">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <state line="5" column="55" selection-start="356" selection-end="356" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -145,7 +141,7 @@
       <file leaf-file-name="site.vm" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="353" column="3" selection-start="12285" selection-end="12285" vertical-scroll-proportion="-9.088889">
+            <state line="393" column="71" selection-start="14455" selection-end="14455" vertical-scroll-proportion="-18.733334">
               <folding />
             </state>
           </provider>
@@ -154,7 +150,7 @@
       <file leaf-file-name="social.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="49" selection-start="634" selection-end="634" vertical-scroll-proportion="-3.7555556">
+            <state line="43" column="115" selection-start="3604" selection-end="3604" vertical-scroll-proportion="-9.355556">
               <folding />
             </state>
           </provider>
@@ -333,10 +329,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="site.css" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="site.css" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="10" column="1" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
+            <state line="8" column="13" selection-start="131" selection-end="131" vertical-scroll-proportion="0.16466552">
               <folding />
             </state>
           </provider>
@@ -345,7 +341,7 @@
       <file leaf-file-name="social.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="14" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
+            <state line="2" column="43" selection-start="77" selection-end="98" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -388,12 +384,14 @@
         <option value="$PROJECT_DIR$/../../src/site/resources/script/sociable.js" />
         <option value="$PROJECT_DIR$/../../src/site/resources/script/socialable-confluence.vm" />
         <option value="$PROJECT_DIR$/../../src/site/resources/site.vm" />
-        <option value="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
         <option value="$PROJECT_DIR$/../../src/site/resources/css/maven-theme.css" />
         <option value="$PROJECT_DIR$/../../src/site/site.xml" />
         <option value="$PROJECT_DIR$/../../src/site/site.vm" />
-        <option value="$PROJECT_DIR$/../../src/site/resources/css/site.css" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/css/social.css" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/script/social.js" />
+        <option value="$PROJECT_DIR$/../../src/site/apt/news.apt" />
         <option value="$PROJECT_DIR$/../../src/site/apt/index.apt" />
+        <option value="$PROJECT_DIR$/../../src/site/resources/css/site.css" />
       </list>
     </option>
   </component>
@@ -1205,7 +1203,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14784546" sideWeight="0.74670184" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23476969" sideWeight="0.7730871" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20802377" sideWeight="0.7730871" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1230,7 +1228,7 @@
     <option name="PERFORM_ROLLBACK_IN_BACKGROUND" value="false" />
     <option name="CHECK_LOCALLY_CHANGED_CONFLICTS_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="eventbus.org looking good, site ready for publication." />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor site tweaks, added Google Reader/Buzz ot sharing icons." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1253,6 +1251,7 @@
     <MESSAGE value="Site changes - faq, index, custom velocity template, google analytics, social bookmarking.  Couple of minor comment changes in the code." />
     <MESSAGE value="Another spot checkin for site, still needs work." />
     <MESSAGE value="eventbus.org looking good, site ready for publication." />
+    <MESSAGE value="Minor site tweaks, added Google Reader/Buzz ot sharing icons." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1362,11 +1361,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/apt/news.apt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/apt/download.apt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="5" column="0" selection-start="171" selection-end="171" vertical-scroll-proportion="0.0" />
@@ -1393,20 +1387,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="14" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="49" selection-start="634" selection-end="634" vertical-scroll-proportion="-3.7555556">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/maven-base.css">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="50.615383">
@@ -1421,6 +1401,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/script/social.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="115" selection-start="3604" selection-end="3604" vertical-scroll-proportion="-9.355556">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/social.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="43" selection-start="77" selection-end="98" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="39" selection-start="2279" selection-end="2279" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/apt/news.apt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="55" selection-start="356" selection-end="356" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="393" column="71" selection-start="14455" selection-end="14455" vertical-scroll-proportion="-18.733334">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/site.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="2" selection-start="299" selection-end="299" vertical-scroll-proportion="0.0">
@@ -1428,23 +1443,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/site.vm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="353" column="3" selection-start="12285" selection-end="12285" vertical-scroll-proportion="-9.088889">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../../src/site/resources/css/site.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="1" selection-start="137" selection-end="137" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../src/site/apt/index.apt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="316" selection-start="2132" selection-end="2132" vertical-scroll-proportion="0.6126761">
+        <state line="8" column="13" selection-start="131" selection-end="131" vertical-scroll-proportion="0.16466552">
           <folding />
         </state>
       </provider>

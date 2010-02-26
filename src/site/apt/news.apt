@@ -1,6 +1,12 @@
 News
-	
-	* <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
+
+    * <<26-Feb-2010>> New pub/sub patterns article on using {{{http://www.eventbus.org/confluence/pages/viewpage.action?pageId=819222}Apache Pivot and the EventBus}}
+
+    The article demonstrates common UI pub/sub patterns using Apache Pivot.  No matter what UI technology you use, this article
+    will show you what the EventBus can do for your UIs, and you'll learn about Apache Pivot along the way.
+
+
+    * <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
   
           * Runtime Subscriber annotation for dynamic subscriptions, thanks to Mario Aquino from 
             {{{http://www.limewire.com}Limewire}} for the patch.  A good use case for a dynamic subscription is 
@@ -23,7 +29,7 @@ News
             variations of "subscribe" in the code base, and much more.  Cal used IntelliJ IDEA 9 code spellchecker, courtesy of IntelliJ's 
             license for Open Source projects, thanks to JetBrains as well.  
 
-	* <<15-Sept-2009>> The EventBus has a new domain - {{{http://www.eventbus.org}EventBus.org}}, after waiting years for it to 
+    * <<15-Sept-2009>> The EventBus has a new domain - {{{http://www.eventbus.org}EventBus.org}}, after waiting years for it to 
 	       become available (previous owner never responded to emails).  The acquisition of this domain provides a new home for the EventBus 
 	       website and sets up work on EventBus 2.0. EventBus 2.0 will move the codebade to the new package name.  EventBus 2.0 will go beyond 
 	       it's Swing orientation, so Swing will no longer be the default EventBus implementation.  Work on EventBus 2.0 will commence after 

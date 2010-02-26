@@ -364,13 +364,13 @@
           </div>
         </div>
         <div id="leftColumn">
-          <div id="navcolumn" style=" border-bottom: 1px solid #aaa;">
+          <div id="navcolumn" style="border-bottom: 1px solid #aaa; padding-bottom: 5px;">
            #publishDate( "navigation-top" $decoration.publishDate $decoration.version )
            #mainMenu( $decoration.body.menus )
            ###poweredByLogo( $decoration.poweredBy )
            #publishDate( "navigation-bottom" $decoration.publishDate $decoration.version )
           </div>
-          <div id="social" class="sociable" style="margin-left:5px; margin-bottom: 0px; margin-top:0px; padding: 0px; background-color: #FFF; border: 0px;">
+          <div id="social" class="sociable" style="margin:0; border: 0px none ; margin: 0pt; padding: 5px 0px 5px 8px; background-color: #FFF;">
           </div>
         </div>
         <div id="bodyColumn">

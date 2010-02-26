@@ -1,8 +1,9 @@
 EventBus 
 
-   The EventBus is a simple but powerful publish-subscribe API with annotations.  EventBus subscriptions are
-   based on class semantics and/or string (topic) matching.  The EventBus works well in general purpose usage 
-   and has extensions for UI development.
+   The EventBus is a simple but powerful publish/subscribe API with annotations that allows POJOs to communicate
+   with each other anywhere in a JVM without having to refer to each other.  EventBus subscriptions are
+   based on class semantics and/or string (topic) matching.  The EventBus is fit for general purpose usage and
+   has extensions for UI development.
 
 Why use the EventBus?
 
@@ -10,7 +11,10 @@ Why use the EventBus?
   the tight coupling introduced by explicit listeners with a flexible loosely coupled design. The EventBus is production ready and 
   used in many applications, including financial UIs, scientific simulations, and the most popular Java desktop application, Limewire.
   The EventBus is well tested, has very good documentation, and gets lots of {{{http://stackoverflow.com/questions/1953380/lightweight-message-bus-library}K}} {{{http://stackoverflow.com/questions/178700/generic-annotation-driven-event-notification-frameworks}U}} {{{http://squirvoid.rainpattern.com/node/76}D}} {{{https://eventbus.dev.java.net/servlets/ProjectForumMessageView?forumID=1834&messageID=30812}O}} {{{http://stackoverflow.com/questions/580867/best-way-of-writing-design-doc}S}}.
-  
+
+  The EventBus is not a JMS competitor.  The EventBus is for pub/sub communication within a VM.  The EventBus is often
+  used by JMS listeners to route events internally once they are pulled off the JMS queue or topic.
+
 Project Status
 
   EventBus 1.x is stable, well tested, well documented and suitable for general purpose Java applications and UIs, including Swing, SWT, and Apache Pivot.
@@ -20,7 +24,12 @@ Project Status
 
 Latest News
 
-	* <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
+    * <<26-Feb-2010>> New pub/sub patterns article on using {{{http://www.eventbus.org/confluence/pages/viewpage.action?pageId=819222}Apache Pivot and the EventBus}}
+
+    The article demonstrates common UI pub/sub patterns using Apache Pivot.
+    No matter what UI technology you use, this article will show you what the EventBus can do for your UIs, and you'll learn about Apache Pivot along the way.
+
+    * <<12-Feb-2010>> EventBus 1.4 Released. EventBus 1.4 adds:
   
           * Runtime Subscriber annotation for dynamic subscriptions, thanks to Mario Aquino from 
             {{{http://www.limewire.com}Limewire}} for the patch.  A good use case for a dynamic subscription is 
